@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1039537530741",
+    "project_id": "inspire-59452",
+    "storage_bucket": "inspire-59452.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039537530741:android:21bd986650514eddd6153c",
+        "android_client_info": {
+          "package_name": "com.app.inspire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIvrVigYNzpHPh2OR2xlDmK3FdySy6aw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039537530741:android:f0d6bb591959e5add6153c",
+        "android_client_info": {
+          "package_name": "com.app.public_housing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIvrVigYNzpHPh2OR2xlDmK3FdySy6aw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Public Housing</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>public_housing</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+    	<array>
+    		<string>sms</string>
+    		<string>tel</string>
+    	</array>
+    	<key>NSCameraUsageDescription</key>
+    	<string>Used to demonstrate image picker plugin</string>
+    	<key>NSLocationAlwaysUsageDescription</key>
+    	<string>This application requires location services to work</string>
+    	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Public Housing App needs access to your location in order to provide accurate emergency information.</string>
+    	<key>NSLocationUsageDescription</key>
+    	<string>This application requires location services to work</string>
+    	<key>NSLocationWhenInUseUsageDescription</key>
+    	<string>This application requires location services to work</string>
+    	<key>NSMicrophoneUsageDescription</key>
+    	<string>Used to capture audio for image picker plugin</string>
+    	<key>NSPhotoLibraryAddUsageDescription</key>
+    	<string>App used image picker for pick profile image</string>
+    	<key>NSPhotoLibraryUsageDescription</key>
+    	<string>Used to demonstrate image picker plugin</string>
+    	<key>NSSpeechRecognitionUsageDescription</key>
+    	<string>Using for recorded data to convert into text</string>
+    	<key>TemporaryPreciseAccuracy</key>
+    	<string>App use location for get current location</string>
+    	<key>UIBackgroundModes</key>
+    	<array>
+    		<string>fetch</string>
+    		<string>remote-notification</string>
+    	</array>
+    	<key>UIStatusBarStyle</key>
+    	<string></string>
+    	<key>UISupportedInterfaceOrientations~ipad</key>
+    	<array>
+    		<string>UIInterfaceOrientationLandscapeLeft</string>
+    		<string>UIInterfaceOrientationLandscapeRight</string>
+    		<string>UIInterfaceOrientationPortrait</string>
+    		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+    	</array>
+        <key>NSAppleMusicUsageDescription</key>
+        <string>Play using while you are hiking</string>
+</dict>
+</plist>

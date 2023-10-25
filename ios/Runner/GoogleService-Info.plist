@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCb9EUwOX23zHpvig360Fm85-wFaDa2e4A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1039537530741</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.gilsonsoftware.publichousing</string>
+	<key>PROJECT_ID</key>
+	<string>inspire-59452</string>
+	<key>STORAGE_BUCKET</key>
+	<string>inspire-59452.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1039537530741:ios:1664a48fab74dbfad6153c</string>
+</dict>
+</plist>
