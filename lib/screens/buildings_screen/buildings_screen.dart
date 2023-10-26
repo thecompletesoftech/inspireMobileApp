@@ -13,8 +13,6 @@ class BuildingsScreen extends GetView<BuildingsController> {
 
   @override
   Widget build(BuildContext context) {
-    // Utils.screenAllow();
-
     return GetBuilder<BuildingsController>(
       assignId: true,
       builder: (controller) {

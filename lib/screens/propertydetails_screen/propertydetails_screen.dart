@@ -5,12 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/screens/propertydetails_screen/propertydetails_controller.dart';
 
 import '../../commons/all.dart';
-import '../areas_screen/areas_screen.dart';
+import '../buildings_screen/buildings_screen.dart';
 import '../main_screen/main_controller.dart';
 import 'generalNotesCard_widget.dart';
 
 class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
-  const PropertyDetailsScreen({Key? key}) : super(key: key);
+  PropertyDetailsScreen({Key? key}) : super(key: key);
   static const routes = "/PropertyDetailsScreen";
 
   @override
@@ -423,10 +423,12 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                         ),
                                       ],
                                     ).paddingOnly(bottom: 20.px),
-                                    const LinearProgressIndicator(
-                                      value: 15,
-                                      semanticsLabel: 'Linear progress indicator',
-                                    ),
+                                    LinearProgressIndicator(
+                                      value: 10.0,
+                                      minHeight: 4.px,
+                                      // color: controller.appColors.appBGColor,
+                                      backgroundColor: controller.appColors.border,
+                                    ).paddingOnly(bottom: 10.px),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -567,59 +569,60 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                             ),
                           ],
                         ),
-                        controller.item!.status != InspectionStatus.completed.toString()
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CommonButton(
-                                      title: Strings.goToBuildings,
-                                      textColor: controller.appColors.appColor,
-                                      color: controller.appColors.transparent,
-                                      radius: 35.px,
-                                      height: 55.px,
-                                      textWeight: FontWeight.w600,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.px,
-                                        vertical: 12.px,
-                                      ),
-                                      textSize: 16.px,
-                                      border: Border.all(color: controller.appColors.border, width: 2),
-                                      onTap: () {
-                                        Get.back();
-                                      }),
-                                  SizedBox(
-                                    width: 24.px,
-                                  ),
-                                  CommonButton(
-                                      title:
-                                          // controller.item!.status!.contains("inCompleted")
-                                          //     ? Strings.resumeInspection
-                                          //     :
-                                          Strings.HSAcknowledgment,
-                                      textColor: controller.visibleBtn
-                                          ? controller.appColors.black
-                                          : controller.appColors.border1,
-                                      color: controller.visibleBtn
-                                          ? controller.appColors.textPink
-                                          : controller.appColors.black.withOpacity(0.11999999731779099),
-                                      radius: 35.px,
-                                      textWeight: FontWeight.w600,
-                                      textSize: 16.px,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.px,
-                                        vertical: 12.px,
-                                      ),
-                                      height: 55.px,
-                                      onTap: () {
-                                        if (controller.visibleBtn) {
-                                          Get.toNamed(AresScreen.routes, arguments: controller.item);
-                                        }
-                                      }),
-                                ],
-                              ).paddingSymmetric(vertical: 32.px)
-                            // : controller.item!.status == InspectionStatus.completed.toString()
-                            //     ? InspectionCompleteWidget()
-                            : const SizedBox()
+                        // controller.item!.status != InspectionStatus.completed.toString()
+                        //     ?
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CommonButton(
+                                title: Strings.goToBuildings,
+                                textColor: controller.appColors.appColor,
+                                color: controller.appColors.transparent,
+                                radius: 35.px,
+                                height: 55.px,
+                                textWeight: FontWeight.w600,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.px,
+                                  vertical: 12.px,
+                                ),
+                                textSize: 16.px,
+                                border: Border.all(color: controller.appColors.border, width: 2),
+                                onTap: () {
+                                  Get.toNamed(BuildingsScreen.routes, arguments: controller.item)!
+                                      .then((value) => controller.update());
+                                }),
+                            SizedBox(
+                              width: 24.px,
+                            ),
+                            CommonButton(
+                                title:
+                                    // controller.item!.status!.contains("inCompleted")
+                                    //     ? Strings.resumeInspection
+                                    //     :
+                                    Strings.HSAcknowledgment,
+                                textColor:
+                                    controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
+                                color: controller.visibleBtn
+                                    ? controller.appColors.textPink
+                                    : controller.appColors.black.withOpacity(0.11999999731779099),
+                                radius: 35.px,
+                                textWeight: FontWeight.w600,
+                                textSize: 16.px,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 24.px,
+                                  vertical: 12.px,
+                                ),
+                                height: 55.px,
+                                onTap: () {
+                                  if (controller.visibleBtn) {
+                                    // Get.toNamed(AresScreen.routes, arguments: controller.item);
+                                  }
+                                }),
+                          ],
+                        ).paddingSymmetric(vertical: 32.px)
+                        // : controller.item!.status == InspectionStatus.completed.toString()
+                        //     ? InspectionCompleteWidget()
+                        // : const SizedBox()
                       ],
                     ).paddingAll(32.px),
                   ],

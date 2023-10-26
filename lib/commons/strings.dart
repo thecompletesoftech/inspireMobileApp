@@ -20,6 +20,8 @@ class Strings {
   static const String nSPIREStandards = "NSPIRE standards";
   static const String logOut = "Log out";
   static const String all = "All";
+  static const String no = "No";
+  static const String na = "N/A";
   static const String failed = "Failed";
   static const String completed = "Completed";
   static const String inComplete = "Incomplete";
@@ -43,6 +45,11 @@ class Strings {
   static const String completeInspection = "Complete Inspection";
   static const String mapRoute = "Map Route";
   static const String certificates = "Certificates";
+  static const String boilerCertificate = "Boiler Certificate";
+  static const String elevatorCertificate = "Elevator Certificate";
+  static const String fireAlarmInspectionReport = "Fire Alarm Inspection Report";
+  static const String leadBasedPaintDisclosureForm = "Lead-Based Paint Disclosure Form";
+  static const String sprinklerSystemCertificate = "Sprinkler System Certificate";
   static const String upload = "Upload";
   static const String noShow = "No Show";
   static const String seeMore = "See More";

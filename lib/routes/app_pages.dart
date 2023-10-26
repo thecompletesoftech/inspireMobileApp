@@ -6,6 +6,8 @@ import '../screens/areas_screen/areas_screen.dart';
 import '../screens/auth/signing_screen/signing_binding.dart';
 import '../screens/auth/signing_screen/signing_screen.dart';
 import '../screens/buildings_screen/buildings_screen.dart';
+import '../screens/certificates_screen/certificates_binding.dart';
+import '../screens/certificates_screen/certificates_screen.dart';
 import '../screens/home_screen/home_binding.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/inspection_screen/inspection_binding.dart';
@@ -40,6 +42,7 @@ class AppPages {
     GetPage(name: BuildingsScreen.routes, page: () => BuildingsScreen(), binding: BuildingsBinding()),
     GetPage(name: PropertyDetailsScreen.routes, page: () => PropertyDetailsScreen(), binding: PropertyDetailsBinding()),
     GetPage(name: PropertyScreen.routes, page: () => const PropertyScreen(), binding: PropertyBinding()),
+    GetPage(name: CertificatesScreen.routes, page: () => const CertificatesScreen(), binding: CertificatesBinding()),
     GetPage(name: HomeScreen.routes, page: () => HomeScreen(), binding: HomeBinding()),
     GetPage(name: InspectionScreen.routes, page: () => const InspectionScreen(), binding: InspectionBinding()),
     GetPage(name: NoShowScreen.routes, page: () => const NoShowScreen(), binding: NoShowBinding()),

@@ -222,7 +222,7 @@ class PropertyDetailsController extends BaseController {
       item = Get.arguments;
       if (item!.status == InspectionStatus.completed.toString() ||
           item!.status == InspectionStatus.inCompleted.toString()) {
-        visibleBtn = true;
+        visibleBtn = false;
       } else {
         visibleBtn = false;
       }
@@ -298,16 +298,14 @@ class PropertyDetailsController extends BaseController {
   }
 
   Future<void> processNext() async {
-    Position latng = await utils.determinePosition();
-    userLocationLat = latng.latitude;
-    userLocationLng = latng.longitude;
+    Position latLng = await utils.determinePosition();
+    userLocationLat = latLng.latitude;
+    userLocationLng = latLng.longitude;
     kGooglePlex = CameraPosition(
       target: LatLng(userLocationLat!, userLocationLng!),
       zoom: 17,
     );
     update();
-
-    // printAction("test_permissionStatus: $permissionStatus");
   }
 
   late final Rx<DateTime> _selectedDate = DateTime.now().obs;
@@ -350,7 +348,7 @@ class PropertyDetailsController extends BaseController {
     update();
   }
 
-  CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
   // GoogleMapController? mapController;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
@@ -572,7 +570,7 @@ class PropertyDetailsController extends BaseController {
       );
       if (pickedFile != null) {
         imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
+        // visibleBtn = true;
         update();
       }
       update();
@@ -589,7 +587,7 @@ class PropertyDetailsController extends BaseController {
       );
       if (pickedFile != null) {
         imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
+        // visibleBtn = true;
         update();
       }
       update();

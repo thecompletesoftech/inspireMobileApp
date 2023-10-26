@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 
+import '../certificates_screen/certificates_screen.dart';
 import '../property_screen/property_screen.dart';
 import 'buildings_controller.dart';
 
@@ -165,8 +166,6 @@ class GridItemCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CommonButton(
-                  // icon: icLocationColor,
-                  // iconheigth: 20.px,
                   title: Strings.certificates,
                   color: controller.appColors.transparent,
                   textColor: controller.appColors.appColor,
@@ -174,7 +173,8 @@ class GridItemCardWidget extends StatelessWidget {
                   textSize: 16.px,
                   padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                   onTap: () {
-                    // controller.navigateToMap();
+                    Get.toNamed(CertificatesScreen.routes, arguments: [controller.item!, item])!
+                        .then((value) => controller.update());
                   }),
             ],
           ),

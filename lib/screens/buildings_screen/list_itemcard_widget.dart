@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/certificates_screen/certificates_screen.dart';
 
 import '../property_screen/property_screen.dart';
 import 'buildings_controller.dart';
@@ -44,7 +45,7 @@ class ListItemCardWidget extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: controller.item!.title,
+                                    text: item.title,
                                     style: MyTextStyle(
                                       textSize: 20.px,
                                       textWeight: FontWeight.w400,
@@ -59,7 +60,7 @@ class ListItemCardWidget extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: MyTextView(
-                                    item.title,
+                                    controller.item!.title,
                                     textStyleNew: MyTextStyle(
                                       textSize: 20.px,
                                       textWeight: FontWeight.w400,
@@ -193,8 +194,6 @@ class ListItemCardWidget extends StatelessWidget {
                 Row(
                   children: [
                     CommonButton(
-                        // icon: icLocationColor,
-                        // iconheigth: 20.px,
                         title: Strings.certificates,
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         color: controller.appColors.transparent,
@@ -202,7 +201,8 @@ class ListItemCardWidget extends StatelessWidget {
                         textWeight: FontWeight.w500,
                         textSize: 16.px,
                         onTap: () {
-                          controller.navigateToMap();
+                          Get.toNamed(CertificatesScreen.routes, arguments: [controller.item!, item])!
+                              .then((value) => controller.update());
                         }).paddingOnly(right: 16.px),
                     CommonButton(
                         border: Border.all(color: controller.appColors.border, width: 2),
