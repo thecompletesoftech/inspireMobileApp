@@ -26,7 +26,7 @@ class Strings {
   static const String completed = "Completed";
   static const String inComplete = "Incomplete";
   static const String scheduled = "Scheduled";
-  static const String annualInspection = "Annual Inspection";
+  static const String annualInspection = "In Sample";
   static const String inSample = "In Sample";
   static const String disconnectedElectric = "Disconnected Electric";
   static const String disconnectedGas = "Disconnected Gas";
@@ -35,16 +35,18 @@ class Strings {
   static const String annual = "Annual";
   static const String tenant = "Re-Inspection";
   static const String title = "2113 Kendall Street";
-  static const String locationAddress = "South Bend, IN";
   static const String location = "Location";
-  static const String phone = "Tel: +11567981686";
+  static const String phone = "Tel: 5743861818";
   static const String backToProperties = "Back to Properties";
+  static const String backToBuildings = "Back to Buildings";
   static const String inspectionDetails = "Inspection Details";
   static const String propertyDetails = "Property Details";
   static const String buildings = "Buildings";
   static const String completeInspection = "Complete Inspection";
   static const String mapRoute = "Map Route";
   static const String certificates = "Certificates";
+  static const String deficienciesFound = "Deficiencies Found";
+  static const String noDeficienciesFound = "No deficiencies found";
   static const String boilerCertificate = "Boiler Certificate";
   static const String elevatorCertificate = "Elevator Certificate";
   static const String fireAlarmInspectionReport = "Fire Alarm Inspection Report";
@@ -69,7 +71,7 @@ class Strings {
   static const String escort = "Escort";
   static const String escortName = "Escort name";
   static const String escortNameHint = "Add the name of the escort person";
-  static const String escortEmailAddresss = "Escort Email Addresss";
+  static const String escortEmailAddresss = "Escort Email Address";
   static const String inspectorNotes = "Inspector Notes";
   static const String reasonUninspectable = "Reason Uninspectable";
   static const String uninspectable = "Uninspectable";
@@ -101,7 +103,6 @@ class Strings {
   static const String signatures = "Signatures";
   static const String editInspection = "Edit Inspection";
   static const String sectionCompleted = "Section Completed";
-  static const String deficienciesFound = "Deficiencies Found";
   static const String tenantSignatures = "Tenant Signature";
   static const String ownerSignatures = "Owner Signature";
   static const String unit = "Unit";

@@ -6,92 +6,56 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
-import '../main_screen/main_controller.dart';
+import '../auth/signing_screen/signing_screen.dart';
+
+enum PropertyStatus { all, completed, inCompleted, scheduled }
 
 class PropertyController extends BaseController {
-  /// ---- Get Inspection APi ----------->>>
-  // getHome({var lat, lng}) async {
-  //   FormData formData = FormData.fromMap({
-  //     'user_id': getStorageData.readObject(getStorageData.userId),
-  //     'curLat': lat ?? userLocationLat!,
-  //     'curLng': lng ?? userLocationLng!,
-  //   });
-  //   if (filterBool.value && categorySelect.value != -1) {
-  //     formData.fields.add(MapEntry(
-  //         "cat_ids", categoryList[categorySelect.value].categories!.id!));
-  //   }
-  //   final data = await APIFunction().apiCall(
-  //     context: Get.context!,
-  //     apiName: Constants.getHome,
-  //     params: formData,
-  //     token: getStorageData.readObject(getStorageData.token),
-  //   );
-  //
-  //   HomeModel model = HomeModel.fromJson(data);
-  //   if (model.responseCode == 1) {
-  //     if (model.data!.isNotEmpty) {
-  //       homeModel = model.data!;
-  //
-  //       update();
-  //     } else {}
-  //     markerClass(lat: lat, lng: lng);
-  //
-  //     // utils.showSnackBar(context: Get.context!, message: model.responseMsg!,isOk: true);
-  //
-  //     update();
-  //   } else if (model.responseCode == 0) {
-  //     utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-  //   }
-  // }
-
-  RxCommonModel? item;
-  RxCommonModel? item1;
-  RxString imageFile = "".obs;
-  bool visibleBtn = false;
-  bool change = true;
-  final commentController = TextEditingController();
-  final dateController = TextEditingController(text: "mm/dd/yyyy");
-
-  List itemCount = [RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")];
-
-  final date1Controller = TextEditingController();
-
-  bool tenantSign = false;
-  bool ownerSign = false;
-  GlobalKey<SfSignaturePadState> tenantSignPadKey = GlobalKey();
-  GlobalKey<SfSignaturePadState> ownerSignPadKey = GlobalKey();
-
-  ScreenshotController tenantSignController = ScreenshotController();
-  ScreenshotController ownerSignController = ScreenshotController();
-
-  var dataList = [
+  var searchController = TextEditingController();
+  int? currentSelection = 0;
+  PropertyStatus status = PropertyStatus.all;
+  bool change = false;
+  int currentIndex = 1;
+  RxList<RxCommonModel> dataList = [
     RxCommonModel(
-      title: "D1. Cabinets are missing",
-      status: "true",
-      image: ImagePath.kitchen,
-      imgId: ImagePath.cabinets,
-    ),
+        id: 1,
+        title: "Grand Avenue",
+        subtitle: "Housing Authority of South Bend",
+        image: ImagePath.pic1,
+        imgId: ImagePath.media1,
+        status: PropertyStatus.scheduled.toString(),
+        check: false),
     RxCommonModel(
-      title: "D3. Refrigerator is missing",
-      image: ImagePath.kitchen,
-      imgId: ImagePath.bedroom,
-      status: "false",
-    ),
-  ];
-  String dropDownValue = "Roof Access Indicator*";
-  List<String> itemList = ["Flat and Accessible"];
-  final switcheleController = ValueNotifier<bool>(false);
-  final switchgasController = ValueNotifier<bool>(false);
-  final switchwatController = ValueNotifier<bool>(false);
+        id: 2,
+        title: "Community Buildings",
+        subtitle: "Housing Authority of South Bend",
+        image: ImagePath.pic2,
+        imgId: ImagePath.media2,
+        status: PropertyStatus.scheduled.toString(),
+        check: false),
+    RxCommonModel(
+        id: 3,
+        title: "Park Manor",
+        subtitle: "Housing Authority of South Bend",
+        image: ImagePath.pic3,
+        imgId: ImagePath.media3,
+        status: PropertyStatus.scheduled.toString(),
+        check: false),
+    RxCommonModel(
+        id: 4,
+        title: "Wentworth",
+        subtitle: "Housing Authority of South Bend",
+        image: ImagePath.pic1,
+        imgId: ImagePath.media1,
+        status: PropertyStatus.scheduled.toString(),
+        check: false),
+  ].obs;
+  var searchList = [].obs;
+
   RxList<RxCommonModel> mapList = [
     RxCommonModel(
         id: 1,
@@ -169,68 +133,36 @@ class PropertyController extends BaseController {
   double? userLocationLng;
 
   CameraPosition kGooglePlex = const CameraPosition(
-    target: LatLng(37.42796133580664, 122.085749655962),
+    target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 17,
   );
-  SpeechToText speechToText = SpeechToText();
-  var isListening = false.obs;
-  var speechText = "".obs;
+  final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
 
-  void listen() async {
-    var microphoneStatus = await Permission.microphone.status;
-    var storageStatus = await Permission.storage.status;
-    if (!microphoneStatus.isGranted) await Permission.microphone.request();
-    if (!storageStatus.isGranted) await Permission.storage.request();
-    if (await Permission.microphone.isGranted) {
-      if (!isListening.value) {
-        bool available = await speechToText.initialize(
-          onStatus: (val) {
-            printAction("Permission onStatus $val");
-            if (val == "done") {
-              isListening.value = false;
-              speechToText.stop();
-              update();
-            }
-          },
-          onError: (val) {
-            printAction("Permission onError $val");
-          },
-        );
-        if (available) {
-          isListening.value = true;
-          update();
-
-          speechToText.listen(onResult: (val) {
-            commentController.text = val.recognizedWords;
-            update();
-          });
-        }
-      } else {
-        isListening.value = false;
-        speechToText.stop();
-        update();
-      }
+  void actionPopUpItemSelected(int value) {
+    // _scaffoldkey.currentState.hideCurrentSnackBar();
+    ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
+    String message;
+    if (value == 0) {
+      message = 'You selected ${Strings.editProfile}';
+    } else if (value == 1) {
+      message = 'You selected ${Strings.inspectionHistory}';
+    } else if (value == 2) {
+      message = 'You selected ${Strings.nSPIREStandards}';
+    } else if (value == 3) {
+      message = 'You selected ${Strings.logOut}';
+      Get.offAllNamed(SigningScreen.routes);
     } else {
-      printAction("Permission Denied");
+      message = 'Not implemented';
     }
+    final snackBar = SnackBar(content: Text(message));
+    // _scaffoldkey.currentState.showSnackBar(snackBar);
+    ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
   @override
-  void onInit() {
-    if (Get.arguments != null) {
-      item1 = Get.arguments[0];
-      item = Get.arguments[1];
-      if (item!.status == InspectionStatus.completed.toString() ||
-          item!.status == InspectionStatus.inCompleted.toString()) {
-        visibleBtn = true;
-      } else {
-        visibleBtn = false;
-      }
-      update();
-    }
+  onInit() {
     checkPermission();
-
-    // TODO: implement onInit
+    searchItem("");
     super.onInit();
   }
 
@@ -255,15 +187,14 @@ class PropertyController extends BaseController {
         isEnableService = await isLocationPermission(isDoRequest: true);
         printAction("isEnableService: $isEnableService");
 
+        if (!isEnableService) {
+          await Geolocator.requestPermission();
+          // AppSettings.openLocationSettings();
+        }
+
         if (status.isGranted && isEnableService) {
           printAction('Got permission and service enabled');
           processNext();
-        } else {
-          if (!isEnableService) {
-            await Geolocator.requestPermission();
-            // AppSettings.openLocationSettings();
-          }
-          printAction('have not got permission and service disabled');
         }
       } else {
         processNext();
@@ -278,12 +209,6 @@ class PropertyController extends BaseController {
 
     bool isEnableService = await locationPermission();
     printAction("isEnableService: $isEnableService");
-
-    if (isEnableService) {
-      if (status.isGranted) {
-        processNext();
-      }
-    }
     return status;
   }
 
@@ -292,76 +217,64 @@ class PropertyController extends BaseController {
     bool isEnableService1 = await location.serviceEnabled();
     if (isDoRequest && !isEnableService1) {
       printAction('test_current_location: isEnableService1 $isEnableService1');
+
       isEnableService1 = await location.requestService();
     }
     return isEnableService1;
   }
 
   Future<void> processNext() async {
-    Position latng = await utils.determinePosition();
-    userLocationLat = latng.latitude;
-    userLocationLng = latng.longitude;
+    Position latLng = await utils.determinePosition();
+    printAction("position----lat->>${latLng.latitude}");
+    printAction("position----lng--->>${latLng.longitude}");
+    userLocationLat = latLng.latitude;
+    userLocationLng = latLng.longitude;
     kGooglePlex = CameraPosition(
       target: LatLng(userLocationLat!, userLocationLng!),
       zoom: 17,
     );
     update();
-
-    // printAction("test_permissionStatus: $permissionStatus");
   }
 
-  late final Rx<DateTime> _selectedDate = DateTime.now().obs;
-  var formattedDate = ''.obs;
-
-  Rx<DateTime> get selectedDate => _selectedDate;
-
-  void selectDate() async {
-    final DateTime? pickedDate = await showDatePicker(
-      initialDate: _selectedDate.value,
-      firstDate: DateTime(1985),
-      lastDate: DateTime.now(),
-      context: Get.context!,
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
-    if (pickedDate != null && pickedDate != selectedDate.value) {
-      selectedDate.value = pickedDate;
-      var dateFormat = DateFormat("MM/dd/yyyy").format(selectedDate.value);
-      formattedDate.value = dateFormat;
-      dateController.text = dateFormat;
+  searchItem(str) {
+    searchList.clear();
+    if (utils.isValidationEmpty(str)) {
+      searchList.addAll(dataList);
+      update();
+    } else {
+      for (int i = 0; i < dataList.length; i++) {
+        if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase())) {
+          searchList.add(dataList[i]);
+          update();
+        }
+      }
     }
-    update();
+    printAction(searchList.length.toString());
   }
 
-  void selectDate1() async {
-    final DateTime? pickedDate = await showDatePicker(
-      initialDate: _selectedDate.value,
-      firstDate: DateTime(1985),
-      lastDate: DateTime.now(),
-      context: Get.context!,
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
-
-    if (pickedDate != null && pickedDate != selectedDate.value) {
-      selectedDate.value = pickedDate;
-      var dateFormat = DateFormat("MM/dd/yyyy").format(selectedDate.value);
-      formattedDate.value = dateFormat;
-      date1Controller.text = dateFormat;
+  searchTypeItem() {
+    searchList.clear();
+    if (status.toString() == PropertyStatus.all.toString()) {
+      searchList.addAll(dataList);
+    } else {
+      for (int i = 0; i < dataList.length; i++) {
+        if (dataList[i].status.toString() == status.toString()) {
+          searchList.add(dataList[i]);
+        }
+      }
     }
-    update();
   }
 
-  CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
   // GoogleMapController? mapController;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
-  List<LatLng> polylineWayPoint = [];
   PolylinePoints polylinePoints = PolylinePoints();
 
   void onMapCreated(GoogleMapController controller) async {
     // mapController = controller;
     _customInfoWindowController.googleMapController = controller;
-
     setMarker();
     update();
   }
@@ -370,10 +283,10 @@ class PropertyController extends BaseController {
     _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(target: LatLng(userLocationLat!, userLocationLng!), zoom: 17),
     ));
-
     mapList.forEach((element) {
       _addMarker(element);
     });
+
     _getPolyline();
     update();
   }
@@ -384,7 +297,6 @@ class PropertyController extends BaseController {
         markerId: markerId,
         icon: await utils.convertNetworkImageToCustomBitmapDescriptor("${element.id}",
             imageUrl: element.image!, titleBackgroundColor: appColors.appColor),
-        // icon: BitmapDescriptor.fromBytes(await utils.getBytesFromAsset(element.image!, 70)),
         position: LatLng(element.lat!, element.lng!),
         onTap: () {
           _customInfoWindowController.addInfoWindow!(
@@ -515,11 +427,11 @@ class PropertyController extends BaseController {
                 itemBuilder: (context, index) {
                   final item = mapList[index];
                   return ListTile(
+                    isThreeLine: true,
                     onTap: () {
                       _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
                           CameraPosition(target: LatLng(item.lat!, item.lng!), zoom: 17)));
                     },
-                    isThreeLine: true,
                     leading: CircleAvatar(
                       backgroundColor: appColors.appColor.withOpacity(0.8),
                       child: MyTextView(
@@ -574,9 +486,9 @@ class PropertyController extends BaseController {
                           width: 10.px,
                         ),
                         SvgPicture.string(
-                          icTimeColor,
-                          height: 24.px,
+                          icTimeColor ?? "",
                           width: 24.px,
+                          height: 24.px,
                         ),
                         // Image.asset(
                         //   ImagePath.icTimeColor,
@@ -601,169 +513,38 @@ class PropertyController extends BaseController {
     );
   }
 
-  itemCardWidget() {}
-
-  dialogInspectionInCompleted() {
-    alertActionDialogApp(
-        context: Get.context!,
-        borderRadius: 28.px,
-        widget: Column(
-          children: [
-            Container(
-              width: 312.px,
-              // height: 184.px,
-              padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
-                  MyTextView(
-                    Strings.inspectionIncomplete,
-                    textStyleNew: MyTextStyle(
-                      textColor: appColors.textBlack,
-                      textSize: 24.px,
-                      textFamily: fontFamilyRegular,
-                      textWeight: FontWeight.w400,
-                    ),
-                  ).paddingSymmetric(vertical: 16.px),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
-                            style: MyTextStyle(
-                              textColor: appColors.lightText,
-                              textSize: 16.px,
-                              textFamily: fontFamilyRegular,
-                              textWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 312.px,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CommonButton(
-                          title: 'Stay',
-                          textColor: appColors.appColor,
-                          color: appColors.transparent,
-                          textSize: 16.px,
-                          textFamily: fontFamilyRegular,
-                          textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
-                          radius: 100.px,
-                          onTap: () {
-                            Get.back();
-                          }).paddingOnly(right: 8.px),
-                      CommonButton(
-                          title: 'Go back',
-                          textColor: appColors.white,
-                          color: appColors.appColor,
-                          textSize: 16.px,
-                          textFamily: fontFamilyRegular,
-                          textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
-                          radius: 100.px,
-                          onTap: () {
-                            Get.back();
-                          }),
-                    ],
-                  ).paddingOnly(
-                    top: 24.px,
-                    left: 8.px,
-                    right: 24.px,
-                    bottom: 24.px,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ));
-  }
-
-  getFromCamera({int? index}) async {
-    bool checkPermission = await utils.checkPermissionOpenCamera();
-
-    if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
-      }
-      update();
-    }
-  }
-
-  getFromGallery({int? index}) async {
-    bool checkPermission = await utils.checkPermissionOpenCamera();
-    if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
-      }
-      update();
-    }
-  }
-}
-
-class TrianglePainter extends CustomPainter {
-  final Color strokeColor;
-  final PaintingStyle paintingStyle;
-  final double strokeWidth;
-
-  TrianglePainter({this.strokeColor = Colors.black, this.strokeWidth = 3, this.paintingStyle = PaintingStyle.stroke});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = strokeColor
-      ..strokeWidth = strokeWidth
-      ..style = paintingStyle;
-
-    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
-  }
-
-  Path getTrianglePath(double x, double y) {
-    return Path()
-      ..moveTo(0, y)
-      ..lineTo(x / 2, 0)
-      ..lineTo(x, y)
-      ..lineTo(0, y);
-  }
-
-  @override
-  bool shouldRepaint(TrianglePainter oldDelegate) {
-    return oldDelegate.strokeColor != strokeColor ||
-        oldDelegate.paintingStyle != paintingStyle ||
-        oldDelegate.strokeWidth != strokeWidth;
-  }
+  /// ---- Get Home APi ----------->>>
+// getHome({var lat, lng}) async {
+//   FormData formData = FormData.fromMap({
+//     'user_id': getStorageData.readObject(getStorageData.userId),
+//     'curLat': lat ?? userLocationLat!,
+//     'curLng': lng ?? userLocationLng!,
+//   });
+//   if (filterBool.value && categorySelect.value != -1) {
+//     formData.fields.add(MapEntry(
+//         "cat_ids", categoryList[categorySelect.value].categories!.id!));
+//   }
+//   final data = await APIFunction().apiCall(
+//     context: Get.context!,
+//     apiName: Constants.getHome,
+//     params: formData,
+//     token: getStorageData.readObject(getStorageData.token),
+//   );
+//
+//   HomeModel model = HomeModel.fromJson(data);
+//   if (model.responseCode == 1) {
+//     if (model.data!.isNotEmpty) {
+//       homeModel = model.data!;
+//
+//       update();
+//     } else {}
+//     markerClass(lat: lat, lng: lng);
+//
+//     // utils.showSnackBar(context: Get.context!, message: model.responseMsg!,isOk: true);
+//
+//     update();
+//   } else if (model.responseCode == 0) {
+//     utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+//   }
+// }
 }

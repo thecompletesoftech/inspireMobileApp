@@ -24,10 +24,10 @@ class CommonButton extends StatelessWidget {
     this.isSmall = true,
     this.isBig = false,
     this.width,
+    this.height,
     required this.onTap,
     this.color,
     this.border,
-    this.height,
     this.radius,
     this.textColor,
     this.textFamily,
@@ -43,6 +43,8 @@ class CommonButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: width,
+        height: height,
         padding: padding ??
             EdgeInsets.symmetric(
               horizontal: 16.px,

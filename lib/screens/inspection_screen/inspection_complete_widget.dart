@@ -231,11 +231,11 @@ class InspectionCompleteWidget extends StatelessWidget {
                 textSize: 16.px,
                 padding: EdgeInsets.symmetric(
                   horizontal: 24.px,
-                  vertical: 12.px,
+                  vertical: 10.px,
                 ),
                 onTap: () {
                   if (controller.visibleBtn) {
-                    Get.toNamed(AresScreen.routes, arguments: controller.item);
+                    Get.toNamed(AresScreen.routes, arguments: [controller.item1, controller.item]);
                   }
                 }),
           ],

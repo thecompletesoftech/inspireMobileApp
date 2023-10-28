@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 
 import '../../commons/all.dart';
-import '../main_screen/main_screen.dart';
+import '../property_screen/property_screen.dart';
 
 class SplashController extends BaseController {
   startTime() async {
@@ -25,7 +25,7 @@ class SplashController extends BaseController {
       // } else {
       //   Get.offAllNamed(ChooseLanguageScreen.routes);
       // }
-      Get.offAllNamed(MainScreen.routes);
+      Get.offAllNamed(PropertyScreen.routes);
     } else {
       Get.offAllNamed(SigningScreen.routes);
     }

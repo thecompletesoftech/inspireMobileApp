@@ -3,12 +3,12 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_screen.dart';
 
 import '../propertydetails_screen/propertydetails_screen.dart';
-import 'main_controller.dart';
+import 'property_controller.dart';
 
 class ListItemCardWidget extends StatelessWidget {
   final RxCommonModel item;
   final int index;
-  final MainController controller = Get.find();
+  final PropertyController controller = Get.find();
 
   ListItemCardWidget({super.key, required this.item, required this.index});
 
@@ -16,7 +16,6 @@ class ListItemCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadowContainer(
         radius: 8.px,
-        height: 170.px,
         padding: EdgeInsets.zero,
         child: Column(
           children: [
@@ -67,8 +66,7 @@ class ListItemCardWidget extends StatelessWidget {
                                         textSize: 14.px,
                                         isSmall: false,
                                         isBig: true,
-                                        radius: 24.px,
-                                        padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 8.px),
+                                        radius: 100.px,
                                         color: controller.appColors.textField,
                                         textWeight: FontWeight.w500,
                                         textColor: item.check == false
@@ -89,8 +87,8 @@ class ListItemCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (item.status == InspectionStatus.completed.toString() ||
-                          item.status == InspectionStatus.inCompleted.toString())
+                      if (item.status == PropertyStatus.completed.toString() ||
+                          item.status == PropertyStatus.inCompleted.toString())
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -108,8 +106,7 @@ class ListItemCardWidget extends StatelessWidget {
                                   textSize: 14.px,
                                   isSmall: false,
                                   isBig: true,
-                                  radius: 24.px,
-                                  padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 8.px),
+                                  radius: 100.px,
                                   color: controller.appColors.textField,
                                   textWeight: FontWeight.w500,
                                   textColor: item.check == false
@@ -176,7 +173,10 @@ class ListItemCardWidget extends StatelessWidget {
                   children: [
                     CommonButton(
                         title: Strings.propertyDetails,
-                        padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.px,
+                          vertical: 10.px,
+                        ),
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w500,
@@ -194,6 +194,7 @@ class ListItemCardWidget extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(BuildingsScreen.routes, arguments: item)!.then((value) => controller.update());
                         },
+                        padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         textWeight: FontWeight.w500,
                         textSize: 16.px,
                         maxLinesNew: 2,

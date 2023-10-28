@@ -4,18 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../languages/language.dart';
-import '../kitchen_screen/kitchen_controller.dart';
+import '../buildings_screen/buildings_controller.dart';
 
 enum CertificateStatus { No, Na }
 
-class CertificatesController extends BaseController {
+class CertificateController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
   // getHome({var lat, lng}) async {
   //   FormData formData = FormData.fromMap({
@@ -52,8 +49,7 @@ class CertificatesController extends BaseController {
   // }
 
   RxCommonModel? item;
-  RxCommonModel? item1;
-  String? itemTitle;
+  String? propertyTitle;
   bool visibleBtn = false;
   bool change = true;
   final searchController = TextEditingController();
@@ -71,84 +67,17 @@ class CertificatesController extends BaseController {
   var sendPaintImagesList = [];
   var sendSprinklerImagesList = [];
 
-  SpeechToText speechToText = SpeechToText();
-
-  var isListening = false.obs;
-  var speechText = "".obs;
-  void listen() async {
-    var microphoneStatus = await Permission.microphone.status;
-    var storageStatus = await Permission.storage.status;
-    if (!microphoneStatus.isGranted) await Permission.microphone.request();
-    if (!storageStatus.isGranted) await Permission.storage.request();
-    if (await Permission.microphone.isGranted) {
-      if (!isListening.value) {
-        bool available = await speechToText.initialize(
-          onStatus: (val) {
-            printAction("Permission onStatus $val");
-            if (val == "done") {
-              isListening.value = false;
-              speechToText.stop();
-              update();
-            }
-          },
-          onError: (val) {
-            printAction("Permission onError $val");
-          },
-        );
-        if (available) {
-          isListening.value = true;
-          update();
-
-          speechToText.listen(onResult: (val) {
-            commentController.text = val.recognizedWords;
-            update();
-          });
-        }
-      } else {
-        isListening.value = false;
-        speechToText.stop();
-        update();
-      }
-    } else {
-      printAction("Permission Denied");
-    }
-  }
-
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments[1];
-      item1 = Get.arguments[0];
-      if (Get.isRegistered<KitchenController>()) {
-        itemTitle = Get.find<KitchenController>().item1!.title!;
+      item = Get.arguments;
+      if (Get.isRegistered<BuildingsController>()) {
+        propertyTitle = Get.find<BuildingsController>().item!.title!;
       }
     }
     update();
     // TODO: implement onInit
     super.onInit();
-  }
-
-  final Rx<DateTime> _selectedDate = DateTime.now().obs;
-  Rx<DateTime> get selectedDate => _selectedDate;
-  void selectDate() async {
-    final DateTime? pickedDate = await showDatePicker(
-      initialDate: _selectedDate.value,
-      firstDate: DateTime(1985),
-      lastDate: DateTime.now(),
-      context: Get.context!,
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
-    if (pickedDate != null && pickedDate != selectedDate.value) {
-      selectedDate.value = pickedDate;
-      var date = DateFormat("MM/dd/yyyy").format(selectedDate.value);
-      dateController.text = date;
-      if (!utils.isValidationEmpty(commentController.text) && !utils.isValidationEmpty(dateController.text)) {
-        visibleBtn = true;
-      } else {
-        visibleBtn = false;
-      }
-    }
-    update();
   }
 
   imagePicker(int index) {
@@ -193,7 +122,6 @@ class CertificatesController extends BaseController {
                           SvgPicture.string(
                             icUpload,
                             height: 30,
-
                             // height: ScalingQuery(Get.context!).scale(0.2.px),
                           ),
                           MyTextView(
@@ -284,11 +212,8 @@ class CertificatesController extends BaseController {
             sendFireImagesList.add(file.path);
           } else if (index == 3) {
             sendPaintImagesList.add(file.path);
-          }
-          if (!utils.isValidationEmpty(commentController.text) && !utils.isValidationEmpty(dateController.text)) {
-            visibleBtn = true;
-          } else {
-            visibleBtn = false;
+          } else if (index == 4) {
+            sendSprinklerImagesList.add(file.path);
           }
           update();
           // utils.showToast(message: "Section Completed", context: Get.context!);
@@ -331,12 +256,7 @@ class CertificatesController extends BaseController {
           } else if (index == 3) {
             sendPaintImagesList.add(file.path);
           } else if (index == 4) {
-            sendPaintImagesList.add(file.path);
-          }
-          if (!utils.isValidationEmpty(commentController.text) && !utils.isValidationEmpty(dateController.text)) {
-            visibleBtn = true;
-          } else {
-            visibleBtn = false;
+            sendSprinklerImagesList.add(file.path);
           }
           update();
           // utils.showToast(message: "Section Completed", context: Get.context!);

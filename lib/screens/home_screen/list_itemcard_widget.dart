@@ -51,7 +51,7 @@ class ListItemCardWidget extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: Strings.locationAddress,
+                                    text: controller.item!.massage,
                                     style: MyTextStyle(
                                       textSize: 20.px,
                                       textWeight: FontWeight.w400,
@@ -82,7 +82,7 @@ class ListItemCardWidget extends StatelessWidget {
                                         textSize: 14.px,
                                         isSmall: false,
                                         isBig: true,
-                                        radius: 24.px,
+                                        radius: 100.px,
                                         padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 8.px),
                                         color: controller.appColors.textField,
                                         textWeight: FontWeight.w500,
@@ -131,8 +131,7 @@ class ListItemCardWidget extends StatelessWidget {
                                   textSize: 14.px,
                                   isSmall: false,
                                   isBig: true,
-                                  radius: 24.px,
-                                  padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 8.px),
+                                  radius: 100.px,
                                   color: controller.appColors.textField,
                                   textWeight: FontWeight.w500,
                                   textColor: item.check == false
@@ -220,7 +219,8 @@ class ListItemCardWidget extends StatelessWidget {
                                 ? Strings.inspectionDetails
                                 : "Details",
                         onTap: () {
-                          Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
+                          Get.toNamed(InspectionScreen.routes, arguments: [controller.item, item])!
+                              .then((value) => controller.update());
                         },
                         textWeight: FontWeight.w500,
                         textSize: 16.px,

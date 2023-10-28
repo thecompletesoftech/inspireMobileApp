@@ -25,16 +25,16 @@ class HomeController extends BaseController {
         id: 1,
         title: "Fernando Devries",
         subtitle: "Tenant",
-        massage: "2113 Kendall Street",
+        massage: "A-1",
         image: ImagePath.pic1,
         imgId: ImagePath.media1,
-        status: InspectionStatus.completed.toString(),
+        status: InspectionStatus.scheduled.toString(),
         check: false),
     RxCommonModel(
         id: 2,
         title: "Lori Bryson",
         subtitle: "Tenant",
-        massage: "2113 Martin",
+        massage: "A-2",
         image: ImagePath.pic2,
         imgId: ImagePath.media2,
         status: InspectionStatus.scheduled.toString(),
@@ -43,7 +43,7 @@ class HomeController extends BaseController {
         id: 3,
         title: "Lyle Koulfman",
         subtitle: "Tenant",
-        massage: "1243 John M. Street",
+        massage: "B-1",
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
@@ -52,7 +52,7 @@ class HomeController extends BaseController {
         id: 4,
         title: "Fernando Devries",
         subtitle: "Tenant",
-        massage: "2113 Kendall Street",
+        massage: "B-2",
         image: ImagePath.pic1,
         imgId: ImagePath.media1,
         status: InspectionStatus.scheduled.toString(),
@@ -61,7 +61,7 @@ class HomeController extends BaseController {
         id: 5,
         title: "Lori Bryson",
         subtitle: "Tenant",
-        massage: "2113 Martin",
+        massage: "C-1",
         image: ImagePath.pic2,
         imgId: ImagePath.media2,
         status: InspectionStatus.scheduled.toString(),
@@ -70,7 +70,7 @@ class HomeController extends BaseController {
         id: 6,
         title: "Lyle Koulfman",
         subtitle: "Tenant",
-        massage: "1243 John M. Street",
+        massage: "C-2",
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
@@ -79,7 +79,7 @@ class HomeController extends BaseController {
         id: 7,
         title: "Fernando Devries",
         subtitle: "Tenant",
-        massage: "2113 Kendall Street",
+        massage: "D-1",
         image: ImagePath.pic1,
         imgId: ImagePath.media1,
         status: InspectionStatus.scheduled.toString(),
@@ -88,7 +88,7 @@ class HomeController extends BaseController {
         id: 8,
         title: "Lori Bryson",
         subtitle: "Tenant",
-        massage: "2113 Martin",
+        massage: "D-2",
         image: ImagePath.pic2,
         imgId: ImagePath.media2,
         status: InspectionStatus.scheduled.toString(),
@@ -97,7 +97,7 @@ class HomeController extends BaseController {
         id: 9,
         title: "Lyle Koulfman",
         subtitle: "Tenant",
-        massage: "1243 John M. Street",
+        massage: "E-1",
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
@@ -106,7 +106,7 @@ class HomeController extends BaseController {
         id: 10,
         title: "Fernando Devries",
         subtitle: "Tenant",
-        massage: "2113 Kendall Street",
+        massage: "E-2",
         image: ImagePath.pic1,
         imgId: ImagePath.media1,
         status: InspectionStatus.scheduled.toString(),
@@ -115,7 +115,7 @@ class HomeController extends BaseController {
         id: 11,
         title: "Lori Bryson",
         subtitle: "Tenant",
-        massage: "2113 Martin",
+        massage: "F-1",
         image: ImagePath.pic2,
         imgId: ImagePath.media2,
         status: InspectionStatus.scheduled.toString(),
@@ -124,7 +124,7 @@ class HomeController extends BaseController {
         id: 12,
         title: "Lyle Koulfman",
         subtitle: "Tenant",
-        massage: "1243 John M. Street",
+        massage: "F-2",
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
@@ -132,6 +132,7 @@ class HomeController extends BaseController {
   ].obs;
   var searchList = [].obs;
 
+  RxCommonModel? item;
   RxList<RxCommonModel> mapList = [
     RxCommonModel(
         id: 1,
@@ -237,6 +238,10 @@ class HomeController extends BaseController {
 
   @override
   onInit() {
+    if (Get.arguments != null) {
+      item = Get.arguments;
+    }
+    update();
     checkPermission();
     searchItem("");
     super.onInit();

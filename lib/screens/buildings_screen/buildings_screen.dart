@@ -217,7 +217,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                             height: 44.px,
                             padding: EdgeInsets.symmetric(
                               horizontal: 24.px,
-                              vertical: 16.px,
+                              vertical: 10.px,
                             ),
                             textWeight: FontWeight.w500,
                             textSize: 16.px,
@@ -230,15 +230,15 @@ class BuildingsScreen extends GetView<BuildingsController> {
                               ? 0
                               : 0,
                       child: SizedBox(
-                        width: 20.px,
+                        width: 14.px,
                       ),
                     ),
                     Expanded(
                       flex: 0,
                       child: SizedBox(
-                        width: 360.px,
-                        height: 50.px,
-                        child: SegmentedButton<InspectionStatus>(
+                        width: 350.px,
+                        height: 44.px,
+                        child: SegmentedButton<BuildingStatus>(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
                               return states.contains(MaterialState.selected)
@@ -255,28 +255,28 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                   color: states.contains(MaterialState.selected) ? Colors.black : Colors.grey);
                             }),
                           ),
-                          segments: const <ButtonSegment<InspectionStatus>>[
-                            ButtonSegment<InspectionStatus>(
-                              value: InspectionStatus.all,
+                          segments: const <ButtonSegment<BuildingStatus>>[
+                            ButtonSegment<BuildingStatus>(
+                              value: BuildingStatus.all,
                               label: Text(
                                 Strings.all,
                               ),
                             ),
-                            ButtonSegment<InspectionStatus>(
-                              value: InspectionStatus.completed,
+                            ButtonSegment<BuildingStatus>(
+                              value: BuildingStatus.completed,
                               label: Text(
                                 Strings.completed,
                               ),
                             ),
-                            ButtonSegment<InspectionStatus>(
-                              value: InspectionStatus.scheduled,
+                            ButtonSegment<BuildingStatus>(
+                              value: BuildingStatus.scheduled,
                               label: Text(
                                 Strings.scheduled,
                               ),
                             ),
                           ],
-                          selected: <InspectionStatus>{controller.status},
-                          onSelectionChanged: (Set<InspectionStatus> newSelection) {
+                          selected: <BuildingStatus>{controller.status},
+                          onSelectionChanged: (Set<BuildingStatus> newSelection) {
                             controller.status = newSelection.first;
                             controller.searchTypeItem();
                             controller.update();
@@ -285,12 +285,13 @@ class BuildingsScreen extends GetView<BuildingsController> {
                       ),
                     ),
                     CommonIconButton(
-                      textColor: controller.appColors.lightText,
+                      textColor: controller.appColors.black,
                       title: controller.change ? "Grid View" : "List View",
                       onTap: () {
                         controller.change = !controller.change;
                         controller.update();
                       },
+                      height: 44.px,
                       padding: EdgeInsets.only(top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
                       iconheigth: 12.px,
                       textWeight: FontWeight.w500,
@@ -299,7 +300,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                       icon: controller.change ? icGrid : icList,
                     ).paddingOnly(left: 20.px),
                   ],
-                ).paddingOnly(left: 32.px, right: 32.px, bottom: 30.px),
+                ).paddingOnly(left: 32.px, right: 32.px, bottom: 24.px),
                 Row(
                   children: [
                     Text.rich(
@@ -327,30 +328,34 @@ class BuildingsScreen extends GetView<BuildingsController> {
                       ),
                     )
                   ],
-                ).paddingOnly(left: 32.px, bottom: 24.px),
+                ).paddingOnly(left: 24.px, top: 8.px, bottom: 24.px),
                 Expanded(
                   flex: 1,
                   child: controller.change
                       ? ListView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 14.px),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 32.px,
+                          ),
                           physics: const BouncingScrollPhysics(),
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
-                            return controller.status == InspectionStatus.all
+                            return controller.status == BuildingStatus.all
                                 ? ListItemCardWidget(item: item, index: index)
-                                : controller.status == InspectionStatus.completed
-                                    ? item.status == InspectionStatus.completed.toString()
+                                : controller.status == BuildingStatus.completed
+                                    ? item.status == BuildingStatus.completed.toString()
                                         ? ListItemCardWidget(item: item, index: index)
                                         : const SizedBox()
-                                    : item.status != InspectionStatus.completed.toString()
+                                    : item.status != BuildingStatus.completed.toString()
                                         ? ListItemCardWidget(item: item, index: index)
                                         : const SizedBox();
-                          })
+                          }).paddingOnly(bottom: 24.px)
                       : GridView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.only(left: 32.px, right: 32.px, top: 24.0),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 32.px,
+                          ),
                           physics: const BouncingScrollPhysics(),
                           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: Utils.isTabletScreen1(context) ? 400 : 450,
@@ -359,9 +364,9 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.53.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.55.px) //.....
                                   : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.50.px) //pro mini
+                                      ? ScalingQuery(context).verticalScale(0.52.px) //pro mini
                                       : Utils.isTabletScreen(context)
                                           ? ScalingQuery(context).verticalScale(0.51.px) //.....1
                                           : Utils.isMediumScreen(context)
@@ -372,16 +377,16 @@ class BuildingsScreen extends GetView<BuildingsController> {
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
-                            return controller.status == InspectionStatus.all
+                            return controller.status == BuildingStatus.all
                                 ? GridItemCardWidget(item: item, index: index)
-                                : controller.status == InspectionStatus.completed
-                                    ? item.status == InspectionStatus.completed.toString()
+                                : controller.status == BuildingStatus.completed
+                                    ? item.status == BuildingStatus.completed.toString()
                                         ? GridItemCardWidget(item: item, index: index)
                                         : const SizedBox()
-                                    : item.status != InspectionStatus.completed.toString()
+                                    : item.status != BuildingStatus.completed.toString()
                                         ? GridItemCardWidget(item: item, index: index)
                                         : const SizedBox();
-                          }),
+                          }).paddingOnly(bottom: 24.px),
                 )
               ],
             ),

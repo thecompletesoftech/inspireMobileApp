@@ -1,9 +1,9 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/property_screen/property_controller.dart';
+import 'package:public_housing/screens/buildingdetails_screen/buildingdetails_controller.dart';
 
 class GeneralNotesCardWidget extends StatelessWidget {
   final RxCommonModel item;
-  final PropertyController controller = Get.find();
+  final BuildingDetailsController controller = Get.find();
   GeneralNotesCardWidget({super.key, required this.item});
 
   @override

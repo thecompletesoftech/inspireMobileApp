@@ -7,10 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:public_housing/commons/all.dart';
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:public_housing/commons/all.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -54,6 +54,7 @@ class InspectionController extends BaseController {
   // }
 
   RxCommonModel? item;
+  RxCommonModel? item1;
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
@@ -215,7 +216,8 @@ class InspectionController extends BaseController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments;
+      item = Get.arguments[1];
+      item1 = Get.arguments[0];
       if (item!.status == InspectionStatus.completed.toString() ||
           item!.status == InspectionStatus.inCompleted.toString()) {
         visibleBtn = true;
@@ -223,9 +225,8 @@ class InspectionController extends BaseController {
         visibleBtn = false;
       }
     }
-    checkPermission();
-
     update();
+    checkPermission();
     // TODO: implement onInit
     super.onInit();
   }

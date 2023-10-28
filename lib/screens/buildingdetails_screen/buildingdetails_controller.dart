@@ -7,9 +7,9 @@ import 'package:screenshot/screenshot.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
-import '../property_screen/property_controller.dart';
+import '../buildings_screen/buildings_controller.dart';
 
-class PropertyDetailsController extends BaseController {
+class BuildingDetailsController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
   // getHome({var lat, lng}) async {
   //   FormData formData = FormData.fromMap({
@@ -46,11 +46,13 @@ class PropertyDetailsController extends BaseController {
   // }
 
   RxCommonModel? item;
+  String? propertyTitle;
+
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
   final commentController = TextEditingController();
-  final dateController = TextEditingController();
+  final dateController = TextEditingController(text: "mm/dd/yyyy");
 
   List itemCount = [RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")];
 
@@ -210,9 +212,12 @@ class PropertyDetailsController extends BaseController {
   void onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
-      if (item!.status == PropertyStatus.completed.toString() ||
-          item!.status == PropertyStatus.inCompleted.toString()) {
-        visibleBtn = false;
+      if (Get.isRegistered<BuildingsController>()) {
+        propertyTitle = Get.find<BuildingsController>().item!.title!;
+      }
+      if (item!.status == BuildingStatus.completed.toString() ||
+          item!.status == BuildingStatus.inCompleted.toString()) {
+        visibleBtn = true;
       } else {
         visibleBtn = false;
       }
@@ -330,7 +335,7 @@ class PropertyDetailsController extends BaseController {
       );
       if (pickedFile != null) {
         imageFile = (pickedFile.path.obs);
-        // visibleBtn = true;
+        visibleBtn = true;
         update();
       }
       update();
@@ -347,10 +352,43 @@ class PropertyDetailsController extends BaseController {
       );
       if (pickedFile != null) {
         imageFile = (pickedFile.path.obs);
-        // visibleBtn = true;
+        visibleBtn = true;
         update();
       }
       update();
     }
+  }
+}
+
+class TrianglePainter extends CustomPainter {
+  final Color strokeColor;
+  final PaintingStyle paintingStyle;
+  final double strokeWidth;
+
+  TrianglePainter({this.strokeColor = Colors.black, this.strokeWidth = 3, this.paintingStyle = PaintingStyle.stroke});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = strokeColor
+      ..strokeWidth = strokeWidth
+      ..style = paintingStyle;
+
+    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
+  }
+
+  Path getTrianglePath(double x, double y) {
+    return Path()
+      ..moveTo(0, y)
+      ..lineTo(x / 2, 0)
+      ..lineTo(x, y)
+      ..lineTo(0, y);
+  }
+
+  @override
+  bool shouldRepaint(TrianglePainter oldDelegate) {
+    return oldDelegate.strokeColor != strokeColor ||
+        oldDelegate.paintingStyle != paintingStyle ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }

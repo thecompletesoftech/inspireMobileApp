@@ -6,7 +6,6 @@ import '../../commons/all.dart';
 import '../../screens/inspection_screen/inspection_controller.dart';
 import '../areas_screen/areas_screen.dart';
 import '../home_screen/home_controller.dart';
-import '../noshow_screen/noshow_screen.dart';
 import '../text_message_screen/text_message_screen.dart';
 import 'generalNotesCard_widget.dart';
 import 'inspection_complete_widget.dart';
@@ -59,7 +58,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                     controller.imageFile.value = "";
                                     controller.update();
                                   },
-                                  radius: 25.px,
+                                  radius: 100.px,
                                 ),
                               ),
                             ],
@@ -94,7 +93,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                         horizontal: 24.px,
                                         vertical: 12.0,
                                       ),
-                                      radius: 25.px,
+                                      radius: 100.px,
                                     ),
                                   ),
                                 ],
@@ -218,7 +217,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 Utils.isTabletScreen(context)
                                     ? Flexible(
                                         child: MyTextView(
-                                          "${controller.item!.massage}, ${Strings.locationAddress}",
+                                          "${controller.item!.massage}, ${controller.item1!.massage}",
                                           textStyleNew: MyTextStyle(
                                             textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                                             textWeight: FontWeight.w600,
@@ -301,7 +300,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 ? Container()
                                 : Flexible(
                                     child: MyTextView(
-                                      "${controller.item!.massage}, ${Strings.locationAddress}",
+                                      "${controller.item!.massage}, ${controller.item1!.massage}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
@@ -661,31 +660,33 @@ class InspectionScreen extends GetView<InspectionController> {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CommonButton(
-                                      title: Strings.noShow,
-                                      textColor: controller.appColors.appColor,
-                                      color: controller.appColors.transparent,
-                                      radius: 35.px,
-                                      height: 55.px,
-                                      textWeight: FontWeight.w600,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.px,
-                                        vertical: 12.px,
-                                      ),
-                                      textSize: 16.px,
-                                      border: Border.all(color: controller.appColors.border, width: 2),
-                                      onTap: () {
-                                        Get.toNamed(NoShowScreen.routes, arguments: controller.item)!.then((value) {
-                                          if (value != null) {
-                                            controller.item!.status = InspectionStatus.inCompleted.toString();
-                                            controller.visibleBtn = true;
-                                            controller.update();
-                                          }
-                                        });
-                                      }),
-                                  SizedBox(
-                                    width: 24.px,
-                                  ),
+                                  // CommonButton(
+                                  //     title: Strings.noShow,
+                                  //     textColor: controller.appColors.appColor,
+                                  //     color: controller.appColors.transparent,
+                                  //     radius: 35.px,
+                                  //     height: 55.px,
+                                  //     textWeight: FontWeight.w600,
+                                  //     padding: EdgeInsets.symmetric(
+                                  //       horizontal: 16.px,
+                                  //       vertical: 12.px,
+                                  //     ),
+                                  //     textSize: 16.px,
+                                  //     border: Border.all(color: controller.appColors.border, width: 2),
+                                  //     onTap: () {
+                                  //       Get.toNamed(NoShowScreen.routes,
+                                  //               arguments: [controller.item1, controller.item])!
+                                  //           .then((value) {
+                                  //         if (value != null) {
+                                  //           controller.item!.status = InspectionStatus.inCompleted.toString();
+                                  //           controller.visibleBtn = true;
+                                  //           controller.update();
+                                  //         }
+                                  //       });
+                                  //     }),
+                                  // SizedBox(
+                                  //   width: 24.px,
+                                  // ),
                                   CommonButton(
                                       title: controller.item!.status!.contains("inCompleted")
                                           ? Strings.resumeInspection
@@ -701,12 +702,12 @@ class InspectionScreen extends GetView<InspectionController> {
                                       textSize: 16.px,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 24.px,
-                                        vertical: 12.px,
+                                        vertical: 10.px,
                                       ),
-                                      height: 55.px,
                                       onTap: () {
                                         if (controller.visibleBtn) {
-                                          Get.toNamed(AresScreen.routes, arguments: controller.item);
+                                          Get.toNamed(AresScreen.routes,
+                                              arguments: [controller.item1, controller.item]);
                                         }
                                       }),
                                 ],

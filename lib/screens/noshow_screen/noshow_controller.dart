@@ -42,6 +42,7 @@ class NoShowController extends BaseController {
   //   }
   // }
   RxCommonModel? item;
+  RxCommonModel? item1;
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
@@ -51,7 +52,8 @@ class NoShowController extends BaseController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments;
+      item = Get.arguments[1];
+      item1 = Get.arguments[0];
       if (item!.status == InspectionStatus.completed.toString()) {
         visibleBtn = true;
       } else {

@@ -187,7 +187,7 @@ class NoShowScreen extends GetView<NoShowController> {
                               child: MyTextView(
                                 controller.item == null
                                     ? ""
-                                    : "${controller.item!.massage}, ${Strings.locationAddress} - ${controller.item!.title}",
+                                    : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
                                 textStyleNew: MyTextStyle(
                                   textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                                   textWeight: FontWeight.w600,
@@ -207,7 +207,6 @@ class NoShowScreen extends GetView<NoShowController> {
                                     isBig: true,
                                     radius: 20.px,
                                     textWeight: FontWeight.w500,
-                                    padding: EdgeInsets.symmetric(horizontal: 16.px, vertical: 6.px),
                                     color: controller.appColors.white,
                                     textColor: controller.item!.check == false
                                         ? controller.appColors.textGreen
@@ -341,7 +340,7 @@ class NoShowScreen extends GetView<NoShowController> {
                                 textSize: 16.px,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 24.px,
-                                  vertical: 12.px,
+                                  vertical: 10.px,
                                 ),
                                 onTap: () {
                                   if (controller.visibleBtn) {

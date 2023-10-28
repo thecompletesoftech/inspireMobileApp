@@ -27,7 +27,7 @@ class GridItemCardWidget extends StatelessWidget {
                   textSize: 12.px,
                   isSmall: false,
                   isBig: true,
-                  radius: 20.px,
+                  radius: 100.px,
                   padding: EdgeInsets.all(8.px),
                   color: controller.appColors.textField,
                   textWeight: FontWeight.w600,
@@ -73,7 +73,7 @@ class GridItemCardWidget extends StatelessWidget {
             ),
           ).paddingOnly(bottom: 8.px),
           MyTextView(
-            Strings.locationAddress,
+            controller.item!.massage,
             textStyleNew:
                 MyTextStyle(textSize: 16.px, textFamily: fontFamilyRegular, textColor: controller.appColors.lightText),
           ),
@@ -160,7 +160,8 @@ class GridItemCardWidget extends StatelessWidget {
                   radius: 100.px,
                   title: Strings.inspectionDetails,
                   onTap: () {
-                    Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
+                    Get.toNamed(InspectionScreen.routes, arguments: [controller.item, item])!
+                        .then((value) => controller.update());
                   },
                   height: 44.px,
                   padding: EdgeInsets.symmetric(

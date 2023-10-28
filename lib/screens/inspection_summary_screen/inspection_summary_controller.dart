@@ -118,7 +118,7 @@ class InspectionSummaryController extends BaseController {
                         height: 55.px,
                         padding: EdgeInsets.zero,
                         border: Border.all(color: appColors.border1),
-                        borderRadius: 25.px,
+                        borderRadius: 100.px,
                         color: appColors.lightText.withOpacity(0.2),
                         hintText: "Give us more context",
                         labelText: "Leave a Comment",

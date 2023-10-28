@@ -32,7 +32,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${Strings.locationAddress} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -50,9 +50,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,
-                                radius: 20.px,
-                                width: 150.px,
-                                height: 40.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -214,11 +212,11 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                     ? controller.appColors.appColor
                                     : controller.appColors.border1,
                                 color: controller.appColors.transparent,
-                                radius: 35.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w600,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 16.px,
-                                  vertical: 12.px,
+                                  vertical: 10.px,
                                 ),
                                 textSize: 16.px,
                                 border: Border.all(
@@ -241,12 +239,12 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                 color: controller.visibleBtn
                                     ? controller.appColors.buttonColor
                                     : controller.appColors.black.withOpacity(0.11999999731779099),
-                                radius: 35.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w600,
                                 textSize: 16.px,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 24.px,
-                                  vertical: 12.px,
+                                  vertical: 10.px,
                                 ),
                                 // height: 55.px,
                                 onTap: () {

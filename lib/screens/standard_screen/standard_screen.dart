@@ -36,7 +36,7 @@ class StandardScreen extends GetView<StandardController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${Strings.locationAddress} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -55,8 +55,6 @@ class StandardScreen extends GetView<StandardController> {
                                 isSmall: false,
                                 isBig: true,
                                 radius: 20.px,
-                                width: 150.px,
-                                height: 40.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false

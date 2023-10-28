@@ -5,6 +5,6 @@ import 'certificates_controller.dart';
 class CertificatesBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put<CertificatesController>(CertificatesController());
+    Get.put<CertificateController>(CertificateController());
   }
 }

@@ -4,13 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/certificates_screen/certificates_controller.dart';
 
-class CertificatesScreen extends GetView<CertificatesController> {
+class CertificatesScreen extends GetView<CertificateController> {
   const CertificatesScreen({Key? key}) : super(key: key);
   static const routes = "/CertificatesScreen";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CertificatesController>(
+    return GetBuilder<CertificateController>(
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -40,7 +40,7 @@ class CertificatesScreen extends GetView<CertificatesController> {
                       children: [
                         Flexible(
                           child: MyTextView(
-                            controller.item == null ? "" : "${controller.item!.massage}, ${controller.item1!.title}",
+                            controller.item == null ? "" : "${controller.item!.massage}, ${controller.propertyTitle}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -59,8 +59,6 @@ class CertificatesScreen extends GetView<CertificatesController> {
                                 isSmall: false,
                                 isBig: true,
                                 radius: 20.px,
-                                width: 150.px,
-                                height: 40.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -80,8 +78,8 @@ class CertificatesScreen extends GetView<CertificatesController> {
                               Strings.certificates,
                               maxLinesNew: 4,
                               textStyleNew: MyTextStyle(
-                                textSize: 32.px,
-                                textWeight: FontWeight.w600,
+                                textSize: 40.px,
+                                textWeight: FontWeight.w700,
                                 textColor: controller.appColors.appColor,
                                 textFamily: fontFamilyBold,
                               ),
@@ -1117,7 +1115,7 @@ class CertificatesScreen extends GetView<CertificatesController> {
                                           if (controller.sendSprinklerImagesList.length - 1 == index) ...[
                                             GestureDetector(
                                               onTap: () async {
-                                                controller.imagePicker(3);
+                                                controller.imagePicker(4);
                                               },
                                               child: Column(
                                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -1164,7 +1162,7 @@ class CertificatesScreen extends GetView<CertificatesController> {
                                   )
                                 : GestureDetector(
                                     onTap: () {
-                                      controller.imagePicker(3);
+                                      controller.imagePicker(4);
                                     },
                                     child: Column(
                                       children: [

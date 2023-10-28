@@ -213,14 +213,14 @@ class HomeScreen extends GetView<HomeController> {
                         child: CommonButton(
                             border: Border.all(color: controller.appColors.border, width: 2),
                             radius: 100.px,
-                            title: Strings.backToProperties,
+                            title: Strings.backToBuildings,
                             onTap: () {
                               Get.back();
                             },
                             height: 44.px,
                             padding: EdgeInsets.symmetric(
                               horizontal: 24.px,
-                              vertical: 16.px,
+                              vertical: 10.px,
                             ),
                             textWeight: FontWeight.w500,
                             textSize: 16.px,
@@ -233,14 +233,14 @@ class HomeScreen extends GetView<HomeController> {
                               ? 0
                               : 0,
                       child: SizedBox(
-                        width: 20.px,
+                        width: 14.px,
                       ),
                     ),
                     Expanded(
                       flex: 0,
                       child: SizedBox(
-                        width: 360.px,
-                        height: 50.px,
+                        width: 350.px,
+                        height: 44.px,
                         child: SegmentedButton<InspectionStatus>(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
@@ -288,12 +288,13 @@ class HomeScreen extends GetView<HomeController> {
                       ),
                     ),
                     CommonIconButton(
-                      textColor: controller.appColors.lightText,
+                      textColor: controller.appColors.black,
                       title: controller.change ? "Grid View" : "List View",
                       onTap: () {
                         controller.change = !controller.change;
                         controller.update();
                       },
+                      height: 44.px,
                       padding: EdgeInsets.only(top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
                       iconheigth: 12.px,
                       textWeight: FontWeight.w500,
@@ -303,34 +304,6 @@ class HomeScreen extends GetView<HomeController> {
                     ).paddingOnly(left: 20.px),
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 30.px),
-                Row(
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Buildings | ',
-                            style: TextStyle(
-                              color: controller.appColors.appColor,
-                              fontSize: 32.px,
-                              fontFamily: fontFamilyRegular,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Grand Avenue',
-                            style: TextStyle(
-                              color: controller.appColors.lightText,
-                              fontSize: 24.px,
-                              fontFamily: fontFamilyRegular,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ).paddingOnly(left: 32.px, bottom: 24.px),
                 Expanded(
                   flex: 1,
                   child: controller.change

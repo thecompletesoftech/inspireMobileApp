@@ -1,18 +1,18 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/home_screen/home_screen.dart';
 
 import '../../responsive/scaling_query.dart';
-import '../inspection_summary_screen/inspection_summary_screen.dart';
-import '../kitchen_screen/kitchen_screen.dart';
-import 'areas_controller.dart';
+import '../deficiencies_found_screen/deficiencies_found_screen.dart';
+import 'areasbuilding_controller.dart';
 
-class AresScreen extends GetView<AreasController> {
-  const AresScreen({Key? key}) : super(key: key);
-  static const routes = "/AresScreen";
+class AresBuildingScreen extends GetView<AreasBuildingController> {
+  const AresBuildingScreen({Key? key}) : super(key: key);
+  static const routes = "/AresBuildingScreen";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AreasController>(
+    return GetBuilder<AreasBuildingController>(
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -31,9 +31,7 @@ class AresScreen extends GetView<AreasController> {
                       children: [
                         Flexible(
                           child: MyTextView(
-                            controller.item == null
-                                ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                            controller.item == null ? "" : "${controller.item!.massage}, ${controller.buildingTitle}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -77,14 +75,14 @@ class AresScreen extends GetView<AreasController> {
                                     padding: EdgeInsets.zero,
                                     child: InkWell(
                                       onTap: () {
-                                        Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
-                                            .then((value) {
-                                          if (value != null && value == true) {
-                                            item.status = "true";
-                                            controller.checkStatus();
-                                            controller.update();
-                                          }
-                                        });
+                                        // Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
+                                        //     .then((value) {
+                                        //   if (value != null && value == true) {
+                                        //     item.status = "true";
+                                        //     controller.checkStatus();
+                                        //     controller.update();
+                                        //   }
+                                        // });
                                       },
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,15 +134,13 @@ class AresScreen extends GetView<AreasController> {
                                                     ),
                                                   ],
                                                 ).paddingOnly(bottom: 8.px),
-                                                if (item.status == "true") ...[
-                                                  MyTextView(item.failMessage ?? "1 Failed Standards",
-                                                      textStyleNew: MyTextStyle(
-                                                        textSize: 16.px,
-                                                        textWeight: FontWeight.w600,
-                                                        textColor: controller.appColors.appColor,
-                                                        textFamily: fontFamilyRegular,
-                                                      )).paddingOnly(bottom: 8.px),
-                                                ],
+                                                MyTextView(item.failMessage ?? "1 Failed Standards",
+                                                    textStyleNew: MyTextStyle(
+                                                      textSize: 20.px,
+                                                      textWeight: FontWeight.w400,
+                                                      textColor: controller.appColors.lightText,
+                                                      textFamily: fontFamilyRegular,
+                                                    )).paddingOnly(bottom: 8.px),
                                                 MyTextView(
                                                   item.subtitle,
                                                   maxLinesNew: 4,
@@ -195,14 +191,14 @@ class AresScreen extends GetView<AreasController> {
                                     padding: EdgeInsets.zero,
                                     child: InkWell(
                                       onTap: () {
-                                        Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
-                                            .then((value) {
-                                          if (value != null && value == true) {
-                                            item.status = "true";
-                                            controller.checkStatus();
-                                            controller.update();
-                                          }
-                                        });
+                                        // Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
+                                        //     .then((value) {
+                                        //   if (value != null && value == true) {
+                                        //     item.status = "true";
+                                        //     controller.checkStatus();
+                                        //     controller.update();
+                                        //   }
+                                        // });
                                       },
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,15 +256,15 @@ class AresScreen extends GetView<AreasController> {
                                                 SizedBox(
                                                   height: 8.px,
                                                 ),
-                                                if (item.status == "true") ...[
-                                                  MyTextView(item.failMessage ?? "1 Failed Standards",
-                                                      textStyleNew: MyTextStyle(
-                                                        textSize: 16.px,
-                                                        textWeight: FontWeight.w600,
-                                                        textColor: controller.appColors.appColor,
-                                                        textFamily: fontFamilyRegular,
-                                                      )).paddingOnly(bottom: 8.px),
-                                                ],
+                                                // if (item.status == "true") ...[
+                                                MyTextView(item.failMessage ?? "1 Failed Standards",
+                                                    textStyleNew: MyTextStyle(
+                                                      textSize: 20.px,
+                                                      textWeight: FontWeight.w400,
+                                                      textColor: controller.appColors.lightText,
+                                                      textFamily: fontFamilyRegular,
+                                                    )).paddingOnly(bottom: 8.px),
+                                                // ],
                                                 MyTextView(
                                                   item.subtitle,
                                                   maxLinesNew: 4,
@@ -291,6 +287,24 @@ class AresScreen extends GetView<AreasController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CommonButton(
+                                title: Strings.deficienciesFound,
+                                textColor: controller.appColors.border1,
+                                color: controller.appColors.transparent,
+                                radius: 35.px,
+                                textWeight: FontWeight.w600,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.px,
+                                  vertical: 10.px,
+                                ),
+                                textSize: 16.px,
+                                border: Border.all(color: controller.appColors.textFiledBorderColor, width: 2),
+                                onTap: () {
+                                  Get.toNamed(DeficienciesFoundScreen.routes, arguments: controller.item);
+                                }),
+                            SizedBox(
+                              width: 24.px,
+                            ),
+                            CommonButton(
                               color: controller.visibleBtn
                                   ? controller.appColors.buttonColor
                                   : controller.appColors.black.withOpacity(0.11999999731779099),
@@ -298,16 +312,16 @@ class AresScreen extends GetView<AreasController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectionSummary,
                               onTap: () {
-                                if (controller.visibleBtn) {
-                                  Get.toNamed(InspectionSummaryScreen.routes, arguments: [controller.item]);
-                                }
+                                // if (controller.visibleBtn) {
+                                Get.toNamed(HomeScreen.routes, arguments: controller.item);
+                                // }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,
                               radius: 35.px,
                             ),
                           ],
-                        ).paddingSymmetric(vertical: 42.px),
+                        ).paddingSymmetric(vertical: 32.px),
                       ],
                     ).paddingSymmetric(horizontal: 32.0),
                   ],

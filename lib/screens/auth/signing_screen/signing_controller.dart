@@ -1,6 +1,7 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
-import 'package:public_housing/screens/main_screen/main_screen.dart';
+
+import '../../../screens/property_screen/property_screen.dart';
 
 class SigningController extends BaseController {
   TextEditingController email = TextEditingController();
@@ -30,7 +31,7 @@ class SigningController extends BaseController {
     // } else {
     //   utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
     // }
-    Get.offAllNamed(MainScreen.routes);
+    Get.offAllNamed(PropertyScreen.routes);
   }
 
   validation() {

@@ -64,10 +64,9 @@ class StandardItemCardWidget extends StatelessWidget {
                               }
                             });
                           },
-                          height: 44.px,
                           padding: EdgeInsets.symmetric(
                             horizontal: 24.px,
-                            vertical: 16.px,
+                            vertical: 10.px,
                           ),
                           textWeight: FontWeight.w500,
                           textSize: 16.px,

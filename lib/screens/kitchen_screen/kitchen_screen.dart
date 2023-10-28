@@ -47,7 +47,7 @@ class KitchenScreen extends GetView<KitchenController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${Strings.locationAddress} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -66,8 +66,6 @@ class KitchenScreen extends GetView<KitchenController> {
                                 isSmall: false,
                                 isBig: true,
                                 radius: 24.px,
-                                width: 150.px,
-                                height: 40.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -108,7 +106,7 @@ class KitchenScreen extends GetView<KitchenController> {
                                     textSize: 16.px,
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 24.px,
-                                      vertical: 12.px,
+                                      vertical: 10.px,
                                     ),
                                     onTap: () {
                                       if (controller.visibleBtn) {
@@ -161,7 +159,7 @@ class KitchenScreen extends GetView<KitchenController> {
                                     textSize: 16.px,
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 24.px,
-                                      vertical: 12.px,
+                                      vertical: 10.px,
                                     ),
                                     onTap: () {
                                       if (controller.visibleBtn) {
@@ -175,7 +173,7 @@ class KitchenScreen extends GetView<KitchenController> {
                                 color: controller.appColors.transparent,
                                 radius: 100.px,
                                 textWeight: FontWeight.w600,
-                                padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 12.px),
+                                padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                                 textSize: 16.px,
                                 border: Border.all(color: controller.appColors.border, width: 2),
                                 onTap: () {
@@ -288,14 +286,9 @@ class KitchenScreen extends GetView<KitchenController> {
                                                   SizedBox(
                                                     width: 80.px,
                                                     height: 80.px,
-                                                    // decoration: BoxDecoration(
-                                                    //     borderRadius: BorderRadius.circular(10.px),
-                                                    //     border:
-                                                    //         Border.all(color: controller.appColors.border1, width: 2)),
                                                     child: Center(
                                                       child: SvgPicture.string(
                                                         icAdd,
-                                                        // height: 45.px,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -434,15 +427,6 @@ class KitchenScreen extends GetView<KitchenController> {
                                           ],
                                         ],
                                       ).paddingOnly(bottom: 8.px),
-                                      // if (controller.item1!.status == "true") ...[
-                                      //   MyTextView(controller.item1!.failMessage ?? "1 Failed Standards",
-                                      //       textStyleNew: MyTextStyle(
-                                      //         textSize: 16.px,
-                                      //         textWeight: FontWeight.w600,
-                                      //         textColor: controller.appColors.appColor,
-                                      //         textFamily: fontFamilyRegular,
-                                      //       )).paddingOnly(bottom: 8.px),
-                                      // ],
                                       MyTextView(
                                         controller.item1!.title == "Kitchen"
                                             ? 'A kitchen must contain an area to store, prepare, and cook food. A microwave is a substitute for a range, stove or oven to establish a kitchen; however, it’s not inspected and does not take the place of an inoperable range, stove, or oven.'

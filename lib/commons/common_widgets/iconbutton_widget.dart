@@ -16,7 +16,7 @@ class CommonIconButton extends StatelessWidget {
   final Color? color;
   final BoxBorder? border;
   final GestureTapCallback? onTap;
-  // final double? height;
+  final double? height;
   final bool isMaxLineWrap;
   final double? radius;
   final Color? textColor;
@@ -40,7 +40,7 @@ class CommonIconButton extends StatelessWidget {
     this.maxLinesNew,
     this.color,
     this.border,
-    // this.height,
+    this.height,
     this.radius,
     this.textColor,
     this.textFamily,
@@ -58,7 +58,7 @@ class CommonIconButton extends StatelessWidget {
           onTap: onTap,
           child: Container(
             padding: padding ?? EdgeInsets.symmetric(vertical: 1.h, horizontal: 3.h),
-            // height: height ?? 50.px,
+            height: height,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color ?? appColors.buttonColor,

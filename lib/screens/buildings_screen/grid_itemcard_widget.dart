@@ -1,8 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 
+import '../buildingdetails_screen/buildingdetails_screen.dart';
 import '../certificates_screen/certificates_screen.dart';
-import '../property_screen/property_screen.dart';
 import 'buildings_controller.dart';
 
 class GridItemCardWidget extends StatelessWidget {
@@ -28,8 +28,7 @@ class GridItemCardWidget extends StatelessWidget {
                   textSize: 12.px,
                   isSmall: false,
                   isBig: true,
-                  radius: 20.px,
-                  padding: EdgeInsets.all(8.px),
+                  radius: 100.px,
                   color: controller.appColors.textField,
                   textWeight: FontWeight.w600,
                   textColor: item.check == false ? controller.appColors.textGreen : controller.appColors.textPink,
@@ -38,8 +37,8 @@ class GridItemCardWidget extends StatelessWidget {
                 flex: 0,
                 child: Row(
                   children: [
-                    if (item.status == InspectionStatus.completed.toString() ||
-                        item.status == InspectionStatus.inCompleted.toString())
+                    if (item.status == BuildingStatus.completed.toString() ||
+                        item.status == BuildingStatus.inCompleted.toString())
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -149,14 +148,9 @@ class GridItemCardWidget extends StatelessWidget {
                   radius: 100.px,
                   title: Strings.inspectionDetails,
                   onTap: () {
-                    Get.toNamed(PropertyScreen.routes, arguments: [controller.item!, item])!
-                        .then((value) => controller.update());
+                    Get.toNamed(BuildingDetailsScreen.routes, arguments: item)!.then((value) => controller.update());
                   },
-                  height: 44.px,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 24.px,
-                    vertical: 16.px,
-                  ),
+                  padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                   textWeight: FontWeight.w500,
                   textSize: 16.px,
                   color: controller.appColors.transparent,
@@ -171,10 +165,12 @@ class GridItemCardWidget extends StatelessWidget {
                   textColor: controller.appColors.appColor,
                   textWeight: FontWeight.w500,
                   textSize: 16.px,
-                  padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.px,
+                    vertical: 10.px,
+                  ),
                   onTap: () {
-                    Get.toNamed(CertificatesScreen.routes, arguments: [controller.item!, item])!
-                        .then((value) => controller.update());
+                    Get.toNamed(CertificatesScreen.routes, arguments: item)!.then((value) => controller.update());
                   }),
             ],
           ),
