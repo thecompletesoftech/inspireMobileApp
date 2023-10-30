@@ -33,7 +33,7 @@ class AresScreen extends GetView<AreasController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -299,7 +299,7 @@ class AresScreen extends GetView<AreasController> {
                               title: Strings.inspectionSummary,
                               onTap: () {
                                 if (controller.visibleBtn) {
-                                  Get.toNamed(InspectionSummaryScreen.routes, arguments: [controller.item]);
+                                Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
                                 }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),

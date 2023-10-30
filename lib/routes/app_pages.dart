@@ -7,6 +7,8 @@ import '../screens/areasbuilding_screen/areasbuilding_binding.dart';
 import '../screens/areasbuilding_screen/areasbuilding_screen.dart';
 import '../screens/auth/signing_screen/signing_binding.dart';
 import '../screens/auth/signing_screen/signing_screen.dart';
+import '../screens/building_exterior_screen/building_exterior_binding.dart';
+import '../screens/building_exterior_screen/building_exterior_screen.dart';
 import '../screens/buildingdetails_screen/buildingdetails_binding.dart';
 import '../screens/buildingdetails_screen/buildingdetails_screen.dart';
 import '../screens/buildings_screen/buildings_screen.dart';
@@ -45,13 +47,20 @@ class AppPages {
     GetPage(name: PropertyScreen.routes, page: () => PropertyScreen(), binding: PropertyBinding()),
     GetPage(name: BuildingsScreen.routes, page: () => BuildingsScreen(), binding: BuildingsBinding()),
     GetPage(name: PropertyDetailsScreen.routes, page: () => PropertyDetailsScreen(), binding: PropertyDetailsBinding()),
-    GetPage(name: BuildingDetailsScreen.routes, page: () => BuildingDetailsScreen(), binding: BuildingDetailsBinding()),
+    GetPage(
+        name: BuildingDetailsScreen.routes,
+        page: () => const BuildingDetailsScreen(),
+        binding: BuildingDetailsBinding()),
     GetPage(name: CertificatesScreen.routes, page: () => const CertificatesScreen(), binding: CertificatesBinding()),
     GetPage(
         name: DeficienciesFoundScreen.routes,
         page: () => const DeficienciesFoundScreen(),
         binding: DeficienciesFoundBinding()),
     GetPage(name: AresBuildingScreen.routes, page: () => const AresBuildingScreen(), binding: AreasBuildingBinding()),
+    GetPage(
+        name: BuildingExteriorScreen.routes,
+        page: () => const BuildingExteriorScreen(),
+        binding: BuildingExteriorBinding()),
     GetPage(name: HomeScreen.routes, page: () => HomeScreen(), binding: HomeBinding()),
     GetPage(name: InspectionScreen.routes, page: () => const InspectionScreen(), binding: InspectionBinding()),
     GetPage(name: NoShowScreen.routes, page: () => const NoShowScreen(), binding: NoShowBinding()),

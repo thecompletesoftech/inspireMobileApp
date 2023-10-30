@@ -32,7 +32,7 @@ class SignatureScreen extends GetView<SignatureController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -168,10 +168,6 @@ class SignatureScreen extends GetView<SignatureController> {
                                               controller.update();
                                             },
                                           ),
-                                          // HandSignature(
-                                          //   control: controller.tenantSign,
-                                          //   type: SignatureDrawType.shape,
-                                          // ),
                                         ),
                                       ),
                                     ),
@@ -355,7 +351,6 @@ class SignatureScreen extends GetView<SignatureController> {
                                       if (tenantSign != null) {
                                         final tenantSignFile = await controller.utils.createFileFromString(tenantSign);
                                         if (tenantSignFile.toString().isNotEmpty) {
-                                          // controller.callOrderStatusApi(file);
                                           controller.tenantSignPadKey.currentState!.clear();
                                           controller.tenantSign = false;
                                           controller.isTenantBlank = true;
@@ -371,7 +366,6 @@ class SignatureScreen extends GetView<SignatureController> {
                                       if (ownerSign != null) {
                                         final ownerSignFile = await controller.utils.createFileFromString(ownerSign);
                                         if (ownerSignFile.toString().isNotEmpty) {
-                                          // controller.callOrderStatusApi(file);
                                           controller.tenantSignPadKey.currentState!.clear();
                                           controller.tenantSign = false;
                                           controller.isTenantBlank = true;

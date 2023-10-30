@@ -287,7 +287,7 @@ class BuildingDetailsController extends BaseController {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CommonButton(
-                          title: 'Stay',
+                          title: Strings.cancel,
                           textColor: appColors.appColor,
                           color: appColors.transparent,
                           textSize: 16.px,
@@ -299,7 +299,7 @@ class BuildingDetailsController extends BaseController {
                             Get.back();
                           }).paddingOnly(right: 8.px),
                       CommonButton(
-                          title: 'Go back',
+                          title: Strings.backToBuildings,
                           textColor: appColors.white,
                           color: appColors.appColor,
                           textSize: 16.px,
@@ -308,7 +308,8 @@ class BuildingDetailsController extends BaseController {
                           padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
-                            Get.back();
+                            Get.back(closeOverlays: true);
+                            Get.back(result: true);
                           }),
                     ],
                   ).paddingOnly(
@@ -326,7 +327,6 @@ class BuildingDetailsController extends BaseController {
 
   getFromCamera({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
-
     if (checkPermission) {
       XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.camera,

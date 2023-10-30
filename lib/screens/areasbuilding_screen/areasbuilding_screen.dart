@@ -3,6 +3,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/home_screen/home_screen.dart';
 
 import '../../responsive/scaling_query.dart';
+import '../building_exterior_screen/building_exterior_screen.dart';
 import '../deficiencies_found_screen/deficiencies_found_screen.dart';
 import 'areasbuilding_controller.dart';
 
@@ -18,7 +19,13 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
             children: [
-              CommonAppBar(color: controller.appColors.transparent, radius: 0.px),
+              CommonAppBar(
+                color: controller.appColors.transparent,
+                radius: 0.px,
+                onClickBack: () {
+                  Get.back(result: controller.inComplete);
+                },
+              ),
               Expanded(
                 flex: 1,
                 child: ListView(
@@ -75,14 +82,14 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                     padding: EdgeInsets.zero,
                                     child: InkWell(
                                       onTap: () {
-                                        // Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
-                                        //     .then((value) {
-                                        //   if (value != null && value == true) {
-                                        //     item.status = "true";
-                                        //     controller.checkStatus();
-                                        //     controller.update();
-                                        //   }
-                                        // });
+                                        Get.toNamed(BuildingExteriorScreen.routes, arguments: [controller.item, item])!
+                                            .then((value) {
+                                          if (value != null && value == true) {
+                                            item.status = "true";
+                                            controller.checkStatus();
+                                            controller.update();
+                                          }
+                                        });
                                       },
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,14 +198,14 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                     padding: EdgeInsets.zero,
                                     child: InkWell(
                                       onTap: () {
-                                        // Get.toNamed(KitchenScreen.routes, arguments: [controller.item, item])!
-                                        //     .then((value) {
-                                        //   if (value != null && value == true) {
-                                        //     item.status = "true";
-                                        //     controller.checkStatus();
-                                        //     controller.update();
-                                        //   }
-                                        // });
+                                        Get.toNamed(BuildingExteriorScreen.routes, arguments: [controller.item, item])!
+                                            .then((value) {
+                                          if (value != null && value == true) {
+                                            item.status = "true";
+                                            controller.checkStatus();
+                                            controller.update();
+                                          }
+                                        });
                                       },
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,9 +319,9 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectionSummary,
                               onTap: () {
-                                // if (controller.visibleBtn) {
-                                Get.toNamed(HomeScreen.routes, arguments: controller.item);
-                                // }
+                                if (controller.visibleBtn) {
+                                  Get.toNamed(HomeScreen.routes, arguments: controller.item);
+                                }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,

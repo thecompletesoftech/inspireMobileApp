@@ -192,7 +192,12 @@ class ListItemCardWidget extends StatelessWidget {
                         radius: 100.px,
                         title: Strings.buildings,
                         onTap: () {
-                          Get.toNamed(BuildingsScreen.routes, arguments: item)!.then((value) => controller.update());
+                          Get.toNamed(BuildingsScreen.routes, arguments: item)!.then((value) {
+                            if (value != null) {
+                              item.status = PropertyStatus.inCompleted.toString();
+                            }
+                            controller.update();
+                          });
                         },
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         textWeight: FontWeight.w500,

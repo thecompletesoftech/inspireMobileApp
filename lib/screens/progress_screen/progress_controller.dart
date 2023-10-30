@@ -4,14 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:public_housing/commons/all.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:public_housing/commons/all.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../languages/language.dart';
-import '../kitchen_screen/kitchen_controller.dart';
+import '../home_screen/home_controller.dart';
 
 class ProgressController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
@@ -52,6 +52,7 @@ class ProgressController extends BaseController {
   RxCommonModel? item;
   RxCommonModel? item1;
   String? itemTitle;
+
   bool visibleBtn = false;
   bool change = true;
   final searchController = TextEditingController();
@@ -125,8 +126,8 @@ class ProgressController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments[0];
       item1 = Get.arguments[1];
-      if (Get.isRegistered<KitchenController>()) {
-        itemTitle = Get.find<KitchenController>().item1!.title!;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
       }
     }
     update();

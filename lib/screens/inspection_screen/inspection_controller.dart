@@ -54,7 +54,7 @@ class InspectionController extends BaseController {
   // }
 
   RxCommonModel? item;
-  RxCommonModel? item1;
+  String? itemTitle;
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
@@ -216,8 +216,10 @@ class InspectionController extends BaseController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments[1];
-      item1 = Get.arguments[0];
+      item = Get.arguments;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
+      }
       if (item!.status == InspectionStatus.completed.toString() ||
           item!.status == InspectionStatus.inCompleted.toString()) {
         visibleBtn = true;

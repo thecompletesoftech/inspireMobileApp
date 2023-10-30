@@ -235,7 +235,7 @@ class InspectionCompleteWidget extends StatelessWidget {
                 ),
                 onTap: () {
                   if (controller.visibleBtn) {
-                    Get.toNamed(AresScreen.routes, arguments: [controller.item1, controller.item]);
+                    Get.toNamed(AresScreen.routes, arguments: controller.item);
                   }
                 }),
           ],

@@ -3,9 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/home_screen/home_screen.dart';
 
+import '../home_screen/home_controller.dart';
+
 class InspectionSummaryController extends BaseController {
   RxCommonModel? item;
-  RxCommonModel? item1;
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
@@ -29,11 +30,15 @@ class InspectionSummaryController extends BaseController {
   String dropDownValue = "Finding Type*";
   List<String> itemList = ["1st time fail", "Terminate"];
 
+  String? itemTitle;
+
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments[0];
-      // item1 = Get.arguments[1];
+      item = Get.arguments;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
+      }
     }
     update();
     // TODO: implement onInit

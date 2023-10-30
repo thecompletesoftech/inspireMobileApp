@@ -36,7 +36,7 @@ class StandardScreen extends GetView<StandardController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -146,9 +146,6 @@ class StandardScreen extends GetView<StandardController> {
                         ),
                         if (!Utils.isLandScapeMode(context)) ...[
                           Row(
-                            // alignment: WrapAlignment.end,
-                            // runSpacing: 5.0,
-                            // spacing: 10.0,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

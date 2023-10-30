@@ -10,7 +10,7 @@ import '../buildings_screen/buildings_controller.dart';
 import 'generalNotesCard_widget.dart';
 
 class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
-  BuildingDetailsScreen({Key? key}) : super(key: key);
+  const BuildingDetailsScreen({Key? key}) : super(key: key);
   static const routes = "/BuildingDetailsScreen";
 
   @override
@@ -22,7 +22,17 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
             children: [
-              CommonAppBar(color: controller.appColors.transparent, radius: 0.px),
+              CommonAppBar(
+                color: controller.appColors.transparent,
+                radius: 0.px,
+                onClickBack: () {
+                  if (controller.item!.status == BuildingStatus.inCompleted.toString()) {
+                    controller.dialogInspectionInCompleted();
+                  } else {
+                    Get.back();
+                  }
+                },
+              ),
               Expanded(
                 flex: 1,
                 child: ListView(
@@ -576,15 +586,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       ),
                                       textSize: 16.px,
                                       border: Border.all(color: controller.appColors.textFiledBorderColor, width: 2),
-                                      onTap: () {
-                                        // Get.toNamed(NoShowScreen.routes, arguments: controller.item)!.then((value) {
-                                        //   if (value != null) {
-                                        //     controller.item!.status = BuildingStatus.inCompleted.toString();
-                                        //     controller.visibleBtn = true;
-                                        //     controller.update();
-                                        //   }
-                                        // });
-                                      }),
+                                      onTap: () {}),
                                   SizedBox(
                                     width: 24.px,
                                   ),
@@ -607,7 +609,17 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       ),
                                       onTap: () {
                                         if (controller.visibleBtn) {
-                                          Get.toNamed(AresBuildingScreen.routes, arguments: controller.item);
+                                          Get.toNamed(AresBuildingScreen.routes, arguments: controller.item)!
+                                              .then((value) {
+                                            if (value != null) {
+                                              if (Get.isRegistered<BuildingsController>()) {
+                                                Get.find<BuildingsController>().item!.status =
+                                                    BuildingStatus.inCompleted.toString();
+                                                controller.item!.status = BuildingStatus.inCompleted.toString();
+                                                controller.update();
+                                              }
+                                            }
+                                          });
                                         }
                                       }),
                                 ],

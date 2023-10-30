@@ -1,20 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:public_housing/screens/kitchen_screen/kitchenitemcard_widget.dart';
 
 import '../../commons/all.dart';
 import '../home_screen/home_controller.dart';
-import '../progress_screen/progress_screen.dart';
-import 'kitchen_controller.dart';
+import 'building_exterior_controller.dart';
+import 'building_exterior_itemcard_widget.dart';
 
-class KitchenScreen extends GetView<KitchenController> {
-  const KitchenScreen({Key? key}) : super(key: key);
-  static const routes = "/KitchenScreen";
+class BuildingExteriorScreen extends GetView<BuildingExteriorController> {
+  const BuildingExteriorScreen({Key? key}) : super(key: key);
+  static const routes = "/BuildingExteriorScreen";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<KitchenController>(
+    return GetBuilder<BuildingExteriorController>(
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -45,9 +44,7 @@ class KitchenScreen extends GetView<KitchenController> {
                       children: [
                         Flexible(
                           child: MyTextView(
-                            controller.item == null
-                                ? ""
-                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
+                            controller.item == null ? "" : "${controller.item!.massage}, ${controller.buildingTitle}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -180,6 +177,9 @@ class KitchenScreen extends GetView<KitchenController> {
                                   controller.expansionTileController.isExpanded
                                       ? controller.expansionTileController.collapse()
                                       : controller.expansionTileController.expand();
+                                  // controller.expansionTileController1.isExpanded
+                                  //     ? controller.expansionTileController1.collapse()
+                                  //     : controller.expansionTileController1.expand();
                                   controller.update();
                                 }).paddingSymmetric(horizontal: 16.px),
                             SizedBox(
@@ -219,7 +219,7 @@ class KitchenScreen extends GetView<KitchenController> {
                               ),
                             ),
                           ],
-                        ),
+                        ).paddingOnly(bottom: 32.px),
                         Card(
                           elevation: 1.0,
                           shape: RoundedRectangleBorder(
@@ -362,84 +362,6 @@ class KitchenScreen extends GetView<KitchenController> {
                                     ),
                                   ),
                           ),
-                        ).paddingSymmetric(vertical: 32.px),
-                        ShadowContainer(
-                          radius: 8.px,
-                          margin: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
-                          child: InkWell(
-                            onTap: () {
-                              Get.toNamed(ProgressScreen.routes, arguments: [
-                                controller.item,
-                                RxCommonModel(title: "${controller.item1!.title!} area is not present")
-                              ]);
-                            },
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Center(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8.px), bottomLeft: Radius.circular(8.px)),
-                                    child: Image.asset(
-                                      controller.item1!.image ?? "",
-                                      fit: BoxFit.cover,
-                                      width: 108.px,
-                                    ).paddingOnly(
-                                      left: 10.px,
-                                      top: 10.px,
-                                      bottom: 10.px,
-                                    ),
-                                  ).paddingOnly(right: 16.px),
-                                ),
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                            child: MyTextView(
-                                              "${controller.item1!.title == "Kitchen" ? "${controller.item1!.title} Area" : controller.item1!.title} Present",
-                                              textStyleNew: MyTextStyle(
-                                                textSize: 20.px,
-                                                textWeight: FontWeight.w400,
-                                                textColor: controller.appColors.textBlack1,
-                                                textFamily: fontFamilyRegular,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 8.px,
-                                          ),
-                                          if (controller.item1!.status == "true") ...[
-                                            ClipOval(
-                                                child: SvgPicture.string(
-                                              icComplete,
-                                            )),
-                                          ],
-                                        ],
-                                      ).paddingOnly(bottom: 8.px),
-                                      MyTextView(
-                                        controller.item1!.title == "Kitchen"
-                                            ? 'A kitchen must contain an area to store, prepare, and cook food. A microwave is a substitute for a range, stove or oven to establish a kitchen; however, it’s not inspected and does not take the place of an inoperable range, stove, or oven.'
-                                            : controller.item1!.subtitle!,
-                                        maxLinesNew: 4,
-                                        textStyleNew: MyTextStyle(
-                                          textSize: 16.px,
-                                          textColor: controller.appColors.textBlack2,
-                                          textWeight: FontWeight.w400,
-                                          textFamily: fontFamilyRegular,
-                                        ),
-                                      ),
-                                    ],
-                                  ).paddingSymmetric(horizontal: 8.px, vertical: 16.px),
-                                ),
-                              ],
-                            ),
-                          ),
                         ),
                         ListView.builder(
                             itemCount: controller.searchList.length,
@@ -449,10 +371,10 @@ class KitchenScreen extends GetView<KitchenController> {
                             itemBuilder: (BuildContext context, int index) {
                               final item1 = controller.searchList[index];
                               return index == 0
-                                  ? KitchenItemCardWidget(item1: item1)
+                                  ? BuildingExteriorItemCardWidget(item1: item1)
                                   : (controller.searchList[index - 1].title!.toString().substring(0, 1).toLowerCase() !=
                                           item1.title!.toString().substring(0, 1).toLowerCase())
-                                      ? KitchenItemCardWidget(item1: item1)
+                                      ? BuildingExteriorItemCardWidget(item1: item1)
                                       : Container();
                             }).paddingSymmetric(vertical: 32.px),
                       ],

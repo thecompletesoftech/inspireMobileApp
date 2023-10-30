@@ -160,13 +160,12 @@ class GridItemCardWidget extends StatelessWidget {
                   radius: 100.px,
                   title: Strings.inspectionDetails,
                   onTap: () {
-                    Get.toNamed(InspectionScreen.routes, arguments: [controller.item, item])!
-                        .then((value) => controller.update());
+                    Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
                   },
                   height: 44.px,
                   padding: EdgeInsets.symmetric(
                     horizontal: 24.px,
-                    vertical: 16.px,
+                    vertical: 10.px,
                   ),
                   textWeight: FontWeight.w500,
                   textSize: 16.px,

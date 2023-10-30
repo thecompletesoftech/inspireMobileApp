@@ -9,8 +9,9 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/home_screen/home_controller.dart';
 
 import '../../languages/language.dart';
+import '../buildingdetails_screen/buildingdetails_controller.dart';
 
-class KitchenController extends BaseController {
+class BuildingExteriorController extends BaseController {
   /// ---- Get ItemDetails API ----------->>>
   // getHome({var lat, lng}) async {
   //   FormData formData = FormData.fromMap({
@@ -48,7 +49,7 @@ class KitchenController extends BaseController {
 
   RxCommonModel? item;
   RxCommonModel? item1;
-  String? itemTitle;
+  String? buildingTitle;
   bool visibleBtn = false;
   bool change = false;
   final searchController = TextEditingController();
@@ -57,201 +58,22 @@ class KitchenController extends BaseController {
   final ExpansionTileController expansionTileController = ExpansionTileController();
   final List<RxCommonModel> dataList = [
     RxCommonModel(
-      title: "Cabinets and Storage",
-      subtitle: "A dedicated space for food, goods, or other items.",
-      image: ImagePath.cabinets,
+      title: "Address and Signage",
+      subtitle: "Unique number and name identifiers assigned to the property.",
+      image: ImagePath.address,
       status: "false",
     ),
     RxCommonModel(
-      title: "Call for Aid System",
-      subtitle: "A call system used by a resident to summon aid during a medical emergency",
-      image: ImagePath.callaId,
+      title: "Chimney",
+      subtitle: "A vertical or near vertical passageway connected to a fireplace or wood-burning appliance.",
+      image: ImagePath.chimney,
       status: "false",
     ),
     RxCommonModel(
-      title: "Carbon Monoxide Alarm",
+      title: "Clothes Dryer Exhaust Ventilation",
       subtitle:
-          "Device that detects elevated levels of carbon monoxide and signals via auditory or visual alarm in order to prevent carbon monoxide poisoning.",
-      image: ImagePath.carbon,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Ceiling",
-      subtitle: "The upper interior surface of a room that provides separation between rooms, spaces, and floors.",
-      image: ImagePath.ceiling,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Cooking Appliance",
-      subtitle:
-          "Can be an electric or gas stove with several burners and one or more connected ovens; a standalone device that may be built into a counter and has one or more electric or gas burners; or a thermally insulated chamber used for cooking, heating, and baking food.",
-      image: ImagePath.kitchen,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Door - General",
-      subtitle:
-          "Panel that provides an opening in a building or room and provides separation (i.e., closes an opening)",
-      image: ImagePath.doorGeneral,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Electrical - conductor, outlet, and switch",
-      subtitle:
-          "Conductor: An object or type of material that carries electrical current. Outlet and Switch: Installations that connect to an electricity supply.",
-      image: ImagePath.electricalConductor,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Electrical - GFCI or AFCI - outler or breaker",
-      subtitle: "Electrical protection devices",
-      image: ImagePath.electricalGFCI,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Electrical - service panel",
-      subtitle:
-          "An enclosure, cabinet, box, or panelboard containing overcurrent protection devices for the control of light, heat, appliances and power circuits",
-      image: ImagePath.electricalService,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Fire Extinguisher",
-      subtitle:
-          "A portable fire safety device that discharges a jet of water, foam, gas, or other material to extinguish a fire.",
-      image: ImagePath.fireExtinguisher,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Flammable and Combustible item",
-      subtitle:
-          "A combustible material is any material that, in the form in which it is used and under the conditions anticipated, will ignite and burn or will add appreciable heat to an ambient fire.",
-      image: ImagePath.flammableCombustible,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Floor",
-      subtitle: "Lower surface of a room.",
-      image: ImagePath.floorLower,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Food Preparation Area",
-      subtitle: "Flat surface installations in kitchens or food preparation spaces.",
-      image: ImagePath.foodPreparation,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Heating, ventilation, and air conditioning (HVAC)",
-      subtitle:
-          "Heating: A system consisting of a heat source and method of distribution designed to heat the surrounding air and area. Ventilation: A method of air distribution by air ducts to transfer air from one location to another. Air can be distributed passively or forced.Air Conditioning: A system consisting of a cooling source and method of distribution designed to cool the surrounding air and area.",
-      image: ImagePath.heatingVentilation,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Infestation",
-      subtitle: "The presence of animals with potential impacts on resident health and safety.",
-      image: ImagePath.infestation,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Leak - gas or oil",
-      subtitle:
-          "A fuel or gas leak refers to an unintended leak of natural gas or another gaseous product from a pipeline or other containment into any area where the gas or fuel should not be present. Gas leaks can be hazardous to health and the environment.",
-      image: ImagePath.leakGas,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Leak - water",
-      subtitle:
-          "A water leak can be caused by damage; including a puncture, gash, rust or other corrosion hole, very tiny pinhole leak (possibly in imperfect welds), crack or microcrack, or inadequate sealing between components or parts joined together.",
-      image: ImagePath.leakWater,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Lighting - interior",
-      subtitle: "Permanently installed light fixture.",
-      image: ImagePath.lightingInterior,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Minimum Electrical and Lighting",
-      subtitle:
-          "Lighting: Permanently installed light fixture. Outlet: Installations that connect to an electrical supply.",
-      image: ImagePath.minimumElectrical,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Mold-like Substance",
-      subtitle:
-          'A "Mold-like substance" can include regular or irregular patches or spots on surfaces that may be colored differently than the surface (coloration may be white, green, yellow, gray, brown, or black), and can be raised from the surface, and are generally composed of minute filaments. A "Mold-like substance" can appear "fuzzy" or "cottony" and a musty or earthy odor can be associated with it. "Mold-like substance" would also include what is often identified as "mildew," i.e., small patches, generally on non-porous surfaces, and dusty (friable) when dry; mildew is generally a thin surface growth that can be wiped off easily. Note that algae are not mold-like substances (algae are grass-green).',
-      image: ImagePath.moldLikeSub,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Potential Lead-Based Paint Hazzards - visual assessment",
-      subtitle:
-          "Lead-based paint (LBP) is paint or other surface coatings that contain lead equal to or exceeding federal regulatory levels, currently 1.0 milligram per square centimeter or 0.5 percent by weight. Deteriorated paint or surface coatings found in homes built before 1978 are LBP hazards if the paint is LBP. Visual Assessment is surface by surface determination of paint condition.",
-      image: ImagePath.potentialLeadBased,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Sharp Edges",
-      subtitle:
-          "Physical hazards within the built environment (i.e., human-made structures, features, and facilities) that can lacerate or puncture skin.",
-      image: ImagePath.sharpEdges,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Sink",
-      subtitle:
-          "A basin with hardware designed to dispense and hold clean water (hot and cold) and discharge wastewater.",
-      image: ImagePath.sinkWasteWater,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Smoke Alarm",
-      subtitle:
-          "A self-contained device that detects the presence of smoke, typically as an indicator of fire, and provides a visual or audio signal as an alert.",
-      image: ImagePath.smokeAlarm,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Sprinkler",
-      subtitle:
-          "Part of the fire protection (sprinkler) system that discharges water when activated once reaching a certain (predetermined) temperature.",
-      image: ImagePath.sprinkler,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Trip Hazard",
-      subtitle:
-          "Hazard caused by an abrupt change in vertical elevation or horizontal separation on any walking surface.",
-      image: ImagePath.tripHazard,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Ventilation",
-      subtitle: "Means of supplying air to or removing air from a space.",
-      image: ImagePath.ventilation,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Wall - interior",
-      subtitle: "A vertical surface that may define an area, and provide security, shelter, or sound proofing.",
-      image: ImagePath.wallInterior,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Water Heater",
-      subtitle: "A device designed to generate and store hot water for domestic use.",
-      image: ImagePath.waterHeater,
-      status: "false",
-    ),
-    RxCommonModel(
-      title: "Window",
-      subtitle: "Opening in a wall or roof of a building that is fitted with glass or other material.",
-      image: ImagePath.windowWall,
+          "The system connected to the clothes dryer vent outlet that exhausts air from the dryer blower to a designated area.",
+      image: ImagePath.clothes,
       status: "false",
     ),
   ];
@@ -310,8 +132,8 @@ class KitchenController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments[0];
       item1 = Get.arguments[1];
-      if (Get.isRegistered<HomeController>()) {
-        itemTitle = Get.find<HomeController>().item!.massage!;
+      if (Get.isRegistered<BuildingDetailsController>()) {
+        buildingTitle = Get.find<BuildingDetailsController>().propertyTitle!;
       }
       searchItem("");
     }

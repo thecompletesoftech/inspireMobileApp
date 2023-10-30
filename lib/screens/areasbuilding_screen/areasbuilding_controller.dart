@@ -41,7 +41,7 @@ class AreasBuildingController extends BaseController {
   RxCommonModel? item;
   String? buildingTitle;
   bool visibleBtn = false;
-  bool change = true;
+  bool inComplete = false;
 
   var dataList = [
     RxCommonModel(
@@ -91,7 +91,6 @@ class AreasBuildingController extends BaseController {
   void onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
-      // item1 = Get.arguments[0];
       if (Get.isRegistered<BuildingDetailsController>()) {
         buildingTitle = Get.find<BuildingDetailsController>().propertyTitle!;
       }
@@ -106,6 +105,7 @@ class AreasBuildingController extends BaseController {
     for (int i = 0; i < dataList.length; i++) {
       if (dataList[i].status == "true") {
         sum++;
+        inComplete = true;
       }
     }
     if (dataList.length == sum) {

@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/home_screen/home_controller.dart';
 
 import '../../languages/language.dart';
 import '../kitchen_screen/kitchen_controller.dart';
@@ -36,8 +37,8 @@ class StandardController extends BaseController {
       item = Get.arguments[0];
       index = Get.arguments[1];
       item1 = itemDetailsController.dataList[index];
-      if (Get.isRegistered<KitchenController>()) {
-        itemTitle = Get.find<KitchenController>().item1!.title!;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
       }
       update();
     }

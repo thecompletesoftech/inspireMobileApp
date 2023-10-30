@@ -41,7 +41,7 @@ class ProgressScreen extends GetView<ProgressController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -97,10 +97,9 @@ class ProgressScreen extends GetView<ProgressController> {
                                           onTap: () {
                                             controller.dialogInspectionProcess();
                                           },
-                                          height: 44.px,
                                           padding: EdgeInsets.symmetric(
                                             horizontal: 24.px,
-                                            vertical: 16.px,
+                                            vertical: 10.px,
                                           ),
                                           textWeight: FontWeight.w500,
                                           textSize: 16.px,

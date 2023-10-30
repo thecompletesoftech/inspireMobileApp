@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 
 import '../auth/signing_screen/signing_screen.dart';
@@ -126,6 +127,8 @@ class BuildingsController extends BaseController {
 
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
 
+  bool inComplete = false;
+
   void actionPopUpItemSelected(int value) {
     // _scaffoldkey.currentState.hideCurrentSnackBar();
     ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
@@ -143,7 +146,6 @@ class BuildingsController extends BaseController {
       message = 'Not implemented';
     }
     final snackBar = SnackBar(content: Text(message));
-    // _scaffoldkey.currentState.showSnackBar(snackBar);
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
@@ -171,6 +173,103 @@ class BuildingsController extends BaseController {
       }
     }
     printAction(searchList.length.toString());
+  }
+
+  dialogInspectionInCompleted() {
+    alertActionDialogApp(
+        context: Get.context!,
+        borderRadius: 28.px,
+        widget: Column(
+          children: [
+            Container(
+              width: 312.px,
+              // height: 184.px,
+              padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  MyTextView(
+                    Strings.inspectionIncomplete,
+                    textStyleNew: MyTextStyle(
+                      textColor: appColors.textBlack,
+                      textSize: 24.px,
+                      textFamily: fontFamilyRegular,
+                      textWeight: FontWeight.w400,
+                    ),
+                  ).paddingSymmetric(vertical: 16.px),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 312.px,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CommonButton(
+                          title: Strings.cancel,
+                          textColor: appColors.appColor,
+                          color: appColors.transparent,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back();
+                          }).paddingOnly(right: 8.px),
+                      CommonButton(
+                          title: Strings.backToBuildings,
+                          textColor: appColors.white,
+                          color: appColors.appColor,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back(closeOverlays: true);
+                            Get.back(result: true);
+                          }),
+                    ],
+                  ).paddingOnly(
+                    top: 24.px,
+                    left: 8.px,
+                    right: 24.px,
+                    bottom: 24.px,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   searchTypeItem() {

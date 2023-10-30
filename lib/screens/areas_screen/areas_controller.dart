@@ -1,5 +1,7 @@
 import 'package:public_housing/commons/all.dart';
 
+import '../home_screen/home_controller.dart';
+
 class AreasController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
   // getHome({var lat, lng}) async {
@@ -37,7 +39,7 @@ class AreasController extends BaseController {
   // }
 
   RxCommonModel? item;
-  RxCommonModel? item1;
+  String? itemTitle;
   bool visibleBtn = false;
   bool change = true;
 
@@ -117,8 +119,10 @@ class AreasController extends BaseController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments[1];
-      item1 = Get.arguments[0];
+      item = Get.arguments;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
+      }
     }
     update();
     // TODO: implement onInit

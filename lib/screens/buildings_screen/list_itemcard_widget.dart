@@ -210,8 +210,10 @@ class ListItemCardWidget extends StatelessWidget {
                                 ? Strings.inspectionDetails
                                 : "Details",
                         onTap: () {
-                          Get.toNamed(BuildingDetailsScreen.routes, arguments: item)!
-                              .then((value) => controller.update());
+                          Get.toNamed(BuildingDetailsScreen.routes, arguments: item)!.then((value) {
+                            if (value != null) controller.inComplete = true;
+                            controller.update();
+                          });
                         },
                         padding: EdgeInsets.symmetric(
                           horizontal: 24.px,

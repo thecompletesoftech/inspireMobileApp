@@ -212,7 +212,11 @@ class BuildingsScreen extends GetView<BuildingsController> {
                             radius: 100.px,
                             title: Strings.backToProperties,
                             onTap: () {
-                              Get.back();
+                              if (controller.inComplete) {
+                                controller.dialogInspectionInCompleted();
+                              } else {
+                                Get.back();
+                              }
                             },
                             height: 44.px,
                             padding: EdgeInsets.symmetric(

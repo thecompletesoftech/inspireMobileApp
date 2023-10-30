@@ -217,7 +217,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 Utils.isTabletScreen(context)
                                     ? Flexible(
                                         child: MyTextView(
-                                          "${controller.item!.massage}, ${controller.item1!.massage}",
+                                          "${controller.item!.massage}, ${controller.itemTitle}",
                                           textStyleNew: MyTextStyle(
                                             textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                                             textWeight: FontWeight.w600,
@@ -300,7 +300,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 ? Container()
                                 : Flexible(
                                     child: MyTextView(
-                                      "${controller.item!.massage}, ${controller.item1!.massage}",
+                                      "${controller.item!.massage}, ${controller.itemTitle}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
@@ -706,8 +706,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                       ),
                                       onTap: () {
                                         if (controller.visibleBtn) {
-                                          Get.toNamed(AresScreen.routes,
-                                              arguments: [controller.item1, controller.item]);
+                                          Get.toNamed(AresScreen.routes, arguments: controller.item);
                                         }
                                       }),
                                 ],

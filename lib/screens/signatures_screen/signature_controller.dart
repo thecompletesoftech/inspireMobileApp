@@ -2,6 +2,8 @@ import 'package:public_housing/commons/all.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
+import '../home_screen/home_controller.dart';
+
 class SignatureController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
   // getHome({var lat, lng}) async {
@@ -56,10 +58,15 @@ class SignatureController extends BaseController {
   var isTenantBlank = true;
   var isOwnerBlank = true;
 
+  String? itemTitle;
+
   @override
   void onInit() {
     if (Get.arguments != null) {
-      item = Get.arguments[0];
+      item = Get.arguments;
+      if (Get.isRegistered<HomeController>()) {
+        itemTitle = Get.find<HomeController>().item!.massage!;
+      }
     }
     update();
     // TODO: implement onInit

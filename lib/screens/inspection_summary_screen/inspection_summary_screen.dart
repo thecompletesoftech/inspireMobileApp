@@ -32,7 +32,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                           child: MyTextView(
                             controller.item == null
                                 ? ""
-                                : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -249,7 +249,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                 // height: 55.px,
                                 onTap: () {
                                   if (controller.visibleBtn) {
-                                    Get.toNamed(SignatureScreen.routes, arguments: [controller.item]);
+                                    Get.toNamed(SignatureScreen.routes, arguments: controller.item);
                                   }
                                 }),
                           ],
