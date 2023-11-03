@@ -189,7 +189,7 @@ class InspectionSummaryController extends BaseController {
                               onTap: () {
                                 if (active) {
                                   Get.back();
-                                  Get.offAllNamed(HomeScreen.routes);
+                                  Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
                                 } else {
                                   utils.showToast(message: "Leave comment is empty", context: Get.context!);
                                 }

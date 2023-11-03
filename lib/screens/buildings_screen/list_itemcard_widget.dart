@@ -154,13 +154,14 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icCalenderColor,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "06/22/2023",
                           isMaxLineWrap: true,
                           textStyleNew: MyTextStyle(
                             textSize: 16.px,
-                            textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textColor: controller.appColors.black,
                             textFamily: fontFamilyRegular,
                           ),
@@ -171,6 +172,7 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icTimeColor,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "8:00",
@@ -178,7 +180,7 @@ class ListItemCardWidget extends StatelessWidget {
                           textStyleNew: MyTextStyle(
                             textSize: 16.px,
                             textColor: controller.appColors.black,
-                            textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textFamily: fontFamilyRegular,
                           ),
                         ),
@@ -221,7 +223,6 @@ class ListItemCardWidget extends StatelessWidget {
                         ),
                         textWeight: FontWeight.w500,
                         textSize: 16.px,
-                        height: 50.px,
                         maxLinesNew: 2,
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor),

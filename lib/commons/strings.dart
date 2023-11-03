@@ -62,6 +62,7 @@ class Strings {
   static const String completedInspection = "Completed Inspection";
   static const String saveChanges = "Save Changes";
   static const String responsibility = "Responsibility";
+  static const String inspectUnits = "Inspect Units";
   static const String inspectionSummary = "Inspection Summary";
   static const String notes = "Pre-Made notes";
   static const String takeOne = "Take one";

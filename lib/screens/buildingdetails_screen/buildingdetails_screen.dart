@@ -48,7 +48,6 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                 fit: BoxFit.cover,
                                 height: 400.px,
                                 width: Get.width,
-                                // scale: ScalingQuery(context).scale(0.2.px),
                               ),
                               Positioned(
                                 top: 10.0,
@@ -58,7 +57,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                   textSize: 16.px,
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 24.px,
-                                    vertical: 12.0,
+                                    vertical: 10.0,
                                   ),
                                   textWeight: FontWeight.w500,
                                   textColor: controller.appColors.lightText,
@@ -67,7 +66,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                     controller.imageFile.value = "";
                                     controller.update();
                                   },
-                                  radius: 25.px,
+                                  radius: 100.px,
                                 ),
                               ),
                             ],
@@ -100,9 +99,9 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       },
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 24.px,
-                                        vertical: 12.0,
+                                        vertical: 10.0,
                                       ),
-                                      radius: 25.px,
+                                      radius: 100.px,
                                     ),
                                   ),
                                 ],
@@ -194,29 +193,6 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                               ),
                     Column(
                       children: [
-                        // if (Utils.isTabletScreen1(context)) ...[
-                        //   Row(
-                        //     children: [
-                        //       controller.item!.status == BuildingStatus.completed.toString() ||
-                        //               controller.item!.status == BuildingStatus.inCompleted.toString()
-                        //           ? CommonButton(
-                        //               title: controller.item!.status!.contains("completed")
-                        //                   ? Strings.completed
-                        //                   : Strings.inComplete,
-                        //               textSize: 14.px,
-                        //               isSmall: false,
-                        //               isBig: true,
-                        //               radius: 100.px,
-                        //               textWeight: FontWeight.w500,
-                        //               color: controller.item!.status!.contains("completed")
-                        //                   ? controller.appColors.updateGreen
-                        //                   : controller.appColors.updateYellow,
-                        //               textColor: controller.appColors.black,
-                        //               onTap: () {})
-                        //           : Container(),
-                        //     ],
-                        //   ),
-                        // ],
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -228,7 +204,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                         child: MyTextView(
                                           "${controller.item!.massage}",
                                           textStyleNew: MyTextStyle(
-                                            textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                                            textSize: 24.px,
                                             textWeight: FontWeight.w600,
                                             textColor: controller.appColors.black,
                                             textFamily: fontFamilyBold,
@@ -255,8 +231,6 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                             : controller.appColors.textPink,
                                         onTap: () {})
                                     : Container(),
-                                // if ((Utils.isMediumScreen(context) ||
-                                //     Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context))) ...[
                                 controller.item!.status == BuildingStatus.completed.toString() ||
                                         controller.item!.status == BuildingStatus.inCompleted.toString()
                                     ? SizedBox(
@@ -296,7 +270,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       "${controller.item!.massage}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
-                                        textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                                        textSize: 24.px,
                                         textWeight: FontWeight.w600,
                                         textColor: controller.appColors.black,
                                         textFamily: fontFamilyBold,
@@ -310,7 +284,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                   padding: EdgeInsets.all(16.px),
                                   child: CommonIconButton(
                                       icon: icCalender1,
-                                      iconheigth: 20.px,
+                                      iconheigth: 24.px,
                                       space: 8.px,
                                       title: "06/22/2023",
                                       padding: EdgeInsets.zero,
@@ -326,7 +300,8 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                   margin: EdgeInsets.zero,
                                   child: CommonIconButton(
                                       icon: icTimeColor,
-                                      iconheigth: 20.px,
+                                      iconheigth: 24.px,
+                                      space: 8.px,
                                       title: "08:00",
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
@@ -340,7 +315,8 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                   padding: EdgeInsets.all(16.px),
                                   child: CommonIconButton(
                                       icon: icHome,
-                                      iconheigth: 20.px,
+                                      iconheigth: 24.px,
+                                      space: 8.px,
                                       title: controller.item!.title,
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,

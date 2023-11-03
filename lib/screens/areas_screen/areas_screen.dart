@@ -51,7 +51,7 @@ class AresScreen extends GetView<AreasController> {
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,
-                                radius: 24.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -97,9 +97,7 @@ class AresScreen extends GetView<AreasController> {
                                               child: Image.asset(
                                                 item.image ?? "",
                                                 fit: BoxFit.cover,
-                                                // height: 80,
                                                 width: 108.px,
-                                                // scale: ScalingQuery(context).scale(0.5.px),
                                               ).paddingOnly(
                                                 left: 10.px,
                                                 top: 10.px,
@@ -136,8 +134,16 @@ class AresScreen extends GetView<AreasController> {
                                                     ),
                                                   ],
                                                 ).paddingOnly(bottom: 8.px),
-                                                if (item.status == "true") ...[
+                                                if (item.status == "false") ...[
                                                   MyTextView(item.failMessage ?? "1 Failed Standards",
+                                                      textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textColor: controller.appColors.border,
+                                                        textFamily: fontFamilyRegular,
+                                                      )).paddingOnly(bottom: 8.px),
+                                                ] else ...[
+                                                  MyTextView("1 Failed Standards",
                                                       textStyleNew: MyTextStyle(
                                                         textSize: 16.px,
                                                         textWeight: FontWeight.w600,
@@ -260,8 +266,16 @@ class AresScreen extends GetView<AreasController> {
                                                 SizedBox(
                                                   height: 8.px,
                                                 ),
-                                                if (item.status == "true") ...[
+                                                if (item.status == "false") ...[
                                                   MyTextView(item.failMessage ?? "1 Failed Standards",
+                                                      textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textColor: controller.appColors.border,
+                                                        textFamily: fontFamilyRegular,
+                                                      )).paddingOnly(bottom: 8.px),
+                                                ] else ...[
+                                                  MyTextView("1 Failed Standards",
                                                       textStyleNew: MyTextStyle(
                                                         textSize: 16.px,
                                                         textWeight: FontWeight.w600,
@@ -298,9 +312,9 @@ class AresScreen extends GetView<AreasController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectionSummary,
                               onTap: () {
-                                if (controller.visibleBtn) {
+                                // if (controller.visibleBtn) {
                                 Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
-                                }
+                                // }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,

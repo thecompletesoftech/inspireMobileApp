@@ -175,35 +175,6 @@ class PropertyScreen extends GetView<PropertyController> {
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 Row(
                   children: [
-                    // (Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context)) ||
-                    //         !Utils.isTabletScreen1(context)
-                    //     ? Expanded(
-                    //         child: SizedBox(
-                    //           width: 250.px,
-                    //           child: CommonTextField(
-                    //             height: 52.px,
-                    //             border: Border.all(color: controller.appColors.border1),
-                    //             borderRadius: 100.px,
-                    //             color: controller.appColors.white,
-                    //             controller: controller.searchController,
-                    //             prefixIcon: Image.asset(
-                    //               ImagePath.icSearch,
-                    //               color: controller.appColors.black,
-                    //             ),
-                    //             hintText: "Search",
-                    //             hintTextStyle: MyTextStyle(
-                    //                 textColor: controller.appColors.border,
-                    //                 textSize: 16.px,
-                    //                 textFamily: fontFamilyRegular,
-                    //                 textWeight: FontWeight.w400),
-                    //             onChange: (str) {
-                    //               controller.searchItem(str);
-                    //               controller.update();
-                    //             },
-                    //           ),
-                    //         ),
-                    //       )
-                    //     :
                     Flexible(
                         child: MyTextView(
                       Strings.properties,
@@ -323,9 +294,9 @@ class PropertyScreen extends GetView<PropertyController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.65.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.68695.px) //.....
                                   : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.62.px) //pro mini
+                                      ? ScalingQuery(context).verticalScale(0.6533.px) //pro mini
                                       : Utils.isTabletScreen(context)
                                           ? ScalingQuery(context).verticalScale(0.51.px) //.....1
                                           : Utils.isMediumScreen(context)

@@ -102,11 +102,11 @@ class StandardScreen extends GetView<StandardController> {
                                       textWeight: FontWeight.w500,
                                       textSize: 16.px,
                                       color: controller.appColors.appColor,
-                                      radius: Utils.isLandScapeMode(context)
-                                          ? 35.px
-                                          : Utils.isTabletScreen(context)
-                                              ? 40.px
-                                              : 24.px,
+                                      // radius: Utils.isLandScapeMode(context)
+                                      //     ? 35.px
+                                      //     : Utils.isTabletScreen(context)
+                                      //         ? 40.px
+                                      //         : 24.px,
                                       icon: icArrowLeft,
                                     ),
                                   SizedBox(
@@ -129,11 +129,11 @@ class StandardScreen extends GetView<StandardController> {
                                       textWeight: FontWeight.w500,
                                       textSize: 16.px,
                                       color: controller.appColors.appColor,
-                                      radius: Utils.isLandScapeMode(context)
-                                          ? 35.px
-                                          : Utils.isTabletScreen(context)
-                                              ? 40.px
-                                              : 24.px,
+                                      // radius: Utils.isLandScapeMode(context)
+                                      //     ? 35.px
+                                      //     : Utils.isTabletScreen(context)
+                                      //         ? 40.px
+                                      //         : 24.px,
                                       icon: icArrowRight,
                                     ),
                                 ],
@@ -152,7 +152,6 @@ class StandardScreen extends GetView<StandardController> {
                               if (controller.index != 0)
                                 CommonIconButton(
                                   textColor: controller.appColors.white,
-                                  isMaxLineWrap: true,
                                   title: controller.itemDetailsController.dataList[controller.index - 1].title!,
                                   onTap: () {
                                     if (controller.index != 0) {
@@ -167,11 +166,11 @@ class StandardScreen extends GetView<StandardController> {
                                   textWeight: FontWeight.w500,
                                   textSize: 16.px,
                                   color: controller.appColors.appColor,
-                                  radius: Utils.isLandScapeMode(context)
-                                      ? 35.px
-                                      : Utils.isTabletScreen(context)
-                                          ? 40.px
-                                          : 24.px,
+                                  // radius: Utils.isLandScapeMode(context)
+                                  //     ? 35.px
+                                  //     : Utils.isTabletScreen(context)
+                                  //         ? 40.px
+                                  //         : 24.px,
                                   icon: icArrowLeft,
                                 ),
                               SizedBox(
@@ -181,7 +180,6 @@ class StandardScreen extends GetView<StandardController> {
                                 CommonIconButton(
                                   textColor: controller.appColors.white,
                                   title: controller.itemDetailsController.dataList[controller.index + 1].title!,
-                                  isMaxLineWrap: true,
                                   onTap: () {
                                     if (controller.itemDetailsController.dataList.length - 1 != controller.index) {
                                       controller.item1 =
@@ -195,11 +193,11 @@ class StandardScreen extends GetView<StandardController> {
                                   textWeight: FontWeight.w500,
                                   textSize: 16.px,
                                   color: controller.appColors.appColor,
-                                  radius: Utils.isLandScapeMode(context)
-                                      ? 35.px
-                                      : Utils.isTabletScreen(context)
-                                          ? 40.px
-                                          : 24.px,
+                                  // radius: Utils.isLandScapeMode(context)
+                                  //     ? 35.px
+                                  //     : Utils.isTabletScreen(context)
+                                  //         ? 40.px
+                                  //         : 24.px,
                                   icon: icArrowRight,
                                 )
                             ],

@@ -30,7 +30,6 @@ class ShadowContainer extends StatelessWidget {
       elevation: elevation ?? 1.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius ?? 15.px),
-        //set border radius more than 50% of height and width to make circle
       ),
       color: color ?? AppColors().white,
       margin: EdgeInsets.zero,

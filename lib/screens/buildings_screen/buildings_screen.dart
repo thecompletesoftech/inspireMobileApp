@@ -368,9 +368,9 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.55.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.57151.px) //.....
                                   : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.52.px) //pro mini
+                                      ? ScalingQuery(context).verticalScale(0.54146.px) //pro mini
                                       : Utils.isTabletScreen(context)
                                           ? ScalingQuery(context).verticalScale(0.51.px) //.....1
                                           : Utils.isMediumScreen(context)

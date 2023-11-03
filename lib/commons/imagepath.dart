@@ -23,6 +23,7 @@ class ImagePath {
 
   /// ------ create account Screen ------------------->>>>
   static String user = "${base}user.png";
+  static String icSign = "${base}ic_sign.png";
 
   /// ------ Set location Screen ------------------->>>>
   static String icPin = "${base}ic_location_color.png";

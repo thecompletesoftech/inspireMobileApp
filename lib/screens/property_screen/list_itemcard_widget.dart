@@ -117,7 +117,8 @@ class ListItemCardWidget extends StatelessWidget {
                       Image.asset(
                         item.imgId ?? ImagePath.media1,
                         width: 80.px,
-                        height: 88.px,
+                        height: 100.px,
+                        fit: BoxFit.cover,
                       )
                     ],
                   ),
@@ -137,6 +138,7 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icCalenderColor,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "06/22/2023",
@@ -154,6 +156,7 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icTimeColor,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "8:00",

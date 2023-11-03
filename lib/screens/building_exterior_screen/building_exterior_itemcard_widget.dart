@@ -3,16 +3,15 @@ import 'package:public_housing/commons/all.dart';
 
 import 'building_exterior_controller.dart';
 
-class BuildingExteriorItemCardWidget extends StatelessWidget {
+class BuildingExteriorItemCardWidget extends GetView<BuildingExteriorController> {
   final RxCommonModel item1;
-  final BuildingExteriorController controller = Get.find();
-  BuildingExteriorItemCardWidget({super.key, required this.item1});
+  const BuildingExteriorItemCardWidget({super.key, required this.item1});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BuildingExteriorController>(
-      assignId: true,
-      builder: (logic) {
+      init: BuildingExteriorController(),
+      builder: (controller) {
         return Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.transparent,

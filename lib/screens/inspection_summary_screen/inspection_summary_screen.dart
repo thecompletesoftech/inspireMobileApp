@@ -189,7 +189,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                       controller: controller.dateController,
                                       color: controller.appColors.transparent,
                                       suffixIcon: SvgPicture.string(
-                                        icCalender1,
+                                        icCalender2,
                                         color: controller.appColors.grey,
                                       ),
                                       padding: EdgeInsets.zero,

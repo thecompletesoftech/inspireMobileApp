@@ -6,10 +6,12 @@ import 'home_controller.dart';
 
 class ListItemCardWidget extends StatelessWidget {
   final RxCommonModel item;
-  final int index;
   final HomeController controller = Get.find();
 
-  ListItemCardWidget({super.key, required this.item, required this.index});
+  ListItemCardWidget({
+    super.key,
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +119,7 @@ class ListItemCardWidget extends StatelessWidget {
                           ],
                         ).paddingOnly(top: 16.px),
                       MyTextView(
-                        "${index + 1}${(index == 1) ? "nd" : "th"}",
+                        "${item.id}${(item.id == 1) ? "st" : (item.id == 2) ? "nd" : (item.id == 3) ? "rd" : "th"}",
                         textStyleNew: MyTextStyle(
                             textSize: 20.px,
                             textColor: controller.appColors.black,
@@ -162,15 +164,14 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icCalenderColor,
-                          // width: 30.px,
-                          // height: 30.px,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "06/22/2023",
                           isMaxLineWrap: true,
                           textStyleNew: MyTextStyle(
                             textSize: 16.px,
-                            textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textColor: controller.appColors.black,
                             textFamily: fontFamilyRegular,
                           ),
@@ -181,6 +182,7 @@ class ListItemCardWidget extends StatelessWidget {
                       children: [
                         SvgPicture.string(
                           icTimeColor,
+                          height: 24.px,
                         ).paddingOnly(right: 8.px),
                         MyTextView(
                           "8:00 - 10:00 AM",
@@ -188,7 +190,7 @@ class ListItemCardWidget extends StatelessWidget {
                           textStyleNew: MyTextStyle(
                             textSize: 16.px,
                             textColor: controller.appColors.black,
-                            textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textFamily: fontFamilyRegular,
                           ),
                         ),
@@ -221,9 +223,12 @@ class ListItemCardWidget extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
                         },
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.px,
+                          vertical: 10.px,
+                        ),
                         textWeight: FontWeight.w500,
                         textSize: 16.px,
-                        height: 50.px,
                         maxLinesNew: 2,
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor),

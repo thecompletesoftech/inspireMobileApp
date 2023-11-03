@@ -1,7 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/screens/inspection_screen/inspection_controller.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 import '../../commons/all.dart';
 import '../areas_screen/areas_screen.dart';
@@ -111,7 +110,7 @@ class InspectionCompleteWidget extends StatelessWidget {
                       controller: controller.date1Controller,
                       color: controller.appColors.transparent,
                       suffixIcon: SvgPicture.string(
-                        icCalender1 ?? "",
+                        icCalender2 ?? "",
                         color: controller.appColors.grey,
                       ),
                       padding: EdgeInsets.zero,
@@ -200,16 +199,8 @@ class InspectionCompleteWidget extends StatelessWidget {
                   child: Container(
                     constraints: const BoxConstraints.expand(),
                     color: Colors.white,
-                    child: SfSignaturePad(
-                      key: controller.tenantSignPadKey,
-                      minimumStrokeWidth: 3,
-                      maximumStrokeWidth: 6,
-                      strokeColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      onDrawEnd: () async {
-                        controller.ownerSign = true;
-                        controller.update();
-                      },
+                    child: Image.asset(
+                      ImagePath.icSign,
                     ),
                   ),
                 ),

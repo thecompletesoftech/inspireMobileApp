@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/home_screen/home_controller.dart';
 import 'package:public_housing/screens/home_screen/home_screen.dart';
 import 'package:public_housing/screens/signatures_screen/signature_controller.dart';
 import 'package:screenshot/screenshot.dart';
@@ -358,7 +359,8 @@ class SignatureScreen extends GetView<SignatureController> {
                                           controller.ownerSign = false;
                                           controller.isOwnerBlank = true;
                                           controller.update();
-                                          Get.offAllNamed(HomeScreen.routes);
+
+                                          Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
                                         }
                                       }
 
@@ -373,7 +375,7 @@ class SignatureScreen extends GetView<SignatureController> {
                                           controller.ownerSign = false;
                                           controller.isOwnerBlank = true;
                                           controller.update();
-                                          Get.offAllNamed(HomeScreen.routes);
+                                          Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
                                         }
                                       }
                                     } else {

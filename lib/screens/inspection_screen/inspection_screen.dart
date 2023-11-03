@@ -6,6 +6,7 @@ import '../../commons/all.dart';
 import '../../screens/inspection_screen/inspection_controller.dart';
 import '../areas_screen/areas_screen.dart';
 import '../home_screen/home_controller.dart';
+import '../noshow_screen/noshow_screen.dart';
 import '../text_message_screen/text_message_screen.dart';
 import 'generalNotesCard_widget.dart';
 import 'inspection_complete_widget.dart';
@@ -49,7 +50,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                   textSize: 16.px,
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 24.px,
-                                    vertical: 12.0,
+                                    vertical: 10.0,
                                   ),
                                   textWeight: FontWeight.w500,
                                   textColor: controller.appColors.lightText,
@@ -91,7 +92,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                       },
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 24.px,
-                                        vertical: 12.0,
+                                        vertical: 10.0,
                                       ),
                                       radius: 100.px,
                                     ),
@@ -185,29 +186,29 @@ class InspectionScreen extends GetView<InspectionController> {
                               ),
                     Column(
                       children: [
-                        if (Utils.isTabletScreen1(context)) ...[
-                          Row(
-                            children: [
-                              controller.item!.status == InspectionStatus.completed.toString() ||
-                                      controller.item!.status == InspectionStatus.inCompleted.toString()
-                                  ? CommonButton(
-                                      title: controller.item!.status!.contains("completed")
-                                          ? Strings.completed
-                                          : Strings.inComplete,
-                                      textSize: 14.px,
-                                      isSmall: false,
-                                      isBig: true,
-                                      radius: 100.px,
-                                      textWeight: FontWeight.w500,
-                                      color: controller.item!.status!.contains("completed")
-                                          ? controller.appColors.updateGreen
-                                          : controller.appColors.updateYellow,
-                                      textColor: controller.appColors.black,
-                                      onTap: () {})
-                                  : Container(),
-                            ],
-                          ),
-                        ],
+                        // if (Utils.isTabletScreen1(context)) ...[
+                        //   Row(
+                        //     children: [
+                        //       controller.item!.status == InspectionStatus.completed.toString() ||
+                        //               controller.item!.status == InspectionStatus.inCompleted.toString()
+                        //           ? CommonButton(
+                        //               title: controller.item!.status!.contains("completed")
+                        //                   ? Strings.completed
+                        //                   : Strings.inComplete,
+                        //               textSize: 14.px,
+                        //               isSmall: false,
+                        //               isBig: true,
+                        //               radius: 100.px,
+                        //               textWeight: FontWeight.w500,
+                        //               color: controller.item!.status!.contains("completed")
+                        //                   ? controller.appColors.updateGreen
+                        //                   : controller.appColors.updateYellow,
+                        //               textColor: controller.appColors.black,
+                        //               onTap: () {})
+                        //           : Container(),
+                        //     ],
+                        //   ),
+                        // ],
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -247,32 +248,32 @@ class InspectionScreen extends GetView<InspectionController> {
                                             : controller.appColors.textPink,
                                         onTap: () {})
                                     : Container(),
-                                if ((Utils.isMediumScreen(context) ||
-                                    Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context))) ...[
-                                  controller.item!.status == InspectionStatus.completed.toString() ||
-                                          controller.item!.status == InspectionStatus.inCompleted.toString()
-                                      ? SizedBox(
-                                          width: 16.px,
-                                        )
-                                      : Container(),
-                                  controller.item!.status == InspectionStatus.completed.toString() ||
-                                          controller.item!.status == InspectionStatus.inCompleted.toString()
-                                      ? CommonButton(
-                                          title: controller.item!.status!.contains("completed")
-                                              ? Strings.completed
-                                              : Strings.inComplete,
-                                          textSize: 14.px,
-                                          isSmall: false,
-                                          isBig: true,
-                                          radius: 100.px,
-                                          textWeight: FontWeight.w500,
-                                          color: controller.item!.status!.contains("completed")
-                                              ? controller.appColors.updateGreen
-                                              : controller.appColors.updateYellow,
-                                          textColor: controller.appColors.black,
-                                          onTap: () {})
-                                      : Container(),
-                                ]
+                                // if ((Utils.isMediumScreen(context) ||
+                                //     Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context))) ...[
+                                controller.item!.status == InspectionStatus.completed.toString() ||
+                                        controller.item!.status == InspectionStatus.inCompleted.toString()
+                                    ? SizedBox(
+                                        width: 16.px,
+                                      )
+                                    : Container(),
+                                controller.item!.status == InspectionStatus.completed.toString() ||
+                                        controller.item!.status == InspectionStatus.inCompleted.toString()
+                                    ? CommonButton(
+                                        title: controller.item!.status!.contains("completed")
+                                            ? Strings.completed
+                                            : Strings.inComplete,
+                                        textSize: 14.px,
+                                        isSmall: false,
+                                        isBig: true,
+                                        radius: 100.px,
+                                        textWeight: FontWeight.w500,
+                                        color: controller.item!.status!.contains("completed")
+                                            ? controller.appColors.updateGreen
+                                            : controller.appColors.updateYellow,
+                                        textColor: controller.appColors.black,
+                                        onTap: () {})
+                                    : Container(),
+                                // ]
                               ],
                             ),
                             GestureDetector(
@@ -282,14 +283,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 child: SvgPicture.string(
                                   icLoc,
                                   height: 40.px,
-                                )
-
-                                // Image.asset(
-                                //   ImagePath.icLoc,
-                                //   width: 40.px,
-                                //   height: 40.px,
-                                // ),
-                                ),
+                                )),
                           ],
                         ).paddingOnly(bottom: 24.px),
                         Row(
@@ -644,7 +638,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                   controller: controller.dateController,
                                   color: controller.appColors.transparent,
                                   suffixIcon: SvgPicture.string(
-                                    icCalender1,
+                                    icCalender2,
                                     color: controller.appColors.lightText,
                                     // height: 10.px,
                                   ),
@@ -660,33 +654,30 @@ class InspectionScreen extends GetView<InspectionController> {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // CommonButton(
-                                  //     title: Strings.noShow,
-                                  //     textColor: controller.appColors.appColor,
-                                  //     color: controller.appColors.transparent,
-                                  //     radius: 35.px,
-                                  //     height: 55.px,
-                                  //     textWeight: FontWeight.w600,
-                                  //     padding: EdgeInsets.symmetric(
-                                  //       horizontal: 16.px,
-                                  //       vertical: 12.px,
-                                  //     ),
-                                  //     textSize: 16.px,
-                                  //     border: Border.all(color: controller.appColors.border, width: 2),
-                                  //     onTap: () {
-                                  //       Get.toNamed(NoShowScreen.routes,
-                                  //               arguments: [controller.item1, controller.item])!
-                                  //           .then((value) {
-                                  //         if (value != null) {
-                                  //           controller.item!.status = InspectionStatus.inCompleted.toString();
-                                  //           controller.visibleBtn = true;
-                                  //           controller.update();
-                                  //         }
-                                  //       });
-                                  //     }),
-                                  // SizedBox(
-                                  //   width: 24.px,
-                                  // ),
+                                  CommonButton(
+                                      title: Strings.noShow,
+                                      textColor: controller.appColors.appColor,
+                                      color: controller.appColors.transparent,
+                                      radius: 35.px,
+                                      textWeight: FontWeight.w600,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 24.px,
+                                        vertical: 10.px,
+                                      ),
+                                      textSize: 16.px,
+                                      border: Border.all(color: controller.appColors.border, width: 2),
+                                      onTap: () {
+                                        Get.toNamed(NoShowScreen.routes, arguments: controller.item)!.then((value) {
+                                          if (value != null) {
+                                            controller.item!.status = InspectionStatus.completed.toString();
+                                            controller.visibleBtn = true;
+                                            controller.update();
+                                          }
+                                        });
+                                      }),
+                                  SizedBox(
+                                    width: 24.px,
+                                  ),
                                   CommonButton(
                                       title: controller.item!.status!.contains("inCompleted")
                                           ? Strings.resumeInspection

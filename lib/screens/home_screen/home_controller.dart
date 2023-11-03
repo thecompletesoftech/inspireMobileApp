@@ -19,6 +19,7 @@ class HomeController extends BaseController {
   int? currentSelection = 0;
   InspectionStatus status = InspectionStatus.all;
   bool change = false;
+  bool visibleBtn = false;
   int currentIndex = 1;
   RxList<RxCommonModel> dataList = [
     RxCommonModel(
@@ -592,6 +593,19 @@ class HomeController extends BaseController {
         );
       },
     );
+  }
+
+  checkStatus() {
+    var sum = 0;
+    for (int i = 0; i < dataList.length; i++) {
+      if (dataList[i].status == "true") {
+        sum++;
+      }
+    }
+    if (dataList.length == sum) {
+      visibleBtn = true;
+      update();
+    }
   }
 
   /// ---- Get Home APi ----------->>>

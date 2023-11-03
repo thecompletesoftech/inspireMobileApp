@@ -24,10 +24,9 @@ class KitchenScreen extends GetView<KitchenController> {
                 color: controller.appColors.transparent,
                 radius: 0.px,
                 onClickBack: () {
-                  if (controller.sendImagesList.isNotEmpty && controller.change) {
-                    controller.dialogSectionCompleted();
-                  } else if (controller.change) {
-                    controller.dialogSectionCompletedSave();
+                  if (controller.sendImagesList.isNotEmpty || controller.change) {
+                    // controller.dialogSectionCompleted();
+                    Get.back(result: true);
                   } else {
                     Get.back();
                   }
@@ -65,7 +64,7 @@ class KitchenScreen extends GetView<KitchenController> {
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,
-                                radius: 24.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -92,28 +91,6 @@ class KitchenScreen extends GetView<KitchenController> {
                                 ),
                               ),
                             ),
-                            !Utils.isLandScapeMode(context) || Utils.isSmallScreen(context)
-                                ? CommonButton(
-                                    title: Strings.sectionCompleted,
-                                    textColor: controller.visibleBtn
-                                        ? controller.appColors.black
-                                        : controller.appColors.border1,
-                                    color: controller.visibleBtn
-                                        ? controller.appColors.buttonColor
-                                        : controller.appColors.black.withOpacity(0.11999999731779099),
-                                    radius: 100.px,
-                                    textWeight: FontWeight.w600,
-                                    textSize: 16.px,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 24.px,
-                                      vertical: 10.px,
-                                    ),
-                                    onTap: () {
-                                      if (controller.visibleBtn) {
-                                        Get.back(result: true);
-                                      }
-                                    })
-                                : Container(),
                           ],
                         ).paddingOnly(bottom: 24.px),
                         Row(
@@ -123,15 +100,13 @@ class KitchenScreen extends GetView<KitchenController> {
                               child: SizedBox(
                                 width: 250.px,
                                 child: CommonTextField(
-                                  height: 52.px,
+                                  height: 56.px,
                                   border: Border.all(color: controller.appColors.border1),
-                                  borderRadius: 25.px,
+                                  borderRadius: 100.px,
                                   color: controller.appColors.white,
                                   controller: controller.searchController,
                                   prefixIcon: SvgPicture.string(
                                     icSearch,
-                                    // color: controller.appColors.grey,
-                                    // height: 15,
                                   ),
                                   hintText: "Search standards",
                                   hintTextStyle: MyTextStyle(
@@ -145,28 +120,6 @@ class KitchenScreen extends GetView<KitchenController> {
                                 ),
                               ),
                             ),
-                            Utils.isLandScapeMode(context) && !Utils.isSmallScreen(context)
-                                ? CommonButton(
-                                    title: Strings.sectionCompleted,
-                                    textColor: controller.visibleBtn
-                                        ? controller.appColors.black
-                                        : controller.appColors.border1,
-                                    color: controller.visibleBtn
-                                        ? controller.appColors.buttonColor
-                                        : controller.appColors.black.withOpacity(0.11999999731779099),
-                                    radius: 100.px,
-                                    textWeight: FontWeight.w600,
-                                    textSize: 16.px,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 24.px,
-                                      vertical: 10.px,
-                                    ),
-                                    onTap: () {
-                                      if (controller.visibleBtn) {
-                                        Get.back(result: true);
-                                      }
-                                    }).paddingOnly(left: 16.px)
-                                : Container(),
                             CommonButton(
                                 title: Strings.collapseStandards,
                                 textColor: controller.appColors.appColor,
@@ -276,30 +229,33 @@ class KitchenScreen extends GetView<KitchenController> {
                                               onTap: () async {
                                                 controller.imagePicker();
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    child: Center(
-                                                      child: SvgPicture.string(
-                                                        icAdd,
-                                                        fit: BoxFit.cover,
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      child: Center(
+                                                        child: SvgPicture.string(
+                                                          icAdd,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ).paddingOnly(bottom: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
                                                       ),
                                                     ),
-                                                  ).paddingOnly(bottom: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
-                                                    ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -316,49 +272,52 @@ class KitchenScreen extends GetView<KitchenController> {
                                     onTap: () {
                                       controller.imagePicker();
                                     },
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.string(
-                                          icImage,
-                                          width: 80.px,
-                                          height: 80.px,
-                                        ).paddingOnly(bottom: 16.px),
-                                        Text.rich(
-                                          TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: "Tap to Take or Upload",
-                                                style: MyTextStyle(
-                                                  textSize: 16.px,
-                                                  textWeight: FontWeight.w600,
-                                                  textColor: controller.appColors.appColor,
-                                                  textFamily: fontFamilyBold,
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.string(
+                                            icImage,
+                                            width: 80.px,
+                                            height: 80.px,
+                                          ).paddingOnly(bottom: 16.px),
+                                          Text.rich(
+                                            TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: "Tap to Take or Upload",
+                                                  style: MyTextStyle(
+                                                    textSize: 16.px,
+                                                    textWeight: FontWeight.w600,
+                                                    textColor: controller.appColors.appColor,
+                                                    textFamily: fontFamilyBold,
+                                                  ),
                                                 ),
-                                              ),
-                                              TextSpan(
-                                                text: " a photo of the ${controller.item1!.title!} to ",
-                                                style: MyTextStyle(
-                                                  textSize: 16.px,
-                                                  textWeight: FontWeight.w400,
-                                                  textColor: controller.appColors.black,
-                                                  textFamily: fontFamilyRegular,
+                                                TextSpan(
+                                                  text: " a photo of the ${controller.item1!.title!} to ",
+                                                  style: MyTextStyle(
+                                                    textSize: 16.px,
+                                                    textWeight: FontWeight.w400,
+                                                    textColor: controller.appColors.black,
+                                                    textFamily: fontFamilyRegular,
+                                                  ),
                                                 ),
-                                              ),
-                                              TextSpan(
-                                                text: "Complete the Section",
-                                                style: MyTextStyle(
-                                                  textSize: 16.px,
-                                                  textWeight: FontWeight.w600,
-                                                  textColor: controller.appColors.appColor,
-                                                  textFamily: fontFamilyBold,
+                                                TextSpan(
+                                                  text: "Complete the Section",
+                                                  style: MyTextStyle(
+                                                    textSize: 16.px,
+                                                    textWeight: FontWeight.w600,
+                                                    textColor: controller.appColors.appColor,
+                                                    textFamily: fontFamilyBold,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),
@@ -414,12 +373,12 @@ class KitchenScreen extends GetView<KitchenController> {
                                           SizedBox(
                                             width: 8.px,
                                           ),
-                                          if (controller.item1!.status == "true") ...[
-                                            ClipOval(
-                                                child: SvgPicture.string(
-                                              icComplete,
-                                            )),
-                                          ],
+                                          // if (controller.item1!.status == "true") ...[
+                                          //   ClipOval(
+                                          //       child: SvgPicture.string(
+                                          //     icComplete,
+                                          //   )),
+                                          // ],
                                         ],
                                       ).paddingOnly(bottom: 8.px),
                                       MyTextView(

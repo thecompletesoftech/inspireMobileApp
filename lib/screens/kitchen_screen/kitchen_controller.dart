@@ -189,7 +189,7 @@ class KitchenController extends BaseController {
       status: "false",
     ),
     RxCommonModel(
-      title: "Potential Lead-Based Paint Hazzards - visual assessment",
+      title: "Potential Lead-Based Paint Hazzards",
       subtitle:
           "Lead-based paint (LBP) is paint or other surface coatings that contain lead equal to or exceeding federal regulatory levels, currently 1.0 milligram per square centimeter or 0.5 percent by weight. Deteriorated paint or surface coatings found in homes built before 1978 are LBP hazards if the paint is LBP. Visual Assessment is surface by surface determination of paint condition.",
       image: ImagePath.potentialLeadBased,

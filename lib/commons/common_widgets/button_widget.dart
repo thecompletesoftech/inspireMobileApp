@@ -55,7 +55,7 @@ class CommonButton extends StatelessWidget {
           color: color ?? appColors.appBGColor,
           borderRadius: BorderRadius.circular(
               // ScalingQuery(context).fontSize((radius ?? 15.px) / 20)
-              (radius ?? 15.px)),
+              (radius ?? 100.px)),
           border: border,
         ),
         child: MyTextView(

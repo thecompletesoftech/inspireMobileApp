@@ -62,7 +62,7 @@ class CommonIconButton extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color ?? appColors.buttonColor,
-              borderRadius: BorderRadius.circular(ScalingQuery(context).fontSize((radius ?? 15.px) / 20)),
+              borderRadius: BorderRadius.circular(ScalingQuery(context).fontSize((radius ?? 100.px) / 20)),
               border: border,
             ),
             child: Row(
@@ -81,19 +81,16 @@ class CommonIconButton extends StatelessWidget {
                 SizedBox(
                   width: space ?? 8.px,
                 ),
-                SizedBox(
-                  width: isMaxLineWrap ? 175.px : null,
-                  child: MyTextView(
-                    title,
-                    maxLinesNew: maxLinesNew ?? 1,
-                    // isMaxLineWrap: isMaxLineWrap,
-                    textStyleNew: MyTextStyle(
-                      // textLetterSpacing: 1,
-                      textSize: ScalingQuery(context).fontSize((textSize ?? 16.px) / 18),
-                      textWeight: textWeight ?? FontWeight.normal,
-                      textFamily: textFamily ?? fontFamilyRegular,
-                      textColor: textColor ?? appColors.white,
-                    ),
+                MyTextView(
+                  title,
+                  maxLinesNew: maxLinesNew ?? 1,
+                  isMaxLineWrap: isMaxLineWrap,
+                  textStyleNew: MyTextStyle(
+                    // textLetterSpacing: 1,
+                    textSize: ScalingQuery(context).fontSize((textSize ?? 16.px) / 18),
+                    textWeight: textWeight ?? FontWeight.normal,
+                    textFamily: textFamily ?? fontFamilyRegular,
+                    textColor: textColor ?? appColors.white,
                   ),
                 ),
               ],

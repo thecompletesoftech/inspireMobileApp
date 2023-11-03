@@ -504,42 +504,45 @@ class ProgressScreen extends GetView<ProgressController> {
                                                     onTap: () async {
                                                       controller.imagePicker();
                                                     },
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 80.px,
-                                                          height: 80.px,
-                                                          // decoration: BoxDecoration(
-                                                          //     borderRadius: BorderRadius.circular(10.px),
-                                                          //     border: Border.all(
-                                                          //         color: controller.appColors.border1, width: 2)),
-                                                          child: Center(
-                                                            child: SvgPicture.string(icAdd,
-                                                                // height: 45.px,
-                                                                color: controller.selectedItem == "null"
-                                                                    ? controller.appColors.black
-                                                                        .withOpacity(0.07999999821186066)
-                                                                    : null
-                                                                // fit: BoxFit.cover,
-                                                                ),
+                                                    child: Container(
+                                                      color: Colors.white,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 80.px,
+                                                            height: 80.px,
+                                                            // decoration: BoxDecoration(
+                                                            //     borderRadius: BorderRadius.circular(10.px),
+                                                            //     border: Border.all(
+                                                            //         color: controller.appColors.border1, width: 2)),
+                                                            child: Center(
+                                                              child: SvgPicture.string(icAdd,
+                                                                  // height: 45.px,
+                                                                  color: controller.selectedItem == "null"
+                                                                      ? controller.appColors.black
+                                                                          .withOpacity(0.07999999821186066)
+                                                                      : null
+                                                                  // fit: BoxFit.cover,
+                                                                  ),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(height: 10.px),
-                                                        MyTextView(
-                                                          "Add picture",
-                                                          textStyleNew: MyTextStyle(
-                                                            textColor: controller.selectedItem == "null"
-                                                                ? controller.appColors.black
-                                                                    .withOpacity(0.07999999821186066)
-                                                                : controller.appColors.appColor,
-                                                            textSize: 14.px,
-                                                            textWeight: FontWeight.w500,
-                                                            textFamily: fontFamilyRegular,
+                                                          SizedBox(height: 10.px),
+                                                          MyTextView(
+                                                            "Add picture",
+                                                            textStyleNew: MyTextStyle(
+                                                              textColor: controller.selectedItem == "null"
+                                                                  ? controller.appColors.black
+                                                                      .withOpacity(0.07999999821186066)
+                                                                  : controller.appColors.appColor,
+                                                              textSize: 14.px,
+                                                              textWeight: FontWeight.w500,
+                                                              textFamily: fontFamilyRegular,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ).paddingSymmetric(horizontal: 32.px)
                                                 ],
@@ -556,61 +559,64 @@ class ProgressScreen extends GetView<ProgressController> {
                                           onTap: () {
                                             controller.imagePicker();
                                           },
-                                          child: Column(
-                                            children: [
-                                              controller.selectedItem == "null"
-                                                  ? Center(
-                                                      child: SvgPicture.string(
-                                                        icImage,
-                                                        width: 80.px,
-                                                        height: 80.px,
-                                                        color:
-                                                            controller.appColors.black.withOpacity(0.07999999821186066),
+                                          child: Container(
+                                            color: Colors.white,
+                                            child: Column(
+                                              children: [
+                                                controller.selectedItem == "null"
+                                                    ? Center(
+                                                        child: SvgPicture.string(
+                                                          icImage,
+                                                          width: 80.px,
+                                                          height: 80.px,
+                                                          color: controller.appColors.black
+                                                              .withOpacity(0.07999999821186066),
+                                                        ),
+                                                      )
+                                                    : Center(
+                                                        child: SvgPicture.string(
+                                                          icImage,
+                                                          width: 80.px,
+                                                          height: 80.px,
+                                                        ),
                                                       ),
-                                                    )
-                                                  : Center(
-                                                      child: SvgPicture.string(
-                                                        icImage,
-                                                        width: 80.px,
-                                                        height: 80.px,
-                                                      ),
+                                                SizedBox(
+                                                  height: 16.px,
+                                                ),
+                                                Flexible(
+                                                  child: Text.rich(
+                                                    TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text: "Tap to Take or Upload",
+                                                          style: MyTextStyle(
+                                                            textSize: 16.px,
+                                                            textWeight: FontWeight.w600,
+                                                            textColor: controller.selectedItem == "null"
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : controller.appColors.appColor,
+                                                            textFamily: fontFamilyBold,
+                                                          ),
+                                                        ),
+                                                        TextSpan(
+                                                          text: " a photo of the deficiency",
+                                                          style: MyTextStyle(
+                                                            textSize: 16.px,
+                                                            textColor: controller.selectedItem == "null"
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : controller.appColors.black,
+                                                            textWeight: FontWeight.w400,
+                                                            textFamily: fontFamilyRegular,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                              SizedBox(
-                                                height: 16.px,
-                                              ),
-                                              Flexible(
-                                                child: Text.rich(
-                                                  TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text: "Tap to Take or Upload",
-                                                        style: MyTextStyle(
-                                                          textSize: 16.px,
-                                                          textWeight: FontWeight.w600,
-                                                          textColor: controller.selectedItem == "null"
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : controller.appColors.appColor,
-                                                          textFamily: fontFamilyBold,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text: " a photo of the deficiency",
-                                                        style: MyTextStyle(
-                                                          textSize: 16.px,
-                                                          textColor: controller.selectedItem == "null"
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : controller.appColors.black,
-                                                          textWeight: FontWeight.w400,
-                                                          textFamily: fontFamilyRegular,
-                                                        ),
-                                                      ),
-                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                 ),
@@ -695,7 +701,7 @@ class ProgressScreen extends GetView<ProgressController> {
                                         controller: controller.dateController,
                                         color: controller.appColors.transparent,
                                         suffixIcon: SvgPicture.string(
-                                          icCalender1,
+                                          icCalender2,
                                           color: controller.selectedItem == "null"
                                               ? controller.appColors.border1
                                               : controller.appColors.lightText,

@@ -186,7 +186,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                         child: MyTextView(
                                           "${controller.item!.title}",
                                           textStyleNew: MyTextStyle(
-                                            textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                                            textSize: 24.px,
                                             textWeight: FontWeight.w600,
                                             textColor: controller.appColors.black,
                                             textFamily: fontFamilyBold,
@@ -254,7 +254,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                       "${controller.item!.title}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
-                                        textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                                        textSize: 24.px,
                                         textWeight: FontWeight.w600,
                                         textColor: controller.appColors.black,
                                         textFamily: fontFamilyBold,
@@ -268,8 +268,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   padding: EdgeInsets.all(16.px),
                                   child: CommonIconButton(
                                       icon: icCalender1,
-                                      iconheigth: 20.px,
-                                      space: 8.px,
+                                      iconheigth: 24.px,
                                       title: "06/22/2023",
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
@@ -284,7 +283,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   margin: EdgeInsets.zero,
                                   child: CommonIconButton(
                                       icon: icTimeColor,
-                                      iconheigth: 20.px,
+                                      iconheigth: 24.px,
                                       title: "08:00",
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
@@ -298,7 +297,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   padding: EdgeInsets.all(16.px),
                                   child: CommonIconButton(
                                       icon: icHome,
-                                      iconheigth: 20.px,
+                                      iconheigth: 24.px,
                                       title: controller.item!.title,
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
@@ -569,7 +568,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                 title: Strings.goToBuildings,
                                 textColor: controller.appColors.appColor,
                                 color: controller.appColors.transparent,
-                                radius: 35.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w600,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 16.px,
@@ -585,17 +584,13 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                               width: 24.px,
                             ),
                             CommonButton(
-                                title:
-                                    // controller.item!.status!.contains("inCompleted")
-                                    //     ? Strings.resumeInspection
-                                    //     :
-                                    Strings.HSAcknowledgment,
+                                title: Strings.HSAcknowledgment,
                                 textColor:
                                     controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                                 color: controller.visibleBtn
                                     ? controller.appColors.textPink
                                     : controller.appColors.black.withOpacity(0.11999999731779099),
-                                radius: 35.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w600,
                                 textSize: 16.px,
                                 padding: EdgeInsets.symmetric(
@@ -609,9 +604,6 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                 }),
                           ],
                         ).paddingSymmetric(vertical: 32.px)
-                        // : controller.item!.status == InspectionStatus.completed.toString()
-                        //     ? InspectionCompleteWidget()
-                        // : const SizedBox()
                       ],
                     ).paddingAll(32.px),
                   ],

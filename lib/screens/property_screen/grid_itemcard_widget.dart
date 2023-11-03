@@ -25,12 +25,12 @@ class GridItemCardWidget extends StatelessWidget {
             children: [
               CommonButton(
                   title: Strings.annual,
-                  textSize: 12.px,
+                  textSize: 14.px,
                   isSmall: false,
                   isBig: true,
                   radius: 100.px,
                   color: controller.appColors.textField,
-                  textWeight: FontWeight.w600,
+                  textWeight: FontWeight.w500,
                   textColor: item.check == false ? controller.appColors.textGreen : controller.appColors.textPink,
                   onTap: () {}),
               Expanded(
@@ -51,6 +51,7 @@ class GridItemCardWidget extends StatelessWidget {
                       ),
                     SvgPicture.string(
                       icLocationColor,
+                      height: 24.px,
                     ),
                   ],
                 ),
@@ -68,8 +69,11 @@ class GridItemCardWidget extends StatelessWidget {
           ).paddingOnly(bottom: 8.px),
           MyTextView(
             item.subtitle,
-            textStyleNew:
-                MyTextStyle(textSize: 16.px, textFamily: fontFamilyRegular, textColor: controller.appColors.lightText),
+            textStyleNew: MyTextStyle(
+                textSize: 16.px,
+                textFamily: fontFamilyRegular,
+                textWeight: FontWeight.w400,
+                textColor: controller.appColors.lightText),
           ),
           Column(
             children: [
@@ -77,12 +81,13 @@ class GridItemCardWidget extends StatelessWidget {
                 children: [
                   SvgPicture.string(
                     icCalenderColor ?? "",
+                    height: 16.px,
                   ).paddingOnly(right: 8.px),
                   MyTextView(
                     "06/22/2023",
                     textStyleNew: MyTextStyle(
                       textSize: 12.px,
-                      textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                      textWeight: FontWeight.w600,
                       textColor: controller.appColors.black,
                       textFamily: fontFamilyRegular,
                     ),
@@ -93,13 +98,14 @@ class GridItemCardWidget extends StatelessWidget {
                 children: [
                   SvgPicture.string(
                     icTimeColor ?? "",
+                    height: 16.px,
                   ).paddingOnly(right: 8.px),
                   MyTextView(
                     "8:00",
                     textStyleNew: MyTextStyle(
                       textSize: 12.px,
                       textColor: controller.appColors.black,
-                      textWeight: Utils.isMediumScreen(context) ? FontWeight.w600 : FontWeight.w500,
+                      textWeight: FontWeight.w600,
                       textFamily: fontFamilyRegular,
                     ),
                   ),

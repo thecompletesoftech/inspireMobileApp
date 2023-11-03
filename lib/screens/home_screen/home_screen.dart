@@ -215,7 +215,7 @@ class HomeScreen extends GetView<HomeController> {
                             radius: 100.px,
                             title: Strings.backToBuildings,
                             onTap: () {
-                              Get.back();
+                              Get.back(result: controller.visibleBtn);
                             },
                             height: 44.px,
                             padding: EdgeInsets.symmetric(
@@ -315,13 +315,19 @@ class HomeScreen extends GetView<HomeController> {
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
                             return controller.status == InspectionStatus.all
-                                ? ListItemCardWidget(item: item, index: index)
+                                ? ListItemCardWidget(
+                                    item: item,
+                                  )
                                 : controller.status == InspectionStatus.completed
                                     ? item.status == InspectionStatus.completed.toString()
-                                        ? ListItemCardWidget(item: item, index: index)
+                                        ? ListItemCardWidget(
+                                            item: item,
+                                          )
                                         : const SizedBox()
                                     : item.status != InspectionStatus.completed.toString()
-                                        ? ListItemCardWidget(item: item, index: index)
+                                        ? ListItemCardWidget(
+                                            item: item,
+                                          )
                                         : const SizedBox();
                           })
                       : GridView.builder(
@@ -335,9 +341,9 @@ class HomeScreen extends GetView<HomeController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.53.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.55322938.px) //.....
                                   : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.51.px) //pro mini
+                                      ? ScalingQuery(context).verticalScale(0.529943.px) //pro mini
                                       : Utils.isTabletScreen(context)
                                           ? ScalingQuery(context).verticalScale(0.51.px) //.....1
                                           : Utils.isMediumScreen(context)
@@ -349,13 +355,19 @@ class HomeScreen extends GetView<HomeController> {
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
                             return controller.status == InspectionStatus.all
-                                ? GridItemCardWidget(item: item, index: index)
+                                ? GridItemCardWidget(
+                                    item: item,
+                                  )
                                 : controller.status == InspectionStatus.completed
                                     ? item.status == InspectionStatus.completed.toString()
-                                        ? GridItemCardWidget(item: item, index: index)
+                                        ? GridItemCardWidget(
+                                            item: item,
+                                          )
                                         : const SizedBox()
                                     : item.status != InspectionStatus.completed.toString()
-                                        ? GridItemCardWidget(item: item, index: index)
+                                        ? GridItemCardWidget(
+                                            item: item,
+                                          )
                                         : const SizedBox();
                           }),
                 )

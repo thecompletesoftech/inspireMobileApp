@@ -56,7 +56,7 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,
-                                radius: 24.px,
+                                radius: 100.px,
                                 textWeight: FontWeight.w500,
                                 color: controller.appColors.white,
                                 textColor: controller.item!.check == false
@@ -141,13 +141,15 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                                     ),
                                                   ],
                                                 ).paddingOnly(bottom: 8.px),
+                                                // if (item.status == "false") ...[
                                                 MyTextView(item.failMessage ?? "1 Failed Standards",
                                                     textStyleNew: MyTextStyle(
                                                       textSize: 20.px,
                                                       textWeight: FontWeight.w400,
-                                                      textColor: controller.appColors.lightText,
+                                                      textColor: controller.appColors.border,
                                                       textFamily: fontFamilyRegular,
                                                     )).paddingOnly(bottom: 8.px),
+                                                // ],
                                                 MyTextView(
                                                   item.subtitle,
                                                   maxLinesNew: 4,
@@ -263,15 +265,15 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                                 SizedBox(
                                                   height: 8.px,
                                                 ),
-                                                // if (item.status == "true") ...[
-                                                MyTextView(item.failMessage ?? "1 Failed Standards",
-                                                    textStyleNew: MyTextStyle(
-                                                      textSize: 20.px,
-                                                      textWeight: FontWeight.w400,
-                                                      textColor: controller.appColors.lightText,
-                                                      textFamily: fontFamilyRegular,
-                                                    )).paddingOnly(bottom: 8.px),
-                                                // ],
+                                                if (item.status == "false") ...[
+                                                  MyTextView(item.failMessage ?? "1 Failed Standards",
+                                                      textStyleNew: MyTextStyle(
+                                                        textSize: 20.px,
+                                                        textWeight: FontWeight.w400,
+                                                        textColor: controller.appColors.border,
+                                                        textFamily: fontFamilyRegular,
+                                                      )).paddingOnly(bottom: 8.px),
+                                                ],
                                                 MyTextView(
                                                   item.subtitle,
                                                   maxLinesNew: 4,
@@ -295,7 +297,9 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                           children: [
                             CommonButton(
                                 title: Strings.deficienciesFound,
-                                textColor: controller.appColors.border1,
+                                textColor: controller.visibleBtn
+                                    ? controller.appColors.appColor
+                                    : controller.appColors.border1,
                                 color: controller.appColors.transparent,
                                 radius: 35.px,
                                 textWeight: FontWeight.w600,
@@ -304,24 +308,30 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                   vertical: 10.px,
                                 ),
                                 textSize: 16.px,
-                                border: Border.all(color: controller.appColors.textFiledBorderColor, width: 2),
+                                border: Border.all(
+                                    color: controller.visibleBtn
+                                        ? controller.appColors.border
+                                        : controller.appColors.textFiledBorderColor,
+                                    width: 2),
                                 onTap: () {
-                                  Get.toNamed(DeficienciesFoundScreen.routes, arguments: controller.item);
+                                  if (controller.visibleBtn) {
+                                    Get.toNamed(DeficienciesFoundScreen.routes, arguments: controller.item);
+                                  }
                                 }),
                             SizedBox(
                               width: 24.px,
                             ),
                             CommonButton(
                               color: controller.visibleBtn
-                                  ? controller.appColors.buttonColor
+                                  ? controller.appColors.textPink
                                   : controller.appColors.black.withOpacity(0.11999999731779099),
                               textColor:
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
-                              title: Strings.inspectionSummary,
+                              title: Strings.inspectUnits,
                               onTap: () {
-                                if (controller.visibleBtn) {
-                                  Get.toNamed(HomeScreen.routes, arguments: controller.item);
-                                }
+                                // if (controller.visibleBtn) {
+                                Get.toNamed(HomeScreen.routes, arguments: controller.item);
+                                // }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,

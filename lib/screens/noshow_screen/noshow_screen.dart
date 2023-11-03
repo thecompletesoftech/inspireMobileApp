@@ -50,8 +50,8 @@ class NoShowScreen extends GetView<NoShowController> {
                                     controller.visibleBtn = false;
                                     controller.update();
                                   },
-                                  radius: 25.px,
-                                  padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 12.px),
+                                  radius: 100.px,
+                                  padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                                 ),
                               ),
                             ],
@@ -81,8 +81,8 @@ class NoShowScreen extends GetView<NoShowController> {
                                         controller.change = false;
                                         controller.update();
                                       },
-                                      radius: 25.px,
-                                      padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 12.px),
+                                      radius: 100.px,
+                                      padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                                     ),
                                   ),
                                 ],
@@ -187,7 +187,7 @@ class NoShowScreen extends GetView<NoShowController> {
                               child: MyTextView(
                                 controller.item == null
                                     ? ""
-                                    : "${controller.item!.massage}, ${controller.item1!.massage} - ${controller.item!.title}",
+                                    : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                                 textStyleNew: MyTextStyle(
                                   textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                                   textWeight: FontWeight.w600,
@@ -307,7 +307,7 @@ class NoShowScreen extends GetView<NoShowController> {
                                       controller: controller.dateController,
                                       color: controller.appColors.transparent,
                                       suffixIcon: SvgPicture.string(
-                                        icCalender1,
+                                        icCalender2,
                                         color: controller.appColors.lightText,
                                       ),
                                       shadowColor: controller.appColors.transparent,
