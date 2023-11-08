@@ -65,9 +65,10 @@ class Constants {
   static String startTyping = "startTyping";
   static String stopTyping = "stopTyping";
 
-  static const String kUriPrefix = "";
+  // static const String kUriPrefix = "";
   static const String apiKey = "";
-  static const String googleApiKey = "AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc";
+  // static const String googleApiKey = "AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc";
+  static const String googleApiKey = "AIzaSyAHAmJ0f-Q9xHKfd-rsddiqm4Mq7mb0xUY";
   static String bold = "";
   static String light = "";
   static String book = "";

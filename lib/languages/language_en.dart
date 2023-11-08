@@ -102,7 +102,10 @@ class LanguageEn extends Languages {
   ///-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= congratulation screen =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   @override
   String get congrats => "Congrats!";
-
+  @override
+  String get enterYourEmail => "Enter your email";
+  @override
+  String get enterYourPassword => "Enter your password";
   @override
   String get resetSuccessful => "Password reset successful";
 

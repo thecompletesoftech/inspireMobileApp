@@ -6,20 +6,18 @@ import '../standard_screen/standard_screen.dart';
 
 class KitchenItemCardWidget extends StatelessWidget {
   final RxCommonModel item1;
-  final KitchenController controller = Get.find();
   KitchenItemCardWidget({super.key, required this.item1});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<KitchenController>(
-      assignId: true,
-      builder: (logic) {
+      init: KitchenController(),
+      builder: (controller) {
         return Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.transparent,
           ),
           child: ExpansionTile(
-              // controller: controller.expansionTileController,
               shape: const Border(
                 top: BorderSide(color: Colors.transparent),
                 bottom: BorderSide(color: Colors.transparent),
@@ -124,7 +122,7 @@ class KitchenItemCardWidget extends StatelessWidget {
                           ),
                         ),
                       ).paddingSymmetric(vertical: 8.px)
-                    : Container();
+                    : const SizedBox();
               }).toList()),
         );
       },

@@ -2,16 +2,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_screen/deficienciesCard_widget.dart';
 
-import '../signatures_screen/signature_screen.dart';
-import 'inspection_summary_controller.dart';
+import '../authority_signatures_screen/authority_signature_screen.dart';
+import 'hs_ack_controller.dart';
 
-class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
-  const InspectionSummaryScreen({Key? key}) : super(key: key);
-  static const routes = "/InspectionSummaryScreen";
+class HSAckScreen extends GetView<HSAckController> {
+  const HSAckScreen({Key? key}) : super(key: key);
+  static const routes = "/HSAckScreen";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<InspectionSummaryController>(
+    return GetBuilder<HSAckController>(
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -30,9 +30,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                       children: [
                         Flexible(
                           child: MyTextView(
-                            controller.item == null
-                                ? ""
-                                : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
+                            controller.item == null ? "" : "${controller.item!.title}, ${controller.item!.subtitle}",
                             textStyleNew: MyTextStyle(
                               textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
@@ -57,13 +55,13 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : const SizedBox(),
+                            : Container(),
                       ],
                     ).paddingOnly(top: 32.px),
                     Column(
                       children: [
                         MyTextView(
-                          Strings.inspectionSummary,
+                          Strings.hSAcknowledgment,
                           textStyleNew: MyTextStyle(
                             textSize: 32.px,
                             textWeight: FontWeight.w600,
@@ -91,16 +89,15 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                             ),
                           ],
                         ).paddingOnly(bottom: 32.px),
-                        Form(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: Column(
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyTextView(
-                                    Strings.selectFindingType,
+                                    Strings.pointOfContact,
                                     textStyleNew: MyTextStyle(
                                       textColor: Colors.black,
                                       textSize: 20.px,
@@ -108,68 +105,49 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                       textWeight: FontWeight.w400,
                                     ),
                                   ).paddingOnly(bottom: 24.px),
-                                  DropdownButtonFormField<String>(
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down,
-                                      size: 20.px,
-                                      color: controller.appColors.grey,
+                                  CommonTextField(
+                                    isLable: true,
+                                    padding: EdgeInsets.zero,
+                                    contentPadding: EdgeInsets.only(left: 15.px),
+                                    controller: controller.commentController,
+                                    color: controller.appColors.transparent,
+                                    suffixIcon: GestureDetector(
+                                      onTap: () {
+                                        controller.listen();
+                                      },
+                                      child: SvgPicture.string(
+                                        icMike,
+                                        color: controller.isListening.value
+                                            ? controller.appColors.appColor
+                                            : controller.appColors.lightText,
+                                      ),
                                     ),
-                                    decoration: InputDecoration(
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 15.px),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: controller.appColors.grey),
-                                          borderRadius: BorderRadius.circular(25.px),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: controller.appColors.grey),
-                                          borderRadius: BorderRadius.circular(25.px),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: controller.appColors.grey),
-                                          borderRadius: BorderRadius.circular(25.px),
-                                        ),
-                                        filled: true,
-                                        hintStyle: MyTextStyle(
-                                          textWeight: FontWeight.w400,
-                                          textSize: 15.px,
-                                          textColor: controller.appColors.black,
-                                        ),
-                                        hintText: controller.dropDownValue,
-                                        labelStyle: MyTextStyle(
-                                          textWeight: FontWeight.w400,
-                                          textSize: 15.px,
-                                        ),
-                                        fillColor: controller.appColors.transparent),
-                                    onChanged: (String? value) {
-                                      controller.dropDownValue = value!;
-                                      controller.visibleBtn = true;
+                                    onChange: (str) {
+                                      if (str.isNotEmpty &&
+                                          controller.dateController.text.isNotEmpty &&
+                                          (controller.change)) {
+                                        controller.visibleBtn = true;
+                                      } else {
+                                        controller.visibleBtn = false;
+                                      }
                                       controller.update();
                                     },
-                                    items: controller.itemList
-                                        .map((cityTitle) => DropdownMenuItem(
-                                            value: cityTitle,
-                                            child: MyTextView(
-                                              cityTitle,
-                                              textStyleNew: MyTextStyle(
-                                                textWeight: FontWeight.w400,
-                                                textSize: 15.px,
-                                                textColor: controller.appColors.black,
-                                              ),
-                                            )))
-                                        .toList(),
+                                    labelText: "${Strings.pointOfContactName}*",
+                                    hintText: Strings.pointOfContactName,
                                   ),
                                 ],
-                              )),
-                              SizedBox(
-                                width: 16.px,
                               ),
-                              Expanded(
-                                  child: Column(
+                            ),
+                            SizedBox(
+                              width: 16.px,
+                            ),
+                            Expanded(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyTextView(
-                                    Strings.selectCompletedDate,
+                                    Strings.selectInspectionEndDateTime,
                                     textStyleNew: MyTextStyle(
                                       textColor: Colors.black,
                                       textSize: 20.px,
@@ -180,27 +158,56 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                   SizedBox(
                                     height: 24.px,
                                   ),
-                                  CommonTextField(
-                                      isLable: true,
-                                      readOnly: true,
-                                      onTap: () {
-                                        controller.selectDate();
-                                      },
-                                      controller: controller.dateController,
-                                      color: controller.appColors.transparent,
-                                      suffixIcon: SvgPicture.string(
-                                        icCalender2,
-                                        color: controller.appColors.grey,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: CommonTextField(
+                                            isLable: true,
+                                            readOnly: true,
+                                            onTap: () {
+                                              controller.selectDate();
+                                            },
+                                            controller: controller.dateController,
+                                            color: controller.appColors.transparent,
+                                            suffixIcon: SvgPicture.string(
+                                              icCalender2,
+                                              color: controller.appColors.grey,
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                            contentPadding: EdgeInsets.only(left: 15.px),
+                                            shadowColor: controller.appColors.transparent,
+                                            labelText: "Date*",
+                                            hintText: "Date"),
                                       ),
-                                      padding: EdgeInsets.zero,
-                                      contentPadding: EdgeInsets.only(left: 15.px),
-                                      shadowColor: controller.appColors.transparent,
-                                      labelText: "${Strings.completedDate}*",
-                                      hintText: Strings.completedDate)
+                                      SizedBox(
+                                        width: 16.px,
+                                      ),
+                                      Expanded(
+                                        child: CommonTextField(
+                                            isLable: true,
+                                            readOnly: true,
+                                            onTap: () {
+                                              controller.selectTime();
+                                            },
+                                            controller: controller.timeController,
+                                            color: controller.appColors.transparent,
+                                            suffixIcon: SvgPicture.string(
+                                              icTime,
+                                              color: controller.appColors.grey,
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                            contentPadding: EdgeInsets.only(left: 15.px),
+                                            shadowColor: controller.appColors.transparent,
+                                            labelText: "Hour*",
+                                            hintText: "Hour"),
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )),
-                            ],
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -249,7 +256,7 @@ class InspectionSummaryScreen extends GetView<InspectionSummaryController> {
                                 // height: 55.px,
                                 onTap: () {
                                   if (controller.visibleBtn) {
-                                    Get.toNamed(SignatureScreen.routes, arguments: controller.item);
+                                    Get.toNamed(AuthoritySignatureScreen.routes, arguments: controller.item);
                                   }
                                 }),
                           ],

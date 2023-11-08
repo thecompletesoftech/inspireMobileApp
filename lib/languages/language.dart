@@ -579,10 +579,12 @@ abstract class Languages {
   String get teaSite;
 
   // =-=-=-=-=-=-=-=-=- Error Strings  =-=-==-=-=->>>>>>
+  String get enterYourEmail;
   String get pleaseEnterEmail;
 
   String get pleaseEnterValidEmail;
 
+  String get enterYourPassword;
   String get pleaseEnterPassword;
 
   String get pleaseEnterConfirmPassword;

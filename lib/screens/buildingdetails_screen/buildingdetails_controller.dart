@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:screenshot/screenshot.dart';
@@ -165,6 +166,12 @@ class BuildingDetailsController extends BaseController {
     target: LatLng(37.42796133580664, 122.085749655962),
     zoom: 17,
   );
+
+  late final Rx<DateTime> _selectedDate = DateTime.now().obs;
+  var formattedDate = ''.obs;
+
+  Rx<DateTime> get selectedDate => _selectedDate;
+
   SpeechToText speechToText = SpeechToText();
   var isListening = false.obs;
   var speechText = "".obs;
@@ -325,18 +332,40 @@ class BuildingDetailsController extends BaseController {
         ));
   }
 
+  void selectDate1() async {
+    final DateTime? pickedDate = await showDatePicker(
+      initialDate: _selectedDate.value,
+      firstDate: DateTime(1985),
+      lastDate: DateTime.now(),
+      context: Get.context!,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+    );
+
+    if (pickedDate != null && pickedDate != selectedDate.value) {
+      selectedDate.value = pickedDate;
+      var dateFormat = DateFormat("MM/dd/yyyy").format(selectedDate.value);
+      formattedDate.value = dateFormat;
+      date1Controller.text = dateFormat;
+    }
+    update();
+  }
+
   getFromCamera({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }
@@ -345,15 +374,19 @@ class BuildingDetailsController extends BaseController {
   getFromGallery({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }

@@ -12,7 +12,7 @@ class Strings {
   static const String homeTitle = "Inspections count ";
   static const String homeTitle1 = "Housing Authority of South Bend";
   static const String homeTitle2 = "$homeTitle1 No Scattered Site";
-  static String userName = "Philip Martin";
+  static String userName = "Nick Johnson";
   static String userType = "Inspector";
 
   static const String editProfile = "Edit profile";
@@ -64,6 +64,7 @@ class Strings {
   static const String responsibility = "Responsibility";
   static const String inspectUnits = "Inspect Units";
   static const String inspectionSummary = "Inspection Summary";
+  static const String hSAcknowledgment = "H&S Acknowledgment";
   static const String notes = "Pre-Made notes";
   static const String takeOne = "Take one";
   static const String txtMsg = "Text message";
@@ -85,6 +86,7 @@ class Strings {
   static const String cancel = "Cancel";
   static const String undoAll = "Undo all";
   static const String selectCompletedDate = 'Select Completed date';
+  static const String selectInspectionEndDateTime = 'Inspection End Date/Time';
   static const String completedDate = 'Completed date';
   static const String addComment = "Add Comments";
   static const String changePicture = "Change picture";
@@ -97,6 +99,9 @@ class Strings {
   static const String addComments = "Add your comments";
   static const String summaryDecision = "Summary Decision";
   static const String selectFindingType = 'Select Finding Type';
+  static const String pointOfContact = 'Point of Contact';
+  static const String pointOfContactName = "$pointOfContact Name";
+  static const String pointOfContactSignatures = "$pointOfContact Signature";
   static const String selectRoofAccessIndicator = 'Select Roof Access Indicator';
   static const String selectReasonUninspectable = 'Select Reason Uninspectable';
   static const String addReasonUninspectable = 'Add Reason Uninspectable';

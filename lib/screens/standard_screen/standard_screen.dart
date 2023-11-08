@@ -61,7 +61,7 @@ class StandardScreen extends GetView<StandardController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : Container(),
+                            : const SizedBox(),
                       ],
                     ).paddingOnly(top: 32.px, bottom: 40.px),
                     Column(
@@ -102,11 +102,6 @@ class StandardScreen extends GetView<StandardController> {
                                       textWeight: FontWeight.w500,
                                       textSize: 16.px,
                                       color: controller.appColors.appColor,
-                                      // radius: Utils.isLandScapeMode(context)
-                                      //     ? 35.px
-                                      //     : Utils.isTabletScreen(context)
-                                      //         ? 40.px
-                                      //         : 24.px,
                                       icon: icArrowLeft,
                                     ),
                                   SizedBox(
@@ -129,11 +124,6 @@ class StandardScreen extends GetView<StandardController> {
                                       textWeight: FontWeight.w500,
                                       textSize: 16.px,
                                       color: controller.appColors.appColor,
-                                      // radius: Utils.isLandScapeMode(context)
-                                      //     ? 35.px
-                                      //     : Utils.isTabletScreen(context)
-                                      //         ? 40.px
-                                      //         : 24.px,
                                       icon: icArrowRight,
                                     ),
                                 ],
@@ -166,11 +156,6 @@ class StandardScreen extends GetView<StandardController> {
                                   textWeight: FontWeight.w500,
                                   textSize: 16.px,
                                   color: controller.appColors.appColor,
-                                  // radius: Utils.isLandScapeMode(context)
-                                  //     ? 35.px
-                                  //     : Utils.isTabletScreen(context)
-                                  //         ? 40.px
-                                  //         : 24.px,
                                   icon: icArrowLeft,
                                 ),
                               SizedBox(
@@ -193,11 +178,6 @@ class StandardScreen extends GetView<StandardController> {
                                   textWeight: FontWeight.w500,
                                   textSize: 16.px,
                                   color: controller.appColors.appColor,
-                                  // radius: Utils.isLandScapeMode(context)
-                                  //     ? 35.px
-                                  //     : Utils.isTabletScreen(context)
-                                  //         ? 40.px
-                                  //         : 24.px,
                                   icon: icArrowRight,
                                 )
                             ],

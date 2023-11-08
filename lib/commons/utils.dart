@@ -306,23 +306,28 @@ class Utils {
       targetWidth: Platform.isAndroid ? 150 : 160,
     );
     final ui.FrameInfo imageFI = await codec.getNextFrame();
+    paintImage(
+      canvas: canvas,
+      rect: Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+      image: imageFI.image,
+      fit: BoxFit.cover,
+    );
 
-    if (addBorder) {
-      //draw Border
-      paint..color = borderColor;
-      paint..style = PaintingStyle.stroke;
-      paint..strokeWidth = borderSize;
-      canvas.drawCircle(Offset(radius, radius), radius, paint);
-    }
+    // if (addBorder) {
+    //   //draw Border
+    //   paint..color = borderColor;
+    //   paint..style = PaintingStyle.stroke;
+    //   paint..strokeWidth = borderSize;
+    //   canvas.drawCircle(Offset(radius, radius), radius, paint);
+    // }
 
     if (title != null) {
       if (title.length > 9) {
         title = title.substring(0, 9);
       }
-      printAction(radius.toString());
       //draw Title background
-      paint..color = titleBackgroundColor;
-      paint..style = PaintingStyle.fill;
+      paint.color = titleBackgroundColor;
+      paint.style = PaintingStyle.fill;
       canvas.drawCircle(Offset(radius, radius), radius, paint);
 
       //draw Title
@@ -394,9 +399,9 @@ class Utils {
 
     if (addBorder) {
       //draw Border
-      paint..color = borderColor;
-      paint..style = PaintingStyle.stroke;
-      paint..strokeWidth = borderSize;
+      paint.color = borderColor;
+      paint.style = PaintingStyle.stroke;
+      paint.strokeWidth = borderSize;
       canvas.drawCircle(Offset(radius, radius), radius, paint);
     }
 
@@ -405,8 +410,8 @@ class Utils {
         title = title.substring(0, 9);
       }
       //draw Title background
-      paint..color = titleBackgroundColor;
-      paint..style = PaintingStyle.fill;
+      paint.color = titleBackgroundColor;
+      paint.style = PaintingStyle.fill;
       canvas.drawRRect(
           RRect.fromRectAndRadius(
               Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10), Radius.circular(100)),

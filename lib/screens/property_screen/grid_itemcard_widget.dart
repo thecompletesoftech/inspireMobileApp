@@ -122,13 +122,17 @@ class GridItemCardWidget extends StatelessWidget {
                   onTap: () {
                     Get.toNamed(BuildingsScreen.routes, arguments: item)!.then((value) {
                       if (value != null) {
-                        item.status = PropertyStatus.inCompleted.toString();
+                        item.status = value == 0
+                            ? PropertyStatus.completed.toString()
+                            : value == 1
+                                ? PropertyStatus.inCompleted.toString()
+                                : PropertyStatus.scheduled.toString();
                       }
                       controller.update();
                     });
                   },
                   padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
-                  textWeight: FontWeight.w500,
+                  textWeight: FontWeight.w600,
                   textSize: 16.px,
                   color: controller.appColors.transparent,
                   textColor: controller.appColors.appColor)
@@ -140,7 +144,7 @@ class GridItemCardWidget extends StatelessWidget {
                   title: Strings.propertyDetails,
                   color: controller.appColors.transparent,
                   textColor: controller.appColors.appColor,
-                  textWeight: FontWeight.w500,
+                  textWeight: FontWeight.w600,
                   textSize: 16.px,
                   padding: EdgeInsets.symmetric(
                     horizontal: 24.px,

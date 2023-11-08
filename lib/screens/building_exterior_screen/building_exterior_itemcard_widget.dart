@@ -121,7 +121,7 @@ class BuildingExteriorItemCardWidget extends GetView<BuildingExteriorController>
                           ),
                         ),
                       ).paddingSymmetric(vertical: 8.px)
-                    : Container();
+                    : const SizedBox();
               }).toList()),
         );
       },

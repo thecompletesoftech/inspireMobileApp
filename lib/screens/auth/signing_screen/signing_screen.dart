@@ -84,7 +84,7 @@ class SigningScreen extends GetView<SigningController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 452.px,
+                              width: 500.px,
                               child: ShadowContainer(
                                   elevation: 2,
                                   radius: 16.px,
@@ -111,7 +111,7 @@ class SigningScreen extends GetView<SigningController> {
                                       CommonTextField(
                                         controller: controller.email,
                                         labelText: Languages.of(context)!.email,
-                                        hintText: Languages.of(context)!.pleaseEnterEmail,
+                                        hintText: Languages.of(context)!.enterYourEmail,
                                         isLable: true,
                                         padding: EdgeInsets.zero,
                                         contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
@@ -141,7 +141,7 @@ class SigningScreen extends GetView<SigningController> {
                                         controller: controller.pass,
                                         labelText: Languages.of(context)!.password,
                                         isLable: true,
-                                        hintText: Languages.of(context)!.pleaseEnterPassword,
+                                        hintText: Languages.of(context)!.enterYourPassword,
                                         padding: EdgeInsets.zero,
                                         obscureText: controller.hide,
                                         contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
@@ -202,7 +202,7 @@ class SigningScreen extends GetView<SigningController> {
                                             textFamily: fontFamilyRegular),
                                       )
                                     ],
-                                  )),
+                                  )).marginSymmetric(horizontal: 32.px),
                             ),
                           ],
                         ),
@@ -222,10 +222,8 @@ class SigningScreen extends GetView<SigningController> {
                             ).paddingOnly(top: 24.px),
                             ShadowContainer(
                                     elevation: 2,
-                                    width: 452.px,
                                     radius: 16.px,
                                     padding: EdgeInsets.all(48.px),
-                                    // margin: EdgeInsets.all(32.px),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +247,7 @@ class SigningScreen extends GetView<SigningController> {
                                         CommonTextField(
                                           controller: controller.email,
                                           labelText: Languages.of(context)!.email,
-                                          hintText: Languages.of(context)!.pleaseEnterEmail,
+                                          hintText: Languages.of(context)!.enterYourEmail,
                                           isLable: true,
                                           padding: EdgeInsets.zero,
                                           contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
@@ -279,7 +277,7 @@ class SigningScreen extends GetView<SigningController> {
                                           controller: controller.pass,
                                           labelText: Languages.of(context)!.password,
                                           isLable: true,
-                                          hintText: Languages.of(context)!.pleaseEnterPassword,
+                                          hintText: Languages.of(context)!.enterYourPassword,
                                           padding: EdgeInsets.zero,
                                           obscureText: controller.hide,
                                           contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
@@ -343,7 +341,7 @@ class SigningScreen extends GetView<SigningController> {
                                       ],
                                     ))
                                 .marginSymmetric(
-                                    horizontal: Utils.isMediumScreen(context) ? 16.h : 10.h, vertical: 10.h),
+                                    horizontal: Utils.isMediumScreen(context) ? 16.h : 13.h, vertical: 10.h),
                             Image.asset(
                               ImagePath.loginScreen,
                               height: 20.h,

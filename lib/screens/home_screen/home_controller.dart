@@ -76,60 +76,6 @@ class HomeController extends BaseController {
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
         check: true),
-    RxCommonModel(
-        id: 7,
-        title: "Fernando Devries",
-        subtitle: "Tenant",
-        massage: "D-1",
-        image: ImagePath.pic1,
-        imgId: ImagePath.media1,
-        status: InspectionStatus.scheduled.toString(),
-        check: false),
-    RxCommonModel(
-        id: 8,
-        title: "Lori Bryson",
-        subtitle: "Tenant",
-        massage: "D-2",
-        image: ImagePath.pic2,
-        imgId: ImagePath.media2,
-        status: InspectionStatus.scheduled.toString(),
-        check: false),
-    RxCommonModel(
-        id: 9,
-        title: "Lyle Koulfman",
-        subtitle: "Tenant",
-        massage: "E-1",
-        image: ImagePath.pic3,
-        imgId: ImagePath.media3,
-        status: InspectionStatus.scheduled.toString(),
-        check: true),
-    RxCommonModel(
-        id: 10,
-        title: "Fernando Devries",
-        subtitle: "Tenant",
-        massage: "E-2",
-        image: ImagePath.pic1,
-        imgId: ImagePath.media1,
-        status: InspectionStatus.scheduled.toString(),
-        check: false),
-    RxCommonModel(
-        id: 11,
-        title: "Lori Bryson",
-        subtitle: "Tenant",
-        massage: "F-1",
-        image: ImagePath.pic2,
-        imgId: ImagePath.media2,
-        status: InspectionStatus.scheduled.toString(),
-        check: false),
-    RxCommonModel(
-        id: 12,
-        title: "Lyle Koulfman",
-        subtitle: "Tenant",
-        massage: "F-2",
-        image: ImagePath.pic3,
-        imgId: ImagePath.media3,
-        status: InspectionStatus.scheduled.toString(),
-        check: true),
   ].obs;
   var searchList = [].obs;
 
@@ -217,7 +163,6 @@ class HomeController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
 
   void actionPopUpItemSelected(int value) {
-    // _scaffoldkey.currentState.hideCurrentSnackBar();
     ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
     String message;
     if (value == 0) {
@@ -606,6 +551,14 @@ class HomeController extends BaseController {
       visibleBtn = true;
       update();
     }
+  }
+
+  @override
+  void dispose() {
+    popupKey.currentState!.deactivate();
+    popupKey.currentState!.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   /// ---- Get Home APi ----------->>>

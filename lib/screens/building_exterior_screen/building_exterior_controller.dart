@@ -500,67 +500,75 @@ class BuildingExteriorController extends BaseController {
 
   getFromCamera({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
-
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      var tempDir = await getTemporaryDirectory();
-      final editedImage = await Navigator.push(
-        Get.context!,
-        MaterialPageRoute(
-          builder: (context) => ImageEditor(
-            image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-            savePath: tempDir, // <-- Uint8List of image
-          ),
-        ),
-      );
-      if (editedImage != null) {
-        File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
-        file.writeAsBytesSync(editedImage);
-        sendImagesList.add(file.path);
-        // if (change) {
-        visibleBtn = true;
-        // }
-        update();
-        utils.showToast(message: "Section Completed", context: Get.context!);
+    if (checkPermission) {
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          var tempDir = await getTemporaryDirectory();
+          final editedImage = await Navigator.push(
+            Get.context!,
+            MaterialPageRoute(
+              builder: (context) => ImageEditor(
+                image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
+                savePath: tempDir, // <-- Uint8List of image
+              ),
+            ),
+          );
+          if (editedImage != null) {
+            File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
+            file.writeAsBytesSync(editedImage);
+            sendImagesList.add(file.path);
+            // if (change) {
+            visibleBtn = true;
+            // }
+            update();
+            utils.showToast(message: "Section Completed", context: Get.context!);
+          }
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
+      update();
     }
-    update();
   }
 
   getFromGallery({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
-
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        var tempDir = await getTemporaryDirectory();
-        final editedImage = await Navigator.push(
-          Get.context!,
-          MaterialPageRoute(
-            builder: (context) => ImageEditor(
-              image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-              savePath: tempDir, // <-- Uint8List of image
-            ),
-          ),
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
         );
-        if (editedImage != null) {
-          File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
-          file.writeAsBytesSync(editedImage);
-          sendImagesList.add(file.path);
-          // if (change) {
-          visibleBtn = true;
-          // }
-          update();
-          utils.showToast(message: "Section Completed", context: Get.context!);
+        if (pickedFile != null) {
+          var tempDir = await getTemporaryDirectory();
+          final editedImage = await Navigator.push(
+            Get.context!,
+            MaterialPageRoute(
+              builder: (context) => ImageEditor(
+                image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
+                savePath: tempDir, // <-- Uint8List of image
+              ),
+            ),
+          );
+          if (editedImage != null) {
+            File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
+            file.writeAsBytesSync(editedImage);
+            sendImagesList.add(file.path);
+            // if (change) {
+            visibleBtn = true;
+            // }
+            update();
+            utils.showToast(message: "Section Completed", context: Get.context!);
+          }
         }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }

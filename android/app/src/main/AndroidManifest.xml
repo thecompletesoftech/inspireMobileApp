@@ -54,8 +54,8 @@
         </activity>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc"/>
-        <!--           android:value="AIzaSyAHAmJ0f-Q9xHKfd-rsddiqm4Mq7mb0xUY"/>-->
+                   android:value="AIzaSyAHAmJ0f-Q9xHKfd-rsddiqm4Mq7mb0xUY"/>
+        <!--            android:value="AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc"/>-->
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

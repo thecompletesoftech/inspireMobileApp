@@ -57,7 +57,7 @@ class DeficienciesFoundScreen extends GetView<DeficienciesFoundController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : Container(),
+                            : const SizedBox(),
                       ],
                     ).paddingOnly(
                       top: 32.px,

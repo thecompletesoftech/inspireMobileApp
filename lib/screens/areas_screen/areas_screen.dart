@@ -58,7 +58,7 @@ class AresScreen extends GetView<AreasController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : Container(),
+                            : const SizedBox(),
                       ],
                     ).paddingSymmetric(vertical: 32.px),
                     Column(

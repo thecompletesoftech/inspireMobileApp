@@ -323,15 +323,19 @@ class PropertyDetailsController extends BaseController {
     bool checkPermission = await utils.checkPermissionOpenCamera();
 
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        // visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          // visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }
@@ -340,15 +344,19 @@ class PropertyDetailsController extends BaseController {
   getFromGallery({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        // visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          // visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }

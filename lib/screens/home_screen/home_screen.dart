@@ -13,11 +13,9 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // Utils.screenAllow();
-
     return GetBuilder<HomeController>(
       assignId: true,
-      // init: HomeController(),
+      init: HomeController(),
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -216,13 +214,15 @@ class HomeScreen extends GetView<HomeController> {
                             title: Strings.backToBuildings,
                             onTap: () {
                               Get.back(result: controller.visibleBtn);
+                              Get.back(result: controller.visibleBtn);
+                              Get.back(result: controller.visibleBtn);
                             },
                             height: 44.px,
                             padding: EdgeInsets.symmetric(
                               horizontal: 24.px,
                               vertical: 10.px,
                             ),
-                            textWeight: FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textSize: 16.px,
                             color: controller.appColors.transparent,
                             textColor: controller.appColors.appColor)),

@@ -29,7 +29,7 @@ class CommonAppBar extends StatelessWidget {
       radius: radius,
       padding: EdgeInsets.zero,
       margin: EdgeInsets.zero,
-      elevation: 0.0,
+      elevation: 3.0,
       child: SizedBox(
         height: 116.px,
         child: Padding(
@@ -300,7 +300,7 @@ class CommonAppBar extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ).paddingOnly(bottom: 4);
   }
 
   static void actionPopUpItemSelected(int value) {

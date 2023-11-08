@@ -60,7 +60,7 @@ class ListItemCardWidget extends StatelessWidget {
                                   ).paddingOnly(right: 24.px),
                                 ),
                                 Utils.isLandScapeMode(context) || Utils.isMediumScreen(context)
-                                    ? Container()
+                                    ? const SizedBox()
                                     : CommonButton(
                                         title: Strings.annual,
                                         textSize: 14.px,
@@ -100,7 +100,7 @@ class ListItemCardWidget extends StatelessWidget {
                           ],
                         ).paddingOnly(top: 16.px),
                       !Utils.isLandScapeMode(context) && Utils.isTabletScreen(context)
-                          ? Container()
+                          ? const SizedBox()
                           : CommonButton(
                                   title: Strings.annual,
                                   textSize: 14.px,
@@ -182,7 +182,7 @@ class ListItemCardWidget extends StatelessWidget {
                         ),
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         onTap: () {
                           Get.toNamed(PropertyDetailsScreen.routes, arguments: item)!
@@ -197,13 +197,17 @@ class ListItemCardWidget extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(BuildingsScreen.routes, arguments: item)!.then((value) {
                             if (value != null) {
-                              item.status = PropertyStatus.inCompleted.toString();
+                              item.status = value == 0
+                                  ? PropertyStatus.completed.toString()
+                                  : value == 1
+                                      ? PropertyStatus.inCompleted.toString()
+                                      : PropertyStatus.scheduled.toString();
                             }
                             controller.update();
                           });
                         },
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         maxLinesNew: 2,
                         color: controller.appColors.transparent,

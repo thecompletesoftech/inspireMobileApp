@@ -145,19 +145,23 @@ class StandardController extends BaseController {
     bool checkPermission = await utils.checkPermissionOpenCamera();
 
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        if (commentController.text.isNotEmpty && imageFile.isNotEmpty) {
-          visibleBtn = true;
-          update();
-        } else {
-          visibleBtn = false;
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          if (commentController.text.isNotEmpty && imageFile.isNotEmpty) {
+            visibleBtn = true;
+            update();
+          } else {
+            visibleBtn = false;
+          }
         }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }
@@ -167,19 +171,23 @@ class StandardController extends BaseController {
     bool checkPermission = await utils.checkPermissionOpenCamera();
 
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        if (commentController.text.isNotEmpty && imageFile.isNotEmpty) {
-          visibleBtn = true;
-          update();
-        } else {
-          visibleBtn = false;
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          if (commentController.text.isNotEmpty && imageFile.isNotEmpty) {
+            visibleBtn = true;
+            update();
+          } else {
+            visibleBtn = false;
+          }
         }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }

@@ -184,6 +184,10 @@ class InspectionScreen extends GetView<InspectionController> {
                                   ],
                                 ),
                               ),
+                    Container(
+                      height: 1.px,
+                      color: AppColors().divider,
+                    ),
                     Column(
                       children: [
                         // if (Utils.isTabletScreen1(context)) ...[
@@ -205,7 +209,7 @@ class InspectionScreen extends GetView<InspectionController> {
                         //                   : controller.appColors.updateYellow,
                         //               textColor: controller.appColors.black,
                         //               onTap: () {})
-                        //           : Container(),
+                        //           : const SizedBox(),
                         //     ],
                         //   ),
                         // ],
@@ -227,12 +231,12 @@ class InspectionScreen extends GetView<InspectionController> {
                                           ),
                                         ),
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 Utils.isTabletScreen(context)
                                     ? SizedBox(
                                         width: 24.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item != null
                                     ? CommonButton(
                                         title:
@@ -247,7 +251,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                             ? controller.appColors.textGreen
                                             : controller.appColors.textPink,
                                         onTap: () {})
-                                    : Container(),
+                                    : const SizedBox(),
                                 // if ((Utils.isMediumScreen(context) ||
                                 //     Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context))) ...[
                                 controller.item!.status == InspectionStatus.completed.toString() ||
@@ -255,7 +259,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                     ? SizedBox(
                                         width: 16.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item!.status == InspectionStatus.completed.toString() ||
                                         controller.item!.status == InspectionStatus.inCompleted.toString()
                                     ? CommonButton(
@@ -272,7 +276,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                             : controller.appColors.updateYellow,
                                         textColor: controller.appColors.black,
                                         onTap: () {})
-                                    : Container(),
+                                    : const SizedBox(),
                                 // ]
                               ],
                             ),
@@ -291,7 +295,7 @@ class InspectionScreen extends GetView<InspectionController> {
                               Utils.isTabletScreen(context) ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
                           children: [
                             Utils.isTabletScreen(context)
-                                ? Container()
+                                ? const SizedBox()
                                 : Flexible(
                                     child: MyTextView(
                                       "${controller.item!.massage}, ${controller.itemTitle}",
@@ -672,6 +676,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                             controller.item!.status = InspectionStatus.completed.toString();
                                             controller.visibleBtn = true;
                                             controller.update();
+                                            Get.back(result: true);
                                           }
                                         });
                                       }),
@@ -697,7 +702,13 @@ class InspectionScreen extends GetView<InspectionController> {
                                       ),
                                       onTap: () {
                                         if (controller.visibleBtn) {
-                                          Get.toNamed(AresScreen.routes, arguments: controller.item);
+                                          Get.toNamed(AresScreen.routes, arguments: controller.item)!.then((value) {
+                                            if (value != null) {
+                                              controller.item!.status = InspectionStatus.completed.toString();
+                                              controller.visibleBtn = true;
+                                              controller.update();
+                                            }
+                                          });
                                         }
                                       }),
                                 ],

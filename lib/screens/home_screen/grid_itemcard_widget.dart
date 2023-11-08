@@ -16,6 +16,7 @@ class GridItemCardWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
         init: HomeController(),
+        assignId: true,
         builder: (controller) {
           return ShadowContainer(
             radius: 8.px,
@@ -165,13 +166,14 @@ class GridItemCardWidget extends GetView<HomeController> {
                         title: Strings.inspectionDetails,
                         onTap: () {
                           Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
+                          controller.checkStatus();
                         },
                         height: 44.px,
                         padding: EdgeInsets.symmetric(
                           horizontal: 24.px,
                           vertical: 10.px,
                         ),
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         textFamily: fontFamilyBold,
                         color: controller.appColors.transparent,
@@ -186,7 +188,7 @@ class GridItemCardWidget extends GetView<HomeController> {
                         title: Strings.mapRoute,
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         textFamily: fontFamilyBold,

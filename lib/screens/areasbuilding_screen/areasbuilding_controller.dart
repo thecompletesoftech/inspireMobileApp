@@ -105,7 +105,7 @@ class AreasBuildingController extends BaseController {
     for (int i = 0; i < dataList.length; i++) {
       if (dataList[i].status == "true") {
         sum++;
-        inComplete = true;
+        inComplete = false;
       }
     }
     if (dataList.length == sum) {

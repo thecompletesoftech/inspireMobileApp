@@ -78,7 +78,7 @@ class ListItemCardWidget extends StatelessWidget {
                                   ).paddingOnly(right: 24.px),
                                 ),
                                 Utils.isLandScapeMode(context) || Utils.isMediumScreen(context)
-                                    ? Container()
+                                    ? const SizedBox()
                                     : CommonButton(
                                         title: item.check == false ? Strings.annualInspection : Strings.tenant,
                                         textSize: 14.px,
@@ -127,7 +127,7 @@ class ListItemCardWidget extends StatelessWidget {
                             textFamily: fontFamilyBold),
                       ).paddingOnly(top: 16.px, right: 16.px),
                       !Utils.isLandScapeMode(context) && Utils.isTabletScreen(context)
-                          ? Container()
+                          ? const SizedBox()
                           : CommonButton(
                                   title: item.check == false ? Strings.annualInspection : Strings.tenant,
                                   textSize: 14.px,
@@ -207,7 +207,7 @@ class ListItemCardWidget extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         onTap: () {
                           controller.navigateToMap();
@@ -222,12 +222,13 @@ class ListItemCardWidget extends StatelessWidget {
                                 : "Details",
                         onTap: () {
                           Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
+                          controller.checkStatus();
                         },
                         padding: EdgeInsets.symmetric(
                           horizontal: 24.px,
                           vertical: 10.px,
                         ),
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         maxLinesNew: 2,
                         color: controller.appColors.transparent,

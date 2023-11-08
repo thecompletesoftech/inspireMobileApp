@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/screens/buildingdetails_screen/buildingdetails_controller.dart';
+import 'package:public_housing/screens/buildingdetails_screen/inspection_complete_widget.dart';
 
 import '../../commons/all.dart';
 import '../areasbuilding_screen/areasbuilding_screen.dart';
@@ -17,6 +18,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
   Widget build(BuildContext context) {
     return GetBuilder<BuildingDetailsController>(
       assignId: true,
+      init: BuildingDetailsController(),
       builder: (_) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -191,6 +193,10 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                   ],
                                 ),
                               ),
+                    Container(
+                      height: 1.px,
+                      color: AppColors().divider,
+                    ),
                     Column(
                       children: [
                         Row(
@@ -211,12 +217,12 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                           ),
                                         ),
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 Utils.isTabletScreen(context)
                                     ? SizedBox(
                                         width: 24.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item != null
                                     ? CommonButton(
                                         title: controller.item!.check == false ? Strings.inSample : Strings.tenant,
@@ -230,13 +236,13 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                             ? controller.appColors.textGreen
                                             : controller.appColors.textPink,
                                         onTap: () {})
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item!.status == BuildingStatus.completed.toString() ||
                                         controller.item!.status == BuildingStatus.inCompleted.toString()
                                     ? SizedBox(
                                         width: 16.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item!.status == BuildingStatus.completed.toString() ||
                                         controller.item!.status == BuildingStatus.inCompleted.toString()
                                     ? CommonButton(
@@ -253,7 +259,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                             : controller.appColors.updateYellow,
                                         textColor: controller.appColors.black,
                                         onTap: () {})
-                                    : Container(),
+                                    : const SizedBox(),
                                 // ]
                               ],
                             ),
@@ -264,7 +270,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                               Utils.isTabletScreen(context) ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
                           children: [
                             Utils.isTabletScreen(context)
-                                ? Container()
+                                ? const SizedBox()
                                 : Flexible(
                                     child: MyTextView(
                                       "${controller.item!.massage}",
@@ -317,7 +323,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       icon: icHome,
                                       iconheigth: 24.px,
                                       space: 8.px,
-                                      title: controller.item!.title,
+                                      title: "4 Units",
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
                                       textColor: controller.appColors.black,
@@ -589,9 +595,12 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                               .then((value) {
                                             if (value != null) {
                                               if (Get.isRegistered<BuildingsController>()) {
-                                                Get.find<BuildingsController>().item!.status =
-                                                    BuildingStatus.inCompleted.toString();
-                                                controller.item!.status = BuildingStatus.inCompleted.toString();
+                                                Get.find<BuildingsController>().item!.status = value
+                                                    ? BuildingStatus.completed.toString()
+                                                    : BuildingStatus.inCompleted.toString();
+                                                controller.item!.status = value
+                                                    ? BuildingStatus.completed.toString()
+                                                    : BuildingStatus.inCompleted.toString();
                                                 controller.update();
                                               }
                                             }
@@ -600,9 +609,9 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                       }),
                                 ],
                               ).paddingSymmetric(vertical: 32.px)
-                            // : controller.item!.status == BuildingStatus.completed.toString()
-                            //     ? InspectionCompleteWidget()
-                            : const SizedBox()
+                            : controller.item!.status == BuildingStatus.completed.toString()
+                                ? InspectionCompleteWidget()
+                                : const SizedBox()
                       ],
                     ).paddingAll(32.px),
                   ],

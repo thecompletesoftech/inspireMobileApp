@@ -227,8 +227,8 @@ class InspectionController extends BaseController {
         visibleBtn = false;
       }
     }
-    update();
     checkPermission();
+    update();
     // TODO: implement onInit
     super.onInit();
   }
@@ -700,17 +700,20 @@ class InspectionController extends BaseController {
 
   getFromCamera({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
-
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.camera,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }
@@ -719,50 +722,21 @@ class InspectionController extends BaseController {
   getFromGallery({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        visibleBtn = true;
-        update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          visibleBtn = true;
+          update();
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }
-  }
-}
-
-class TrianglePainter extends CustomPainter {
-  final Color strokeColor;
-  final PaintingStyle paintingStyle;
-  final double strokeWidth;
-
-  TrianglePainter({this.strokeColor = Colors.black, this.strokeWidth = 3, this.paintingStyle = PaintingStyle.stroke});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = strokeColor
-      ..strokeWidth = strokeWidth
-      ..style = paintingStyle;
-
-    canvas.drawPath(getTrianglePath(size.width, size.height), paint);
-  }
-
-  Path getTrianglePath(double x, double y) {
-    return Path()
-      ..moveTo(0, y)
-      ..lineTo(x / 2, 0)
-      ..lineTo(x, y)
-      ..lineTo(0, y);
-  }
-
-  @override
-  bool shouldRepaint(TrianglePainter oldDelegate) {
-    return oldDelegate.strokeColor != strokeColor ||
-        oldDelegate.paintingStyle != paintingStyle ||
-        oldDelegate.strokeWidth != strokeWidth;
   }
 }

@@ -4,6 +4,7 @@ import 'package:public_housing/screens/buildings_screen/grid_itemcard_widget.dar
 import 'package:public_housing/screens/buildings_screen/list_itemcard_widget.dart';
 
 import '../../responsive/scaling_query.dart';
+import '../hs_ack_screen/hs_ack_screen.dart';
 import 'buildings_controller.dart';
 
 class BuildingsScreen extends GetView<BuildingsController> {
@@ -215,7 +216,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                               if (controller.inComplete) {
                                 controller.dialogInspectionInCompleted();
                               } else {
-                                Get.back();
+                                Get.back(result: controller.visibleBtn ? 0 : 2);
                               }
                             },
                             height: 44.px,
@@ -223,7 +224,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                               horizontal: 24.px,
                               vertical: 10.px,
                             ),
-                            textWeight: FontWeight.w500,
+                            textWeight: FontWeight.w600,
                             textSize: 16.px,
                             color: controller.appColors.transparent,
                             textColor: controller.appColors.appColor)),
@@ -306,6 +307,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 24.px),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text.rich(
                       TextSpan(
@@ -330,9 +332,28 @@ class BuildingsScreen extends GetView<BuildingsController> {
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    controller.visibleBtn
+                        ? CommonButton(
+                            title: Strings.HSAcknowledgment,
+                            textColor:
+                                controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
+                            color: controller.visibleBtn
+                                ? controller.appColors.textPink
+                                : controller.appColors.black.withOpacity(0.11999999731779099),
+                            radius: 100.px,
+                            textWeight: FontWeight.w600,
+                            textSize: 16.px,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 24.px,
+                              vertical: 10.px,
+                            ),
+                            onTap: () {
+                              Get.toNamed(HSAckScreen.routes, arguments: controller.item);
+                            })
+                        : const SizedBox(),
                   ],
-                ).paddingOnly(left: 24.px, top: 8.px, bottom: 24.px),
+                ).paddingOnly(left: 24.px, right: 24.px, top: 8.px, bottom: 24.px),
                 Expanded(
                   flex: 1,
                   child: controller.change

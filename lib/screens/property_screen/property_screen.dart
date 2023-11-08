@@ -15,6 +15,7 @@ class PropertyScreen extends GetView<PropertyController> {
   Widget build(BuildContext context) {
     return GetBuilder<PropertyController>(
       assignId: true,
+      init: PropertyController(),
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -184,7 +185,7 @@ class PropertyScreen extends GetView<PropertyController> {
                           textFamily: fontFamilyRegular,
                           textColor: controller.appColors.appColor),
                     )),
-                    (Utils.isLandScapeMode(context)) ? Expanded(child: Container()) : Container(),
+                    (Utils.isLandScapeMode(context)) ? Expanded(child: const SizedBox()) : const SizedBox(),
                     Expanded(
                       flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)
                           ? 1

@@ -1,16 +1,20 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/home_screen/home_screen.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 import '../home_screen/home_controller.dart';
 
-class InspectionSummaryController extends BaseController {
+class HSAckController extends BaseController {
   RxCommonModel? item;
   RxString imageFile = "".obs;
   bool visibleBtn = false;
   bool change = true;
   final commentController = TextEditingController();
   final dateController = TextEditingController();
+  final timeController = TextEditingController();
 
   var dataList = [
     RxCommonModel(
@@ -29,15 +33,53 @@ class InspectionSummaryController extends BaseController {
   String dropDownValue = "Finding Type*";
   List<String> itemList = ["1st time fail", "Terminate"];
 
-  String? itemTitle;
+  SpeechToText speechToText = SpeechToText();
+  var isListening = false.obs;
+  var speechText = "".obs;
+
+  void listen() async {
+    var microphoneStatus = await Permission.microphone.status;
+    var storageStatus = await Permission.storage.status;
+    if (!microphoneStatus.isGranted) await Permission.microphone.request();
+    if (!storageStatus.isGranted) await Permission.storage.request();
+    if (await Permission.microphone.isGranted) {
+      if (!isListening.value) {
+        bool available = await speechToText.initialize(
+          onStatus: (val) {
+            printAction("Permission onStatus $val");
+            if (val == "done") {
+              isListening.value = false;
+              speechToText.stop();
+              update();
+            }
+          },
+          onError: (val) {
+            printAction("Permission onError $val");
+          },
+        );
+        if (available) {
+          isListening.value = true;
+          update();
+
+          speechToText.listen(onResult: (val) {
+            commentController.text = val.recognizedWords;
+            update();
+          });
+        }
+      } else {
+        isListening.value = false;
+        speechToText.stop();
+        update();
+      }
+    } else {
+      printAction("Permission Denied");
+    }
+  }
 
   @override
   void onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
-      if (Get.isRegistered<HomeController>()) {
-        itemTitle = Get.find<HomeController>().item!.massage!;
-      }
     }
     update();
     // TODO: implement onInit
@@ -45,9 +87,10 @@ class InspectionSummaryController extends BaseController {
   }
 
   late final Rx<DateTime> _selectedDate = DateTime.now().obs;
-  var formattedDate = ''.obs;
+  late final Rx<TimeOfDay> _selectedTime = TimeOfDay.now().obs;
 
   Rx<DateTime> get selectedDate => _selectedDate;
+  Rx<TimeOfDay> get selectedTime => _selectedTime;
 
   void selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
@@ -60,8 +103,26 @@ class InspectionSummaryController extends BaseController {
     if (pickedDate != null && pickedDate != selectedDate.value) {
       selectedDate.value = pickedDate;
       var date = DateFormat("MM/dd/yyyy").format(selectedDate.value);
-      formattedDate.value = date;
       dateController.text = "  $date";
+      visibleBtn = true;
+    }
+    update();
+  }
+
+  void selectTime() async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: Get.context!,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime != null) {
+      printAction(pickedTime.format(Get.context!)); //output 10:51 PM
+      DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(Get.context!).toString());
+      //converting to DateTime so that we can further format on different pattern.
+      String formattedTime = DateFormat('HH:mm').format(parsedTime);
+      printAction(formattedTime); //output 14:59:00
+      selectedTime.value = pickedTime;
+      // var date = DateFormat("hh:mm").format(selectedTime.value);
+      timeController.text = "  $formattedTime";
       visibleBtn = true;
     }
     update();
@@ -74,7 +135,7 @@ class InspectionSummaryController extends BaseController {
     alertActionDialogApp(
         context: Get.context!,
         borderRadius: 28.px,
-        widget: GetBuilder<InspectionSummaryController>(
+        widget: GetBuilder<HSAckController>(
           // assignId: true,
           builder: (_) {
             return Column(
@@ -188,19 +249,7 @@ class InspectionSummaryController extends BaseController {
                               onTap: () {
                                 if (active) {
                                   Get.back();
-                                  Get.back(result: true);
-                                  Get.back(result: true);
-                                  Get.back(result: true);
-
-                                  // if (Get.isRegistered<HomeController>()) {
-                                  //   Get.find<HomeController>().dataList.where((element) {
-                                  //       if (element.id == InspectionController().item!.id) {
-                                  //         element.status = InspectionStatus.inCompleted.toString();
-                                  //       }
-                                  //       return element.id == InspectionController().item!.id;
-                                  //   });
-                                  // }
-                                  // Get.offNamed(HomeScreen.routes, arguments: BuildingDetailsController().item);
+                                  Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
                                 } else {
                                   utils.showToast(message: "Leave comment is empty", context: Get.context!);
                                 }

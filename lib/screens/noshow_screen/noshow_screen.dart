@@ -175,6 +175,10 @@ class NoShowScreen extends GetView<NoShowController> {
                                   ],
                                 ),
                               ),
+                    Container(
+                      height: 1.px,
+                      color: AppColors().divider,
+                    ),
                     Column(
                       children: [
                         SizedBox(
@@ -212,7 +216,7 @@ class NoShowScreen extends GetView<NoShowController> {
                                         ? controller.appColors.textGreen
                                         : controller.appColors.textPink,
                                     onTap: () {})
-                                : Container(),
+                                : const SizedBox(),
                           ],
                         ),
                         SizedBox(
@@ -345,12 +349,12 @@ class NoShowScreen extends GetView<NoShowController> {
                                 onTap: () {
                                   if (controller.visibleBtn) {
                                     if (Get.isRegistered<InspectionController>()) {
-                                      Get.find<InspectionController>().dataList.where((element) {
-                                        if (element.id == controller.item!.id) {
-                                          element.status = InspectionStatus.inCompleted.toString();
-                                        }
-                                        return element.id == controller.item!.id;
-                                      });
+                                      // Get.find<InspectionController>().dataList.where((element) {
+                                      //   if (element.id == controller.item!.id) {
+                                      //     element.status = InspectionStatus.completed.toString();
+                                      //   }
+                                      //   return element.id == controller.item!.id;
+                                      // });
 
                                       Get.back(result: true);
                                     }

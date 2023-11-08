@@ -10,6 +10,7 @@ class BuildingsController extends BaseController {
   int? currentSelection = 0;
   BuildingStatus status = BuildingStatus.all;
   bool change = false;
+  bool visibleBtn = false;
   int currentIndex = 1;
   RxCommonModel? item;
 
@@ -175,6 +176,19 @@ class BuildingsController extends BaseController {
     printAction(searchList.length.toString());
   }
 
+  checkStatus() {
+    var sum = 0;
+    for (int i = 0; i < dataList.length; i++) {
+      if (dataList[i].status == "true") {
+        sum++;
+      }
+    }
+    if (dataList.length == sum) {
+      visibleBtn = true;
+      update();
+    }
+  }
+
   dialogInspectionInCompleted() {
     alertActionDialogApp(
         context: Get.context!,
@@ -183,7 +197,6 @@ class BuildingsController extends BaseController {
           children: [
             Container(
               width: 312.px,
-              // height: 184.px,
               padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -256,7 +269,7 @@ class BuildingsController extends BaseController {
                           radius: 100.px,
                           onTap: () {
                             Get.back(closeOverlays: true);
-                            Get.back(result: true);
+                            Get.back(result: 1);
                           }),
                     ],
                   ).paddingOnly(

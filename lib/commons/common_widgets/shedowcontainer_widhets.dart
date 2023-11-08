@@ -27,7 +27,7 @@ class ShadowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: elevation ?? 1.0,
+      elevation: elevation ?? 2.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius ?? 15.px),
       ),

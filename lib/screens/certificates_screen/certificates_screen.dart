@@ -65,7 +65,7 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : Container(),
+                            : const SizedBox(),
                       ],
                     ).paddingOnly(
                       top: 32.px,
@@ -197,41 +197,45 @@ class CertificatesScreen extends GetView<CertificateController> {
                                               onTap: () async {
                                                 controller.imagePicker(0);
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    // decoration: BoxDecoration(
-                                                    //     borderRadius: BorderRadius.circular(10.px),
-                                                    //     border: Border.all(
-                                                    //         color: controller.appColors.border1, width: 2)),
-                                                    child: Center(
-                                                      child: SvgPicture.string(icAdd,
-                                                          // height: 45.px,
-                                                          color: controller.boilerStatus == CertificateStatus.No
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : null
-                                                          // fit: BoxFit.cover,
-                                                          ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      // decoration: BoxDecoration(
+                                                      //     borderRadius: BorderRadius.circular(10.px),
+                                                      //     border: Border.all(
+                                                      //         color: controller.appColors.border1, width: 2)),
+                                                      child: Center(
+                                                        child: SvgPicture.string(icAdd,
+                                                            // height: 45.px,
+                                                            color: controller.boilerStatus == CertificateStatus.No
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : null
+                                                            // fit: BoxFit.cover,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.boilerStatus == CertificateStatus.No
-                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                          : controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
+                                                    SizedBox(height: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.boilerStatus == CertificateStatus.No
+                                                            ? controller.appColors.black
+                                                                .withOpacity(0.07999999821186066)
+                                                            : controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -248,69 +252,72 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     onTap: () {
                                       controller.imagePicker(0);
                                     },
-                                    child: Column(
-                                      children: [
-                                        controller.boilerStatus == CertificateStatus.No
-                                            ? Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                  color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          controller.boilerStatus == CertificateStatus.No
+                                              ? Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                    color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                  ),
                                                 ),
-                                              )
-                                            : Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                ),
+                                          SizedBox(
+                                            height: 16.px,
+                                          ),
+                                          Flexible(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Tap to Take or Upload",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.boilerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: " a photo of the ",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textColor: controller.boilerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.black,
+                                                      textWeight: FontWeight.w400,
+                                                      textFamily: fontFamilyRegular,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: Strings.boilerCertificate,
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.boilerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        SizedBox(
-                                          height: 16.px,
-                                        ),
-                                        Flexible(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Tap to Take or Upload",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.boilerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: " a photo of the ",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textColor: controller.boilerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.black,
-                                                    textWeight: FontWeight.w400,
-                                                    textFamily: fontFamilyRegular,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: Strings.boilerCertificate,
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.boilerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),
@@ -430,37 +437,41 @@ class CertificatesScreen extends GetView<CertificateController> {
                                               onTap: () async {
                                                 controller.imagePicker(1);
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    child: Center(
-                                                      child: SvgPicture.string(icAdd,
-                                                          // height: 45.px,
-                                                          color: controller.elevatorStatus == CertificateStatus.No
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : null
-                                                          // fit: BoxFit.cover,
-                                                          ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      child: Center(
+                                                        child: SvgPicture.string(icAdd,
+                                                            // height: 45.px,
+                                                            color: controller.elevatorStatus == CertificateStatus.No
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : null
+                                                            // fit: BoxFit.cover,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.elevatorStatus == CertificateStatus.No
-                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                          : controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
+                                                    SizedBox(height: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.elevatorStatus == CertificateStatus.No
+                                                            ? controller.appColors.black
+                                                                .withOpacity(0.07999999821186066)
+                                                            : controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -477,69 +488,72 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     onTap: () {
                                       controller.imagePicker(1);
                                     },
-                                    child: Column(
-                                      children: [
-                                        controller.elevatorStatus == CertificateStatus.No
-                                            ? Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                  color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          controller.elevatorStatus == CertificateStatus.No
+                                              ? Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                    color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                  ),
                                                 ),
-                                              )
-                                            : Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                ),
+                                          SizedBox(
+                                            height: 16.px,
+                                          ),
+                                          Flexible(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Tap to Take or Upload",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.elevatorStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: " a photo of the ",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textColor: controller.elevatorStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.black,
+                                                      textWeight: FontWeight.w400,
+                                                      textFamily: fontFamilyRegular,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: Strings.elevatorCertificate,
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.elevatorStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        SizedBox(
-                                          height: 16.px,
-                                        ),
-                                        Flexible(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Tap to Take or Upload",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.elevatorStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: " a photo of the ",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textColor: controller.elevatorStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.black,
-                                                    textWeight: FontWeight.w400,
-                                                    textFamily: fontFamilyRegular,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: Strings.elevatorCertificate,
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.elevatorStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),
@@ -660,37 +674,41 @@ class CertificatesScreen extends GetView<CertificateController> {
                                               onTap: () async {
                                                 controller.imagePicker(2);
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    child: Center(
-                                                      child: SvgPicture.string(icAdd,
-                                                          // height: 45.px,
-                                                          color: controller.fireStatus == CertificateStatus.No
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : null
-                                                          // fit: BoxFit.cover,
-                                                          ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      child: Center(
+                                                        child: SvgPicture.string(icAdd,
+                                                            // height: 45.px,
+                                                            color: controller.fireStatus == CertificateStatus.No
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : null
+                                                            // fit: BoxFit.cover,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.fireStatus == CertificateStatus.No
-                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                          : controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
+                                                    SizedBox(height: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.fireStatus == CertificateStatus.No
+                                                            ? controller.appColors.black
+                                                                .withOpacity(0.07999999821186066)
+                                                            : controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -707,69 +725,72 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     onTap: () {
                                       controller.imagePicker(2);
                                     },
-                                    child: Column(
-                                      children: [
-                                        controller.fireStatus == CertificateStatus.No
-                                            ? Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                  color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          controller.fireStatus == CertificateStatus.No
+                                              ? Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                    color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                  ),
                                                 ),
-                                              )
-                                            : Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                ),
+                                          SizedBox(
+                                            height: 16.px,
+                                          ),
+                                          Flexible(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Tap to Take or Upload",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.fireStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: " a photo of the ",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textColor: controller.fireStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.black,
+                                                      textWeight: FontWeight.w400,
+                                                      textFamily: fontFamilyRegular,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: Strings.fireAlarmInspectionReport,
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.fireStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        SizedBox(
-                                          height: 16.px,
-                                        ),
-                                        Flexible(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Tap to Take or Upload",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.fireStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: " a photo of the ",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textColor: controller.fireStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.black,
-                                                    textWeight: FontWeight.w400,
-                                                    textFamily: fontFamilyRegular,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: Strings.fireAlarmInspectionReport,
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.fireStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),
@@ -889,37 +910,41 @@ class CertificatesScreen extends GetView<CertificateController> {
                                               onTap: () async {
                                                 controller.imagePicker(3);
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    child: Center(
-                                                      child: SvgPicture.string(icAdd,
-                                                          // height: 45.px,
-                                                          color: controller.paintStatus == CertificateStatus.No
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : null
-                                                          // fit: BoxFit.cover,
-                                                          ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      child: Center(
+                                                        child: SvgPicture.string(icAdd,
+                                                            // height: 45.px,
+                                                            color: controller.paintStatus == CertificateStatus.No
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : null
+                                                            // fit: BoxFit.cover,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.paintStatus == CertificateStatus.No
-                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                          : controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
+                                                    SizedBox(height: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.paintStatus == CertificateStatus.No
+                                                            ? controller.appColors.black
+                                                                .withOpacity(0.07999999821186066)
+                                                            : controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -936,69 +961,72 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     onTap: () {
                                       controller.imagePicker(3);
                                     },
-                                    child: Column(
-                                      children: [
-                                        controller.paintStatus == CertificateStatus.No
-                                            ? Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                  color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          controller.paintStatus == CertificateStatus.No
+                                              ? Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                    color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                  ),
                                                 ),
-                                              )
-                                            : Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                ),
+                                          SizedBox(
+                                            height: 16.px,
+                                          ),
+                                          Flexible(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Tap to Take or Upload",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.paintStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: " a photo of the ",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textColor: controller.paintStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.black,
+                                                      textWeight: FontWeight.w400,
+                                                      textFamily: fontFamilyRegular,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: Strings.leadBasedPaintDisclosureForm,
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.paintStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        SizedBox(
-                                          height: 16.px,
-                                        ),
-                                        Flexible(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Tap to Take or Upload",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.paintStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: " a photo of the ",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textColor: controller.paintStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.black,
-                                                    textWeight: FontWeight.w400,
-                                                    textFamily: fontFamilyRegular,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: Strings.leadBasedPaintDisclosureForm,
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.paintStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),
@@ -1117,37 +1145,41 @@ class CertificatesScreen extends GetView<CertificateController> {
                                               onTap: () async {
                                                 controller.imagePicker(4);
                                               },
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 80.px,
-                                                    height: 80.px,
-                                                    child: Center(
-                                                      child: SvgPicture.string(icAdd,
-                                                          // height: 45.px,
-                                                          color: controller.paintStatus == CertificateStatus.No
-                                                              ? controller.appColors.black
-                                                                  .withOpacity(0.07999999821186066)
-                                                              : null
-                                                          // fit: BoxFit.cover,
-                                                          ),
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 80.px,
+                                                      height: 80.px,
+                                                      child: Center(
+                                                        child: SvgPicture.string(icAdd,
+                                                            // height: 45.px,
+                                                            color: controller.paintStatus == CertificateStatus.No
+                                                                ? controller.appColors.black
+                                                                    .withOpacity(0.07999999821186066)
+                                                                : null
+                                                            // fit: BoxFit.cover,
+                                                            ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 10.px),
-                                                  MyTextView(
-                                                    "Add picture",
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller.paintStatus == CertificateStatus.No
-                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                          : controller.appColors.appColor,
-                                                      textSize: 14.px,
-                                                      textWeight: FontWeight.w500,
-                                                      textFamily: fontFamilyRegular,
+                                                    SizedBox(height: 10.px),
+                                                    MyTextView(
+                                                      "Add picture",
+                                                      textStyleNew: MyTextStyle(
+                                                        textColor: controller.paintStatus == CertificateStatus.No
+                                                            ? controller.appColors.black
+                                                                .withOpacity(0.07999999821186066)
+                                                            : controller.appColors.appColor,
+                                                        textSize: 14.px,
+                                                        textWeight: FontWeight.w500,
+                                                        textFamily: fontFamilyRegular,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ).paddingSymmetric(horizontal: 32.px)
                                           ],
@@ -1164,69 +1196,72 @@ class CertificatesScreen extends GetView<CertificateController> {
                                     onTap: () {
                                       controller.imagePicker(4);
                                     },
-                                    child: Column(
-                                      children: [
-                                        controller.sprinklerStatus == CertificateStatus.No
-                                            ? Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                  color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          controller.sprinklerStatus == CertificateStatus.No
+                                              ? Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                    color: controller.appColors.black.withOpacity(0.07999999821186066),
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: SvgPicture.string(
+                                                    icImage,
+                                                    width: 80.px,
+                                                    height: 80.px,
+                                                  ),
                                                 ),
-                                              )
-                                            : Center(
-                                                child: SvgPicture.string(
-                                                  icImage,
-                                                  width: 80.px,
-                                                  height: 80.px,
-                                                ),
+                                          SizedBox(
+                                            height: 16.px,
+                                          ),
+                                          Flexible(
+                                            child: Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Tap to Take or Upload",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.sprinklerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: " a photo of the ",
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textColor: controller.sprinklerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.black,
+                                                      textWeight: FontWeight.w400,
+                                                      textFamily: fontFamilyRegular,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: Strings.sprinklerSystemCertificate,
+                                                    style: MyTextStyle(
+                                                      textSize: 16.px,
+                                                      textWeight: FontWeight.w600,
+                                                      textColor: controller.sprinklerStatus == CertificateStatus.No
+                                                          ? controller.appColors.black.withOpacity(0.07999999821186066)
+                                                          : controller.appColors.appColor,
+                                                      textFamily: fontFamilyBold,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                        SizedBox(
-                                          height: 16.px,
-                                        ),
-                                        Flexible(
-                                          child: Text.rich(
-                                            TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "Tap to Take or Upload",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.sprinklerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: " a photo of the ",
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textColor: controller.sprinklerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.black,
-                                                    textWeight: FontWeight.w400,
-                                                    textFamily: fontFamilyRegular,
-                                                  ),
-                                                ),
-                                                TextSpan(
-                                                  text: Strings.sprinklerSystemCertificate,
-                                                  style: MyTextStyle(
-                                                    textSize: 16.px,
-                                                    textWeight: FontWeight.w600,
-                                                    textColor: controller.sprinklerStatus == CertificateStatus.No
-                                                        ? controller.appColors.black.withOpacity(0.07999999821186066)
-                                                        : controller.appColors.appColor,
-                                                    textFamily: fontFamilyBold,
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                           ),

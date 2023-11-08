@@ -21,6 +21,7 @@ class ListItemCardWidget extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   flex: 1,
@@ -69,7 +70,7 @@ class ListItemCardWidget extends StatelessWidget {
                                   ).paddingOnly(right: 24.px),
                                 ),
                                 Utils.isLandScapeMode(context) || Utils.isMediumScreen(context)
-                                    ? Container()
+                                    ? const SizedBox()
                                     : CommonButton(
                                         title: item.check == false ? Strings.inSample : Strings.tenant,
                                         textSize: 14.px,
@@ -93,8 +94,8 @@ class ListItemCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 0,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (item.status == BuildingStatus.completed.toString() ||
                           item.status == BuildingStatus.inCompleted.toString())
@@ -117,7 +118,7 @@ class ListItemCardWidget extends StatelessWidget {
                             textFamily: fontFamilyBold),
                       ).paddingOnly(top: 16.px, right: 16.px),
                       !Utils.isLandScapeMode(context) && Utils.isTabletScreen(context)
-                          ? Container()
+                          ? const SizedBox()
                           : CommonButton(
                                   title: item.check == false ? Strings.annualInspection : Strings.tenant,
                                   textSize: 14.px,
@@ -134,7 +135,8 @@ class ListItemCardWidget extends StatelessWidget {
                       Image.asset(
                         item.imgId ?? ImagePath.media1,
                         width: 80.px,
-                        height: 88.px,
+                        height: !Utils.isLandScapeMode(context) && Utils.isTabletScreen(context) ? 94.px : 88.px,
+                        fit: BoxFit.cover,
                       )
                     ],
                   ),
@@ -198,7 +200,7 @@ class ListItemCardWidget extends StatelessWidget {
                         ),
                         color: controller.appColors.transparent,
                         textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         onTap: () {
                           Get.toNamed(CertificatesScreen.routes, arguments: item)!.then((value) => controller.update());
@@ -216,12 +218,13 @@ class ListItemCardWidget extends StatelessWidget {
                             if (value != null) controller.inComplete = true;
                             controller.update();
                           });
+                          controller.checkStatus();
                         },
                         padding: EdgeInsets.symmetric(
                           horizontal: 24.px,
                           vertical: 10.px,
                         ),
-                        textWeight: FontWeight.w500,
+                        textWeight: FontWeight.w600,
                         textSize: 16.px,
                         maxLinesNew: 2,
                         color: controller.appColors.transparent,

@@ -70,7 +70,7 @@ class BuildingExteriorScreen extends GetView<BuildingExteriorController> {
                                     ? controller.appColors.textGreen
                                     : controller.appColors.textPink,
                                 onTap: () {})
-                            : Container(),
+                            : const SizedBox(),
                       ],
                     ).paddingSymmetric(vertical: 32.px),
                     Column(
@@ -334,7 +334,7 @@ class BuildingExteriorScreen extends GetView<BuildingExteriorController> {
                                   : (controller.searchList[index - 1].title!.toString().substring(0, 1).toLowerCase() !=
                                           item1.title!.toString().substring(0, 1).toLowerCase())
                                       ? BuildingExteriorItemCardWidget(item1: item1)
-                                      : Container();
+                                      : const SizedBox();
                             }).paddingSymmetric(vertical: 32.px),
                       ],
                     ).paddingSymmetric(horizontal: 32.px),

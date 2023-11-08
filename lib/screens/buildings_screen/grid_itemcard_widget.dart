@@ -157,9 +157,10 @@ class GridItemCardWidget extends StatelessWidget {
                       if (value != null) controller.inComplete = true;
                       controller.update();
                     });
+                    controller.checkStatus();
                   },
                   padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
-                  textWeight: FontWeight.w500,
+                  textWeight: FontWeight.w600,
                   textSize: 16.px,
                   color: controller.appColors.transparent,
                   textColor: controller.appColors.appColor)
@@ -171,7 +172,7 @@ class GridItemCardWidget extends StatelessWidget {
                   title: Strings.certificates,
                   color: controller.appColors.transparent,
                   textColor: controller.appColors.appColor,
-                  textWeight: FontWeight.w500,
+                  textWeight: FontWeight.w600,
                   textSize: 16.px,
                   padding: EdgeInsets.symmetric(
                     horizontal: 24.px,

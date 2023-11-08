@@ -137,39 +137,48 @@ class NoShowController extends BaseController {
 
   getFromCamera({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
-
-    XFile? pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      imageFile = (pickedFile.path.obs);
-      if (commentController.text.isNotEmpty && dateController.text.isNotEmpty && imageFile.isNotEmpty) {
-        visibleBtn = true;
-        update();
-      } else {
-        visibleBtn = false;
+    if (checkPermission) {
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          if (commentController.text.isNotEmpty && dateController.text.isNotEmpty && imageFile.isNotEmpty) {
+            visibleBtn = true;
+            update();
+          } else {
+            visibleBtn = false;
+          }
+        }
+      } catch (e) {
+        printAction(e.toString());
       }
+      update();
     }
-    update();
   }
 
   getFromGallery({int? index}) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
 
     if (checkPermission) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxWidth: 1800,
-        maxHeight: 1800,
-      );
-      if (pickedFile != null) {
-        imageFile = (pickedFile.path.obs);
-        if (commentController.text.isNotEmpty && dateController.text.isNotEmpty && imageFile.isNotEmpty) {
-          visibleBtn = true;
-          update();
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+        if (pickedFile != null) {
+          imageFile = (pickedFile.path.obs);
+          if (commentController.text.isNotEmpty && dateController.text.isNotEmpty && imageFile.isNotEmpty) {
+            visibleBtn = true;
+            update();
+          }
         }
+      } catch (e) {
+        printAction(e.toString());
       }
       update();
     }

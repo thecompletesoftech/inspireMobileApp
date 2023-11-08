@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:public_housing/screens/authority_signatures_screen/authority_signature_screen.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 
 import '../screens/areas_screen/areas_binding.dart';
@@ -7,6 +8,7 @@ import '../screens/areasbuilding_screen/areasbuilding_binding.dart';
 import '../screens/areasbuilding_screen/areasbuilding_screen.dart';
 import '../screens/auth/signing_screen/signing_binding.dart';
 import '../screens/auth/signing_screen/signing_screen.dart';
+import '../screens/authority_signatures_screen/authority_signature_binding.dart';
 import '../screens/building_exterior_screen/building_exterior_binding.dart';
 import '../screens/building_exterior_screen/building_exterior_screen.dart';
 import '../screens/buildingdetails_screen/buildingdetails_binding.dart';
@@ -18,6 +20,8 @@ import '../screens/deficiencies_found_screen/deficiencies_found_binding.dart';
 import '../screens/deficiencies_found_screen/deficiencies_found_screen.dart';
 import '../screens/home_screen/home_binding.dart';
 import '../screens/home_screen/home_screen.dart';
+import '../screens/hs_ack_screen/hs_ack_binding.dart';
+import '../screens/hs_ack_screen/hs_ack_screen.dart';
 import '../screens/inspection_screen/inspection_binding.dart';
 import '../screens/inspection_screen/inspection_screen.dart';
 import '../screens/inspection_summary_screen/inspection_summary_binding.dart';
@@ -61,6 +65,11 @@ class AppPages {
         name: BuildingExteriorScreen.routes,
         page: () => const BuildingExteriorScreen(),
         binding: BuildingExteriorBinding()),
+    GetPage(name: HSAckScreen.routes, page: () => const HSAckScreen(), binding: HSAckBinding()),
+    GetPage(
+        name: AuthoritySignatureScreen.routes,
+        page: () => const AuthoritySignatureScreen(),
+        binding: AuthoritySignatureBinding()),
     GetPage(name: HomeScreen.routes, page: () => HomeScreen(), binding: HomeBinding()),
     GetPage(name: InspectionScreen.routes, page: () => const InspectionScreen(), binding: InspectionBinding()),
     GetPage(name: NoShowScreen.routes, page: () => const NoShowScreen(), binding: NoShowBinding()),

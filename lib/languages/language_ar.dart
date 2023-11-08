@@ -955,6 +955,10 @@ class LanguageAr extends Languages {
       "Password must be more than 8 characters long including lower case, upper case, number and a special character.";
 
   @override
+  String get enterYourEmail => "Enter your email";
+  @override
+  String get enterYourPassword => "Enter your password";
+  @override
   String get pleaseEnterPassword => "Please enter password";
 
   @override

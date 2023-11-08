@@ -6,6 +6,7 @@ import 'package:public_housing/screens/propertydetails_screen/propertydetails_co
 
 import '../../commons/all.dart';
 import '../buildings_screen/buildings_screen.dart';
+import '../hs_ack_screen/hs_ack_screen.dart';
 import '../property_screen/property_controller.dart';
 import 'generalNotesCard_widget.dart';
 
@@ -17,6 +18,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
   Widget build(BuildContext context) {
     return GetBuilder<PropertyDetailsController>(
       assignId: true,
+      init: PropertyDetailsController(),
       builder: (_) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -173,6 +175,10 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   ],
                                 ),
                               ),
+                    Container(
+                      height: 1.px,
+                      color: AppColors().divider,
+                    ),
                     Column(
                       children: [
                         Row(
@@ -193,12 +199,12 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                           ),
                                         ),
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 Utils.isTabletScreen(context)
                                     ? SizedBox(
                                         width: 24.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item != null
                                     ? CommonButton(
                                         title: controller.item!.check == false ? Strings.inSample : Strings.tenant,
@@ -212,15 +218,13 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                             ? controller.appColors.textGreen
                                             : controller.appColors.textPink,
                                         onTap: () {})
-                                    : Container(),
-                                // if ((Utils.isMediumScreen(context) ||
-                                //     Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context))) ...[
+                                    : const SizedBox(),
                                 controller.item!.status == PropertyStatus.completed.toString() ||
                                         controller.item!.status == PropertyStatus.inCompleted.toString()
                                     ? SizedBox(
                                         width: 16.px,
                                       )
-                                    : Container(),
+                                    : const SizedBox(),
                                 controller.item!.status == PropertyStatus.completed.toString() ||
                                         controller.item!.status == PropertyStatus.inCompleted.toString()
                                     ? CommonButton(
@@ -237,7 +241,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                             : controller.appColors.updateYellow,
                                         textColor: controller.appColors.black,
                                         onTap: () {})
-                                    : Container(),
+                                    : const SizedBox(),
                                 // ]
                               ],
                             ),
@@ -248,7 +252,7 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                               Utils.isTabletScreen(context) ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
                           children: [
                             Utils.isTabletScreen(context)
-                                ? Container()
+                                ? const SizedBox()
                                 : Flexible(
                                     child: MyTextView(
                                       "${controller.item!.title}",
@@ -296,9 +300,9 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   radius: 4.px,
                                   padding: EdgeInsets.all(16.px),
                                   child: CommonIconButton(
-                                      icon: icHome,
+                                      icon: icBuilding,
                                       iconheigth: 24.px,
-                                      title: controller.item!.title,
+                                      title: "12 ${Strings.buildings}",
                                       padding: EdgeInsets.zero,
                                       color: controller.appColors.white,
                                       textColor: controller.appColors.black,
@@ -598,9 +602,9 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   vertical: 10.px,
                                 ),
                                 onTap: () {
-                                  if (controller.visibleBtn) {
-                                    // Get.toNamed(AresScreen.routes, arguments: controller.item);
-                                  }
+                                  // if (controller.visibleBtn) {
+                                  Get.toNamed(HSAckScreen.routes, arguments: controller.item);
+                                  // }
                                 }),
                           ],
                         ).paddingSymmetric(vertical: 32.px)
