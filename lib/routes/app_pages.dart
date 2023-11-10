@@ -30,6 +30,8 @@ import '../screens/kitchen_screen/kitchen_binding.dart';
 import '../screens/kitchen_screen/kitchen_screen.dart';
 import '../screens/noshow_screen/noshow_binding.dart';
 import '../screens/noshow_screen/noshow_screen.dart';
+import '../screens/pdf_screen/pdf_binding.dart';
+import '../screens/pdf_screen/pdf_screen.dart';
 import '../screens/progress_screen/progress_binding.dart';
 import '../screens/progress_screen/progress_screen.dart';
 import '../screens/property_screen/property_binding.dart';
@@ -65,6 +67,7 @@ class AppPages {
         name: BuildingExteriorScreen.routes,
         page: () => const BuildingExteriorScreen(),
         binding: BuildingExteriorBinding()),
+    GetPage(name: PdfScreen.routes, page: () => const PdfScreen(), binding: PdfBinding()),
     GetPage(name: HSAckScreen.routes, page: () => const HSAckScreen(), binding: HSAckBinding()),
     GetPage(
         name: AuthoritySignatureScreen.routes,

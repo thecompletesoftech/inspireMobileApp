@@ -151,7 +151,6 @@ class Utils {
         return true;
       } else {
         printError("App needs +++========");
-
         openAppSettings();
         printError("App needs to access your storage, please provide permission");
         return false;

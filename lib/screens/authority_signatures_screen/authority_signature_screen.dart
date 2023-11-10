@@ -1,9 +1,10 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/authority_signatures_screen/authority_signature_controller.dart';
-import 'package:public_housing/screens/property_screen/property_screen.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+
+import '../pdf_screen/pdf_screen.dart';
 
 class AuthoritySignatureScreen extends GetView<AuthoritySignatureController> {
   const AuthoritySignatureScreen({Key? key}) : super(key: key);
@@ -228,9 +229,10 @@ class AuthoritySignatureScreen extends GetView<AuthoritySignatureController> {
                                           controller.isOwnerBlank = true;
                                           controller.update();
 
-                                          Get.offNamed(
-                                            PropertyScreen.routes,
-                                          );
+                                          // Get.offNamed(
+                                          //   PropertyScreen.routes,
+                                          // );
+                                          Get.toNamed(PdfScreen.routes);
                                         }
                                       }
                                     } else {
