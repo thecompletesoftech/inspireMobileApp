@@ -4,14 +4,15 @@ import 'package:public_housing/screens/kitchen_screen/kitchen_controller.dart';
 
 import '../standard_screen/standard_screen.dart';
 
-class KitchenItemCardWidget extends StatelessWidget {
+class KitchenItemCardWidget extends GetView<KitchenController> {
   final RxCommonModel item1;
-  KitchenItemCardWidget({super.key, required this.item1});
+  const KitchenItemCardWidget({super.key, required this.item1});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<KitchenController>(
       init: KitchenController(),
+      assignId: true,
       builder: (controller) {
         return Theme(
           data: Theme.of(context).copyWith(

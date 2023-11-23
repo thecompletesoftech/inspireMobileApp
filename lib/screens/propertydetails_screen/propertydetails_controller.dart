@@ -210,9 +210,8 @@ class PropertyDetailsController extends BaseController {
   void onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
-      if (item!.status == PropertyStatus.completed.toString() ||
-          item!.status == PropertyStatus.inCompleted.toString()) {
-        visibleBtn = false;
+      if (item!.status == PropertyStatus.completed.toString()) {
+        visibleBtn = true;
       } else {
         visibleBtn = false;
       }

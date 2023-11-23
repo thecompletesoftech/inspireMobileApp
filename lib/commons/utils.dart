@@ -48,7 +48,7 @@ class Utils {
   }
 
   static bool isTabletScreen(BuildContext context) {
-    return getWidth(context) > 300 && getWidth(context) < 850;
+    return getWidth(context) > 300 && getWidth(context) < 820;
   }
 
   static bool isTabletScreen1(BuildContext context) {

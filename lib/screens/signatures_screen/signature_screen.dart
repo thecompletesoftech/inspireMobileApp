@@ -327,10 +327,10 @@ class SignatureScreen extends GetView<SignatureController> {
                           children: [
                             CommonButton(
                                 title: Strings.completeInspection,
-                                textColor: controller.tenantSign || controller.ownerSign
+                                textColor: controller.tenantSign && controller.ownerSign
                                     ? controller.appColors.black
                                     : controller.appColors.border1,
-                                color: controller.tenantSign || controller.ownerSign
+                                color: controller.tenantSign && controller.ownerSign
                                     ? controller.appColors.textPink
                                     : controller.appColors.black.withOpacity(0.11999999731779099),
                                 radius: 35.px,
@@ -342,38 +342,36 @@ class SignatureScreen extends GetView<SignatureController> {
                                 ),
                                 onTap: () async {
                                   try {
-                                    if (controller.tenantSign || controller.ownerSign) {
+                                    if (controller.tenantSign && controller.ownerSign) {
                                       var tenantSign = await controller.tenantSignController.capture();
-                                      if (tenantSign != null) {
-                                        final tenantSignFile = await controller.utils.createFileFromString(tenantSign);
-                                        if (tenantSignFile.toString().isNotEmpty) {
-                                          var ownerSign = await controller.ownerSignController.capture();
-                                          final ownerSignFile = await controller.utils.createFileFromString(ownerSign);
-                                          if (ownerSignFile.toString().isNotEmpty) {
-                                            controller.tenantSignPadKey.currentState!.clear();
-                                            controller.tenantSign = false;
-                                            controller.isTenantBlank = true;
-                                            controller.ownerSignPadKey.currentState!.clear();
-                                            controller.ownerSign = false;
-                                            controller.isOwnerBlank = true;
-                                            controller.update();
+                                      final tenantSignFile = await controller.utils.createFileFromString(tenantSign);
+                                      if (tenantSignFile.toString().isNotEmpty) {
+                                        var ownerSign = await controller.ownerSignController.capture();
+                                        final ownerSignFile = await controller.utils.createFileFromString(ownerSign);
+                                        if (ownerSignFile.toString().isNotEmpty) {
+                                          controller.tenantSignPadKey.currentState!.clear();
+                                          controller.tenantSign = false;
+                                          controller.isTenantBlank = true;
+                                          controller.ownerSignPadKey.currentState!.clear();
+                                          controller.ownerSign = false;
+                                          controller.isOwnerBlank = true;
+                                          controller.update();
 
-                                            Get.back(result: true);
-                                            Get.back(result: true);
+                                          Get.back(result: true);
+                                          Get.back(result: true);
 
-                                            // if (Get.isRegistered<HomeController>()) {
-                                            //   var index = Get.find<HomeController>().dataList.where((element) {
-                                            //     return element.id == Get.find<InspectionController>().item!.id;
-                                            //   });
-                                            //
-                                            //   // index.status = InspectionStatus.completed.toString();
-                                            // }
-                                            Get.back(result: true);
-                                            Get.back(result: true);
+                                          // if (Get.isRegistered<HomeController>()) {
+                                          //   var index = Get.find<HomeController>().dataList.where((element) {
+                                          //     return element.id == Get.find<InspectionController>().item!.id;
+                                          //   });
+                                          //
+                                          //   // index.status = InspectionStatus.completed.toString();
+                                          // }
+                                          Get.back(result: true);
+                                          Get.back(result: true);
 
-                                            // Get.offNamed(HomeScreen.routes,
-                                            //     arguments: BuildingDetailsController().item);
-                                          }
+                                          // Get.offNamed(HomeScreen.routes,
+                                          //     arguments: BuildingDetailsController().item);
                                         }
                                       }
                                     } else {

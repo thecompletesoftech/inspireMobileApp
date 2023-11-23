@@ -208,12 +208,13 @@ class BuildingsScreen extends GetView<BuildingsController> {
                     //       )
                     //     :
                     Expanded(
+                        flex: 0,
                         child: CommonButton(
                             border: Border.all(color: controller.appColors.border, width: 2),
                             radius: 100.px,
                             title: Strings.backToProperties,
                             onTap: () {
-                              if (controller.inComplete) {
+                              if (controller.inComplete == true) {
                                 controller.dialogInspectionInCompleted();
                               } else {
                                 Get.back(result: controller.visibleBtn ? 0 : 2);
@@ -389,13 +390,13 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.57151.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.5658189.px) //.....57151
                                   : Utils.isTabletScreen1(context)
                                       ? ScalingQuery(context).verticalScale(0.54146.px) //pro mini
                                       : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.51.px) //.....1
+                                          ? ScalingQuery(context).verticalScale(0.583442.px) //.....1
                                           : Utils.isMediumScreen(context)
-                                              ? ScalingQuery(context).verticalScale(0.36.px) //.....2
+                                              ? ScalingQuery(context).verticalScale(0.579.px) //.....2
                                               : ScalingQuery(context).verticalScale(0.49.px), //.....
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16),

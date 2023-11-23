@@ -4,7 +4,7 @@ import 'package:public_housing/screens/propertydetails_screen/propertydetails_co
 class GeneralNotesCardWidget extends GetView<PropertyDetailsController> {
   final RxCommonModel item;
 
-  GeneralNotesCardWidget({super.key, required this.item});
+  const GeneralNotesCardWidget({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

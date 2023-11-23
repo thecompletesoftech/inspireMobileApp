@@ -48,7 +48,7 @@ class DeficienciesFoundController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments;
       if (Get.isRegistered<BuildingDetailsController>()) {
-        buildingTitle = Get.find<BuildingDetailsController>().propertyTitle;
+        buildingTitle = Get.find<BuildingDetailsController>().propertyTitle ?? "";
       }
     }
     update();

@@ -540,7 +540,6 @@ class InspectionScreen extends GetView<InspectionController> {
                                       textSize: 20.px,
                                       onTap: () {
                                         Get.toNamed(TextMessageScreen.routes, arguments: controller.item);
-                                        // controller.getFromGallery();
                                       }),
                                   SizedBox(
                                     width: 24.px,
@@ -549,11 +548,9 @@ class InspectionScreen extends GetView<InspectionController> {
                                       icon: icPhone,
                                       iconheigth: 20.px,
                                       title: Utils.isTabletScreen(context) ? "Call" : Strings.makeCall,
-                                      // height: 44.px,
                                       radius: 100.px,
                                       padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                                       border: Border.all(color: controller.appColors.border, width: 2),
-                                      // width: 179.px,
                                       color: controller.appColors.white,
                                       textColor: controller.appColors.appColor,
                                       textWeight: FontWeight.w500,
@@ -615,7 +612,6 @@ class InspectionScreen extends GetView<InspectionController> {
                                     prefixIcon: SvgPicture.string(
                                       icMsg,
                                       color: controller.appColors.lightText,
-                                      // height: 20,
                                     ).paddingOnly(left: 15.px),
                                     suffixIcon: GestureDetector(
                                       onTap: () {
@@ -644,7 +640,6 @@ class InspectionScreen extends GetView<InspectionController> {
                                   suffixIcon: SvgPicture.string(
                                     icCalender2,
                                     color: controller.appColors.lightText,
-                                    // height: 10.px,
                                   ),
                                   padding: EdgeInsets.zero,
                                   contentPadding: EdgeInsets.only(left: 16.px),
@@ -714,7 +709,7 @@ class InspectionScreen extends GetView<InspectionController> {
                                 ],
                               ).paddingSymmetric(vertical: 32.px)
                             : controller.item!.status == InspectionStatus.completed.toString()
-                                ? InspectionCompleteWidget()
+                                ? const InspectionCompleteWidget()
                                 : const SizedBox()
                       ],
                     ).paddingAll(32.px),

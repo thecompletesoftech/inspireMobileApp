@@ -4,13 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// <<< To store data in phone storage --------- >>>
 class SharedPref {
-  // For login and signup
-  String? ccode = "ccode";
-  String? number = "number";
-  String? loginData = "loginData";
-
-  // String? deviceToken = "deviceToken";
-
   // For introduction Screen
   String? isWalkThrough = "isWalkThrough";
 

@@ -7,7 +7,7 @@ import 'home_controller.dart';
 class GridItemCardWidget extends GetView<HomeController> {
   final RxCommonModel item;
 
-  GridItemCardWidget({
+  const GridItemCardWidget({
     super.key,
     required this.item,
   });
@@ -165,8 +165,10 @@ class GridItemCardWidget extends GetView<HomeController> {
                         radius: 100.px,
                         title: Strings.inspectionDetails,
                         onTap: () {
-                          Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) => controller.update());
-                          controller.checkStatus();
+                          Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) {
+                            controller.checkStatus();
+                            controller.update();
+                          });
                         },
                         height: 44.px,
                         padding: EdgeInsets.symmetric(

@@ -55,9 +55,9 @@ class PdfController extends BaseController {
 
   @override
   void onInit() {
-    // if (Get.arguments != null) {
-    //   item = Get.arguments;
-    // }
+    if (Get.arguments != null) {
+      item = Get.arguments;
+    }
     update();
     // TODO: implement onInit
     super.onInit();

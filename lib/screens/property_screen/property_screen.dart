@@ -177,15 +177,16 @@ class PropertyScreen extends GetView<PropertyController> {
                 Row(
                   children: [
                     Flexible(
+                        flex: 0,
                         child: MyTextView(
-                      Strings.properties,
-                      textStyleNew: MyTextStyle(
-                          textSize: 32.px,
-                          textWeight: FontWeight.w600,
-                          textFamily: fontFamilyRegular,
-                          textColor: controller.appColors.appColor),
-                    )),
-                    (Utils.isLandScapeMode(context)) ? Expanded(child: const SizedBox()) : const SizedBox(),
+                          Strings.properties,
+                          textStyleNew: MyTextStyle(
+                              textSize: 32.px,
+                              textWeight: FontWeight.w600,
+                              textFamily: fontFamilyRegular,
+                              textColor: controller.appColors.appColor),
+                        )),
+                    (Utils.isLandScapeMode(context)) ? const Expanded(child: SizedBox()) : const SizedBox(),
                     Expanded(
                       flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)
                           ? 1
@@ -293,15 +294,15 @@ class PropertyScreen extends GetView<PropertyController> {
                               childAspectRatio: Utils.isLandScapeMode(context)
                                   ? Utils.isSmallScreen(context)
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
-                                      : Utils.isTabletScreen1(context)
+                                      : Utils.isTabletScreen(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.68695.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.68.px) //.....68695
                                   : Utils.isTabletScreen1(context)
                                       ? ScalingQuery(context).verticalScale(0.6533.px) //pro mini
                                       : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.51.px) //.....1
+                                          ? ScalingQuery(context).verticalScale(0.703956.px) //.....1
                                           : Utils.isMediumScreen(context)
-                                              ? ScalingQuery(context).verticalScale(0.36.px) //.....2
+                                              ? ScalingQuery(context).verticalScale(0.699.px) //.....2
                                               : ScalingQuery(context).verticalScale(0.49.px), //.....
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16),

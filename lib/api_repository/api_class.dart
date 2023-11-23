@@ -85,7 +85,6 @@ class HttpUtil {
 
     if (response.statusCode == 200) {
       printAction("params -------->>> response ${response.data['data']['token']}");
-
       getStorageData.saveString(getStorageData.token, response.data['data']['token']);
       // this.token = response.data['token'];
       return response.data['token'];

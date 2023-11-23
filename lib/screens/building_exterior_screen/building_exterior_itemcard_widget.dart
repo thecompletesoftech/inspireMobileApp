@@ -11,6 +11,7 @@ class BuildingExteriorItemCardWidget extends GetView<BuildingExteriorController>
   Widget build(BuildContext context) {
     return GetBuilder<BuildingExteriorController>(
       init: BuildingExteriorController(),
+      assignId: true,
       builder: (controller) {
         return Theme(
           data: Theme.of(context).copyWith(

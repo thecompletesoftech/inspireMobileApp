@@ -33,7 +33,7 @@ class AppColors {
   Color textFiledLabelColor = const Color(0xFF666F80);
 
   ///=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-= APP COLORS ==-=-=-=--=-=-=-=-=-=-=-=-=///
-  Color appColor = const Color(0xFF002D74);
+  Color appColor = const Color(0xff002d74);
   Color appBGColor = const Color(0xBFF4F4F4);
   Color textBlack = const Color(0xFF1C1B1F);
   Color textBlack1 = const Color(0xFF191919);
@@ -51,9 +51,9 @@ class AppColors {
   Color allowButton = const Color(0xFFF6F6F6);
   Color shadow = const Color(0xFF5A6CEA);
   Color textGreen = const Color(0xFF005E0A);
-  Color textPink = const Color(0xFFFF41F3);
-  Color updateGreen = const Color(0xFF1FCC42);
-  Color updateYellow = const Color(0xFFE98C00);
+  Color textPink = const Color(0xFFF032E4);
+  Color updateGreen = const Color(0xFF00BB13); //0xFF1FCC42
+  Color updateYellow = const Color(0xFFEA8C00); //0xFFE98C00
   Color bottomSheetBackground = const Color(0xFF273840);
   Color delete = const Color(0xFFD72B2B);
   Color pinkcolor = const Color(0xFFE8DEF8);

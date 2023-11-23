@@ -420,7 +420,6 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                     LinearProgressIndicator(
                                       value: 10.0,
                                       minHeight: 4.px,
-                                      // color: controller.appColors.appBGColor,
                                       backgroundColor: controller.appColors.border,
                                     ).paddingOnly(bottom: 10.px),
                                     Row(

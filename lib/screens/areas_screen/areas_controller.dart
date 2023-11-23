@@ -130,11 +130,12 @@ class AreasController extends BaseController {
 
   checkStatus() {
     var sum = 0;
-    for (int i = 0; i < dataList.length; i++) {
-      if (dataList[i].status == "true") {
+
+    dataList.forEach((element) {
+      if (element.status == "true") {
         sum++;
       }
-    }
+    });
     if (dataList.length == sum) {
       visibleBtn = true;
       update();

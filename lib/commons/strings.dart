@@ -52,6 +52,8 @@ class Strings {
   static const String fireAlarmInspectionReport = "Fire Alarm Inspection Report";
   static const String leadBasedPaintDisclosureForm = "Lead-Based Paint Disclosure Form";
   static const String sprinklerSystemCertificate = "Sprinkler System Certificate";
+  static const String share = "Share";
+  static const String download = "Download";
   static const String upload = "Upload";
   static const String noShow = "No Show";
   static const String seeMore = "See More";

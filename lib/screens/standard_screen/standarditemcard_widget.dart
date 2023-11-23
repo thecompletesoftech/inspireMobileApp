@@ -4,17 +4,17 @@ import 'package:public_housing/screens/standard_screen/standard_controller.dart'
 
 import '../progress_screen/progress_screen.dart';
 
-class StandardItemCardWidget extends StatelessWidget {
+class StandardItemCardWidget extends GetView<StandardController> {
   final RxCommonModel item;
   final int index;
-  final StandardController controller = Get.find();
-  StandardItemCardWidget({super.key, required this.item, required this.index});
+  const StandardItemCardWidget({super.key, required this.item, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StandardController>(
+      init: StandardController(),
       assignId: true,
-      builder: (logic) {
+      builder: (controller) {
         return Column(
           children: [
             Container(

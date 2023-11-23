@@ -232,7 +232,7 @@ class AuthoritySignatureScreen extends GetView<AuthoritySignatureController> {
                                           // Get.offNamed(
                                           //   PropertyScreen.routes,
                                           // );
-                                          Get.toNamed(PdfScreen.routes);
+                                          Get.toNamed(PdfScreen.routes, arguments: controller.item);
                                         }
                                       }
                                     } else {

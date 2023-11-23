@@ -305,8 +305,6 @@ class InspectionController extends BaseController {
       zoom: 17,
     );
     update();
-
-    // printAction("test_permissionStatus: $permissionStatus");
   }
 
   late final Rx<DateTime> _selectedDate = DateTime.now().obs;

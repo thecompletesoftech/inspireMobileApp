@@ -264,7 +264,7 @@ class KitchenController extends BaseController {
         searchList.addAll(dataList);
       } else {
         for (int i = 0; i < dataList.length; i++) {
-          if (dataList[i].status.toString() == "false") {
+          if (dataList[i].status.toString() == "true") {
             searchList.addAll(dataList);
             update();
           }
@@ -281,7 +281,7 @@ class KitchenController extends BaseController {
       } else {
         for (int i = 0; i < dataList.length; i++) {
           if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase()) &&
-              dataList[i].status.toString() == "false") {
+              dataList[i].status.toString() == "true") {
             searchList.add(dataList[i]);
             update();
           }
@@ -296,7 +296,7 @@ class KitchenController extends BaseController {
       searchList.addAll(dataList);
     } else {
       for (int i = 0; i < dataList.length; i++) {
-        if (dataList[i].status.toString() == "false") {
+        if (dataList[i].status.toString() == "true") {
           searchList.add(dataList[i]);
         }
       }

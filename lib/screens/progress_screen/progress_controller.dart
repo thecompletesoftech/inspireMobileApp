@@ -424,8 +424,8 @@ class ProgressController extends BaseController {
                           padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
-                            Get.back();
-                            Get.back();
+                            Get.back(result: true);
+                            Get.back(result: true);
                           }),
                     ],
                   ).paddingOnly(

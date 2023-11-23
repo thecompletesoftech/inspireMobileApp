@@ -178,36 +178,8 @@ class HomeScreen extends GetView<HomeController> {
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 Row(
                   children: [
-                    // (Utils.isLandScapeMode(context) && !Utils.isTabletScreen1(context)) ||
-                    //         !Utils.isTabletScreen1(context)
-                    //     ? Expanded(
-                    //         child: SizedBox(
-                    //           width: 250.px,
-                    //           child: CommonTextField(
-                    //             height: 52.px,
-                    //             border: Border.all(color: controller.appColors.border1),
-                    //             borderRadius: 25.px,
-                    //             color: controller.appColors.white,
-                    //             controller: controller.searchController,
-                    //             prefixIcon: Image.asset(
-                    //               ImagePath.icSearch,
-                    //               color: controller.appColors.black,
-                    //             ),
-                    //             hintText: "Search",
-                    //             hintTextStyle: MyTextStyle(
-                    //                 textColor: controller.appColors.border,
-                    //                 textSize: 16.px,
-                    //                 textFamily: fontFamilyRegular,
-                    //                 textWeight: FontWeight.w400),
-                    //             onChange: (str) {
-                    //               controller.searchItem(str);
-                    //               controller.update();
-                    //             },
-                    //           ),
-                    //         ),
-                    //       )
-                    //     :
                     Expanded(
+                        flex: 0,
                         child: CommonButton(
                             border: Border.all(color: controller.appColors.border, width: 2),
                             radius: 100.px,
@@ -341,13 +313,13 @@ class HomeScreen extends GetView<HomeController> {
                                       ? ScalingQuery(context).verticalScale(0.72.px) // iphone
                                       : Utils.isTabletScreen1(context)
                                           ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.55322938.px) //.....
+                                          : ScalingQuery(context).verticalScale(0.5537.px) //.....55322938
                                   : Utils.isTabletScreen1(context)
                                       ? ScalingQuery(context).verticalScale(0.529943.px) //pro mini
                                       : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.51.px) //.....1
+                                          ? ScalingQuery(context).verticalScale(0.571028.px) //.....1
                                           : Utils.isMediumScreen(context)
-                                              ? ScalingQuery(context).verticalScale(0.36.px) //.....2
+                                              ? ScalingQuery(context).verticalScale(0.561.px) //.....2
                                               : ScalingQuery(context).verticalScale(0.49.px), //.....
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16),

@@ -75,7 +75,6 @@ class InspectionSummaryController extends BaseController {
         context: Get.context!,
         borderRadius: 28.px,
         widget: GetBuilder<InspectionSummaryController>(
-          // assignId: true,
           builder: (_) {
             return Column(
               children: [

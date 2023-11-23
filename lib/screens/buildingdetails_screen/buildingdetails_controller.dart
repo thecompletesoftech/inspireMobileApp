@@ -220,7 +220,7 @@ class BuildingDetailsController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments;
       if (Get.isRegistered<BuildingsController>()) {
-        propertyTitle = Get.find<BuildingsController>().item!.title!;
+        propertyTitle = Get.find<BuildingsController>().item!.title ?? "";
       }
       if (item!.status == BuildingStatus.completed.toString() ||
           item!.status == BuildingStatus.inCompleted.toString()) {
@@ -230,7 +230,6 @@ class BuildingDetailsController extends BaseController {
       }
       update();
     }
-
     // TODO: implement onInit
     super.onInit();
   }
@@ -243,7 +242,6 @@ class BuildingDetailsController extends BaseController {
           children: [
             Container(
               width: 312.px,
-              // height: 184.px,
               padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
               child: Column(
                 mainAxisSize: MainAxisSize.min,

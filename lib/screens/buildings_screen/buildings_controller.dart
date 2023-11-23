@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/property_screen/property_controller.dart';
 
 import '../auth/signing_screen/signing_screen.dart';
 
@@ -42,7 +43,7 @@ class BuildingsController extends BaseController {
         imgId: ImagePath.media3,
         status: BuildingStatus.scheduled.toString(),
         check: false),
-    RxCommonModel(
+/*    RxCommonModel(
         id: 4,
         title: "2 Units",
         subtitle: "Tenant",
@@ -122,16 +123,15 @@ class BuildingsController extends BaseController {
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: BuildingStatus.scheduled.toString(),
-        check: false),
+        check: false),*/
   ].obs;
   var searchList = [].obs;
 
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
 
-  bool inComplete = false;
+  bool? inComplete;
 
   void actionPopUpItemSelected(int value) {
-    // _scaffoldkey.currentState.hideCurrentSnackBar();
     ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
     String message;
     if (value == 0) {
@@ -154,10 +154,33 @@ class BuildingsController extends BaseController {
   onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
+      if (item!.status == PropertyStatus.completed.toString()) {
+        dataList.forEach((element) {
+          element.status = BuildingStatus.completed.toString();
+        });
+        inComplete = false;
+        visibleBtn = true;
+      } else {
+        visibleBtn = false;
+      }
       update();
     }
     searchItem("");
     super.onInit();
+  }
+
+  checkStatus() {
+    var sum = 0;
+    dataList.forEach((element) {
+      if (element.status == BuildingStatus.completed.toString()) {
+        sum++;
+      }
+    });
+    if (dataList.length == sum) {
+      inComplete = false;
+      visibleBtn = true;
+      update();
+    }
   }
 
   searchItem(str) {
@@ -174,19 +197,6 @@ class BuildingsController extends BaseController {
       }
     }
     printAction(searchList.length.toString());
-  }
-
-  checkStatus() {
-    var sum = 0;
-    for (int i = 0; i < dataList.length; i++) {
-      if (dataList[i].status == "true") {
-        sum++;
-      }
-    }
-    if (dataList.length == sum) {
-      visibleBtn = true;
-      update();
-    }
   }
 
   dialogInspectionInCompleted() {

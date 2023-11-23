@@ -92,7 +92,7 @@ class AreasBuildingController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments;
       if (Get.isRegistered<BuildingDetailsController>()) {
-        buildingTitle = Get.find<BuildingDetailsController>().propertyTitle!;
+        buildingTitle = Get.find<BuildingDetailsController>().propertyTitle ?? "";
       }
     }
     update();
@@ -102,12 +102,12 @@ class AreasBuildingController extends BaseController {
 
   checkStatus() {
     var sum = 0;
-    for (int i = 0; i < dataList.length; i++) {
-      if (dataList[i].status == "true") {
+    dataList.forEach((element) {
+      if (element.status == "true") {
         sum++;
         inComplete = false;
       }
-    }
+    });
     if (dataList.length == sum) {
       visibleBtn = true;
       update();

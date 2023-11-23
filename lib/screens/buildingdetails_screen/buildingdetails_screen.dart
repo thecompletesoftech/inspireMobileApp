@@ -610,7 +610,7 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                 ],
                               ).paddingSymmetric(vertical: 32.px)
                             : controller.item!.status == BuildingStatus.completed.toString()
-                                ? InspectionCompleteWidget()
+                                ? const InspectionCompleteWidget()
                                 : const SizedBox()
                       ],
                     ).paddingAll(32.px),

@@ -2,10 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/home_screen/home_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-
-import '../home_screen/home_controller.dart';
 
 class HSAckController extends BaseController {
   RxCommonModel? item;
@@ -249,7 +246,9 @@ class HSAckController extends BaseController {
                               onTap: () {
                                 if (active) {
                                   Get.back();
-                                  Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
+                                  Get.back(result: true);
+                                  // Get.back(result: true);
+                                  // Get.offNamed(HomeScreen.routes, arguments: HomeController().item);
                                 } else {
                                   utils.showToast(message: "Leave comment is empty", context: Get.context!);
                                 }

@@ -49,7 +49,7 @@ class HomeController extends BaseController {
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
         check: true),
-    RxCommonModel(
+    /* RxCommonModel(
         id: 4,
         title: "Fernando Devries",
         subtitle: "Tenant",
@@ -75,7 +75,7 @@ class HomeController extends BaseController {
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: InspectionStatus.scheduled.toString(),
-        check: true),
+        check: true),*/
   ].obs;
   var searchList = [].obs;
 
@@ -542,15 +542,17 @@ class HomeController extends BaseController {
 
   checkStatus() {
     var sum = 0;
-    for (int i = 0; i < dataList.length; i++) {
-      if (dataList[i].status == "true") {
+
+    dataList.forEach((element) {
+      if (element.status == InspectionStatus.completed.toString()) {
         sum++;
       }
-    }
+    });
     if (dataList.length == sum) {
       visibleBtn = true;
       update();
     }
+    printAction(visibleBtn.toString());
   }
 
   @override
