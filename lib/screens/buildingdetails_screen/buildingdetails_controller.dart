@@ -199,7 +199,6 @@ class BuildingDetailsController extends BaseController {
         if (available) {
           isListening.value = true;
           update();
-
           speechToText.listen(onResult: (val) {
             commentController.text = val.recognizedWords;
             update();

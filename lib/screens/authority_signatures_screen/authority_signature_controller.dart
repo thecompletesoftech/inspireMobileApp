@@ -43,11 +43,8 @@ class AuthoritySignatureController extends BaseController {
   final commentController = TextEditingController();
   bool tenantSign = false;
   GlobalKey<SfSignaturePadState> tenantSignPadKey = GlobalKey();
-
   ScreenshotController tenantSignController = ScreenshotController();
-
   var sendImagesList = [];
-
   var isTenantBlank = true;
   var isOwnerBlank = true;
 

@@ -15,8 +15,8 @@ String fontFamilyFuturaHeavyBTtext = selectedLang == Constants.languageCodeAr ? 
 class Constants {
   static const bool isTestingMode = kDebugMode;
   // if(userOrOwner == false){ user flow } else { Business Owner Flow }
-  static bool userOrOwner = false;
-  static const String owner = "Business";
+  // static bool userOrOwner = false;
+  // static const String owner = "Business";
 
   // Time Format .....
   static const String YYYY_MM_DD_HH_MM_SS = 'yyyy-MM-dd hh:mm:ss';
@@ -57,23 +57,18 @@ class Constants {
   static String setChatUserList = "setChatUserlist";
 
   /// ------------ OLD Socket Key ------------>>
-  static String updateChatList = "updateChatList";
-  static String getMessageList = "getMessageList";
-  static String setMessageList = "setMessageList";
-  static String sendMessage = "sendMessage";
-  static String setNewMessage = "setNewMessage";
-  static String startTyping = "startTyping";
-  static String stopTyping = "stopTyping";
+  // static String updateChatList = "updateChatList";
+  // static String getMessageList = "getMessageList";
+  // static String setMessageList = "setMessageList";
+  // static String sendMessage = "sendMessage";
+  // static String setNewMessage = "setNewMessage";
+  // static String startTyping = "startTyping";
+  // static String stopTyping = "stopTyping";
 
-  // static const String kUriPrefix = "";
+  static const String kUriPrefix = "";
   static const String apiKey = "";
   // static const String googleApiKey = "AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc";
   static const String googleApiKey = "AIzaSyAHAmJ0f-Q9xHKfd-rsddiqm4Mq7mb0xUY";
-  static String bold = "";
-  static String light = "";
-  static String book = "";
-  static String regular = "";
-  static String medium = "";
   static const String languageCodeDefault = languageCodeEn;
 
   //google map json

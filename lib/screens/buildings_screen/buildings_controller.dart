@@ -43,7 +43,7 @@ class BuildingsController extends BaseController {
         imgId: ImagePath.media3,
         status: BuildingStatus.scheduled.toString(),
         check: false),
-/*    RxCommonModel(
+    RxCommonModel(
         id: 4,
         title: "2 Units",
         subtitle: "Tenant",
@@ -123,7 +123,7 @@ class BuildingsController extends BaseController {
         image: ImagePath.pic3,
         imgId: ImagePath.media3,
         status: BuildingStatus.scheduled.toString(),
-        check: false),*/
+        check: false),
   ].obs;
   var searchList = [].obs;
 
@@ -269,7 +269,7 @@ class BuildingsController extends BaseController {
                             Get.back();
                           }).paddingOnly(right: 8.px),
                       CommonButton(
-                          title: Strings.backToBuildings,
+                          title: Strings.backToProperties,
                           textColor: appColors.white,
                           color: appColors.appColor,
                           textSize: 16.px,

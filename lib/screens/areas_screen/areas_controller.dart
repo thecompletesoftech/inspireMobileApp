@@ -41,7 +41,7 @@ class AreasController extends BaseController {
   RxCommonModel? item;
   String? itemTitle;
   bool visibleBtn = false;
-  bool change = true;
+  bool inComplete = false;
 
   var dataList = [
     RxCommonModel(
@@ -134,6 +134,7 @@ class AreasController extends BaseController {
     dataList.forEach((element) {
       if (element.status == "true") {
         sum++;
+        inComplete = false;
       }
     });
     if (dataList.length == sum) {

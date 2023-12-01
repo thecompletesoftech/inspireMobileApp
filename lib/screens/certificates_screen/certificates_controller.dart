@@ -72,7 +72,7 @@ class CertificateController extends BaseController {
     if (Get.arguments != null) {
       item = Get.arguments;
       if (Get.isRegistered<BuildingsController>()) {
-        propertyTitle = Get.find<BuildingsController>().item!.title!;
+        propertyTitle = Get.find<BuildingsController>().item!.title ?? "";
       }
     }
     update();

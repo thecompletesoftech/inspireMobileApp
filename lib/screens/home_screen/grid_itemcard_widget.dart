@@ -166,6 +166,7 @@ class GridItemCardWidget extends GetView<HomeController> {
                         title: Strings.inspectionDetails,
                         onTap: () {
                           Get.toNamed(InspectionScreen.routes, arguments: item)!.then((value) {
+                            controller.inComplete = true;
                             controller.checkStatus();
                             controller.update();
                           });

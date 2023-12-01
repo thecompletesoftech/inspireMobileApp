@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 
 import '../auth/signing_screen/signing_screen.dart';
+import '../buildings_screen/buildings_controller.dart';
 
 enum InspectionStatus { all, completed, inCompleted, scheduled }
 
@@ -178,14 +179,24 @@ class HomeController extends BaseController {
       message = 'Not implemented';
     }
     final snackBar = SnackBar(content: Text(message));
-    // _scaffoldkey.currentState.showSnackBar(snackBar);
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
+  bool? inComplete;
   @override
   onInit() {
     if (Get.arguments != null) {
       item = Get.arguments;
+
+      if (item!.status == BuildingStatus.completed.toString()) {
+        dataList.forEach((element) {
+          element.status = BuildingStatus.completed.toString();
+        });
+        inComplete = false;
+        visibleBtn = true;
+      } else {
+        visibleBtn = false;
+      }
     }
     update();
     checkPermission();
@@ -549,10 +560,107 @@ class HomeController extends BaseController {
       }
     });
     if (dataList.length == sum) {
+      inComplete = false;
       visibleBtn = true;
       update();
     }
     printAction(visibleBtn.toString());
+  }
+
+  dialogInspectionInCompleted() {
+    alertActionDialogApp(
+        context: Get.context!,
+        borderRadius: 28.px,
+        widget: Column(
+          children: [
+            Container(
+              width: 312.px,
+              padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  MyTextView(
+                    Strings.inspectionIncomplete,
+                    textStyleNew: MyTextStyle(
+                      textColor: appColors.textBlack,
+                      textSize: 24.px,
+                      textFamily: fontFamilyRegular,
+                      textWeight: FontWeight.w400,
+                    ),
+                  ).paddingSymmetric(vertical: 16.px),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 312.px,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CommonButton(
+                          title: Strings.cancel,
+                          textColor: appColors.appColor,
+                          color: appColors.transparent,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back();
+                          }).paddingOnly(right: 8.px),
+                      CommonButton(
+                          title: Strings.backToInspections,
+                          textColor: appColors.white,
+                          color: appColors.appColor,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back(closeOverlays: true);
+                            Get.back(result: 1);
+                          }),
+                    ],
+                  ).paddingOnly(
+                    top: 24.px,
+                    left: 8.px,
+                    right: 24.px,
+                    bottom: 24.px,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   @override

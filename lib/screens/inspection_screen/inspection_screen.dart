@@ -6,7 +6,6 @@ import '../../commons/all.dart';
 import '../../screens/inspection_screen/inspection_controller.dart';
 import '../areas_screen/areas_screen.dart';
 import '../home_screen/home_controller.dart';
-import '../noshow_screen/noshow_screen.dart';
 import '../text_message_screen/text_message_screen.dart';
 import 'generalNotesCard_widget.dart';
 import 'inspection_complete_widget.dart';
@@ -24,7 +23,17 @@ class InspectionScreen extends GetView<InspectionController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
             children: [
-              CommonAppBar(color: controller.appColors.transparent, radius: 0.px),
+              CommonAppBar(
+                color: controller.appColors.transparent,
+                radius: 0.px,
+                onClickBack: () {
+                  if (controller.item!.status == InspectionStatus.inCompleted.toString()) {
+                    controller.dialogInspectionInCompleted();
+                  } else {
+                    Get.back(result: controller.visibleBtn);
+                  }
+                },
+              ),
               Expanded(
                 flex: 1,
                 child: ListView(
@@ -653,28 +662,28 @@ class InspectionScreen extends GetView<InspectionController> {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CommonButton(
-                                      title: Strings.noShow,
-                                      textColor: controller.appColors.appColor,
-                                      color: controller.appColors.transparent,
-                                      radius: 35.px,
-                                      textWeight: FontWeight.w600,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.px,
-                                        vertical: 10.px,
-                                      ),
-                                      textSize: 16.px,
-                                      border: Border.all(color: controller.appColors.border, width: 2),
-                                      onTap: () {
-                                        Get.toNamed(NoShowScreen.routes, arguments: controller.item)!.then((value) {
-                                          if (value != null) {
-                                            controller.item!.status = InspectionStatus.completed.toString();
-                                            controller.visibleBtn = true;
-                                            controller.update();
-                                            Get.back(result: true);
-                                          }
-                                        });
-                                      }),
+                                  // CommonButton(
+                                  //     title: Strings.noShow,
+                                  //     textColor: controller.appColors.appColor,
+                                  //     color: controller.appColors.transparent,
+                                  //     radius: 35.px,
+                                  //     textWeight: FontWeight.w600,
+                                  //     padding: EdgeInsets.symmetric(
+                                  //       horizontal: 24.px,
+                                  //       vertical: 10.px,
+                                  //     ),
+                                  //     textSize: 16.px,
+                                  //     border: Border.all(color: controller.appColors.border, width: 2),
+                                  //     onTap: () {
+                                  //       Get.toNamed(NoShowScreen.routes, arguments: controller.item)!.then((value) {
+                                  //         if (value != null) {
+                                  //           controller.item!.status = InspectionStatus.completed.toString();
+                                  //           controller.visibleBtn = true;
+                                  //           controller.update();
+                                  //           Get.back(result: true);
+                                  //         }
+                                  //       });
+                                  //     }),
                                   SizedBox(
                                     width: 24.px,
                                   ),
@@ -699,7 +708,9 @@ class InspectionScreen extends GetView<InspectionController> {
                                         if (controller.visibleBtn) {
                                           Get.toNamed(AresScreen.routes, arguments: controller.item)!.then((value) {
                                             if (value != null) {
-                                              controller.item!.status = InspectionStatus.completed.toString();
+                                              controller.item!.status = value
+                                                  ? InspectionStatus.completed.toString()
+                                                  : InspectionStatus.inCompleted.toString();
                                               controller.visibleBtn = true;
                                               controller.update();
                                             }

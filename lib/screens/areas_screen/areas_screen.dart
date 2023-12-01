@@ -18,7 +18,13 @@ class AresScreen extends GetView<AreasController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
             children: [
-              CommonAppBar(color: controller.appColors.transparent, radius: 0.px),
+              CommonAppBar(
+                color: controller.appColors.transparent,
+                radius: 0.px,
+                onClickBack: () {
+                  Get.back(result: controller.inComplete);
+                },
+              ),
               Expanded(
                 flex: 1,
                 child: ListView(
@@ -312,9 +318,9 @@ class AresScreen extends GetView<AreasController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectionSummary,
                               onTap: () {
-                                // if (controller.visibleBtn) {
-                                Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
-                                // }
+                                if (controller.visibleBtn) {
+                                  Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
+                                }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,

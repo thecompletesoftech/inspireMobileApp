@@ -1,10 +1,10 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/home_screen/home_screen.dart';
 
 import '../../responsive/scaling_query.dart';
 import '../building_exterior_screen/building_exterior_screen.dart';
 import '../deficiencies_found_screen/deficiencies_found_screen.dart';
+import '../home_screen/home_screen.dart';
 import 'areasbuilding_controller.dart';
 
 class AresBuildingScreen extends GetView<AreasBuildingController> {
@@ -329,9 +329,9 @@ class AresBuildingScreen extends GetView<AreasBuildingController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectUnits,
                               onTap: () {
-                                // if (controller.visibleBtn) {
-                                Get.toNamed(HomeScreen.routes, arguments: controller.item);
-                                // }
+                                if (controller.visibleBtn) {
+                                  Get.toNamed(HomeScreen.routes, arguments: controller.item);
+                                }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,

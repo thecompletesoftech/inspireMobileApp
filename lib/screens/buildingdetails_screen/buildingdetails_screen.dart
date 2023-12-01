@@ -598,11 +598,11 @@ class BuildingDetailsScreen extends GetView<BuildingDetailsController> {
                                                 Get.find<BuildingsController>().item!.status = value
                                                     ? BuildingStatus.completed.toString()
                                                     : BuildingStatus.inCompleted.toString();
-                                                controller.item!.status = value
-                                                    ? BuildingStatus.completed.toString()
-                                                    : BuildingStatus.inCompleted.toString();
-                                                controller.update();
                                               }
+                                              controller.item!.status = value
+                                                  ? BuildingStatus.completed.toString()
+                                                  : BuildingStatus.inCompleted.toString();
+                                              controller.update();
                                             }
                                           });
                                         }

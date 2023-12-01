@@ -304,7 +304,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                       textSize: 16.px,
                       radius: 100.px,
                       icon: controller.change ? icGrid : icList,
-                    ).paddingOnly(left: 20.px),
+                    ).paddingOnly(left: 15.px),
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 24.px),
                 Row(

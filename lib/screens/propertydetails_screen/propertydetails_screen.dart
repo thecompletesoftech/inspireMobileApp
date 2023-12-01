@@ -601,9 +601,9 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   vertical: 10.px,
                                 ),
                                 onTap: () {
-                                  // if (controller.visibleBtn) {
-                                  Get.toNamed(HSAckScreen.routes, arguments: controller.item);
-                                  // }
+                                  if (controller.visibleBtn) {
+                                    Get.toNamed(HSAckScreen.routes, arguments: controller.item);
+                                  }
                                 }),
                           ],
                         ).paddingSymmetric(vertical: 32.px)

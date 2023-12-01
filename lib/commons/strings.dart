@@ -39,6 +39,7 @@ class Strings {
   static const String phone = "Tel: 5743861818";
   static const String backToProperties = "Back to Properties";
   static const String backToBuildings = "Back to Buildings";
+  static const String backToInspections = "Back to Inspections";
   static const String inspectionDetails = "Inspection Details";
   static const String propertyDetails = "Property Details";
   static const String buildings = "Buildings";

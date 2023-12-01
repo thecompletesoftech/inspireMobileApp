@@ -185,9 +185,13 @@ class HomeScreen extends GetView<HomeController> {
                             radius: 100.px,
                             title: Strings.backToBuildings,
                             onTap: () {
-                              Get.back(result: controller.visibleBtn);
-                              Get.back(result: controller.visibleBtn);
-                              Get.back(result: controller.visibleBtn);
+                              if (controller.inComplete == true) {
+                                controller.dialogInspectionInCompleted();
+                              } else {
+                                Get.back(result: controller.visibleBtn);
+                                Get.back(result: controller.visibleBtn);
+                                Get.back(result: controller.visibleBtn);
+                              }
                             },
                             height: 44.px,
                             padding: EdgeInsets.symmetric(
