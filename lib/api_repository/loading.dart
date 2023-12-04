@@ -1,6 +1,5 @@
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../commons/all.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class Loading {
   AppColors appColors = AppColors();

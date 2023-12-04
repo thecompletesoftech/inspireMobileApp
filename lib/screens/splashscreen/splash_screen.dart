@@ -1,6 +1,5 @@
-import 'package:public_housing/screens/splashscreen/splash_controller.dart';
-
 import '../../commons/all.dart';
+import 'package:public_housing/screens/splashscreen/splash_controller.dart';
 
 class SplashScreen extends GetView<SplashController> {
   const SplashScreen({Key? key}) : super(key: key);

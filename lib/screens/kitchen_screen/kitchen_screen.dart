@@ -1,12 +1,10 @@
 import 'dart:io';
-
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:public_housing/screens/kitchen_screen/kitchenitemcard_widget.dart';
-
 import '../../commons/all.dart';
-import '../home_screen/home_controller.dart';
-import '../progress_screen/progress_screen.dart';
 import 'kitchen_controller.dart';
+import '../home_screen/home_controller.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../progress_screen/progress_screen.dart';
+import 'package:public_housing/screens/kitchen_screen/kitchenitemcard_widget.dart';
 
 class KitchenScreen extends GetView<KitchenController> {
   const KitchenScreen({Key? key}) : super(key: key);
@@ -24,7 +22,8 @@ class KitchenScreen extends GetView<KitchenController> {
                 color: controller.appColors.transparent,
                 radius: 0.px,
                 onClickBack: () {
-                  if (controller.sendImagesList.isNotEmpty || controller.change) {
+                  if (controller.sendImagesList.isNotEmpty ||
+                      controller.change) {
                     // controller.dialogSectionCompleted();
                     Get.back(result: true);
                   } else {
@@ -48,7 +47,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                 ? ""
                                 : "${controller.item!.massage}, ${controller.itemTitle} - ${controller.item!.title}",
                             textStyleNew: MyTextStyle(
-                              textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                              textSize:
+                                  Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
                               textColor: controller.appColors.appColor,
                               textFamily: fontFamilyBold,
@@ -60,7 +60,9 @@ class KitchenScreen extends GetView<KitchenController> {
                         ),
                         controller.item != null
                             ? CommonButton(
-                                title: controller.item!.check == false ? Strings.annualInspection : Strings.tenant,
+                                title: controller.item!.check == false
+                                    ? Strings.annualInspection
+                                    : Strings.tenant,
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,
@@ -101,7 +103,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                 width: 250.px,
                                 child: CommonTextField(
                                   height: 56.px,
-                                  border: Border.all(color: controller.appColors.border1),
+                                  border: Border.all(
+                                      color: controller.appColors.border1),
                                   borderRadius: 100.px,
                                   color: controller.appColors.white,
                                   controller: controller.searchController,
@@ -126,13 +129,18 @@ class KitchenScreen extends GetView<KitchenController> {
                                 color: controller.appColors.transparent,
                                 radius: 100.px,
                                 textWeight: FontWeight.w600,
-                                padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.px, vertical: 10.px),
                                 textSize: 16.px,
-                                border: Border.all(color: controller.appColors.border, width: 2),
+                                border: Border.all(
+                                    color: controller.appColors.border,
+                                    width: 2),
                                 onTap: () {
                                   controller.expansionTileController.isExpanded
-                                      ? controller.expansionTileController.collapse()
-                                      : controller.expansionTileController.expand();
+                                      ? controller.expansionTileController
+                                          .collapse()
+                                      : controller.expansionTileController
+                                          .expand();
                                   controller.update();
                                 }).paddingSymmetric(horizontal: 16.px),
                             SizedBox(
@@ -140,20 +148,33 @@ class KitchenScreen extends GetView<KitchenController> {
                               height: 45.px,
                               child: SegmentedButton<InspectionStatus>(
                                 style: ButtonStyle(
-                                  backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
-                                    return states.contains(MaterialState.selected)
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (Set<MaterialState> states) {
+                                    return states
+                                            .contains(MaterialState.selected)
                                         ? controller.appColors.pinkcolor
                                         : controller.appColors.transparent;
                                   }),
-                                  foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
-                                    return states.contains(MaterialState.selected) ? Colors.black : Colors.grey;
+                                  foregroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (Set<MaterialState> states) {
+                                    return states
+                                            .contains(MaterialState.selected)
+                                        ? Colors.black
+                                        : Colors.grey;
                                   }),
-                                  side: MaterialStateBorderSide.resolveWith((states) {
+                                  side: MaterialStateBorderSide.resolveWith(
+                                      (states) {
                                     return BorderSide(
-                                        color: states.contains(MaterialState.selected) ? Colors.black : Colors.grey);
+                                        color: states.contains(
+                                                MaterialState.selected)
+                                            ? Colors.black
+                                            : Colors.grey);
                                   }),
                                 ),
-                                segments: const <ButtonSegment<InspectionStatus>>[
+                                segments: const <ButtonSegment<
+                                    InspectionStatus>>[
                                   ButtonSegment<InspectionStatus>(
                                     value: InspectionStatus.all,
                                     label: Text(Strings.all),
@@ -164,7 +185,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                   ),
                                 ],
                                 selected: <InspectionStatus>{controller.status},
-                                onSelectionChanged: (Set<InspectionStatus> newSelection) {
+                                onSelectionChanged:
+                                    (Set<InspectionStatus> newSelection) {
                                   controller.status = newSelection.first;
                                   controller.searchTypeItem();
                                   controller.update();
@@ -191,18 +213,22 @@ class KitchenScreen extends GetView<KitchenController> {
                                     itemCount: controller.sendImagesList.length,
                                     shrinkWrap: true,
                                     physics: const ClampingScrollPhysics(),
-                                    itemBuilder: (BuildContext context, int index) {
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
                                       return Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Stack(children: [
                                             SizedBox(
                                               height: 126.px,
                                               width: 126.px,
                                               child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(8),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                                 child: Image.file(
-                                                  File(controller.sendImagesList[index]),
+                                                  File(controller
+                                                      .sendImagesList[index]),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -212,19 +238,31 @@ class KitchenScreen extends GetView<KitchenController> {
                                               top: 4,
                                               child: GestureDetector(
                                                   onTap: () {
-                                                    if (controller.sendImagesList.length == 1) {
-                                                      controller.visibleBtn = false;
+                                                    if (controller
+                                                            .sendImagesList
+                                                            .length ==
+                                                        1) {
+                                                      controller.visibleBtn =
+                                                          false;
                                                     }
-                                                    controller.sendImagesList.length == 1
-                                                        ? controller.sendImagesList = []
-                                                        : controller.sendImagesList.removeAt(index);
+                                                    controller.sendImagesList
+                                                                .length ==
+                                                            1
+                                                        ? controller
+                                                            .sendImagesList = []
+                                                        : controller
+                                                            .sendImagesList
+                                                            .removeAt(index);
 
                                                     controller.update();
                                                   },
-                                                  child: SvgPicture.string(icDelete)),
+                                                  child: SvgPicture.string(
+                                                      icDelete)),
                                             )
                                           ]),
-                                          if (controller.sendImagesList.length - 1 == index) ...[
+                                          if (controller.sendImagesList.length -
+                                                  1 ==
+                                              index) ...[
                                             GestureDetector(
                                               onTap: () async {
                                                 controller.imagePicker();
@@ -232,37 +270,46 @@ class KitchenScreen extends GetView<KitchenController> {
                                               child: Container(
                                                 color: Colors.white,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     SizedBox(
                                                       width: 80.px,
                                                       height: 80.px,
                                                       child: Center(
-                                                        child: SvgPicture.string(
+                                                        child:
+                                                            SvgPicture.string(
                                                           icAdd,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
-                                                    ).paddingOnly(bottom: 10.px),
+                                                    ).paddingOnly(
+                                                        bottom: 10.px),
                                                     MyTextView(
                                                       "Add picture",
                                                       textStyleNew: MyTextStyle(
-                                                        textColor: controller.appColors.appColor,
+                                                        textColor: controller
+                                                            .appColors.appColor,
                                                         textSize: 14.px,
-                                                        textWeight: FontWeight.w500,
-                                                        textFamily: fontFamilyRegular,
+                                                        textWeight:
+                                                            FontWeight.w500,
+                                                        textFamily:
+                                                            fontFamilyRegular,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ).paddingSymmetric(horizontal: 32.px)
+                                            ).paddingSymmetric(
+                                                horizontal: 32.px)
                                           ],
                                         ],
                                       );
                                     },
-                                    separatorBuilder: (BuildContext context, int index) {
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
                                       return SizedBox(
                                         width: 32.px,
                                       );
@@ -275,8 +322,10 @@ class KitchenScreen extends GetView<KitchenController> {
                                     child: Container(
                                       color: Colors.white,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           SvgPicture.string(
                                             icImage,
@@ -291,17 +340,21 @@ class KitchenScreen extends GetView<KitchenController> {
                                                   style: MyTextStyle(
                                                     textSize: 16.px,
                                                     textWeight: FontWeight.w600,
-                                                    textColor: controller.appColors.appColor,
+                                                    textColor: controller
+                                                        .appColors.appColor,
                                                     textFamily: fontFamilyBold,
                                                   ),
                                                 ),
                                                 TextSpan(
-                                                  text: " a photo of the ${controller.item1!.title!} to ",
+                                                  text:
+                                                      " a photo of the ${controller.item1!.title!} to ",
                                                   style: MyTextStyle(
                                                     textSize: 16.px,
                                                     textWeight: FontWeight.w400,
-                                                    textColor: controller.appColors.black,
-                                                    textFamily: fontFamilyRegular,
+                                                    textColor: controller
+                                                        .appColors.black,
+                                                    textFamily:
+                                                        fontFamilyRegular,
                                                   ),
                                                 ),
                                                 TextSpan(
@@ -309,7 +362,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                                   style: MyTextStyle(
                                                     textSize: 16.px,
                                                     textWeight: FontWeight.w600,
-                                                    textColor: controller.appColors.appColor,
+                                                    textColor: controller
+                                                        .appColors.appColor,
                                                     textFamily: fontFamilyBold,
                                                   ),
                                                 ),
@@ -330,7 +384,9 @@ class KitchenScreen extends GetView<KitchenController> {
                             onTap: () {
                               Get.toNamed(ProgressScreen.routes, arguments: [
                                 controller.item,
-                                RxCommonModel(title: "${controller.item1!.title!} area is not present")
+                                RxCommonModel(
+                                    title:
+                                        "${controller.item1!.title!} area is not present")
                               ]);
                             },
                             child: Row(
@@ -340,7 +396,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                 Center(
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8.px), bottomLeft: Radius.circular(8.px)),
+                                        topLeft: Radius.circular(8.px),
+                                        bottomLeft: Radius.circular(8.px)),
                                     child: Image.asset(
                                       controller.item1!.image ?? "",
                                       fit: BoxFit.cover,
@@ -354,7 +411,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                 ),
                                 Flexible(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
@@ -365,7 +423,8 @@ class KitchenScreen extends GetView<KitchenController> {
                                               textStyleNew: MyTextStyle(
                                                 textSize: 20.px,
                                                 textWeight: FontWeight.w400,
-                                                textColor: controller.appColors.textBlack1,
+                                                textColor: controller
+                                                    .appColors.textBlack1,
                                                 textFamily: fontFamilyRegular,
                                               ),
                                             ),
@@ -388,13 +447,15 @@ class KitchenScreen extends GetView<KitchenController> {
                                         maxLinesNew: 4,
                                         textStyleNew: MyTextStyle(
                                           textSize: 16.px,
-                                          textColor: controller.appColors.textBlack2,
+                                          textColor:
+                                              controller.appColors.textBlack2,
                                           textWeight: FontWeight.w400,
                                           textFamily: fontFamilyRegular,
                                         ),
                                       ),
                                     ],
-                                  ).paddingSymmetric(horizontal: 8.px, vertical: 16.px),
+                                  ).paddingSymmetric(
+                                      horizontal: 8.px, vertical: 16.px),
                                 ),
                               ],
                             ),
@@ -409,8 +470,14 @@ class KitchenScreen extends GetView<KitchenController> {
                               final item1 = controller.searchList[index];
                               return index == 0
                                   ? KitchenItemCardWidget(item1: item1)
-                                  : (controller.searchList[index - 1].title!.toString().substring(0, 1).toLowerCase() !=
-                                          item1.title!.toString().substring(0, 1).toLowerCase())
+                                  : (controller.searchList[index - 1].title!
+                                              .toString()
+                                              .substring(0, 1)
+                                              .toLowerCase() !=
+                                          item1.title!
+                                              .toString()
+                                              .substring(0, 1)
+                                              .toLowerCase())
                                       ? KitchenItemCardWidget(item1: item1)
                                       : Container();
                             }).paddingSymmetric(vertical: 32.px),

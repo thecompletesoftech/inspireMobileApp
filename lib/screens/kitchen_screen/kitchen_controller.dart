@@ -1,14 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_editor_plus/image_editor_plus.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/home_screen/home_controller.dart';
-
 import '../../languages/language.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:public_housing/commons/all.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:image_editor_plus/image_editor_plus.dart';
+import 'package:public_housing/screens/home_screen/home_controller.dart';
 
 class KitchenController extends BaseController {
   /// ---- Get ItemDetails API ----------->>>
@@ -54,7 +52,8 @@ class KitchenController extends BaseController {
   final searchController = TextEditingController();
   var sendImagesList = [];
 
-  final ExpansionTileController expansionTileController = ExpansionTileController();
+  final ExpansionTileController expansionTileController =
+      ExpansionTileController();
   final List<RxCommonModel> dataList = [
     RxCommonModel(
       title: "Cabinets and Storage",
@@ -64,7 +63,8 @@ class KitchenController extends BaseController {
     ),
     RxCommonModel(
       title: "Call for Aid System",
-      subtitle: "A call system used by a resident to summon aid during a medical emergency",
+      subtitle:
+          "A call system used by a resident to summon aid during a medical emergency",
       image: ImagePath.callaId,
       status: "false",
     ),
@@ -77,7 +77,8 @@ class KitchenController extends BaseController {
     ),
     RxCommonModel(
       title: "Ceiling",
-      subtitle: "The upper interior surface of a room that provides separation between rooms, spaces, and floors.",
+      subtitle:
+          "The upper interior surface of a room that provides separation between rooms, spaces, and floors.",
       image: ImagePath.ceiling,
       status: "false",
     ),
@@ -137,7 +138,8 @@ class KitchenController extends BaseController {
     ),
     RxCommonModel(
       title: "Food Preparation Area",
-      subtitle: "Flat surface installations in kitchens or food preparation spaces.",
+      subtitle:
+          "Flat surface installations in kitchens or food preparation spaces.",
       image: ImagePath.foodPreparation,
       status: "false",
     ),
@@ -150,7 +152,8 @@ class KitchenController extends BaseController {
     ),
     RxCommonModel(
       title: "Infestation",
-      subtitle: "The presence of animals with potential impacts on resident health and safety.",
+      subtitle:
+          "The presence of animals with potential impacts on resident health and safety.",
       image: ImagePath.infestation,
       status: "false",
     ),
@@ -238,19 +241,22 @@ class KitchenController extends BaseController {
     ),
     RxCommonModel(
       title: "Wall - interior",
-      subtitle: "A vertical surface that may define an area, and provide security, shelter, or sound proofing.",
+      subtitle:
+          "A vertical surface that may define an area, and provide security, shelter, or sound proofing.",
       image: ImagePath.wallInterior,
       status: "false",
     ),
     RxCommonModel(
       title: "Water Heater",
-      subtitle: "A device designed to generate and store hot water for domestic use.",
+      subtitle:
+          "A device designed to generate and store hot water for domestic use.",
       image: ImagePath.waterHeater,
       status: "false",
     ),
     RxCommonModel(
       title: "Window",
-      subtitle: "Opening in a wall or roof of a building that is fitted with glass or other material.",
+      subtitle:
+          "Opening in a wall or roof of a building that is fitted with glass or other material.",
       image: ImagePath.windowWall,
       status: "false",
     ),
@@ -273,14 +279,22 @@ class KitchenController extends BaseController {
     } else {
       if (status.toString() == InspectionStatus.all.toString()) {
         for (int i = 0; i < dataList.length; i++) {
-          if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase())) {
+          if (dataList[i]
+              .title
+              .toString()
+              .toLowerCase()
+              .contains(str.toString().toLowerCase())) {
             searchList.add(dataList[i]);
             update();
           }
         }
       } else {
         for (int i = 0; i < dataList.length; i++) {
-          if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase()) &&
+          if (dataList[i]
+                  .title
+                  .toString()
+                  .toLowerCase()
+                  .contains(str.toString().toLowerCase()) &&
               dataList[i].status.toString() == "true") {
             searchList.add(dataList[i]);
             update();
@@ -334,7 +348,10 @@ class KitchenController extends BaseController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
                   MyTextView(
                     "${Strings.sectionCompleted}?",
                     textStyleNew: MyTextStyle(
@@ -350,7 +367,8 @@ class KitchenController extends BaseController {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Before you leave this screen. Is the section completed?\n\nYou can enter to ',
+                            text:
+                                'Before you leave this screen. Is the section completed?\n\nYou can enter to ',
                             style: MyTextStyle(
                               textColor: appColors.lightText,
                               textSize: 16.px,
@@ -397,7 +415,8 @@ class KitchenController extends BaseController {
                       textSize: 16.px,
                       textFamily: fontFamilyRegular,
                       textWeight: FontWeight.w500,
-                      padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 24.px, vertical: 10.px),
                       radius: 100.px,
                       onTap: () {
                         Get.back();
@@ -409,7 +428,8 @@ class KitchenController extends BaseController {
                       textSize: 16.px,
                       textFamily: fontFamilyRegular,
                       textWeight: FontWeight.w500,
-                      padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 24.px, vertical: 10.px),
                       radius: 100.px,
                       onTap: () {
                         Get.back();
@@ -441,7 +461,10 @@ class KitchenController extends BaseController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
                   MyTextView(
                     Strings.sectionCompleted,
                     textStyleNew: MyTextStyle(
@@ -545,7 +568,8 @@ class KitchenController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back();
@@ -557,7 +581,8 @@ class KitchenController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back();
@@ -691,20 +716,24 @@ class KitchenController extends BaseController {
             Get.context!,
             MaterialPageRoute(
               builder: (context) => ImageEditor(
-                image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
+                image:
+                    Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
                 savePath: tempDir, // <-- Uint8List of image
               ),
             ),
           );
           if (editedImage != null) {
-            File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
+            File file = await File(
+                    '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
+                .create();
             file.writeAsBytesSync(editedImage);
             sendImagesList.add(file.path);
             // if (change) {
             visibleBtn = true;
             // }
             update();
-            utils.showToast(message: "Section Completed", context: Get.context!);
+            utils.showToast(
+                message: "Section Completed", context: Get.context!);
           }
         }
       } catch (e) {
@@ -730,20 +759,24 @@ class KitchenController extends BaseController {
             Get.context!,
             MaterialPageRoute(
               builder: (context) => ImageEditor(
-                image: Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
+                image:
+                    Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
                 savePath: tempDir, // <-- Uint8List of image
               ),
             ),
           );
           if (editedImage != null) {
-            File file = await File('${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png').create();
+            File file = await File(
+                    '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
+                .create();
             file.writeAsBytesSync(editedImage);
             sendImagesList.add(file.path);
             // if (change) {
             visibleBtn = true;
             // }
             update();
-            utils.showToast(message: "Section Completed", context: Get.context!);
+            utils.showToast(
+                message: "Section Completed", context: Get.context!);
           }
         }
       } catch (e) {

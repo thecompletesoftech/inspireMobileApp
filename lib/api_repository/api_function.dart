@@ -1,6 +1,6 @@
+import 'api_class.dart';
 import '../commons/all.dart';
 import '../languages/language.dart';
-import 'api_class.dart';
 
 class APIFunction {
   Future<dynamic> apiCall({
@@ -31,12 +31,14 @@ class GetAPIFunction {
     var response = await HttpUtil(token!, isLoading, context).get(
       apiName,
     );
-    if (GetStorageData().readString('is_guest') != null && GetStorageData().readString('is_guest') == "true") {
+    if (GetStorageData().readString('is_guest') != null &&
+        GetStorageData().readString('is_guest') == "true") {
       if (response['ResponseCode'] == 0) {
         if (GetStorageData().containKey(GetStorageData().loginData)) {
           return response;
         } else {
-          Utils().showSnackBar(context: context, message: Languages.of(context)!.guestError);
+          Utils().showSnackBar(
+              context: context, message: Languages.of(context)!.guestError);
         }
       } else {
         return response;

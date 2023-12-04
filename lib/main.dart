@@ -1,28 +1,28 @@
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-import 'api_repository/loading.dart';
 import 'commons/all.dart';
-import 'languages/app_localizations_delegate.dart';
-import 'languages/locale_constant.dart';
 import 'routes/app_pages.dart';
-import 'screens/splashscreen/splash_binding.dart';
+import 'api_repository/loading.dart';
+import 'package:flutter/services.dart';
+import 'languages/locale_constant.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get_storage/get_storage.dart';
 import 'screens/splashscreen/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'screens/splashscreen/splash_binding.dart';
+import 'languages/app_localizations_delegate.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  printOkStatus('Handling a background message -----1----->>>>>${message.data}');
-  printOkStatus('Handling a background message ------2---->>>>> ${message.messageId}');
+  printOkStatus(
+      'Handling a background message -----1----->>>>>${message.data}');
+  printOkStatus(
+      'Handling a background message ------2---->>>>> ${message.messageId}');
 }
 
 AndroidNotificationChannel? channel;
@@ -53,7 +53,8 @@ Future<void> main() async {
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
-        ?.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel!);
   }
 
@@ -80,7 +81,8 @@ class MyApp extends StatefulWidget {
 
   static void setLocal(BuildContext context, Locale newLocale) {
     var state = context.findAncestorStateOfType<_MyAppState>();
-    printAction("test_newLocale: ${newLocale.languageCode} - ${newLocale.countryCode}");
+    printAction(
+        "test_newLocale: ${newLocale.languageCode} - ${newLocale.countryCode}");
     state?.setLocal(newLocale);
   }
 }
@@ -98,7 +100,8 @@ class _MyAppState extends State<MyApp> {
   firebaseInit() async {
     if (Platform.isIOS) {
       final bool? result = await flutterLocalNotificationsPlugin
-          ?.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+          ?.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
     }
     _firebaseMessaging.requestPermission();
@@ -109,7 +112,8 @@ class _MyAppState extends State<MyApp> {
     });
     _firebaseMessaging.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        printOkStatus("message -- main -- initState ---------->>>>> ${message.messageType}");
+        printOkStatus(
+            "message -- main -- initState ---------->>>>> ${message.messageType}");
       }
     });
     FirebaseMessaging.onMessage.listen(
@@ -176,7 +180,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void iOSPermission() async {
-    printOkStatus("<<<<<-------------- User granted permission -------------->>>>>");
+    printOkStatus(
+        "<<<<<-------------- User granted permission -------------->>>>>");
     await _firebaseMessaging.requestPermission(
       sound: true,
       badge: true,

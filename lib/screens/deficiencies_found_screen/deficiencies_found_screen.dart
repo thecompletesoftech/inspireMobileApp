@@ -32,9 +32,12 @@ class DeficienciesFoundScreen extends GetView<DeficienciesFoundController> {
                       children: [
                         Flexible(
                           child: MyTextView(
-                            controller.item == null ? "" : "${controller.item!.massage}, ${controller.buildingTitle}",
+                            controller.item == null
+                                ? ""
+                                : "${controller.item!.massage}, ${controller.buildingTitle}",
                             textStyleNew: MyTextStyle(
-                              textSize: Utils.isMediumScreen(context) ? 24.px : 20.px,
+                              textSize:
+                                  Utils.isMediumScreen(context) ? 24.px : 20.px,
                               textWeight: FontWeight.w600,
                               textColor: controller.appColors.appColor,
                               textFamily: fontFamilyBold,
@@ -46,7 +49,9 @@ class DeficienciesFoundScreen extends GetView<DeficienciesFoundController> {
                         ),
                         controller.item != null
                             ? CommonButton(
-                                title: controller.item!.check == false ? Strings.inSample : Strings.tenant,
+                                title: controller.item!.check == false
+                                    ? Strings.inSample
+                                    : Strings.tenant,
                                 textSize: 14.px,
                                 isSmall: false,
                                 isBig: true,

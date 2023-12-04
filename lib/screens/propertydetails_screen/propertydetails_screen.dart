@@ -1,14 +1,12 @@
 import 'dart:io';
-
-import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:public_housing/screens/propertydetails_screen/propertydetails_controller.dart';
-
 import '../../commons/all.dart';
-import '../buildings_screen/buildings_screen.dart';
-import '../hs_ack_screen/hs_ack_screen.dart';
-import '../property_screen/property_controller.dart';
 import 'generalNotesCard_widget.dart';
+import '../hs_ack_screen/hs_ack_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../buildings_screen/buildings_screen.dart';
+import '../property_screen/property_controller.dart';
+import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
+import 'package:public_housing/screens/propertydetails_screen/propertydetails_controller.dart';
 
 class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
   PropertyDetailsScreen({Key? key}) : super(key: key);
@@ -24,7 +22,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
             children: [
-              CommonAppBar(color: controller.appColors.transparent, radius: 0.px),
+              CommonAppBar(
+                  color: controller.appColors.transparent, radius: 0.px),
               Expanded(
                 flex: 1,
                 child: ListView(
@@ -64,8 +63,11 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                               ),
                             ],
                           )
-                        : (controller.item!.status == PropertyStatus.completed.toString() ||
-                                    controller.item!.status == PropertyStatus.inCompleted.toString()) &&
+                        : (controller.item!.status ==
+                                        PropertyStatus.completed.toString() ||
+                                    controller.item!.status ==
+                                        PropertyStatus.inCompleted
+                                            .toString()) &&
                                 controller.item!.imgId != "" &&
                                 controller.change
                             ? Stack(
@@ -122,17 +124,20 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                               style: MyTextStyle(
                                                 textSize: 24.px,
                                                 textWeight: FontWeight.w600,
-                                                textColor: controller.appColors.appColor,
+                                                textColor: controller
+                                                    .appColors.appColor,
                                                 textFamily: fontFamilyBold,
                                               ),
                                             ),
                                             TextSpan(
-                                              text: " of the Property or Address",
+                                              text:
+                                                  " of the Property or Address",
                                               style: MyTextStyle(
                                                 textSize: 24.px,
                                                 textWeight: FontWeight.w400,
                                                 textFamily: fontFamilyRegular,
-                                                textColor: controller.appColors.appColor,
+                                                textColor: controller
+                                                    .appColors.appColor,
                                               ),
                                             ),
                                           ],
@@ -140,17 +145,24 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         CommonIconButton(
                                             icon: icUpload,
                                             iconheigth: 20.px,
                                             title: Strings.upload,
                                             radius: 100.px,
-                                            border: Border.all(color: controller.appColors.border, width: 2),
-                                            padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
-                                            color: controller.appColors.transparent,
-                                            textColor: controller.appColors.appColor,
+                                            border: Border.all(
+                                                color:
+                                                    controller.appColors.border,
+                                                width: 2),
+                                            padding: EdgeInsets.fromLTRB(
+                                                16.px, 10.px, 24.px, 10.px),
+                                            color: controller
+                                                .appColors.transparent,
+                                            textColor:
+                                                controller.appColors.appColor,
                                             textWeight: FontWeight.w600,
                                             textSize: 16.px,
                                             onTap: () {
@@ -161,10 +173,16 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                             iconheigth: 20.px,
                                             title: Strings.takeOne,
                                             radius: 100.px,
-                                            border: Border.all(color: controller.appColors.border, width: 2),
-                                            padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
-                                            color: controller.appColors.transparent,
-                                            textColor: controller.appColors.appColor,
+                                            border: Border.all(
+                                                color:
+                                                    controller.appColors.border,
+                                                width: 2),
+                                            padding: EdgeInsets.fromLTRB(
+                                                16.px, 10.px, 24.px, 10.px),
+                                            color: controller
+                                                .appColors.transparent,
+                                            textColor:
+                                                controller.appColors.appColor,
                                             textWeight: FontWeight.w600,
                                             textSize: 16.px,
                                             onTap: () {
@@ -194,7 +212,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                           textStyleNew: MyTextStyle(
                                             textSize: 24.px,
                                             textWeight: FontWeight.w600,
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textFamily: fontFamilyBold,
                                           ),
                                         ),
@@ -207,28 +226,40 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                     : const SizedBox(),
                                 controller.item != null
                                     ? CommonButton(
-                                        title: controller.item!.check == false ? Strings.inSample : Strings.tenant,
+                                        title: controller.item!.check == false
+                                            ? Strings.inSample
+                                            : Strings.tenant,
                                         textSize: 14.px,
                                         isSmall: false,
                                         isBig: true,
                                         radius: 100.px,
                                         textWeight: FontWeight.w500,
                                         color: controller.appColors.white,
-                                        textColor: controller.item!.check == false
-                                            ? controller.appColors.textGreen
-                                            : controller.appColors.textPink,
+                                        textColor:
+                                            controller.item!.check == false
+                                                ? controller.appColors.textGreen
+                                                : controller.appColors.textPink,
                                         onTap: () {})
                                     : const SizedBox(),
-                                controller.item!.status == PropertyStatus.completed.toString() ||
-                                        controller.item!.status == PropertyStatus.inCompleted.toString()
+                                controller.item!.status ==
+                                            PropertyStatus.completed
+                                                .toString() ||
+                                        controller.item!.status ==
+                                            PropertyStatus.inCompleted
+                                                .toString()
                                     ? SizedBox(
                                         width: 16.px,
                                       )
                                     : const SizedBox(),
-                                controller.item!.status == PropertyStatus.completed.toString() ||
-                                        controller.item!.status == PropertyStatus.inCompleted.toString()
+                                controller.item!.status ==
+                                            PropertyStatus.completed
+                                                .toString() ||
+                                        controller.item!.status ==
+                                            PropertyStatus.inCompleted
+                                                .toString()
                                     ? CommonButton(
-                                        title: controller.item!.status!.contains("completed")
+                                        title: controller.item!.status!
+                                                .contains("completed")
                                             ? Strings.completed
                                             : Strings.inComplete,
                                         textSize: 14.px,
@@ -236,7 +267,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                         isBig: true,
                                         radius: 100.px,
                                         textWeight: FontWeight.w500,
-                                        color: controller.item!.status!.contains("completed")
+                                        color: controller.item!.status!
+                                                .contains("completed")
                                             ? controller.appColors.updateGreen
                                             : controller.appColors.updateYellow,
                                         textColor: controller.appColors.black,
@@ -248,8 +280,9 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                           ],
                         ).paddingOnly(bottom: 24.px),
                         Row(
-                          mainAxisAlignment:
-                              Utils.isTabletScreen(context) ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: Utils.isTabletScreen(context)
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.spaceBetween,
                           children: [
                             Utils.isTabletScreen(context)
                                 ? const SizedBox()
@@ -338,8 +371,10 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                     )).paddingOnly(right: 10.px),
                                     Flexible(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Text.rich(
@@ -351,7 +386,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                                   style: MyTextStyle(
                                                     textSize: 20.px,
                                                     textWeight: FontWeight.w600,
-                                                    textColor: controller.appColors.black,
+                                                    textColor: controller
+                                                        .appColors.black,
                                                     textFamily: fontFamilyBold,
                                                   ),
                                                 ),
@@ -360,7 +396,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                                   style: MyTextStyle(
                                                     textSize: 16.px,
                                                     textWeight: FontWeight.w400,
-                                                    textColor: controller.appColors.black,
+                                                    textColor: controller
+                                                        .appColors.black,
                                                     textFamily: fontFamilyBold,
                                                   ),
                                                 ),
@@ -372,7 +409,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                             textStyleNew: MyTextStyle(
                                               textSize: 16.px,
                                               textWeight: FontWeight.w400,
-                                              textColor: controller.appColors.lightText,
+                                              textColor: controller
+                                                  .appColors.lightText,
                                               textFamily: fontFamilyRegular,
                                             ),
                                           ),
@@ -390,19 +428,22 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                               flex: 1,
                               child: ShadowContainer(
                                 radius: 8.px,
-                                padding: EdgeInsets.symmetric(vertical: 8.px, horizontal: 16.px),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8.px, horizontal: 16.px),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         MyTextView(
                                           Strings.occupancyPercentage,
                                           textStyleNew: MyTextStyle(
                                             textSize: 16.px,
                                             textWeight: FontWeight.w600,
-                                            textColor: controller.appColors.appColor,
+                                            textColor:
+                                                controller.appColors.appColor,
                                             textFamily: fontFamilyRegular,
                                           ),
                                         ),
@@ -411,7 +452,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                           textStyleNew: MyTextStyle(
                                             textSize: 16.px,
                                             textWeight: FontWeight.w600,
-                                            textColor: controller.appColors.appColor,
+                                            textColor:
+                                                controller.appColors.appColor,
                                             textFamily: fontFamilyRegular,
                                           ),
                                         ),
@@ -420,17 +462,20 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                     LinearProgressIndicator(
                                       value: 10.0,
                                       minHeight: 4.px,
-                                      backgroundColor: controller.appColors.border,
+                                      backgroundColor:
+                                          controller.appColors.border,
                                     ).paddingOnly(bottom: 10.px),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         MyTextView(
                                           "0 Unit",
                                           textStyleNew: MyTextStyle(
                                             textSize: 12.px,
                                             textWeight: FontWeight.w400,
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textFamily: fontFamilyRegular,
                                           ),
                                         ),
@@ -439,7 +484,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                           textStyleNew: MyTextStyle(
                                             textSize: 12.px,
                                             textWeight: FontWeight.w400,
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textFamily: fontFamilyRegular,
                                           ),
                                         ),
@@ -528,7 +574,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                     isLable: true,
                                     controller: controller.dateController,
                                     color: controller.appColors.transparent,
-                                    contentPadding: EdgeInsets.only(left: 24.px),
+                                    contentPadding:
+                                        EdgeInsets.only(left: 24.px),
                                     suffixIcon: GestureDetector(
                                       onTap: () {
                                         controller.listen();
@@ -578,21 +625,37 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                   vertical: 10.px,
                                 ),
                                 textSize: 16.px,
-                                border: Border.all(color: controller.appColors.border, width: 2),
+                                border: Border.all(
+                                    color: controller.appColors.border,
+                                    width: 2),
                                 onTap: () {
-                                  Get.toNamed(BuildingsScreen.routes, arguments: controller.item)!
-                                      .then((value) => controller.update());
+                                  Get.toNamed(BuildingsScreen.routes,
+                                          arguments: controller.item)!
+                                      .then((value) {
+                                    if (value != null) {
+                                      controller.item!.status = value == 0
+                                          ? PropertyStatus.completed.toString()
+                                          : value == 1
+                                              ? PropertyStatus.inCompleted
+                                                  .toString()
+                                              : PropertyStatus.scheduled
+                                                  .toString();
+                                    }
+                                    controller.update();
+                                  });
                                 }),
                             SizedBox(
                               width: 24.px,
                             ),
                             CommonButton(
                                 title: Strings.HSAcknowledgment,
-                                textColor:
-                                    controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
+                                textColor: controller.visibleBtn
+                                    ? controller.appColors.black
+                                    : controller.appColors.border1,
                                 color: controller.visibleBtn
                                     ? controller.appColors.textPink
-                                    : controller.appColors.black.withOpacity(0.11999999731779099),
+                                    : controller.appColors.black
+                                        .withOpacity(0.11999999731779099),
                                 radius: 100.px,
                                 textWeight: FontWeight.w600,
                                 textSize: 16.px,
@@ -602,7 +665,8 @@ class PropertyDetailsScreen extends GetView<PropertyDetailsController> {
                                 ),
                                 onTap: () {
                                   if (controller.visibleBtn) {
-                                    Get.toNamed(HSAckScreen.routes, arguments: controller.item);
+                                    Get.toNamed(HSAckScreen.routes,
+                                        arguments: controller.item);
                                   }
                                 }),
                           ],
