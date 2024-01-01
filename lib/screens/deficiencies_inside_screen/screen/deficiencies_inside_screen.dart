@@ -4,6 +4,8 @@ import 'package:public_housing/screens/building_cabinets_screen/binding/standard
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 
+import '../../../internet_services/internet_service.dart';
+
 class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
   const DeficienciesInsideScreen({Key? key}) : super(key: key);
 
@@ -875,7 +877,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         if (controller.visibleBtn &&
                                             controller.commentController.text
                                                 .isNotEmpty) {
-                                          await controller.saveChanges();
+                                               if(  isInternet == IsInternet.connect) {
+ await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
                                                 .successListOfDeficiencies
@@ -885,6 +888,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                 controller
                                                     .deficiencyInspectionsReqModel
                                           });
+                                               }else{
+                                                 controller.upalodimagelocal();
+
+                                               }
+                                         
+                                        
                                         }
                                       }),
                                 ],

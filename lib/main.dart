@@ -11,6 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:public_housing/Database/Crud.dart';
 import 'package:public_housing/background_services/background_service.dart';
 import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/offline_database_services/offline_database_service.dart';
@@ -32,6 +33,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 AndroidNotificationChannel? channel;
 FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
+Crud _crud = Get.put(Crud());
 Future<void> main() async {
   // final context = SecurityContext.defaultContext;
   // context.allowLegacyUnsafeRenegotiation = true;
@@ -89,7 +91,7 @@ Future<void> main() async {
   //   }
   // }
   HttpOverrides.global = MyHttpOverrides();
-
+  await _crud.createdatabase();
   runApp(const MyApp());
 }
 

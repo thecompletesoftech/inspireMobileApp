@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +15,9 @@ import 'package:public_housing/screens/building_standards_screen/models/deficien
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+
+import '../../../Database/Crud.dart';
+import '../../../Database/tablenamestring.dart';
 
 enum ImageUploadStatus { initial, uploading, success }
 
@@ -32,6 +36,7 @@ class DeficienciesInsideController extends BaseController {
   final dateController = TextEditingController();
   bool change = true;
   List<String> imageList = [];
+  List imageListlocal = [];
   List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
   int? listIndex;
   var isListening = false.obs;
@@ -39,6 +44,7 @@ class DeficienciesInsideController extends BaseController {
   SpeechToText speechToText = SpeechToText();
   StandardsDetailsController standardsDetailsController =
       Get.put(StandardsDetailsController());
+      Crud crud = Get.put(Crud()); 
   bool isDeleted = false;
   String standard = '';
 
@@ -597,9 +603,11 @@ class DeficienciesInsideController extends BaseController {
           );
           if (editedImage != null) {
             File file = await File(
-                    '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
+                    '${tempDir!.path}/${DateTime.now().millisecondsSinceEpoch}.png')
                 .create();
+            imageListlocal.add(File(pickedFile.path));
             file.writeAsBytesSync(editedImage);
+          
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
             var response = await deficienciesInsideRepository.getImageUpload(
@@ -827,6 +835,7 @@ class DeficienciesInsideController extends BaseController {
             tempDir = await getTemporaryDirectory();
           }
           print("temp file" + tempDir.toString());
+
           final editedImage = await Navigator.push(
             Get.context!,
             MaterialPageRoute(
@@ -837,7 +846,7 @@ class DeficienciesInsideController extends BaseController {
               ),
             ),
           );
-
+          imageListlocal.add(File(pickedFile.path));
           if (editedImage != null) {
             File file = await File(
                     '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
@@ -898,5 +907,29 @@ class DeficienciesInsideController extends BaseController {
             imageList, successListOfDeficiencies.deficiencyProofPictures) &&
         successListOfDeficiencies.comment == commentController.text &&
         successListOfDeficiencies.date == dateController.text;
+  }
+  upalodimagelocal() async {
+    print("image list" +imageListlocal.toString());
+    final appDir;
+     if (Platform.isIOS) {
+            appDir = await getApplicationDocumentsDirectory();
+          } else {
+            appDir = await getExternalStorageDirectory();
+          }
+if(imageListlocal.length > 0){
+  for(var  i= 0 ; i < imageListlocal.length;i++){
+
+  File file = await File(
+                    '${appDir!.path}/${DateTime.now().millisecondsSinceEpoch.toString()}.png')
+                .create();                          
+                 file.writeAsBytesSync(await imageListlocal[i].readAsBytes());
+                   crud.insertdata(TablenameString().ImageList, {"imagename":file.path});
+  }
+  imageListlocal.clear();
+
+}
+
+  
+  
   }
 }
