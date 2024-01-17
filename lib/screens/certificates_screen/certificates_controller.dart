@@ -221,7 +221,8 @@ class CertificateController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }
@@ -268,7 +269,8 @@ class CertificateController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }

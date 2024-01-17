@@ -15,6 +15,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BuildingsController>(
+      init: BuildingsController(),
       assignId: true,
       builder: (controller) {
         return BaseScreen(

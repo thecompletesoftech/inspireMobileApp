@@ -1,13 +1,12 @@
 import 'dart:async';
-
+import 'loading.dart';
+import '../commons/all.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
-import '../commons/all.dart';
-import 'loading.dart';
-
 class HttpUtil {
-  factory HttpUtil(String token, bool isLoading, BuildContext context) => _instance(token, isLoading, context);
+  factory HttpUtil(String token, bool isLoading, BuildContext context) =>
+      _instance(token, isLoading, context);
 
   static HttpUtil _instance(token, isLoading, context) =>
       HttpUtil._internal(token: token, isLoading: isLoading, context: context);
@@ -20,7 +19,8 @@ class HttpUtil {
   Utils utils = Utils();
   BuildContext? context;
 
-  HttpUtil._internal({String? token, bool? isLoading, required BuildContext context}) {
+  HttpUtil._internal(
+      {String? token, bool? isLoading, required BuildContext context}) {
     BaseOptions options = BaseOptions(
       baseUrl: apiUrl,
       connectTimeout: const Duration(milliseconds: 10000),
@@ -61,11 +61,25 @@ class HttpUtil {
 
         if (e.response?.statusCode == 403 || e.response?.statusCode == 401) {
           token = await refreshToken();
-          if (isLoading!) {
-            Loading.dismiss();
+          if (!utils.isValidationEmpty(token)) {
+            e.requestOptions.headers["Authorization"] = "Bearer ${token!}";
+            //create request with new access token
+            final opts = Options(
+                method: e.requestOptions.method,
+                headers: e.requestOptions.headers);
+            final cloneReq = await dio.request(e.requestOptions.path,
+                options: opts,
+                data: e.requestOptions.data,
+                queryParameters: e.requestOptions.queryParameters);
+
+            return handler.resolve(cloneReq);
+          } else {
+            if (isLoading!) {
+              Loading.dismiss();
+            }
+
+            return handler.next(e);
           }
-          // onError(createErrorEntity(e), context);
-          return handler.next(e);
         } else {
           if (isLoading!) {
             Loading.dismiss();
@@ -84,9 +98,11 @@ class HttpUtil {
         }));
 
     if (response.statusCode == 200) {
-      printAction("params -------->>> response ${response.data['data']['token']}");
-      getStorageData.saveString(getStorageData.token, response.data['data']['token']);
-      // this.token = response.data['token'];
+      printAction(
+          "params -------->>> response ${response.data['data']['token']}");
+      getStorageData.saveString(
+          getStorageData.token, response.data['data']['token']);
+
       return response.data['token'];
     }
     return null;
@@ -98,12 +114,15 @@ class HttpUtil {
       headers: requestOptions.headers,
     );
     return dio.request<dynamic>(requestOptions.path,
-        data: requestOptions.data, queryParameters: requestOptions.queryParameters, options: options);
+        data: requestOptions.data,
+        queryParameters: requestOptions.queryParameters,
+        options: options);
   }
 
   ///  On Error....
   void onError(ErrorEntity eInfo, BuildContext context) {
-    printError("error.code -> ${eInfo.code}, error.message -> ${eInfo.message}");
+    printError(
+        "error.code -> ${eInfo.code}, error.message -> ${eInfo.message}");
     if (eInfo.message.isNotEmpty) {
       utils.showSnackBar(message: eInfo.message, context: context);
     }
@@ -112,39 +131,53 @@ class HttpUtil {
   ErrorEntity createErrorEntity(DioError error) {
     switch (error.type) {
       case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "Request to server was cancelled");
+        return ErrorEntity(
+            code: -1, message: "Request to server was cancelled");
       case DioErrorType.connectionTimeout:
         return ErrorEntity(code: -2, message: "Connection timeout with server");
       case DioErrorType.sendTimeout:
-        return ErrorEntity(code: -3, message: "Send timeout in connection with server");
+        return ErrorEntity(
+            code: -3, message: "Send timeout in connection with server");
       case DioErrorType.receiveTimeout:
-        return ErrorEntity(code: -4, message: "Receive timeout in connection with server");
+        return ErrorEntity(
+            code: -4, message: "Receive timeout in connection with server");
       case DioErrorType.badResponse:
         {
           try {
-            int errCode = error.response != null ? error.response!.statusCode! : 00;
+            int errCode =
+                error.response != null ? error.response!.statusCode! : 00;
             switch (errCode) {
               case 400:
-                return ErrorEntity(code: errCode, message: "Request syntax error");
+                return ErrorEntity(
+                    code: errCode, message: "Request syntax error");
               case 401:
                 return ErrorEntity(code: errCode, message: "Permission denied");
               case 403:
-                return ErrorEntity(code: errCode, message: "Server refuses to execute");
+                return ErrorEntity(
+                    code: errCode, message: "Server refuses to execute");
               case 404:
-                return ErrorEntity(code: errCode, message: "Can not reach server");
+                return ErrorEntity(
+                    code: errCode, message: "Can not reach server");
               case 405:
-                return ErrorEntity(code: errCode, message: "Request method is forbidden");
+                return ErrorEntity(
+                    code: errCode, message: "Request method is forbidden");
               case 500:
-                return ErrorEntity(code: errCode, message: "Internal server error");
+                return ErrorEntity(
+                    code: errCode, message: "Internal server error");
               case 502:
                 return ErrorEntity(code: errCode, message: "Invalid request");
               case 503:
                 return ErrorEntity(code: errCode, message: "Server hangs");
               case 505:
-                return ErrorEntity(code: errCode, message: "HTTP protocol requests are not supported");
+                return ErrorEntity(
+                    code: errCode,
+                    message: "HTTP protocol requests are not supported");
               default:
                 return ErrorEntity(
-                    code: errCode, message: error.response != null ? error.response!.data!['ResponseMsg'] : "");
+                    code: errCode,
+                    message: error.response != null
+                        ? error.response!.data!['ResponseMsg']
+                        : "");
             }
           } on Exception catch (_) {
             return ErrorEntity(code: 00, message: "Unknown mistake");
@@ -152,9 +185,16 @@ class HttpUtil {
         }
       case DioErrorType.unknown:
         if (error.message!.contains("SocketException")) {
-          return ErrorEntity(code: -5, message: "Your internet is not available, please try again later");
-        } else if (error.message!.contains("Software caused connection abort")) {
-          return ErrorEntity(code: -6, message: "Your internet is not available, please try again later");
+          return ErrorEntity(
+              code: -5,
+              message:
+                  "Your internet is not available, please try again later");
+        } else if (error.message!
+            .contains("Software caused connection abort")) {
+          return ErrorEntity(
+              code: -6,
+              message:
+                  "Your internet is not available, please try again later");
         }
         return ErrorEntity(code: -7, message: "Oops something went wrong");
       default:

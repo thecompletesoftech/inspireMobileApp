@@ -439,15 +439,12 @@ class ProgressScreen extends GetView<ProgressController> {
                                   ),
                                 ],
                               ).paddingSymmetric(vertical: 32.px),
-                              Card(
-                                elevation: 1.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.px),
-                                  //set border radius more than 50% of height and width to make circle
-                                ),
+                              ShadowContainer1(
+                                color: controller.appColors.white,
                                 margin: EdgeInsets.zero,
-                                color: AppColors().white,
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                padding: EdgeInsets.zero,
+                                radius: 8.px,
+                                elevation: 1,
                                 child: Container(
                                   height: 200.px,
                                   width: Get.width,

@@ -154,7 +154,8 @@ class NoShowController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }
@@ -178,7 +179,8 @@ class NoShowController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }

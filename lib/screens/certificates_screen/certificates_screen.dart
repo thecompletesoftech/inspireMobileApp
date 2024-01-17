@@ -11,7 +11,9 @@ class CertificatesScreen extends GetView<CertificateController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CertificateController>(
-      builder: (controller) {
+      init: CertificateController(),
+      assignId: true,
+      builder: (_) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
           child: Column(
@@ -136,15 +138,12 @@ class CertificatesScreen extends GetView<CertificateController> {
                         ).paddingOnly(bottom: 16.px),
                         AbsorbPointer(
                           absorbing: (controller.boilerStatus == CertificateStatus.No),
-                          child: Card(
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.px),
-                              //set border radius more than 50% of height and width to make circle
-                            ),
+                          child: ShadowContainer1(
+                            color: controller.appColors.white,
                             margin: EdgeInsets.zero,
-                            color: AppColors().white,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            padding: EdgeInsets.zero,
+                            radius: 8.px,
+                            elevation: 1,
                             child: Container(
                               height: 200.px,
                               width: Get.width,
@@ -383,15 +382,12 @@ class CertificatesScreen extends GetView<CertificateController> {
                         ).paddingOnly(bottom: 16.px),
                         AbsorbPointer(
                           absorbing: (controller.elevatorStatus == CertificateStatus.No),
-                          child: Card(
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.px),
-                              //set border radius more than 50% of height and width to make circle
-                            ),
+                          child: ShadowContainer1(
+                            color: controller.appColors.white,
                             margin: EdgeInsets.zero,
-                            color: AppColors().white,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            padding: EdgeInsets.zero,
+                            radius: 8.px,
+                            elevation: 1,
                             child: Container(
                               height: 200.px,
                               width: Get.width,
@@ -626,15 +622,12 @@ class CertificatesScreen extends GetView<CertificateController> {
                         ).paddingOnly(bottom: 16.px),
                         AbsorbPointer(
                           absorbing: (controller.fireStatus == CertificateStatus.No),
-                          child: Card(
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.px),
-                              //set border radius more than 50% of height and width to make circle
-                            ),
+                          child: ShadowContainer1(
+                            color: controller.appColors.white,
                             margin: EdgeInsets.zero,
-                            color: AppColors().white,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            padding: EdgeInsets.zero,
+                            radius: 8.px,
+                            elevation: 1,
                             child: Container(
                               height: 200.px,
                               width: Get.width,
@@ -869,15 +862,12 @@ class CertificatesScreen extends GetView<CertificateController> {
                         ).paddingOnly(bottom: 16.px),
                         AbsorbPointer(
                           absorbing: (controller.paintStatus == CertificateStatus.No),
-                          child: Card(
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.px),
-                              //set border radius more than 50% of height and width to make circle
-                            ),
+                          child: ShadowContainer1(
+                            color: controller.appColors.white,
                             margin: EdgeInsets.zero,
-                            color: AppColors().white,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            padding: EdgeInsets.zero,
+                            radius: 8.px,
+                            elevation: 1,
                             child: Container(
                               height: 200.px,
                               width: Get.width,
@@ -1112,14 +1102,12 @@ class CertificatesScreen extends GetView<CertificateController> {
                         ).paddingOnly(bottom: 16.px),
                         AbsorbPointer(
                           absorbing: (controller.sprinklerStatus == CertificateStatus.No),
-                          child: Card(
-                            elevation: 1.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.px),
-                            ),
+                          child: ShadowContainer1(
+                            color: controller.appColors.white,
                             margin: EdgeInsets.zero,
-                            color: AppColors().white,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            padding: EdgeInsets.zero,
+                            radius: 8.px,
+                            elevation: 1,
                             child: Container(
                               height: 200.px,
                               width: Get.width,

@@ -295,7 +295,8 @@ class ProgressController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }
@@ -337,7 +338,8 @@ class ProgressController extends BaseController {
           }
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }

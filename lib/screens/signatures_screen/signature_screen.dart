@@ -97,7 +97,7 @@ class SignatureScreen extends GetView<SignatureController> {
                         ),
                         SizedBox(
                           height: 184.px,
-                          child: ShadowContainer(
+                          child: ShadowContainer1(
                             color: controller.appColors.white,
                             radius: 8.px,
                             child: Padding(
@@ -221,7 +221,7 @@ class SignatureScreen extends GetView<SignatureController> {
                         ).paddingSymmetric(vertical: 32.px),
                         SizedBox(
                           height: 184.px,
-                          child: ShadowContainer(
+                          child: ShadowContainer1(
                             color: controller.appColors.white,
                             radius: 8.px,
                             child: Padding(
@@ -327,10 +327,10 @@ class SignatureScreen extends GetView<SignatureController> {
                           children: [
                             CommonButton(
                                 title: Strings.completeInspection,
-                                textColor: controller.tenantSign && controller.ownerSign
+                                textColor: controller.tenantSign || controller.ownerSign
                                     ? controller.appColors.black
                                     : controller.appColors.border1,
-                                color: controller.tenantSign && controller.ownerSign
+                                color: controller.tenantSign || controller.ownerSign
                                     ? controller.appColors.textPink
                                     : controller.appColors.black.withOpacity(0.11999999731779099),
                                 radius: 35.px,
@@ -376,6 +376,46 @@ class SignatureScreen extends GetView<SignatureController> {
                                       }
                                     } else {
                                       printError("file=> error sign not found");
+                                      if (controller.tenantSign) {
+                                        var tenantSign = await controller.tenantSignController.capture();
+                                        final tenantSignFile = await controller.utils.createFileFromString(tenantSign);
+                                        if (tenantSignFile.toString().isNotEmpty) {
+                                          controller.tenantSignPadKey.currentState!.clear();
+                                          controller.tenantSign = false;
+                                          controller.isTenantBlank = true;
+                                          controller.update();
+
+                                          Get.back(result: true);
+                                          Get.back(result: true);
+                                          Get.back(result: true);
+                                          Get.back(result: true);
+                                        }
+                                      } else {
+                                        var ownerSign = await controller.ownerSignController.capture();
+                                        final ownerSignFile = await controller.utils.createFileFromString(ownerSign);
+                                        if (ownerSignFile.toString().isNotEmpty) {
+                                          controller.ownerSignPadKey.currentState!.clear();
+                                          controller.ownerSign = false;
+                                          controller.isOwnerBlank = true;
+                                          controller.update();
+
+                                          Get.back(result: true);
+                                          Get.back(result: true);
+
+                                          // if (Get.isRegistered<HomeController>()) {
+                                          //   var index = Get.find<HomeController>().dataList.where((element) {
+                                          //     return element.id == Get.find<InspectionController>().item!.id;
+                                          //   });
+                                          //
+                                          //   // index.status = InspectionStatus.completed.toString();
+                                          // }
+                                          Get.back(result: true);
+                                          Get.back(result: true);
+
+                                          // Get.offNamed(HomeScreen.routes,
+                                          //     arguments: BuildingDetailsController().item);
+                                        }
+                                      }
                                     }
                                   } catch (e) {
                                     printError(e.toString());

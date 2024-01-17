@@ -52,9 +52,14 @@ class GridItemCardWidget extends GetView<PropertyController> {
                                 )).paddingOnly(right: 16.px),
                               ],
                             ),
-                          SvgPicture.string(
-                            icLocationColor,
-                            height: 24.px,
+                          InkWell(
+                            onTap: () {
+                              controller.navigateToMap();
+                            },
+                            child: SvgPicture.string(
+                              icLocationColor,
+                              height: 24.px,
+                            ),
                           ),
                         ],
                       ),

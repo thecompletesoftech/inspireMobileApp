@@ -224,11 +224,21 @@ class PropertyController extends BaseController {
   }
 
   Future<void> processNext() async {
-    Position latLng = await utils.determinePosition();
-    printAction("position----lat->>${latLng.latitude}");
-    printAction("position----lng--->>${latLng.longitude}");
-    userLocationLat = latLng.latitude;
-    userLocationLng = latLng.longitude;
+    if (getStorageData.containKey(getStorageData.userLAT)) {
+      printAction("position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
+      printAction("position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
+      userLocationLat = getStorageData.readString(getStorageData.userLAT);
+      userLocationLng = getStorageData.readString(getStorageData.userLNG);
+    } else {
+      Position latLng = await utils.determinePosition();
+
+      getStorageData.saveString(getStorageData.userLAT, latLng.latitude);
+      getStorageData.saveString(getStorageData.userLNG, latLng.longitude);
+      printAction("position----lat->>${latLng.latitude}");
+      printAction("position----lng--->>${latLng.longitude}");
+      userLocationLat = latLng.latitude;
+      userLocationLng = latLng.longitude;
+    }
     kGooglePlex = CameraPosition(
       target: LatLng(userLocationLat!, userLocationLng!),
       zoom: 17,
@@ -389,125 +399,129 @@ class PropertyController extends BaseController {
         ),
       ),
       builder: (context) {
-        return ListView(
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          children: [
-            SizedBox(
-                height: 500.px,
-                child: Stack(
-                  children: [
-                    GetBuilder<PropertyController>(builder: (logic) {
-                      return GoogleMap(
-                        mapType: MapType.hybrid,
-                        myLocationEnabled: true,
-                        initialCameraPosition: kGooglePlex,
-                        onMapCreated: onMapCreated,
-                        markers: Set<Marker>.of(markers.values),
-                        onTap: (position) {
-                          _customInfoWindowController.hideInfoWindow!();
-                        },
-                        onCameraMove: (position) {
-                          _customInfoWindowController.onCameraMove!();
-                        },
-                        polylines: Set<Polyline>.of(polylines.values),
-                      );
-                    }),
-                    CustomInfoWindow(
-                      controller: _customInfoWindowController,
-                      height: 98,
-                      width: 316,
-                      // offset: 50,
-                    ),
-                  ],
-                )),
-            ListView.separated(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  final item = mapList[index];
-                  return ListTile(
-                    isThreeLine: true,
-                    onTap: () {
-                      _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-                          CameraPosition(target: LatLng(item.lat!, item.lng!), zoom: 17)));
-                    },
-                    leading: CircleAvatar(
-                      backgroundColor: appColors.appColor.withOpacity(0.8),
-                      child: MyTextView(
-                        "${index + 1}",
-                        textStyleNew:
-                            MyTextStyle(textSize: 16.px, textWeight: FontWeight.w500, textColor: appColors.white),
-                      ),
-                    ),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+        return GetBuilder<PropertyController>(
+          assignId: true,
+          init: PropertyController(),
+          builder: (_) {
+            return ListView(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              children: [
+                SizedBox(
+                    height: 500.px,
+                    child: Stack(
                       children: [
-                        MyTextView(
-                          item.check == false ? Strings.annualInspection : Strings.tenant,
-                          textStyleNew: MyTextStyle(
-                            textSize: 12.px,
-                            textWeight: FontWeight.w500,
-                            textColor: appColors.textBlack2,
+                        GoogleMap(
+                          mapType: MapType.hybrid,
+                          myLocationEnabled: true,
+                          initialCameraPosition: kGooglePlex,
+                          onMapCreated: onMapCreated,
+                          markers: Set<Marker>.of(markers.values),
+                          onTap: (position) {
+                            _customInfoWindowController.hideInfoWindow!();
+                          },
+                          onCameraMove: (position) {
+                            _customInfoWindowController.onCameraMove!();
+                          },
+                          polylines: Set<Polyline>.of(polylines.values),
+                        ),
+                        CustomInfoWindow(
+                          controller: _customInfoWindowController,
+                          height: 98,
+                          width: 316,
+                          // offset: 50,
+                        ),
+                      ],
+                    )),
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final item = mapList[index];
+                      return ListTile(
+                        isThreeLine: true,
+                        onTap: () {
+                          _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
+                              CameraPosition(target: LatLng(item.lat!, item.lng!), zoom: 17)));
+                        },
+                        leading: CircleAvatar(
+                          backgroundColor: appColors.appColor.withOpacity(0.8),
+                          child: MyTextView(
+                            "${index + 1}",
+                            textStyleNew:
+                                MyTextStyle(textSize: 16.px, textWeight: FontWeight.w500, textColor: appColors.white),
                           ),
                         ),
-                        MyTextView(
-                          item.massage.toString(),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyTextView(
+                              item.check == false ? Strings.annualInspection : Strings.tenant,
+                              textStyleNew: MyTextStyle(
+                                textSize: 12.px,
+                                textWeight: FontWeight.w500,
+                                textColor: appColors.textBlack2,
+                              ),
+                            ),
+                            MyTextView(
+                              item.massage.toString(),
+                              textStyleNew: MyTextStyle(
+                                textSize: 16.px,
+                                textWeight: FontWeight.w400,
+                                textColor: appColors.textBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                        contentPadding: EdgeInsets.symmetric(vertical: 12.px, horizontal: 16.px),
+                        subtitle: MyTextView(
+                          item.title.toString(),
                           textStyleNew: MyTextStyle(
-                            textSize: 16.px,
+                            textSize: 14.px,
                             textWeight: FontWeight.w400,
-                            textColor: appColors.textBlack,
-                          ),
-                        ),
-                      ],
-                    ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.px, horizontal: 16.px),
-                    subtitle: MyTextView(
-                      item.title.toString(),
-                      textStyleNew: MyTextStyle(
-                        textSize: 14.px,
-                        textWeight: FontWeight.w400,
-                        textColor: appColors.textBlack2,
-                      ),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        MyTextView(
-                          "08:00-10:00",
-                          textStyleNew: MyTextStyle(
-                            textSize: 11.px,
-                            textWeight: FontWeight.w500,
                             textColor: appColors.textBlack2,
                           ),
                         ),
-                        SizedBox(
-                          width: 10.px,
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MyTextView(
+                              "08:00-10:00",
+                              textStyleNew: MyTextStyle(
+                                textSize: 11.px,
+                                textWeight: FontWeight.w500,
+                                textColor: appColors.textBlack2,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.px,
+                            ),
+                            SvgPicture.string(
+                              icTimeColor ?? "",
+                              width: 24.px,
+                              height: 24.px,
+                            ),
+                            // Image.asset(
+                            //   ImagePath.icTimeColor,
+                            //   height: 24.px,
+                            //   width: 24.px,
+                            // )
+                          ],
                         ),
-                        SvgPicture.string(
-                          icTimeColor ?? "",
-                          width: 24.px,
-                          height: 24.px,
-                        ),
-                        // Image.asset(
-                        //   ImagePath.icTimeColor,
-                        //   height: 24.px,
-                        //   width: 24.px,
-                        // )
-                      ],
-                    ),
-                    dense: true,
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 2.px,
-                    color: AppColors().divider,
-                  );
-                },
-                itemCount: mapList.length),
-          ],
+                        dense: true,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 2.px,
+                        color: AppColors().divider,
+                      );
+                    },
+                    itemCount: mapList.length),
+              ],
+            );
+          },
         );
       },
     );

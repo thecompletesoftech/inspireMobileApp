@@ -13,6 +13,8 @@ class AresScreen extends GetView<AreasController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AreasController>(
+      init: AreasController(),
+      assignId: true,
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -318,9 +320,9 @@ class AresScreen extends GetView<AreasController> {
                                   controller.visibleBtn ? controller.appColors.black : controller.appColors.border1,
                               title: Strings.inspectionSummary,
                               onTap: () {
-                                if (controller.visibleBtn) {
-                                  Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
-                                }
+                                // if (controller.visibleBtn) {
+                                Get.toNamed(InspectionSummaryScreen.routes, arguments: controller.item);
+                                // }
                               },
                               padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                               textWeight: FontWeight.w500,
@@ -329,7 +331,7 @@ class AresScreen extends GetView<AreasController> {
                           ],
                         ).paddingSymmetric(vertical: 42.px),
                       ],
-                    ).paddingSymmetric(horizontal: 32.0),
+                    ).paddingSymmetric(horizontal: 32.px),
                   ],
                 ),
               )

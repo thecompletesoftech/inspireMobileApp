@@ -297,9 +297,21 @@ class InspectionController extends BaseController {
   }
 
   Future<void> processNext() async {
-    Position latng = await utils.determinePosition();
-    userLocationLat = latng.latitude;
-    userLocationLng = latng.longitude;
+    if (getStorageData.containKey(getStorageData.userLAT)) {
+      printAction("position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
+      printAction("position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
+      userLocationLat = getStorageData.readString(getStorageData.userLAT);
+      userLocationLng = getStorageData.readString(getStorageData.userLNG);
+    } else {
+      Position latLng = await utils.determinePosition();
+
+      getStorageData.saveString(getStorageData.userLAT, latLng.latitude);
+      getStorageData.saveString(getStorageData.userLNG, latLng.longitude);
+      printAction("position----lat->>${latLng.latitude}");
+      printAction("position----lng--->>${latLng.longitude}");
+      userLocationLat = latLng.latitude;
+      userLocationLng = latLng.longitude;
+    }
     kGooglePlex = CameraPosition(
       target: LatLng(userLocationLat!, userLocationLng!),
       zoom: 17,
@@ -680,7 +692,8 @@ class InspectionController extends BaseController {
                           padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
-                            Get.back();
+                            Get.back(closeOverlays: true);
+                            Get.back(result: true);
                           }),
                     ],
                   ).paddingOnly(
@@ -711,7 +724,8 @@ class InspectionController extends BaseController {
           update();
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }
@@ -732,7 +746,8 @@ class InspectionController extends BaseController {
           update();
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }

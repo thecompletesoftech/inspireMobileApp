@@ -223,7 +223,7 @@ class SigningScreen extends GetView<SigningController> {
                             ShadowContainer(
                                     elevation: 2,
                                     radius: 16.px,
-                                    padding: EdgeInsets.all(48.px),
+                                    padding: EdgeInsets.all(38.px),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +262,6 @@ class SigningScreen extends GetView<SigningController> {
                                               controller.update();
                                             } else {
                                               controller.isEmail = true;
-
                                               if (controller.isPass) {
                                                 controller.checked = true;
                                               } else {

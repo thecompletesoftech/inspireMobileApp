@@ -502,7 +502,7 @@ class Utils {
                       "assets/images/settings1.jpeg",
                       fit: BoxFit.cover,
                     )),
-                SizedBox(height: 15),
+                SizedBox(height: 15.px),
                 ListTile(
                     title: const Text(
                       '2. Select Privacy',

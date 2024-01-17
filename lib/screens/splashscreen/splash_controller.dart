@@ -37,7 +37,7 @@ class SplashController extends BaseController {
     startTime();
     selectedLang = Constants.languageCodeEn;
 
-    printAction("Language =-=- $selectedLang");
+    printAction("Language -=-=--> $selectedLang");
     super.onInit();
   }
 }

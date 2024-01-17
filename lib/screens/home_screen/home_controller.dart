@@ -262,11 +262,21 @@ class HomeController extends BaseController {
   }
 
   Future<void> processNext() async {
-    Position latLng = await utils.determinePosition();
-    printAction("position----lat->>${latLng.latitude}");
-    printAction("position----lng--->>${latLng.longitude}");
-    userLocationLat = latLng.latitude;
-    userLocationLng = latLng.longitude;
+    if (getStorageData.containKey(getStorageData.userLAT)) {
+      printAction("position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
+      printAction("position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
+      userLocationLat = getStorageData.readString(getStorageData.userLAT);
+      userLocationLng = getStorageData.readString(getStorageData.userLNG);
+    } else {
+      Position latLng = await utils.determinePosition();
+
+      getStorageData.saveString(getStorageData.userLAT, latLng.latitude);
+      getStorageData.saveString(getStorageData.userLNG, latLng.longitude);
+      printAction("position----lat->>${latLng.latitude}");
+      printAction("position----lng--->>${latLng.longitude}");
+      userLocationLat = latLng.latitude;
+      userLocationLng = latLng.longitude;
+    }
     kGooglePlex = CameraPosition(
       target: LatLng(userLocationLat!, userLocationLng!),
       zoom: 17,
@@ -304,14 +314,12 @@ class HomeController extends BaseController {
   }
 
   final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
-  // GoogleMapController? mapController;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
 
   void onMapCreated(GoogleMapController controller) async {
-    // mapController = controller;
     _customInfoWindowController.googleMapController = controller;
     setMarker();
     update();
@@ -435,7 +443,7 @@ class HomeController extends BaseController {
                 height: 500.px,
                 child: Stack(
                   children: [
-                    GetBuilder<HomeController>(builder: (logic) {
+                    GetBuilder<HomeController>(builder: (_) {
                       return GoogleMap(
                         mapType: MapType.hybrid,
                         myLocationEnabled: true,

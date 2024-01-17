@@ -1,28 +1,28 @@
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'commons/all.dart';
-import 'routes/app_pages.dart';
-import 'api_repository/loading.dart';
-import 'package:flutter/services.dart';
-import 'languages/locale_constant.dart';
-import 'package:flutter/foundation.dart';
-import 'package:get_storage/get_storage.dart';
-import 'screens/splashscreen/splash_screen.dart';
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/splashscreen/splash_binding.dart';
-import 'languages/app_localizations_delegate.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'api_repository/loading.dart';
+import 'commons/all.dart';
+import 'languages/app_localizations_delegate.dart';
+import 'languages/locale_constant.dart';
+import 'routes/app_pages.dart';
+import 'screens/splashscreen/splash_binding.dart';
+import 'screens/splashscreen/splash_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  printOkStatus(
-      'Handling a background message -----1----->>>>>${message.data}');
-  printOkStatus(
-      'Handling a background message ------2---->>>>> ${message.messageId}');
+  printOkStatus('Handling a background message -----1----->>>>>${message.data}');
+  printOkStatus('Handling a background message ------2---->>>>> ${message.messageId}');
 }
 
 AndroidNotificationChannel? channel;
@@ -36,12 +36,13 @@ Future<void> main() async {
 
   //-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=
   await GetStorage.init();
-  await Firebase.initializeApp();
   // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
+    await Firebase.initializeApp();
+
     channel = const AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
@@ -53,9 +54,20 @@ Future<void> main() async {
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
-        ?.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        ?.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel!);
+  } else {
+    await Firebase.initializeApp(
+      // Replace with actual values
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDxBtNrW3EQgr7kJNR_X32d8J6SQKkQxDw",
+          authDomain: "inspire-59452.firebaseapp.com",
+          projectId: "inspire-59452",
+          storageBucket: "inspire-59452.appspot.com",
+          messagingSenderId: "1039537530741",
+          appId: "1:1039537530741:web:3acf109d6ff8baded6153c",
+          measurementId: "G-2SKL0MPPKQ"),
+    );
   }
 
   var isDenied = await Permission.notification.isDenied;
@@ -81,8 +93,7 @@ class MyApp extends StatefulWidget {
 
   static void setLocal(BuildContext context, Locale newLocale) {
     var state = context.findAncestorStateOfType<_MyAppState>();
-    printAction(
-        "test_newLocale: ${newLocale.languageCode} - ${newLocale.countryCode}");
+    printAction("test_newLocale: ${newLocale.languageCode} - ${newLocale.countryCode}");
     state?.setLocal(newLocale);
   }
 }
@@ -100,8 +111,7 @@ class _MyAppState extends State<MyApp> {
   firebaseInit() async {
     if (Platform.isIOS) {
       final bool? result = await flutterLocalNotificationsPlugin
-          ?.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
+          ?.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
     }
     _firebaseMessaging.requestPermission();
@@ -112,8 +122,7 @@ class _MyAppState extends State<MyApp> {
     });
     _firebaseMessaging.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        printOkStatus(
-            "message -- main -- initState ---------->>>>> ${message.messageType}");
+        printOkStatus("message -- main -- initState ---------->>>>> ${message.messageType}");
       }
     });
     FirebaseMessaging.onMessage.listen(
@@ -180,8 +189,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void iOSPermission() async {
-    printOkStatus(
-        "<<<<<-------------- User granted permission -------------->>>>>");
+    printOkStatus("<<<<<-------------- User granted permission -------------->>>>>");
     await _firebaseMessaging.requestPermission(
       sound: true,
       badge: true,

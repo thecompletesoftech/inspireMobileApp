@@ -17,6 +17,7 @@ class InspectionScreen extends GetView<InspectionController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<InspectionController>(
+      init: InspectionController(),
       assignId: true,
       builder: (_) {
         return BaseScreen(
@@ -291,7 +292,11 @@ class InspectionScreen extends GetView<InspectionController> {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  controller.navigateToMap();
+                                  try {
+                                    controller.navigateToMap();
+                                  } catch (e) {
+                                    printError(e.toString());
+                                  }
                                 },
                                 child: SvgPicture.string(
                                   icLoc,

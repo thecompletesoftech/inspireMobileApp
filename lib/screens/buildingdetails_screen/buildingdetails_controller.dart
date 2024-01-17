@@ -362,7 +362,8 @@ class BuildingDetailsController extends BaseController {
           update();
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }
@@ -383,7 +384,8 @@ class BuildingDetailsController extends BaseController {
           update();
         }
       } catch (e) {
-        printAction(e.toString());
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
       }
       update();
     }

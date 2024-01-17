@@ -196,7 +196,11 @@ class GridItemCardWidget extends GetView<HomeController> {
                         padding: EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
                         textFamily: fontFamilyBold,
                         onTap: () {
-                          controller.navigateToMap();
+                          try {
+                            controller.navigateToMap();
+                          }catch(e){
+                            printError(e.toString());
+                          }
                         }),
                   ],
                 ),
