@@ -139,13 +139,10 @@ class Utils {
     var storageStatus = await Permission.storage.status;
     var manageExternalStorageStatus = await Permission.manageExternalStorage.status;
     if (!photosStatus.isGranted) await Permission.photos.request();
-
     if (!cameraStatus.isGranted) await Permission.camera.request();
-
     if (!microphoneStatus.isGranted) await Permission.microphone.request();
     if (!storageStatus.isGranted) await Permission.storage.request();
     if (!manageExternalStorageStatus.isGranted) await Permission.manageExternalStorage.request();
-
     if (await Permission.microphone.isGranted) {
       if (await Permission.camera.isGranted) {
         return true;
