@@ -134,4 +134,21 @@ class Strings {
   static const String HSAcknowledgment = "H&S Acknowledgment";
 
   ///************** error message string **************///
+
+  ///************** Building Inspection Screen String **************///
+
+  static String buildingInspection = "Building Inspection";
+  static String inspectionInformation = "Inspection Information";
+  static String propertyInformation = "Property Information";
+  static String inspectionDate = "Inspection Date";
+  static String propertyName = "Property Name";
+  static String city = "City";
+  static String propertyID = "Property ID";
+  static String state = "State";
+  static String zip = "Zip";
+  static String propertyAddress = "Property Address";
+  static String buildingInformation = "Building Information";
+  static String buildingName = "Building Name";
+  static String yearConstructed = "Year constructed";
+  static String buildingType = "Building Type";
 }

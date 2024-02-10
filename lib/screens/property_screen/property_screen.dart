@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_inspection_screen/building_inspection_screen.dart';
 
 import '../../responsive/scaling_query.dart';
 import 'grid_itemcard_widget.dart';
@@ -176,16 +177,21 @@ class PropertyScreen extends GetView<PropertyController> {
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 Row(
                   children: [
-                    Flexible(
-                        flex: 0,
-                        child: MyTextView(
-                          Strings.properties,
-                          textStyleNew: MyTextStyle(
-                              textSize: 32.px,
-                              textWeight: FontWeight.w600,
-                              textFamily: fontFamilyRegular,
-                              textColor: controller.appColors.appColor),
-                        )),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(BuildingInspectionScreen.routes);
+                      },
+                      child: Flexible(
+                          flex: 0,
+                          child: MyTextView(
+                            Strings.properties,
+                            textStyleNew: MyTextStyle(
+                                textSize: 32.px,
+                                textWeight: FontWeight.w600,
+                                textFamily: fontFamilyRegular,
+                                textColor: controller.appColors.appColor),
+                          )),
+                    ),
                     (Utils.isLandScapeMode(context)) ? const Expanded(child: SizedBox()) : const SizedBox(),
                     Expanded(
                       flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)

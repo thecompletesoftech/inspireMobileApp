@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:public_housing/screens/authority_signatures_screen/authority_signature_screen.dart';
+import 'package:public_housing/screens/building_inspection_screen/building_inspection_binding.dart';
+import 'package:public_housing/screens/building_inspection_screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 
 import '../screens/areas_screen/areas_binding.dart';
@@ -53,6 +55,7 @@ class AppPages {
     GetPage(name: PropertyScreen.routes, page: () => PropertyScreen(), binding: PropertyBinding()),
     GetPage(name: BuildingsScreen.routes, page: () => BuildingsScreen(), binding: BuildingsBinding()),
     GetPage(name: PropertyDetailsScreen.routes, page: () => PropertyDetailsScreen(), binding: PropertyDetailsBinding()),
+    GetPage(name: BuildingInspectionScreen.routes, page: () => const BuildingInspectionScreen(), binding: BuildingInspectionBinding()),
     GetPage(
         name: BuildingDetailsScreen.routes,
         page: () => const BuildingDetailsScreen(),

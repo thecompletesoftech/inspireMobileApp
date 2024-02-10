@@ -354,3 +354,17 @@ const icUpload = '''
 </svg>
 
 ''';
+
+const icPerson = '''<svg width="20" height="20" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.7498 5C12.7498 7.07107 11.0709 8.75 8.99984 8.75C6.92877 8.75 5.24984 7.07107 5.24984 5C5.24984 2.92893 6.92877 1.25 8.99984 1.25C11.0709 1.25 12.7498 2.92893 12.7498 5Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.50098 19.1182C1.57128 15.0369 4.90171 11.75 8.99984 11.75C13.0981 11.75 16.4286 15.0371 16.4987 19.1185C14.2159 20.166 11.6762 20.75 9.00016 20.75C6.32384 20.75 3.78394 20.1659 1.50098 19.1182Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>''';
+
+const icLocation = '''<svg width="20" height="20" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 8.5C12 10.1569 10.6569 11.5 9 11.5C7.34315 11.5 6 10.1569 6 8.5C6 6.84315 7.34315 5.5 9 5.5C10.6569 5.5 12 6.84315 12 8.5Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.5 8.5C16.5 15.6421 9 19.75 9 19.75C9 19.75 1.5 15.6421 1.5 8.5C1.5 4.35786 4.85786 1 9 1C13.1421 1 16.5 4.35786 16.5 8.5Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>''';
+
+const icBuildingss = '''<svg width="20" height="20" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.25 19H20.75M2.75 1V19M13.25 1V19M19.25 5.5V19M5.75 4.75H6.5M5.75 7.75H6.5M5.75 10.75H6.5M9.5 4.75H10.25M9.5 7.75H10.25M9.5 10.75H10.25M5.75 19V15.625C5.75 15.0037 6.25368 14.5 6.875 14.5H9.125C9.74632 14.5 10.25 15.0037 10.25 15.625V19M2 1H14M13.25 5.5H20M16.25 9.25H16.2575V9.2575H16.25V9.25ZM16.25 12.25H16.2575V12.2575H16.25V12.25ZM16.25 15.25H16.2575V15.2575H16.25V15.25Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>''';
