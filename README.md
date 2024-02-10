@@ -45,3 +45,8 @@ For use shadow in any container.
 **(Routes) filename: app_pages.dart** This file contains all the routes of all screens, when you create any screen you have to add that screen in routes to manage route flow.
 
 
+**(Project Manage) Branch name: brachreponame_trelloIDno** If in sigle trello board have multiple taske please create each seprate .
+
+**Mention Git Head** please metion git head in trello and branch name To-track branches by given task .
+
+
