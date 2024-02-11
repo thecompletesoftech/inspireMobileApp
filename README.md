@@ -34,7 +34,7 @@ For use shadow in any container.
 
 6. **(Constants) filename: constants.dart** This File contain base urls and endpoint of an apis.
 
-# StateManagment(GetX)
+# StateManagement(GetX)
 
 **For new screen you have to create these files**
 
@@ -49,4 +49,4 @@ For use shadow in any container.
 
 **Mention Git Head** please metion git head in trello and branch name To-track branches by given task .
 
-
+This app use flutter version 3.16.3
