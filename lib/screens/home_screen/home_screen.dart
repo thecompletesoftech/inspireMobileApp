@@ -76,7 +76,8 @@ class HomeScreen extends GetView<HomeController> {
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          Strings.userName,
+                                          controller.account.toString(),
+                                          // Strings.userName,
                                           textStyleNew: MyTextStyle(
                                             textColor: controller.appColors.lightText,
                                             textWeight: FontWeight.w600,
@@ -354,4 +355,6 @@ class HomeScreen extends GetView<HomeController> {
       },
     );
   }
+
+  
 }

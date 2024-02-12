@@ -71,7 +71,12 @@ dependencies:
   custom_info_window: ^1.0.1
   clippy_flutter:
   flutter_advanced_switch: ^3.0.1
-
+  # new plugins
+  hasura_connect:
+  graphql: 
+  freezed: ^2.4.5
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +89,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.13.1"
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
 
 flutter_launcher_icons:
   android: "launcher_icon"
