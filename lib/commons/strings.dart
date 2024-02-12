@@ -151,4 +151,12 @@ class Strings {
   static String buildingName = "Building Name";
   static String yearConstructed = "Year constructed";
   static String buildingType = "Building Type";
+  static String propertyNames = "*propertyName* - ";
+  static String searchStandards = "Search standards";
+  static String callForAidSystem = "Call for Aid System";
+  static String stowItems = "Stow items, including food, sanitation, and household supplies.";
+  static String door = "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
+  static String aDedicated = "A dedicated space for food, goods, or other items.";
+  static String none = "None";
+  static String laundry = "Kitchens, bathroom, laundry";
 }

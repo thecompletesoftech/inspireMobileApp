@@ -368,3 +368,8 @@ const icLocation = '''<svg width="20" height="20" viewBox="0 0 40 24" fill="none
 const icBuildingss = '''<svg width="20" height="20" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.25 19H20.75M2.75 1V19M13.25 1V19M19.25 5.5V19M5.75 4.75H6.5M5.75 7.75H6.5M5.75 10.75H6.5M9.5 4.75H10.25M9.5 7.75H10.25M9.5 10.75H10.25M5.75 19V15.625C5.75 15.0037 6.25368 14.5 6.875 14.5H9.125C9.74632 14.5 10.25 15.0037 10.25 15.625V19M2 1H14M13.25 5.5H20M16.25 9.25H16.2575V9.2575H16.25V9.25ZM16.25 12.25H16.2575V12.2575H16.25V12.25ZM16.25 15.25H16.2575V15.2575H16.25V15.25Z" stroke="#3F3F3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>''';
+
+const icUpArrow = '''<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M6.55806 0.433058C6.80214 0.188981 7.19786 0.188981 7.44194 0.433058L13.6919 6.68306C13.936 6.92714 13.936 7.32286 13.6919 7.56694C13.4479 7.81102 13.0521 7.81102 12.8081 7.56694L7 1.75888L1.19194 7.56694C0.947864 7.81102 0.552136 7.81102 0.308058 7.56694C0.0639806 7.32286 0.0639806 6.92714 0.308058 6.68306L6.55806 0.433058Z" fill="#1F3664"/>
+</svg>''';
+

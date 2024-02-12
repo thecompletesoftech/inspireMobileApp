@@ -177,21 +177,16 @@ class PropertyScreen extends GetView<PropertyController> {
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(BuildingInspectionScreen.routes);
-                      },
-                      child: Flexible(
-                          flex: 0,
-                          child: MyTextView(
-                            Strings.properties,
-                            textStyleNew: MyTextStyle(
-                                textSize: 32.px,
-                                textWeight: FontWeight.w600,
-                                textFamily: fontFamilyRegular,
-                                textColor: controller.appColors.appColor),
-                          )),
-                    ),
+                    Flexible(
+                        flex: 0,
+                        child: MyTextView(
+                          Strings.properties,
+                          textStyleNew: MyTextStyle(
+                              textSize: 32.px,
+                              textWeight: FontWeight.w600,
+                              textFamily: fontFamilyRegular,
+                              textColor: controller.appColors.appColor),
+                        )),
                     (Utils.isLandScapeMode(context)) ? const Expanded(child: SizedBox()) : const SizedBox(),
                     Expanded(
                       flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)
