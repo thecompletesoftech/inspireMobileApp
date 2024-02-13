@@ -1,7 +1,6 @@
-import 'package:public_housing/commons/all.dart';
-
-import '../../../languages/language.dart';
 import 'signing_controller.dart';
+import '../../../languages/language.dart';
+import 'package:public_housing/commons/all.dart';
 
 class SigningScreen extends GetView<SigningController> {
   const SigningScreen({Key? key}) : super(key: key);

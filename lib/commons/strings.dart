@@ -134,4 +134,29 @@ class Strings {
   static const String HSAcknowledgment = "H&S Acknowledgment";
 
   ///************** error message string **************///
+
+  ///************** Building Inspection Screen String **************///
+
+  static String buildingInspection = "Building Inspection";
+  static String inspectionInformation = "Inspection Information";
+  static String propertyInformation = "Property Information";
+  static String inspectionDate = "Inspection Date";
+  static String propertyName = "Property Name";
+  static String city = "City";
+  static String propertyID = "Property ID";
+  static String state = "State";
+  static String zip = "Zip";
+  static String propertyAddress = "Property Address";
+  static String buildingInformation = "Building Information";
+  static String buildingName = "Building Name";
+  static String yearConstructed = "Year constructed";
+  static String buildingType = "Building Type";
+  static String propertyNames = "*propertyName* - ";
+  static String searchStandards = "Search standards";
+  static String callForAidSystem = "Call for Aid System";
+  static String stowItems = "Stow items, including food, sanitation, and household supplies.";
+  static String door = "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
+  static String aDedicated = "A dedicated space for food, goods, or other items.";
+  static String none = "None";
+  static String laundry = "Kitchens, bathroom, laundry";
 }
