@@ -8,6 +8,7 @@ import '../../../api_authentication/login_account_direct_request.dart';
 
 
 import '../../../screens/property_screen/property_screen.dart';
+import '../../building_inspection_screen/building_inspection_screen.dart';
 
 class SigningController extends BaseController {
   TextEditingController email = TextEditingController();
@@ -26,7 +27,8 @@ class SigningController extends BaseController {
       print("account token" + tokenAccount.toString());
       saveAccount(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
-      Get.offAllNamed(PropertyScreen.routes);
+      // Get.offAllNamed(PropertyScreen.routes);
+       Get.offAllNamed(BuildingInspectionScreen.routes);
       return tokenAccount;
     } catch (e) {
       print(e.toString());

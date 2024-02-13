@@ -154,6 +154,8 @@ class PropertyController extends BaseController {
     } else if (value == 3) {
       message = 'You selected ${Strings.logOut}';
       Get.offAllNamed(SigningScreen.routes);
+      // getStorageData.clearAlldata();
+      getStorageData.removeData(getStorageData.isLogin);
     } else {
       message = 'Not implemented';
     }

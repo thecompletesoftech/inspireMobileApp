@@ -64,6 +64,7 @@ class BuildingInspectionController extends BaseController {
     } else if (value == 3) {
       message = 'You selected ${Strings.logOut}';
       Get.offAllNamed(SigningScreen.routes);
+      getStorageData.removeData(getStorageData.isLogin);
     } else {
       message = 'Not implemented';
     }
