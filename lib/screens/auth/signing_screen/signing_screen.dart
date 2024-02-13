@@ -186,13 +186,15 @@ class SigningScreen extends GetView<SigningController> {
                                             controller.isPass = false;
                                             controller.checked = false;
                                             controller.update();
-                                          } else if (!controller.utils
-                                              .passwordValidator(controller
-                                                  .pass.text
-                                                  .trim())) {
-                                            controller.checked = false;
-                                            controller.update();
-                                          } else {
+                                          }
+                                          // else if (!controller.utils
+                                          //     .passwordValidator(controller
+                                          //         .pass.text
+                                          //         .trim())) {
+                                          //   controller.checked = false;
+                                          //   controller.update();
+                                          // }
+                                           else {
                                             controller.isPass = true;
                                             if (controller.isEmail) {
                                               controller.checked = true;
@@ -356,13 +358,15 @@ class SigningScreen extends GetView<SigningController> {
                                               controller.isPass = false;
                                               controller.checked = false;
                                               controller.update();
-                                            } else if (!controller.utils
-                                                .passwordValidator(controller
-                                                    .pass.text
-                                                    .trim())) {
-                                              controller.checked = false;
-                                              controller.update();
-                                            } else {
+                                            } 
+                                            // else if (!controller.utils
+                                            //     .passwordValidator(controller
+                                            //         .pass.text
+                                            //         .trim())) {
+                                            //   controller.checked = false;
+                                            //   controller.update();
+                                            // } 
+                                            else {
                                               controller.isPass = true;
                                               if (controller.isEmail) {
                                                 controller.checked = true;
@@ -392,12 +396,12 @@ class SigningScreen extends GetView<SigningController> {
                                                     .withOpacity(
                                                         0.11999999731779099),
                                             onTap: () {
-                                              // if (controller.checked)
-                                              controller.validation();
+                                              if (controller.checked)
+                                                controller.validation();
                                             }).paddingSymmetric(vertical: 24.px),
                                         GestureDetector(
                                           onTap: (() {
-                                            controller.createNewAccount();
+                                            // controller.createNewAccount();
                                           }),
                                           child: MyTextView(
                                             Strings.forgotPassword,

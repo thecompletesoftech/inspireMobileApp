@@ -9,7 +9,6 @@ import '../../../api_authentication/register_account_direct_request.dart';
 import '../../../screens/property_screen/property_screen.dart';
 
 class SigningController extends BaseController {
-
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   bool checked = false;
@@ -32,12 +31,10 @@ class SigningController extends BaseController {
       print(e.toString());
       String title = "Error";
       String errorMessage = "An error has occurred";
-
       if (e.toString().contains("LA1000")) {
         title = "Account not found";
         errorMessage = "Email or password incorrect";
       }
-
       if (e.toString().contains("LA1002")) {
         // print(e);
         errorMessage =
@@ -101,53 +98,57 @@ class SigningController extends BaseController {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterPassword);
-    } else if (!utils.passwordValidator(pass.text.trim())) {
-      utils.showSnackBar(
-          context: Get.context!,
-          message: Languages.of(Get.context!)!.pleaseEnterValidPassword);
-    } else {
+    }
+    // else if (!utils.passwordValidator(pass.text.trim())) {
+    //   utils.showSnackBar(
+    //       context: Get.context!,
+    //       message: Languages.of(Get.context!)!.pleaseEnterValidPassword);
+    // }
+    else {
+      // checked = true;
       loginApiCall();
     }
   }
+// create account demo--------->
+  // createNewAccount() async {
+  //   try {
+  //     tokenAccount = await createAccount(
+  //       name: "rishi",
+  //       password: "Rishu@123",
+  //       surname: "singh",
+  //       email: "singh123@gmail.com",
+  //       phoneNumber: "7845129601",
+  //       address: "althan",
+  //       zipcode: "394221",
+  //       unitno: "1245",
+  //       city: "Surat",
+  //     );
 
-  createNewAccount() async {
-    try {
-      tokenAccount = await createAccount(
-        name: "rishi",
-        password: "Rishu@123",
-        surname: "singh",
-        email: "singh123@gmail.com",
-        phoneNumber: "7845129601",
-        address: "althan",
-        zipcode: "394221",
-        unitno: "1245",
-        city: "Surat",
-      );
+  //     if (tokenAccount != null) {
+  //       saveAccount(tokenAccount!);
+  //     }
+  //     return tokenAccount;
+  //   } catch (e, st) {
+  //     log("----- >>>  ${st}");
+  //     String title = "Error";
+  //     String message = "Something went wrong, please check your internet";
+  //     if (e.toString().contains("CA104")) {
+  //       title = "Error with the Email";
+  //       message =
+  //           "Oops! It seems like that email is already registered. Please try another email or log in if you already have an account";
+  //     }
+  //     if (e.toString().contains("CP101")) {
+  //       title = "Error with the Phone";
+  //       message =
+  //           "Oops! It seems like that phone is already registered. Please try another phone or log in if you already have an account";
+  //     }
+  //     print(e);
+  //     _dialogException(title: title, message: message);
+  //     return null;
+  //   }
+  // }
 
-      if (tokenAccount != null) {
-        saveAccount(tokenAccount!);
-      }
-      return tokenAccount;
-    } catch (e, st) {
-      log("----- >>>  ${st}");
-      String title = "Error";
-      String message = "Something went wrong, please check your internet";
-      if (e.toString().contains("CA104")) {
-        title = "Error with the Email";
-        message =
-            "Oops! It seems like that email is already registered. Please try another email or log in if you already have an account";
-      }
-      if (e.toString().contains("CP101")) {
-        title = "Error with the Phone";
-        message =
-            "Oops! It seems like that phone is already registered. Please try another phone or log in if you already have an account";
-      }
-      print(e);
-      _dialogException(title: title, message: message);
-      return null;
-    }
-  }
-
+//---------------->
   _dialogException({required String title, required String message}) {
     Get.snackbar("", "",
         titleText: Text(title,
@@ -182,5 +183,4 @@ class SigningController extends BaseController {
         "shared pref" + sharedPreferences.getString('accountModel').toString());
     tokenAccount = tokenAccount;
   }
-
 }

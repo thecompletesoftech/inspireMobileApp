@@ -37,23 +37,13 @@ const int limitResultByTerm = 15;
 const String ipLocalDenisHost = "192.168.15.44";
 const String ipRemoteTesting = "209.208.27.55"; // remote testing
 const String ipRemoteProduction = "104.245.38.245"; //remote Live
-
 String serverAddress = ipRemoteTesting;
-
-String publicCtxProduct =
-    "http://$serverAddress/public/product/gateway_graphql";
-
-String protectedCtxProduct =
-    "http://$serverAddress/protected/product/gateway_graphql";
 
 String publicCtxAuthentication =
     "http://$serverAddress/public/auth/gateway_graphql";
 
 String protectedCtxAuthentication =
     "http://$serverAddress/protected/auth/gateway_graphql";
-
-String protectedCtxOrder =
-    "http://$serverAddress/protected/order/gateway_graphql";
 
 //<-----------------------------login constant over --------------------------->
 
