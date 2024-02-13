@@ -1,5 +1,6 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
+import 'package:public_housing/screens/building_inspection_screen/building_inspection_screen.dart';
 
 import '../../../screens/property_screen/property_screen.dart';
 
@@ -31,7 +32,7 @@ class SigningController extends BaseController {
     // } else {
     //   utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
     // }
-    Get.offAllNamed(PropertyScreen.routes);
+    Get.offAllNamed(BuildingInspectionScreen.routes);
   }
 
   validation() {
