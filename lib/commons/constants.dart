@@ -3,14 +3,49 @@
 import 'package:flutter/foundation.dart';
 
 String selectedLang = '';
-String fontFamilyBold = selectedLang == Constants.languageCodeAr ? 'Tajawal-Bold' : 'Roboto-Bold';
-String fontFamilyLight = selectedLang == Constants.languageCodeAr ? 'Tajawal-Light' : 'Roboto-Light';
-String fontFamilyBook = selectedLang == Constants.languageCodeAr ? 'Tajawal-Regular' : 'Roboto-Regular';
-String fontFamilyRegular = selectedLang == Constants.languageCodeAr ? 'Tajawal-Regular' : 'Roboto-Regular';
-String fontFamilyMedium = selectedLang == Constants.languageCodeAr ? 'Tajawal-Medium' : 'Roboto-Medium';
-String fontFamilyMediumFututext = selectedLang == Constants.languageCodeAr ? 'Roboto-Medium' : 'FuturaMediumBT';
-String fontFamilyFutuHvtext = selectedLang == Constants.languageCodeAr ? 'Roboto-Medium' : 'Futura_Hv_BT';
-String fontFamilyFuturaHeavyBTtext = selectedLang == Constants.languageCodeAr ? 'Roboto-Medium' : 'Futura_Hv_BT';
+String fontFamilyBold =
+    selectedLang == Constants.languageCodeAr ? 'Tajawal-Bold' : 'Roboto-Bold';
+String fontFamilyLight =
+    selectedLang == Constants.languageCodeAr ? 'Tajawal-Light' : 'Roboto-Light';
+String fontFamilyBook = selectedLang == Constants.languageCodeAr
+    ? 'Tajawal-Regular'
+    : 'Roboto-Regular';
+String fontFamilyRegular = selectedLang == Constants.languageCodeAr
+    ? 'Tajawal-Regular'
+    : 'Roboto-Regular';
+String fontFamilyMedium = selectedLang == Constants.languageCodeAr
+    ? 'Tajawal-Medium'
+    : 'Roboto-Medium';
+String fontFamilyMediumFututext = selectedLang == Constants.languageCodeAr
+    ? 'Roboto-Medium'
+    : 'FuturaMediumBT';
+String fontFamilyFutuHvtext =
+    selectedLang == Constants.languageCodeAr ? 'Roboto-Medium' : 'Futura_Hv_BT';
+String fontFamilyFuturaHeavyBTtext =
+    selectedLang == Constants.languageCodeAr ? 'Roboto-Medium' : 'Futura_Hv_BT';
+
+//<---------------------login constant---------------------------->
+
+const String version = '1.0.2';
+// Search parameters for the home page Based on the last searches
+String initialBasedLastSearchesTerm = '- ';
+const int initialMaxPages = 5;
+const int limitResultBasedLastSearchesTerm = 15;
+const int limitResultSearchesTermGrid = 40;
+const int limitResultByIdSubCategory = 20;
+const int limitResultByTerm = 15;
+const String ipLocalDenisHost = "192.168.15.44";
+const String ipRemoteTesting = "209.208.27.55"; // remote testing
+const String ipRemoteProduction = "104.245.38.245"; //remote Live
+String serverAddress = ipRemoteTesting;
+
+String publicCtxAuthentication =
+    "http://$serverAddress/public/auth/gateway_graphql";
+
+String protectedCtxAuthentication =
+    "http://$serverAddress/protected/auth/gateway_graphql";
+
+//<-----------------------------login constant over --------------------------->
 
 class Constants {
   static const bool isTestingMode = kDebugMode;

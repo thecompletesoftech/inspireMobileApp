@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:clippy_flutter/triangle.dart';
 import 'package:custom_info_window/custom_info_window.dart';
@@ -9,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/signing_screen/signing_screen.dart';
 
@@ -20,6 +22,7 @@ class PropertyController extends BaseController {
   PropertyStatus status = PropertyStatus.all;
   bool change = false;
   int currentIndex = 1;
+  var account;
   RxList<RxCommonModel> dataList = [
     RxCommonModel(
         id: 1,
@@ -163,6 +166,7 @@ class PropertyController extends BaseController {
   onInit() {
     checkPermission();
     searchItem("");
+    getaccount();
     super.onInit();
   }
 
@@ -225,8 +229,10 @@ class PropertyController extends BaseController {
 
   Future<void> processNext() async {
     if (getStorageData.containKey(getStorageData.userLAT)) {
-      printAction("position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
-      printAction("position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
+      printAction(
+          "position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
+      printAction(
+          "position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
       userLocationLat = getStorageData.readString(getStorageData.userLAT);
       userLocationLng = getStorageData.readString(getStorageData.userLNG);
     } else {
@@ -253,7 +259,11 @@ class PropertyController extends BaseController {
       update();
     } else {
       for (int i = 0; i < dataList.length; i++) {
-        if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase())) {
+        if (dataList[i]
+            .title
+            .toString()
+            .toLowerCase()
+            .contains(str.toString().toLowerCase())) {
           searchList.add(dataList[i]);
           update();
         }
@@ -275,7 +285,8 @@ class PropertyController extends BaseController {
     }
   }
 
-  final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  final CustomInfoWindowController _customInfoWindowController =
+      CustomInfoWindowController();
   // GoogleMapController? mapController;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
@@ -290,8 +301,10 @@ class PropertyController extends BaseController {
   }
 
   setMarker() async {
-    _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: LatLng(userLocationLat!, userLocationLng!), zoom: 17),
+    _customInfoWindowController.googleMapController!
+        .animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+          target: LatLng(userLocationLat!, userLocationLng!), zoom: 17),
     ));
     mapList.forEach((element) {
       _addMarker(element);
@@ -305,15 +318,19 @@ class PropertyController extends BaseController {
     MarkerId markerId = MarkerId(element.id.toString());
     Marker marker = Marker(
         markerId: markerId,
-        icon: await utils.convertNetworkImageToCustomBitmapDescriptor("${element.id}",
-            imageUrl: element.image!, titleBackgroundColor: appColors.appColor),
+        icon: await utils.convertNetworkImageToCustomBitmapDescriptor(
+            "${element.id}",
+            imageUrl: element.image!,
+            titleBackgroundColor: appColors.appColor),
         position: LatLng(element.lat!, element.lng!),
         onTap: () {
           _customInfoWindowController.addInfoWindow!(
             Column(children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(color: appColors.white, borderRadius: BorderRadius.circular(8.px)),
+                  decoration: BoxDecoration(
+                      color: appColors.white,
+                      borderRadius: BorderRadius.circular(8.px)),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -342,7 +359,9 @@ class PropertyController extends BaseController {
                                 textFamily: fontFamilyRegular),
                           ),
                         ],
-                      ).paddingSymmetric(vertical: 16.px).paddingOnly(right: 24.px, left: 16.px),
+                      )
+                          .paddingSymmetric(vertical: 16.px)
+                          .paddingOnly(right: 24.px, left: 16.px),
                       Image.asset(
                         element.imgId!,
                         width: 75.px,
@@ -373,15 +392,22 @@ class PropertyController extends BaseController {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         Constants.googleApiKey,
         PointLatLng(mapList[0].lat!, mapList[0].lng!),
-        PointLatLng(mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
+        PointLatLng(
+            mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
         travelMode: TravelMode.driving,
-        wayPoints: mapList.map((element) => PolylineWayPoint(location: "${element.lat!},${element.lng!}")).toList());
+        wayPoints: mapList
+            .map((element) =>
+                PolylineWayPoint(location: "${element.lat!},${element.lng!}"))
+            .toList());
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
       PolylineId id = PolylineId(mapList[0].title!);
-      Polyline polyline = Polyline(polylineId: id, color: const Color(0xFF002D74), points: polylineCoordinates);
+      Polyline polyline = Polyline(
+          polylineId: id,
+          color: const Color(0xFF002D74),
+          points: polylineCoordinates);
       polylines[id] = polyline;
       update();
     }
@@ -441,15 +467,20 @@ class PropertyController extends BaseController {
                       return ListTile(
                         isThreeLine: true,
                         onTap: () {
-                          _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-                              CameraPosition(target: LatLng(item.lat!, item.lng!), zoom: 17)));
+                          _customInfoWindowController.googleMapController!
+                              .animateCamera(CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                      target: LatLng(item.lat!, item.lng!),
+                                      zoom: 17)));
                         },
                         leading: CircleAvatar(
                           backgroundColor: appColors.appColor.withOpacity(0.8),
                           child: MyTextView(
                             "${index + 1}",
-                            textStyleNew:
-                                MyTextStyle(textSize: 16.px, textWeight: FontWeight.w500, textColor: appColors.white),
+                            textStyleNew: MyTextStyle(
+                                textSize: 16.px,
+                                textWeight: FontWeight.w500,
+                                textColor: appColors.white),
                           ),
                         ),
                         title: Column(
@@ -457,7 +488,9 @@ class PropertyController extends BaseController {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             MyTextView(
-                              item.check == false ? Strings.annualInspection : Strings.tenant,
+                              item.check == false
+                                  ? Strings.annualInspection
+                                  : Strings.tenant,
                               textStyleNew: MyTextStyle(
                                 textSize: 12.px,
                                 textWeight: FontWeight.w500,
@@ -474,7 +507,8 @@ class PropertyController extends BaseController {
                             ),
                           ],
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 12.px, horizontal: 16.px),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 12.px, horizontal: 16.px),
                         subtitle: MyTextView(
                           item.title.toString(),
                           textStyleNew: MyTextStyle(
@@ -525,6 +559,15 @@ class PropertyController extends BaseController {
         );
       },
     );
+  }
+
+  getaccount() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var accountdata = await sharedPreferences.getString('accountModel');
+    account = jsonDecode(accountdata.toString());
+    print(
+        "shared pref" + sharedPreferences.getString('accountModel').toString());
   }
 
   /// ---- Get Home APi ----------->>>
