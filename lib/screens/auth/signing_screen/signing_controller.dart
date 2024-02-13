@@ -1,13 +1,9 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
-
-
-import '../../../screens/property_screen/property_screen.dart';
 import '../../building_inspection_screen/building_inspection_screen.dart';
 
 class SigningController extends BaseController {
@@ -28,7 +24,7 @@ class SigningController extends BaseController {
       saveAccount(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
       // Get.offAllNamed(PropertyScreen.routes);
-       Get.offAllNamed(BuildingInspectionScreen.routes);
+      Get.offAllNamed(BuildingInspectionScreen.routes);
       return tokenAccount;
     } catch (e) {
       print(e.toString());
@@ -44,7 +40,6 @@ class SigningController extends BaseController {
             "We're sorry, but it seems that this account has been deleted. If you believe this is an error or need further assistance, please contact our support team";
         title = "Account deleted";
       }
-
 
       Get.snackbar("", "",
           titleText: Text(title,
@@ -87,7 +82,6 @@ class SigningController extends BaseController {
     // //   utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
     // // }
     // Get.offAllNamed(PropertyScreen.routes);
-
   }
 
   validation() {
