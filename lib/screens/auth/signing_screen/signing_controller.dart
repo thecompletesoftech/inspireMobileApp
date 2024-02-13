@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
-import '../../../api_authentication/register_account_direct_request.dart';
 import '../../../screens/property_screen/property_screen.dart';
 
 class SigningController extends BaseController {
@@ -147,31 +145,31 @@ class SigningController extends BaseController {
   //     return null;
   //   }
   // }
-
 //---------------->
-  _dialogException({required String title, required String message}) {
-    Get.snackbar("", "",
-        titleText: Text(title,
-            style: TextStyle(
-                color: Colors.red[900],
-                fontSize: 19,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        messageText: Text(message,
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 17,
-            )),
-        duration: Duration(seconds: 3),
-        boxShadows: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3))
-        ],
-        snackStyle: SnackStyle.FLOATING);
-  }
+
+  // _dialogException({required String title, required String message}) {
+  //   Get.snackbar("", "",
+  //       titleText: Text(title,
+  //           style: TextStyle(
+  //               color: Colors.red[900],
+  //               fontSize: 19,
+  //               fontWeight: FontWeight.bold)),
+  //       backgroundColor: Colors.white,
+  //       messageText: Text(message,
+  //           style: TextStyle(
+  //             color: Colors.black87,
+  //             fontSize: 17,
+  //           )),
+  //       duration: Duration(seconds: 3),
+  //       boxShadows: [
+  //         BoxShadow(
+  //             color: Colors.grey.withOpacity(0.5),
+  //             spreadRadius: 5,
+  //             blurRadius: 7,
+  //             offset: const Offset(0, 3))
+  //       ],
+  //       snackStyle: SnackStyle.FLOATING);
+  // }
 
   saveAccount(TokenAccount tokenAccount) async {
     final SharedPreferences sharedPreferences =
