@@ -68,15 +68,19 @@ class PropertyScreen extends GetView<PropertyController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          Strings.userName,
+                                          controller.account['userName']
+                                              .toString(),
+                                          // Strings.userName,
                                           textStyleNew: MyTextStyle(
-                                            textColor: controller.appColors.lightText,
+                                            textColor:
+                                                controller.appColors.lightText,
                                             textWeight: FontWeight.w600,
                                             textFamily: fontFamilyBold,
                                             textSize: 16.px,
@@ -107,7 +111,8 @@ class PropertyScreen extends GetView<PropertyController> {
                                     icDownArrow ?? "",
                                     height: 24.px,
                                   ),
-                                  onSelected: (int value) => controller.actionPopUpItemSelected(value),
+                                  onSelected: (int value) =>
+                                      controller.actionPopUpItemSelected(value),
                                   itemBuilder: (context) {
                                     return <PopupMenuEntry<int>>[
                                       PopupMenuItem(
@@ -120,8 +125,10 @@ class PropertyScreen extends GetView<PropertyController> {
                                                 Strings.editProfile,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 1,
@@ -133,8 +140,10 @@ class PropertyScreen extends GetView<PropertyController> {
                                                 Strings.inspectionHistory,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 2,
@@ -146,8 +155,10 @@ class PropertyScreen extends GetView<PropertyController> {
                                                 Strings.nSPIREStandards,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 3,
@@ -159,8 +170,10 @@ class PropertyScreen extends GetView<PropertyController> {
                                                 Strings.logOut,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                     ];
                                   },
@@ -186,9 +199,12 @@ class PropertyScreen extends GetView<PropertyController> {
                               textFamily: fontFamilyRegular,
                               textColor: controller.appColors.appColor),
                         )),
-                    (Utils.isLandScapeMode(context)) ? const Expanded(child: SizedBox()) : const SizedBox(),
+                    (Utils.isLandScapeMode(context))
+                        ? const Expanded(child: SizedBox())
+                        : const SizedBox(),
                     Expanded(
-                      flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)
+                      flex: Utils.isLandScapeMode(context) ||
+                              !Utils.isTabletScreen1(context)
                           ? 1
                           : Utils.isTabletScreen1(context)
                               ? 0
@@ -204,19 +220,23 @@ class PropertyScreen extends GetView<PropertyController> {
                         height: 44.px,
                         child: SegmentedButton<PropertyStatus>(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (Set<MaterialState> states) {
                               return states.contains(MaterialState.selected)
                                   ? controller.appColors.pinkcolor
                                   : controller.appColors.transparent;
                             }),
-                            foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                            foregroundColor: MaterialStateColor.resolveWith(
+                                (Set<MaterialState> states) {
                               return states.contains(MaterialState.selected)
                                   ? Colors.black
                                   : controller.appColors.border1;
                             }),
                             side: MaterialStateBorderSide.resolveWith((states) {
                               return BorderSide(
-                                  color: states.contains(MaterialState.selected) ? Colors.black : Colors.grey);
+                                  color: states.contains(MaterialState.selected)
+                                      ? Colors.black
+                                      : Colors.grey);
                             }),
                           ),
                           segments: const <ButtonSegment<PropertyStatus>>[
@@ -240,7 +260,8 @@ class PropertyScreen extends GetView<PropertyController> {
                             ),
                           ],
                           selected: <PropertyStatus>{controller.status},
-                          onSelectionChanged: (Set<PropertyStatus> newSelection) {
+                          onSelectionChanged:
+                              (Set<PropertyStatus> newSelection) {
                             controller.status = newSelection.first;
                             controller.searchTypeItem();
                             controller.update();
@@ -256,7 +277,8 @@ class PropertyScreen extends GetView<PropertyController> {
                         controller.update();
                       },
                       height: 44.px,
-                      padding: EdgeInsets.only(top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
+                      padding: EdgeInsets.only(
+                          top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
                       iconheigth: 12.px,
                       textWeight: FontWeight.w500,
                       textSize: 16.px,
@@ -270,7 +292,8 @@ class PropertyScreen extends GetView<PropertyController> {
                   child: controller.change
                       ? ListView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(horizontal: 32.px, vertical: 24.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32.px, vertical: 24.px),
                           physics: const BouncingScrollPhysics(),
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
@@ -278,45 +301,70 @@ class PropertyScreen extends GetView<PropertyController> {
                             return controller.status == PropertyStatus.all
                                 ? ListItemCardWidget(item: item, index: index)
                                 : controller.status == PropertyStatus.completed
-                                    ? item.status == PropertyStatus.completed.toString()
-                                        ? ListItemCardWidget(item: item, index: index)
+                                    ? item.status ==
+                                            PropertyStatus.completed.toString()
+                                        ? ListItemCardWidget(
+                                            item: item, index: index)
                                         : const SizedBox()
-                                    : item.status != PropertyStatus.completed.toString()
-                                        ? ListItemCardWidget(item: item, index: index)
+                                    : item.status !=
+                                            PropertyStatus.completed.toString()
+                                        ? ListItemCardWidget(
+                                            item: item, index: index)
                                         : const SizedBox();
                           })
                       : GridView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(horizontal: 32.px, vertical: 24.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32.px, vertical: 24.px),
                           physics: const BouncingScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: Utils.isTabletScreen1(context) ? 400 : 450,
-                              childAspectRatio: Utils.isLandScapeMode(context)
-                                  ? Utils.isSmallScreen(context)
-                                      ? ScalingQuery(context).verticalScale(0.72.px) // iphone
-                                      : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.68.px) //.....68695
-                                  : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.6533.px) //pro mini
-                                      : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.703956.px) //.....1
-                                          : Utils.isMediumScreen(context)
-                                              ? ScalingQuery(context).verticalScale(0.699.px) //.....2
-                                              : ScalingQuery(context).verticalScale(0.49.px), //.....
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16),
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: Utils.isTabletScreen1(context)
+                                      ? 400
+                                      : 450,
+                                  childAspectRatio: Utils.isLandScapeMode(
+                                          context)
+                                      ? Utils.isSmallScreen(context)
+                                          ? ScalingQuery(context)
+                                              .verticalScale(0.72.px) // iphone
+                                          : Utils.isTabletScreen(context)
+                                              ? ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.52.px) // land mini
+                                              : ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.68.px) //.....68695
+                                      : Utils.isTabletScreen1(context)
+                                          ? ScalingQuery(context).verticalScale(
+                                              0.6533.px) //pro mini
+                                          : Utils.isTabletScreen(context)
+                                              ? ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.703956.px) //.....1
+                                              : Utils.isMediumScreen(context)
+                                                  ? ScalingQuery(context)
+                                                      .verticalScale(
+                                                          0.699.px) //.....2
+                                                  : ScalingQuery(context)
+                                                      .verticalScale(
+                                                          0.49.px), //.....
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16),
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
                             return controller.status == PropertyStatus.all
                                 ? GridItemCardWidget(item: item, index: index)
                                 : controller.status == PropertyStatus.completed
-                                    ? item.status == PropertyStatus.completed.toString()
-                                        ? GridItemCardWidget(item: item, index: index)
+                                    ? item.status ==
+                                            PropertyStatus.completed.toString()
+                                        ? GridItemCardWidget(
+                                            item: item, index: index)
                                         : const SizedBox()
-                                    : item.status != PropertyStatus.completed.toString()
-                                        ? GridItemCardWidget(item: item, index: index)
+                                    : item.status !=
+                                            PropertyStatus.completed.toString()
+                                        ? GridItemCardWidget(
+                                            item: item, index: index)
                                         : const SizedBox();
                           }),
                 )

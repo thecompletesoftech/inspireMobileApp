@@ -70,16 +70,17 @@ class HomeScreen extends GetView<HomeController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          controller.account.toString(),
-                                          // Strings.userName,
+                                          Strings.userName,
                                           textStyleNew: MyTextStyle(
-                                            textColor: controller.appColors.lightText,
+                                            textColor:
+                                                controller.appColors.lightText,
                                             textWeight: FontWeight.w600,
                                             textFamily: fontFamilyBold,
                                             textSize: 16.px,
@@ -110,7 +111,8 @@ class HomeScreen extends GetView<HomeController> {
                                     icDownArrow ?? "",
                                     height: 24.px,
                                   ),
-                                  onSelected: (int value) => controller.actionPopUpItemSelected(value),
+                                  onSelected: (int value) =>
+                                      controller.actionPopUpItemSelected(value),
                                   itemBuilder: (context) {
                                     return <PopupMenuEntry<int>>[
                                       PopupMenuItem(
@@ -123,8 +125,10 @@ class HomeScreen extends GetView<HomeController> {
                                                 Strings.editProfile,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 1,
@@ -136,8 +140,10 @@ class HomeScreen extends GetView<HomeController> {
                                                 Strings.inspectionHistory,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 2,
@@ -149,8 +155,10 @@ class HomeScreen extends GetView<HomeController> {
                                                 Strings.nSPIREStandards,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                       PopupMenuItem(
                                           value: 3,
@@ -162,8 +170,10 @@ class HomeScreen extends GetView<HomeController> {
                                                 Strings.logOut,
                                                 textStyleNew: MyTextStyle(
                                                     textSize: 16.px,
-                                                    textColor: AppColors().black,
-                                                    textWeight: FontWeight.w400),
+                                                    textColor:
+                                                        AppColors().black,
+                                                    textWeight:
+                                                        FontWeight.w400),
                                               ))),
                                     ];
                                   },
@@ -182,7 +192,8 @@ class HomeScreen extends GetView<HomeController> {
                     Expanded(
                         flex: 0,
                         child: CommonButton(
-                            border: Border.all(color: controller.appColors.border, width: 2),
+                            border: Border.all(
+                                color: controller.appColors.border, width: 2),
                             radius: 100.px,
                             title: Strings.backToBuildings,
                             onTap: () {
@@ -204,7 +215,8 @@ class HomeScreen extends GetView<HomeController> {
                             color: controller.appColors.transparent,
                             textColor: controller.appColors.appColor)),
                     Expanded(
-                      flex: Utils.isLandScapeMode(context) || !Utils.isTabletScreen1(context)
+                      flex: Utils.isLandScapeMode(context) ||
+                              !Utils.isTabletScreen1(context)
                           ? 1
                           : Utils.isTabletScreen1(context)
                               ? 0
@@ -220,19 +232,23 @@ class HomeScreen extends GetView<HomeController> {
                         height: 44.px,
                         child: SegmentedButton<InspectionStatus>(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (Set<MaterialState> states) {
                               return states.contains(MaterialState.selected)
                                   ? controller.appColors.pinkcolor
                                   : controller.appColors.transparent;
                             }),
-                            foregroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) {
+                            foregroundColor: MaterialStateColor.resolveWith(
+                                (Set<MaterialState> states) {
                               return states.contains(MaterialState.selected)
                                   ? Colors.black
                                   : controller.appColors.border1;
                             }),
                             side: MaterialStateBorderSide.resolveWith((states) {
                               return BorderSide(
-                                  color: states.contains(MaterialState.selected) ? Colors.black : Colors.grey);
+                                  color: states.contains(MaterialState.selected)
+                                      ? Colors.black
+                                      : Colors.grey);
                             }),
                           ),
                           segments: const <ButtonSegment<InspectionStatus>>[
@@ -256,7 +272,8 @@ class HomeScreen extends GetView<HomeController> {
                             ),
                           ],
                           selected: <InspectionStatus>{controller.status},
-                          onSelectionChanged: (Set<InspectionStatus> newSelection) {
+                          onSelectionChanged:
+                              (Set<InspectionStatus> newSelection) {
                             controller.status = newSelection.first;
                             controller.searchTypeItem();
                             controller.update();
@@ -272,7 +289,8 @@ class HomeScreen extends GetView<HomeController> {
                         controller.update();
                       },
                       height: 44.px,
-                      padding: EdgeInsets.only(top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
+                      padding: EdgeInsets.only(
+                          top: 10.px, bottom: 10.px, left: 16.px, right: 24.px),
                       iconheigth: 12.px,
                       textWeight: FontWeight.w500,
                       textSize: 16.px,
@@ -286,7 +304,8 @@ class HomeScreen extends GetView<HomeController> {
                   child: controller.change
                       ? ListView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 14.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 14.px),
                           physics: const BouncingScrollPhysics(),
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
@@ -295,13 +314,18 @@ class HomeScreen extends GetView<HomeController> {
                                 ? ListItemCardWidget(
                                     item: item,
                                   )
-                                : controller.status == InspectionStatus.completed
-                                    ? item.status == InspectionStatus.completed.toString()
+                                : controller.status ==
+                                        InspectionStatus.completed
+                                    ? item.status ==
+                                            InspectionStatus.completed
+                                                .toString()
                                         ? ListItemCardWidget(
                                             item: item,
                                           )
                                         : const SizedBox()
-                                    : item.status != InspectionStatus.completed.toString()
+                                    : item.status !=
+                                            InspectionStatus.completed
+                                                .toString()
                                         ? ListItemCardWidget(
                                             item: item,
                                           )
@@ -309,25 +333,42 @@ class HomeScreen extends GetView<HomeController> {
                           })
                       : GridView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.only(left: 32.px, right: 32.px, top: 24.0),
+                          padding: EdgeInsets.only(
+                              left: 32.px, right: 32.px, top: 24.0),
                           physics: const BouncingScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: Utils.isTabletScreen1(context) ? 400 : 450,
-                              childAspectRatio: Utils.isLandScapeMode(context)
-                                  ? Utils.isSmallScreen(context)
-                                      ? ScalingQuery(context).verticalScale(0.72.px) // iphone
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent:
+                                      Utils.isTabletScreen1(context)
+                                          ? 400
+                                          : 450,
+                                  childAspectRatio: Utils.isLandScapeMode(
+                                          context)
+                                      ? Utils.isSmallScreen(context)
+                                          ? ScalingQuery(context)
+                                              .verticalScale(0.72.px) // iphone
+                                          : Utils.isTabletScreen1(context)
+                                              ? ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.52.px) // land mini
+                                              : ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.5537.px) //.....55322938
                                       : Utils.isTabletScreen1(context)
-                                          ? ScalingQuery(context).verticalScale(0.52.px) // land mini
-                                          : ScalingQuery(context).verticalScale(0.5537.px) //.....55322938
-                                  : Utils.isTabletScreen1(context)
-                                      ? ScalingQuery(context).verticalScale(0.529943.px) //pro mini
-                                      : Utils.isTabletScreen(context)
-                                          ? ScalingQuery(context).verticalScale(0.571028.px) //.....1
-                                          : Utils.isMediumScreen(context)
-                                              ? ScalingQuery(context).verticalScale(0.561.px) //.....2
-                                              : ScalingQuery(context).verticalScale(0.49.px), //.....
-                              crossAxisSpacing: 16,
-                              mainAxisSpacing: 16),
+                                          ? ScalingQuery(context).verticalScale(
+                                              0.529943.px) //pro mini
+                                          : Utils.isTabletScreen(context)
+                                              ? ScalingQuery(context)
+                                                  .verticalScale(
+                                                      0.571028.px) //.....1
+                                              : Utils.isMediumScreen(context)
+                                                  ? ScalingQuery(context)
+                                                      .verticalScale(
+                                                          0.561.px) //.....2
+                                                  : ScalingQuery(context)
+                                                      .verticalScale(0.49.px), //.....
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16),
                           itemCount: controller.searchList.length,
                           itemBuilder: (context, index) {
                             RxCommonModel item = controller.searchList[index];
@@ -335,13 +376,18 @@ class HomeScreen extends GetView<HomeController> {
                                 ? GridItemCardWidget(
                                     item: item,
                                   )
-                                : controller.status == InspectionStatus.completed
-                                    ? item.status == InspectionStatus.completed.toString()
+                                : controller.status ==
+                                        InspectionStatus.completed
+                                    ? item.status ==
+                                            InspectionStatus.completed
+                                                .toString()
                                         ? GridItemCardWidget(
                                             item: item,
                                           )
                                         : const SizedBox()
-                                    : item.status != InspectionStatus.completed.toString()
+                                    : item.status !=
+                                            InspectionStatus.completed
+                                                .toString()
                                         ? GridItemCardWidget(
                                             item: item,
                                           )
@@ -355,6 +401,4 @@ class HomeScreen extends GetView<HomeController> {
       },
     );
   }
-
-  
 }

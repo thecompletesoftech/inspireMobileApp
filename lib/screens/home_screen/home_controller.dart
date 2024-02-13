@@ -24,7 +24,7 @@ class HomeController extends BaseController {
   bool change = false;
   bool visibleBtn = false;
   int currentIndex = 1;
-  var account;
+ 
   RxList<RxCommonModel> dataList = [
     RxCommonModel(
         id: 1,
@@ -204,7 +204,7 @@ class HomeController extends BaseController {
     update();
     checkPermission();
     searchItem("");
-    getaccount();
+    
     super.onInit();
   }
 
@@ -711,14 +711,7 @@ class HomeController extends BaseController {
         ));
   }
 
-  getaccount() async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    account = await sharedPreferences.getString('accountModel');
-    print(
-        "shared pref" + sharedPreferences.getString('accountModel').toString());
-  }
-
+  
   @override
   void dispose() {
     popupKey.currentState!.deactivate();
