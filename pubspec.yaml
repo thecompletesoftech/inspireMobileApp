@@ -46,13 +46,13 @@ dependencies:
   shared_preferences: ^2.0.18
   flutter_localizations:
     sdk: flutter
-  share_plus: ^6.3.1
+  share_plus: ^7.2.2
   dio_cookie_manager: ^3.0.0
   flutter_easyloading: ^3.0.5
   path_provider: ^2.0.0
   firebase_messaging: ^14.2.2
   firebase_core: ^2.5.0
-  flutter_local_notifications: ^13.0.0
+  flutter_local_notifications: ^16.3.2
   image_picker:
   firebase_crashlytics:
   app_settings: ^5.1.1
@@ -60,14 +60,14 @@ dependencies:
   screenshot: ^2.1.0
   image_gallery_saver: ^2.0.3
   speech_to_text: ^6.1.1
-  syncfusion_flutter_signaturepad: ^23.1.36
+  syncfusion_flutter_signaturepad: ^24.2.5
   google_maps_flutter: ^2.5.0
   image_editor_plus:
   location:
   geolocator:
   cached_network_image:
   flutter_svg:
-  flutter_polyline_points: ^1.0.0
+  flutter_polyline_points: ^2.0.0
   custom_info_window: ^1.0.1
   clippy_flutter:
   flutter_advanced_switch: ^3.0.1
@@ -87,7 +87,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   flutter_launcher_icons: "^0.13.1"
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
