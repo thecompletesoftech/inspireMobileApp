@@ -37,6 +37,12 @@ class GetStorageData {
     return box.remove(key);
   }
 
+  /// <<< To clear all data --------- >>>
+  clearAlldata() async {
+    final box = GetStorage();
+    return box.erase();
+  }
+
   /// <<< To Store Key data --------- >>>
   bool containKey(String key) {
     final box = GetStorage();

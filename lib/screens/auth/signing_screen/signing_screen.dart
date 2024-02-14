@@ -1,7 +1,6 @@
-import 'package:public_housing/commons/all.dart';
-
-import '../../../languages/language.dart';
 import 'signing_controller.dart';
+import '../../../languages/language.dart';
+import 'package:public_housing/commons/all.dart';
 
 class SigningScreen extends GetView<SigningController> {
   const SigningScreen({Key? key}) : super(key: key);
@@ -40,7 +39,8 @@ class SigningScreen extends GetView<SigningController> {
                                     TextSpan(
                                       text: 'Trust us',
                                       style: MyTextStyle(
-                                        textColor: controller.appColors.appColor,
+                                        textColor:
+                                            controller.appColors.appColor,
                                         textSize: 24.px,
                                         textFamily: fontFamilyFutuHvtext,
                                         textWeight: FontWeight.w600,
@@ -50,7 +50,8 @@ class SigningScreen extends GetView<SigningController> {
                                     TextSpan(
                                       text: ', ',
                                       style: MyTextStyle(
-                                        textColor: controller.appColors.appColor,
+                                        textColor:
+                                            controller.appColors.appColor,
                                         textSize: 24.px,
                                         textFamily: fontFamilyMediumFututext,
                                         textWeight: FontWeight.w400,
@@ -60,7 +61,8 @@ class SigningScreen extends GetView<SigningController> {
                                     TextSpan(
                                       text: 'we can handle it',
                                       style: MyTextStyle(
-                                        textColor: controller.appColors.appColor,
+                                        textColor:
+                                            controller.appColors.appColor,
                                         textSize: 24.px,
                                         textFamily: fontFamilyMediumFututext,
                                         textWeight: FontWeight.w400,
@@ -90,14 +92,19 @@ class SigningScreen extends GetView<SigningController> {
                                   radius: 16.px,
                                   padding: EdgeInsets.all(48.px),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          Image.asset(ImagePath.appLogo, height: 30.px).paddingOnly(right: 24.px),
-                                          Image.asset(ImagePath.logo, height: 30.px),
+                                          Image.asset(ImagePath.appLogo,
+                                                  height: 30.px)
+                                              .paddingOnly(right: 24.px),
+                                          Image.asset(ImagePath.logo,
+                                              height: 30.px),
                                         ],
                                       ),
                                       MyTextView(
@@ -105,22 +112,33 @@ class SigningScreen extends GetView<SigningController> {
                                         textStyleNew: MyTextStyle(
                                             textSize: 32.px,
                                             textFamily: fontFamilyFutuHvtext,
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textWeight: FontWeight.w500),
                                       ).paddingSymmetric(vertical: 48.px),
                                       CommonTextField(
                                         controller: controller.email,
                                         labelText: Languages.of(context)!.email,
-                                        hintText: Languages.of(context)!.enterYourEmail,
+                                        hintText: Languages.of(context)!
+                                            .enterYourEmail,
                                         isLable: true,
                                         padding: EdgeInsets.zero,
-                                        contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
+                                        contentPadding: EdgeInsets.only(
+                                            left: 16.px,
+                                            top: 16.px,
+                                            bottom: 16.px),
                                         onChange: (value) {
-                                          if (controller.utils.isValidationEmpty(controller.email.text.trim())) {
+                                          if (controller.utils
+                                              .isValidationEmpty(controller
+                                                  .email.text
+                                                  .trim())) {
                                             controller.isEmail = false;
                                             controller.checked = false;
                                             controller.update();
-                                          } else if (!controller.utils.emailValidator(controller.email.text.trim())) {
+                                          } else if (!controller.utils
+                                              .emailValidator(controller
+                                                  .email.text
+                                                  .trim())) {
                                             controller.isEmail = false;
                                             controller.checked = false;
                                             controller.update();
@@ -139,12 +157,17 @@ class SigningScreen extends GetView<SigningController> {
                                       SizedBox(height: 24.px),
                                       CommonTextField(
                                         controller: controller.pass,
-                                        labelText: Languages.of(context)!.password,
+                                        labelText:
+                                            Languages.of(context)!.password,
                                         isLable: true,
-                                        hintText: Languages.of(context)!.enterYourPassword,
+                                        hintText: Languages.of(context)!
+                                            .enterYourPassword,
                                         padding: EdgeInsets.zero,
                                         obscureText: controller.hide,
-                                        contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
+                                        contentPadding: EdgeInsets.only(
+                                            left: 16.px,
+                                            top: 16.px,
+                                            bottom: 16.px),
                                         suffixIcon: IconButton(
                                           onPressed: () {
                                             controller.hide = !controller.hide;
@@ -155,14 +178,22 @@ class SigningScreen extends GetView<SigningController> {
                                               : Icons.visibility_off_outlined),
                                         ),
                                         onChange: (value) {
-                                          if (controller.utils.isValidationEmpty(controller.pass.text.trim())) {
+                                          if (controller.utils
+                                              .isValidationEmpty(controller
+                                                  .pass.text
+                                                  .trim())) {
                                             controller.isPass = false;
                                             controller.checked = false;
                                             controller.update();
-                                          } else if (!controller.utils.passwordValidator(controller.pass.text.trim())) {
-                                            controller.checked = false;
-                                            controller.update();
-                                          } else {
+                                          }
+                                          // else if (!controller.utils
+                                          //     .passwordValidator(controller
+                                          //         .pass.text
+                                          //         .trim())) {
+                                          //   controller.checked = false;
+                                          //   controller.update();
+                                          // }
+                                           else {
                                             controller.isPass = true;
                                             if (controller.isEmail) {
                                               controller.checked = true;
@@ -188,7 +219,9 @@ class SigningScreen extends GetView<SigningController> {
                                               : controller.appColors.border1,
                                           color: controller.checked
                                               ? controller.appColors.textPink
-                                              : controller.appColors.black.withOpacity(0.11999999731779099),
+                                              : controller.appColors.black
+                                                  .withOpacity(
+                                                      0.11999999731779099),
                                           onTap: () {
                                             // if (controller.checked)
                                             controller.validation();
@@ -198,7 +231,8 @@ class SigningScreen extends GetView<SigningController> {
                                         textStyleNew: MyTextStyle(
                                             textSize: 16.px,
                                             textWeight: FontWeight.w500,
-                                            textColor: controller.appColors.appColor,
+                                            textColor:
+                                                controller.appColors.appColor,
                                             textFamily: fontFamilyRegular),
                                       )
                                     ],
@@ -217,7 +251,9 @@ class SigningScreen extends GetView<SigningController> {
                             Center(
                               child: Image.asset(
                                 ImagePath.gilsonLogo,
-                                height: Utils.isLandScapeMode(context) ? 70.px : 10.h,
+                                height: Utils.isLandScapeMode(context)
+                                    ? 70.px
+                                    : 10.h,
                               ),
                             ).paddingOnly(top: 24.px),
                             ShadowContainer(
@@ -225,14 +261,19 @@ class SigningScreen extends GetView<SigningController> {
                                     radius: 16.px,
                                     padding: EdgeInsets.all(38.px),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Image.asset(ImagePath.appLogo, height: 54.px),
-                                            Image.asset(ImagePath.logo, height: 54.px),
+                                            Image.asset(ImagePath.appLogo,
+                                                height: 54.px),
+                                            Image.asset(ImagePath.logo,
+                                                height: 54.px),
                                           ],
                                         ),
                                         MyTextView(
@@ -241,22 +282,34 @@ class SigningScreen extends GetView<SigningController> {
                                           textStyleNew: MyTextStyle(
                                               textSize: 32.px,
                                               textFamily: fontFamilyFutuHvtext,
-                                              textColor: controller.appColors.black,
+                                              textColor:
+                                                  controller.appColors.black,
                                               textWeight: FontWeight.w500),
                                         ).paddingSymmetric(vertical: 48.px),
                                         CommonTextField(
                                           controller: controller.email,
-                                          labelText: Languages.of(context)!.email,
-                                          hintText: Languages.of(context)!.enterYourEmail,
+                                          labelText:
+                                              Languages.of(context)!.email,
+                                          hintText: Languages.of(context)!
+                                              .enterYourEmail,
                                           isLable: true,
                                           padding: EdgeInsets.zero,
-                                          contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
+                                          contentPadding: EdgeInsets.only(
+                                              left: 16.px,
+                                              top: 16.px,
+                                              bottom: 16.px),
                                           onChange: (value) {
-                                            if (controller.utils.isValidationEmpty(controller.email.text.trim())) {
+                                            if (controller.utils
+                                                .isValidationEmpty(controller
+                                                    .email.text
+                                                    .trim())) {
                                               controller.isEmail = false;
                                               controller.checked = false;
                                               controller.update();
-                                            } else if (!controller.utils.emailValidator(controller.email.text.trim())) {
+                                            } else if (!controller.utils
+                                                .emailValidator(controller
+                                                    .email.text
+                                                    .trim())) {
                                               controller.isEmail = false;
                                               controller.checked = false;
                                               controller.update();
@@ -274,31 +327,45 @@ class SigningScreen extends GetView<SigningController> {
                                         SizedBox(height: 24.px),
                                         CommonTextField(
                                           controller: controller.pass,
-                                          labelText: Languages.of(context)!.password,
+                                          labelText:
+                                              Languages.of(context)!.password,
                                           isLable: true,
-                                          hintText: Languages.of(context)!.enterYourPassword,
+                                          hintText: Languages.of(context)!
+                                              .enterYourPassword,
                                           padding: EdgeInsets.zero,
                                           obscureText: controller.hide,
-                                          contentPadding: EdgeInsets.only(left: 16.px, top: 16.px, bottom: 16.px),
+                                          contentPadding: EdgeInsets.only(
+                                              left: 16.px,
+                                              top: 16.px,
+                                              bottom: 16.px),
                                           suffixIcon: IconButton(
                                             onPressed: () {
-                                              controller.hide = !controller.hide;
+                                              controller.hide =
+                                                  !controller.hide;
                                               controller.update();
                                             },
                                             icon: Icon(controller.hide
                                                 ? Icons.visibility_outlined
-                                                : Icons.visibility_off_outlined),
+                                                : Icons
+                                                    .visibility_off_outlined),
                                           ),
                                           onChange: (value) {
-                                            if (controller.utils.isValidationEmpty(controller.pass.text.trim())) {
+                                            if (controller.utils
+                                                .isValidationEmpty(controller
+                                                    .pass.text
+                                                    .trim())) {
                                               controller.isPass = false;
                                               controller.checked = false;
                                               controller.update();
-                                            } else if (!controller.utils
-                                                .passwordValidator(controller.pass.text.trim())) {
-                                              controller.checked = false;
-                                              controller.update();
-                                            } else {
+                                            } 
+                                            // else if (!controller.utils
+                                            //     .passwordValidator(controller
+                                            //         .pass.text
+                                            //         .trim())) {
+                                            //   controller.checked = false;
+                                            //   controller.update();
+                                            // } 
+                                            else {
                                               controller.isPass = true;
                                               if (controller.isEmail) {
                                                 controller.checked = true;
@@ -324,23 +391,34 @@ class SigningScreen extends GetView<SigningController> {
                                                 : controller.appColors.border1,
                                             color: controller.checked
                                                 ? controller.appColors.textPink
-                                                : controller.appColors.black.withOpacity(0.11999999731779099),
+                                                : controller.appColors.black
+                                                    .withOpacity(
+                                                        0.11999999731779099),
                                             onTap: () {
-                                              // if (controller.checked)
-                                              controller.validation();
+                                              if (controller.checked)
+                                                controller.validation();
                                             }).paddingSymmetric(vertical: 24.px),
-                                        MyTextView(
-                                          Strings.forgotPassword,
-                                          textStyleNew: MyTextStyle(
-                                              textSize: 16.px,
-                                              textWeight: FontWeight.w500,
-                                              textColor: controller.appColors.appColor,
-                                              textFamily: fontFamilyRegular),
+                                        GestureDetector(
+                                          onTap: (() {
+                                            // controller.createNewAccount();
+                                          }),
+                                          child: MyTextView(
+                                            Strings.forgotPassword,
+                                            textStyleNew: MyTextStyle(
+                                                textSize: 16.px,
+                                                textWeight: FontWeight.w500,
+                                                textColor: controller
+                                                    .appColors.appColor,
+                                                textFamily: fontFamilyRegular),
+                                          ),
                                         )
                                       ],
                                     ))
                                 .marginSymmetric(
-                                    horizontal: Utils.isMediumScreen(context) ? 16.h : 13.h, vertical: 10.h),
+                                    horizontal: Utils.isMediumScreen(context)
+                                        ? 16.h
+                                        : 13.h,
+                                    vertical: 10.h),
                             Image.asset(
                               ImagePath.loginScreen,
                               height: 20.h,

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'api_repository/loading.dart';
 import 'commons/all.dart';
 import 'languages/app_localizations_delegate.dart';
