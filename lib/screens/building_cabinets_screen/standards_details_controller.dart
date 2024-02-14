@@ -1,9 +1,11 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/building_standards_controller.dart';
 
-class BuildingCabinetsController extends BaseController {
+class StandardsDetailsController extends BaseController {
   String buildingName = '';
   BuildingDataModel? buildingDataModel;
+  dynamic isSuccess;
+  var imagesList;
 
   @override
   void onInit() {

@@ -1,19 +1,20 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
-import 'package:public_housing/screens/building_cabinets_screen/building_cabinets_binding.dart';
-import 'package:public_housing/screens/building_cabinets_screen/building_cabinets_controller.dart';
+import 'package:public_housing/screens/building_cabinets_screen/standards_details_binding.dart';
+import 'package:public_housing/screens/building_cabinets_screen/standards_details_controller.dart';
 import 'package:public_housing/screens/building_cabinets_screen/building_text_common_widget.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_screen.dart';
 
-class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
-  const BuildingCabinetsScreen({Key? key}) : super(key: key);
+class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
+  const StandardsDetailsScreen({Key? key}) : super(key: key);
 
-  static const routes = "/BuildingCabinetsScreen";
+  static const routes = "/StandardsDetailsScreen";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BuildingCabinetsController>(
-      init: BuildingCabinetsController(),
+    return GetBuilder<StandardsDetailsController>(
+      init: StandardsDetailsController(),
       autoRemove: false,
       builder: (controller) {
         return BaseScreen(
@@ -21,36 +22,20 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
           child: SafeArea(
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  ShadowContainer(
-                    height: 116.px,
-                    radius: 0.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: SvgPicture.string(icBack),
-                        ),
-                        Image.asset(
-                          ImagePath.logo,
-                          width: 182.px,
-                          height: 40.625.px,
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Image.asset(
-                            ImagePath.user,
-                            width: 48.px,
-                            height: 48.px,
-                          ).paddingOnly(right: 8.px),
-                        )
-                      ],
-                    ).paddingOnly(left: 32.px, right: 32.px),
+                  CommonAppBar(
+                    color: controller.appColors.transparent,
+                    radius: 0.px,
+                    onClickBack: () {
+                      Get.back(result: {
+                        "isSuccess": controller.isSuccess,
+                        "imagesList": controller.imagesList,
+                        "buildingName":
+                            "${controller.buildingDataModel?.title ?? ""}",
+                      });
+                    },
                   ),
                   Column(
                     children: [
@@ -112,6 +97,7 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
                           Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CommonText(
                                   title: Strings.definition,
@@ -132,12 +118,15 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
                           Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset(
-                                controller.buildingDataModel?.image ?? "",
-                                height: 248.px,
-                                width: 332.px,
-                                fit: BoxFit.cover,
+                              Center(
+                                child: Image.asset(
+                                  controller.buildingDataModel?.image ?? "",
+                                  height: 248.px,
+                                  width: 332.px,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                               MyTextView(
                                 Strings.location,
@@ -220,6 +209,7 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
                           Expanded(
                             child: MyTextView(
                               Strings.storageComponent,
+                              isMaxLineWrap: true,
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.black,
                                 textWeight: FontWeight.w400,
@@ -228,10 +218,27 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
                               ),
                             ),
                           ),
+                          if (controller.isSuccess == true)
+                            ClipOval(
+                                child: SvgPicture.string(
+                              icComplete,
+                            )),
                           CommonButton(
                             radius: 100.px,
                             title: Strings.seeMore,
-                            onTap: () {},
+                            onTap: () {
+                              Get.toNamed(DeficienciesInsideScreen.routes,
+                                  arguments: {
+                                    "buildingName":
+                                        "${controller.buildingName}",
+                                    "deficiencies":
+                                        "${Strings.storageComponent}",
+                                  })?.then((value) {
+                                controller.isSuccess = value['isSuccess'];
+                                controller.imagesList = value['imagesList'];
+                                controller.update();
+                              });
+                            },
                             padding: EdgeInsets.symmetric(
                               horizontal: 24.px,
                               vertical: 10.px,
@@ -240,7 +247,7 @@ class BuildingCabinetsScreen extends GetView<BuildingCabinetsBinding> {
                             textSize: 16.px,
                             color: controller.appColors.buttonColor,
                             textColor: controller.appColors.black,
-                          ),
+                          ).paddingOnly(left: 24.px),
                         ],
                       ).paddingSymmetric(vertical: 16.px),
                       Container(

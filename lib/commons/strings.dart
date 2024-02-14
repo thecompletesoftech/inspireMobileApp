@@ -50,9 +50,12 @@ class Strings {
   static const String noDeficienciesFound = "No deficiencies found";
   static const String boilerCertificate = "Boiler Certificate";
   static const String elevatorCertificate = "Elevator Certificate";
-  static const String fireAlarmInspectionReport = "Fire Alarm Inspection Report";
-  static const String leadBasedPaintDisclosureForm = "Lead-Based Paint Disclosure Form";
-  static const String sprinklerSystemCertificate = "Sprinkler System Certificate";
+  static const String fireAlarmInspectionReport =
+      "Fire Alarm Inspection Report";
+  static const String leadBasedPaintDisclosureForm =
+      "Lead-Based Paint Disclosure Form";
+  static const String sprinklerSystemCertificate =
+      "Sprinkler System Certificate";
   static const String share = "Share";
   static const String download = "Download";
   static const String upload = "Upload";
@@ -105,7 +108,8 @@ class Strings {
   static const String pointOfContact = 'Point of Contact';
   static const String pointOfContactName = "$pointOfContact Name";
   static const String pointOfContactSignatures = "$pointOfContact Signature";
-  static const String selectRoofAccessIndicator = 'Select Roof Access Indicator';
+  static const String selectRoofAccessIndicator =
+      'Select Roof Access Indicator';
   static const String selectReasonUninspectable = 'Select Reason Uninspectable';
   static const String addReasonUninspectable = 'Add Reason Uninspectable';
   static const String noOneIsPresent = "No one is present";
@@ -121,7 +125,8 @@ class Strings {
   static const String inspectionIncomplete = "Inspection Incomplete";
   static const String properties = "Properties";
 
-  static const String messageHint = "This is the beginning of your chat with Fernando Devries";
+  static const String messageHint =
+      "This is the beginning of your chat with Fernando Devries";
   static const String commentHint = "Add a comment of the inspection...";
   static const String escortHint = "escort@mail.com";
   static const String comment =
@@ -154,10 +159,26 @@ class Strings {
   static String propertyNames = "*propertyName* - ";
   static String searchStandards = "Search standards";
   static String callForAidSystem = "Call for Aid System";
-  static String stowItems = "Stow items, including food, sanitation, and household supplies.";
-  static String door = "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
-  static String aDedicated = "A dedicated space for food, goods, or other items.";
+  static String stowItems =
+      "Stow items, including food, sanitation, and household supplies.";
+  static String door =
+      "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
+  static String aDedicated =
+      "A dedicated space for food, goods, or other items.";
   static String none = "None";
   static String laundry = "Kitchens, bathroom, laundry";
-  static String storageComponent = "D2 - INSIDE. Storage component is damaged, inoperable, or missing.";
+  static String storageComponent =
+      "D2 - INSIDE. Storage component is damaged, inoperable, or missing.";
+  static String noDataFound = "No data found";
+  static String correctionTimeframe = "Correction Timeframe:";
+  static String days = "30 days";
+  static String determination = "H&S Determination:";
+  static String moderate = "Moderate";
+  static String deficiencyCriteria = "Deficiency Criteria";
+  static String deficiencyCriteriaDes =
+      "50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are damaged (i.e., visibly defective; impacts functionality). \nOR\n50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are inoperable (i.e., overall system or component thereof is not meeting function or purpose; with or without visible damage). \nOR\n50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are missing (i.e., evidence of prior installation, but now not present or is incomplete).";
+  static String deficiencyPresent = "Deficiency Present";
+  static String inconclusive = "Inconclusive";
+  static String takePhoto = "Take a Photo";
+  static String saveAddUnit = "Save and Add Unit";
 }
