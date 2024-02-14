@@ -2,6 +2,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/property_screen/property_controller.dart';
 
+import '../../Models/BuildingstypeModel/buildingtype_model.dart';
+import '../../Models/CertificateModel/certificate_model.dart';
+import '../../Models/buildingModel/building_model.dart';
+import '../../Models/propertymodel/property_model.dart';
 import '../auth/signing_screen/signing_screen.dart';
 
 enum BuildingStatus { all, completed, inCompleted, scheduled }
@@ -125,6 +129,11 @@ class BuildingsController extends BaseController {
         status: BuildingStatus.scheduled.toString(),
         check: false),
   ].obs;
+
+  var property = <Properties>[].obs;
+  var buildings = <Buildings>[].obs;
+  var certificates = <Certificates>[].obs;
+  var buildingTypes = <BuildingTypes>[].obs;
   var searchList = [].obs;
 
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -190,7 +199,11 @@ class BuildingsController extends BaseController {
       update();
     } else {
       for (int i = 0; i < dataList.length; i++) {
-        if (dataList[i].title.toString().toLowerCase().contains(str.toString().toLowerCase())) {
+        if (dataList[i]
+            .title
+            .toString()
+            .toLowerCase()
+            .contains(str.toString().toLowerCase())) {
           searchList.add(dataList[i]);
           update();
         }
@@ -213,7 +226,10 @@ class BuildingsController extends BaseController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
                   MyTextView(
                     Strings.inspectionIncomplete,
                     textStyleNew: MyTextStyle(
@@ -229,7 +245,8 @@ class BuildingsController extends BaseController {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
+                            text:
+                                'This inspection is still incomplete. Do you want to go back anyway?',
                             style: MyTextStyle(
                               textColor: appColors.lightText,
                               textSize: 16.px,
@@ -263,7 +280,8 @@ class BuildingsController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back();
@@ -275,7 +293,8 @@ class BuildingsController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back(closeOverlays: true);
@@ -309,37 +328,79 @@ class BuildingsController extends BaseController {
   }
 
   /// ---- Get Home APi ----------->>>
-// getHome({var lat, lng}) async {
-//   FormData formData = FormData.fromMap({
-//     'user_id': getStorageData.readObject(getStorageData.userId),
-//     'curLat': lat ?? userLocationLat!,
-//     'curLng': lng ?? userLocationLng!,
-//   });
-//   if (filterBool.value && categorySelect.value != -1) {
-//     formData.fields.add(MapEntry(
-//         "cat_ids", categoryList[categorySelect.value].categories!.id!));
-//   }
-//   final data = await APIFunction().apiCall(
-//     context: Get.context!,
-//     apiName: Constants.getHome,
-//     params: formData,
-//     token: getStorageData.readObject(getStorageData.token),
-//   );
-//
-//   HomeModel model = HomeModel.fromJson(data);
-//   if (model.responseCode == 1) {
-//     if (model.data!.isNotEmpty) {
-//       homeModel = model.data!;
-//
-//       update();
-//     } else {}
-//     markerClass(lat: lat, lng: lng);
-//
-//     // utils.showSnackBar(context: Get.context!, message: model.responseMsg!,isOk: true);
-//
-//     update();
-//   } else if (model.responseCode == 0) {
-//     utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-//   }
-// }
+  getpropertydata() async {
+    final data = await GetAPIFunction().apiCall(
+      context: Get.context!,
+      apiName: Constants.propertylist,
+      token: getStorageData.readObject(getStorageData.token),
+    );
+
+    PropertyModel model = PropertyModel.fromJson(data);
+    if (model.type == "SUCCESS") {
+      if (model.properties!.length > 0) {
+        property.value = model.properties!;
+        update();
+      } else {}
+      update();
+    } else if (model.type == "FAILED") {
+      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+    }
+  }
+
+  getbuildingdata() async {
+    final data = await GetAPIFunction().apiCall(
+      context: Get.context!,
+      apiName: Constants.buildingslist,
+      token: getStorageData.readObject(getStorageData.token),
+    );
+
+    BuildingModel model = BuildingModel.fromJson(data);
+    if (model.type == "SUCCESS") {
+      if (model.buildings!.length > 0) {
+        buildings.value = model.buildings!;
+        update();
+      } else {}
+      update();
+    } else if (model.type == "FAILED") {
+      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+    }
+  }
+
+  getCertificatesdata() async {
+    final data = await GetAPIFunction().apiCall(
+      context: Get.context!,
+      apiName: Constants.certificatesList,
+      token: getStorageData.readObject(getStorageData.token),
+    );
+
+    CertificateModel model = CertificateModel.fromJson(data);
+    if (model.type == "SUCCESS") {
+      if (model.certificates!.length > 0) {
+        certificates.value = model.certificates!;
+        update();
+      } else {}
+      update();
+    } else if (model.type == "FAILED") {
+      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+    }
+  }
+
+  getBuildingTypedata() async {
+    final data = await GetAPIFunction().apiCall(
+      context: Get.context!,
+      apiName: Constants.certificatesList,
+      token: getStorageData.readObject(getStorageData.token),
+    );
+
+    BuildingTypesModel model = BuildingTypesModel.fromJson(data);
+    if (model.type == "SUCCESS") {
+      if (model.type!.length > 0) {
+        buildingTypes.value = model.buildingTypes!;
+        update();
+      } else {}
+      update();
+    } else if (model.type == "FAILED") {
+      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+    }
+  }
 }

@@ -121,7 +121,6 @@ class SigningController extends BaseController {
   //       unitno: "1245",
   //       city: "Surat",
   //     );
-
   //     if (tokenAccount != null) {
   //       saveAccount(tokenAccount!);
   //     }
@@ -146,7 +145,6 @@ class SigningController extends BaseController {
   //   }
   // }
 //---------------->
-
   // _dialogException({required String title, required String message}) {
   //   Get.snackbar("", "",
   //       titleText: Text(title,

@@ -77,6 +77,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                         flex: 1,
                                         child: MyTextView(
                                           Strings.userName,
+                                          
                                           textStyleNew: MyTextStyle(
                                             textColor: controller.appColors.lightText,
                                             textWeight: FontWeight.w600,

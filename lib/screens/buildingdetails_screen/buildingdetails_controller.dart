@@ -8,6 +8,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
+import '../../Models/DeficiencyareasModel/deficiencyareas_model.dart';
 import '../buildings_screen/buildings_controller.dart';
 
 class BuildingDetailsController extends BaseController {
@@ -55,7 +56,9 @@ class BuildingDetailsController extends BaseController {
   final commentController = TextEditingController();
   final dateController = TextEditingController(text: "mm/dd/yyyy");
 
-  List itemCount = [RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")];
+  List itemCount = [
+    RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")
+  ];
 
   final date1Controller = TextEditingController();
 
@@ -66,7 +69,7 @@ class BuildingDetailsController extends BaseController {
 
   ScreenshotController tenantSignController = ScreenshotController();
   ScreenshotController ownerSignController = ScreenshotController();
-
+  var deficiencyArea = <DeficiencyAreas>[].obs;
   var dataList = [
     RxCommonModel(
       title: "D1. Cabinets are missing",
@@ -247,7 +250,10 @@ class BuildingDetailsController extends BaseController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
                   MyTextView(
                     Strings.inspectionIncomplete,
                     textStyleNew: MyTextStyle(
@@ -263,7 +269,8 @@ class BuildingDetailsController extends BaseController {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
+                            text:
+                                'This inspection is still incomplete. Do you want to go back anyway?',
                             style: MyTextStyle(
                               textColor: appColors.lightText,
                               textSize: 16.px,
@@ -297,7 +304,8 @@ class BuildingDetailsController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back();
@@ -309,7 +317,8 @@ class BuildingDetailsController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back(closeOverlays: true);
@@ -390,6 +399,25 @@ class BuildingDetailsController extends BaseController {
       update();
     }
   }
+
+  getDeficiency_areas() async {
+    final data = await GetAPIFunction().apiCall(
+      context: Get.context!,
+      apiName: Constants.deficienciesList,
+      token: getStorageData.readObject(getStorageData.token),
+    );
+
+    DeficiencyAreaModel model = DeficiencyAreaModel.fromJson(data);
+    if (model.type == "SUCCESS") {
+      if (model.type!.length > 0) {
+        deficiencyArea.value = model.deficiencyAreas!;
+        update();
+      } else {}
+      update();
+    } else if (model.type == "FAILED") {
+      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
+    }
+  }
 }
 
 class TrianglePainter extends CustomPainter {
@@ -397,7 +425,10 @@ class TrianglePainter extends CustomPainter {
   final PaintingStyle paintingStyle;
   final double strokeWidth;
 
-  TrianglePainter({this.strokeColor = Colors.black, this.strokeWidth = 3, this.paintingStyle = PaintingStyle.stroke});
+  TrianglePainter(
+      {this.strokeColor = Colors.black,
+      this.strokeWidth = 3,
+      this.paintingStyle = PaintingStyle.stroke});
 
   @override
   void paint(Canvas canvas, Size size) {

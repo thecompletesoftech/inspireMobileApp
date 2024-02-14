@@ -77,9 +77,16 @@ class Constants {
   static const String resendOTP = "user/resendOTP";
   static const String logOut = "user/logOut";
   static const String deleteAccount = "user/deleteAccount";
-
   static const String refreshToken = "user/refreshToken";
   static const String isRegister = "user/isRegister";
+  //new Api urls
+  static const String propertylist = "/inspection/api/properties";
+  static const String buildingslist = "/inspection/api/buildings";
+  static const String certificatesList = "/inspection/api/certificates";
+  static const String buildingtypesList = "/inspection/api/building_types";
+  static const String deficienciesList = "/inspection/api/deficiencies";
+
+  
 
   /// ----------- Socket ----------->>
   // static IO.Socket? socket;
