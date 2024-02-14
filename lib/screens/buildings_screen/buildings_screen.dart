@@ -9,7 +9,6 @@ import 'buildings_controller.dart';
 
 class BuildingsScreen extends GetView<BuildingsController> {
   BuildingsScreen({Key? key}) : super(key: key);
-
   static const routes = "/BuildingsScreen";
 
   @override
