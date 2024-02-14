@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_cabinets_screen/building_cabinets_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/building_standards_controller.dart';
@@ -10,10 +11,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
 
   @override
   Widget build(BuildContext context) {
-    var data = Get.arguments;
     return GetBuilder<BuildingStandardsController>(
       init: BuildingStandardsController(),
-      assignId: true,
+      autoRemove: false,
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -52,7 +52,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 Column(
                   children: [
                     MyTextView(
-                      '${Strings.propertyNames}${data['buildingName'] ?? ""}',
+                      '${Strings.propertyNames}${controller.buildingName}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -96,8 +96,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           flex: 6,
                           child: CommonTextField(
                             isLable: true,
-                            readOnly: true,
-                            onTap: () {},
+                            onChange: (value) =>
+                                controller.searchStandards(searchText: value),
                             controller: controller.searchStandardsController,
                             color: controller.appColors.transparent,
                             padding: EdgeInsets.zero,
@@ -275,7 +275,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                               BuildingCabinetsScreen.routes,
                                               arguments: {
                                                 "buildingName":
-                                                    "${data['buildingName']}",
+                                                    controller.buildingName,
                                                 "buildingDataList":
                                                     buildingDataList
                                               });

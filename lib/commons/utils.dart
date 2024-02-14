@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
@@ -1046,12 +1045,10 @@ void printWarning(String text) {
 
 /// <<< Action Massage Blue Color --------- >>>
 void printAction(String text) {
-  if (!kIsWeb) {
-    if (Platform.isAndroid) {
-      debugPrint('\x1B[94m$text\x1B[0m');
-    } else {
-      debugPrint(text);
-    }
+  if (Platform.isAndroid) {
+    debugPrint('\x1B[94m$text\x1B[0m');
+  } else {
+    debugPrint(text);
   }
 }
 

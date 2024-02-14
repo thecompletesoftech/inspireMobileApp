@@ -12,7 +12,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   Widget build(BuildContext context) {
     return GetBuilder<BuildingInspectionController>(
       init: BuildingInspectionController(),
-      assignId: true,
+      autoRemove: false,
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -758,13 +758,11 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       : controller.appColors.black
                           .withOpacity(0.11999999731779099),
                   onTap: () {
-                    if (controller.getStartInspection()) {
-                      Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                        "buildingName": controller.buildingNameController.text,
-                        "buildingTypeList":
-                            controller.buildingTypeController.text
-                      });
-                    }
+                    // if (controller.getStartInspection()) {
+                    Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                      "buildingName": controller.buildingNameController.text,
+                    });
+                    // }
                   },
                 ).paddingSymmetric(vertical: 24.px),
               ],

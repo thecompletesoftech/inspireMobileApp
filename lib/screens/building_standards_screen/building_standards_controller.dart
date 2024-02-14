@@ -6,6 +6,7 @@ class BuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
   BuildingStandardsStatus status = BuildingStandardsStatus.all;
   bool isCollapseStandards = false;
+  String buildingName = '';
 
   RxList<BuildingModel> buildingDataList = [
     BuildingModel('C', [
@@ -65,7 +66,7 @@ class BuildingStandardsController extends BaseController {
         ImagePath.electricalService,
         'Electrical - service panel',
         'An enclosure, cabinet, box, or panelboard containing overcurrent protection devices for the control of light, heat, appliances and power circuits.',
-        BuildingStandardsStatus.all.toString(),
+        BuildingStandardsStatus.failed.toString(),
       ),
     ]),
     BuildingModel('F', [
@@ -82,6 +83,10 @@ class BuildingStandardsController extends BaseController {
 
   void onInit() {
     super.onInit();
+    if (Get.arguments != null) {
+      buildingName = Get.arguments['buildingName'];
+    }
+    update();
   }
 
   searchTypeItem() {
@@ -95,16 +100,17 @@ class BuildingStandardsController extends BaseController {
             j++) {
           if (buildingDataList[i].buildingDataModel![j].status.toString() ==
               status.toString()) {
-            if (searchList.contains(buildingDataList[i])) {
-              int index = searchList.indexOf(buildingDataList[i]);
-              searchList[index]
+            int itemIndex = searchList
+                .indexWhere((e) => e.type == buildingDataList[i].type);
+
+            if (itemIndex != -1) {
+              searchList[itemIndex]
                   .buildingDataModel
                   ?.add(buildingDataList[i].buildingDataModel![j]);
             } else {
-              // if(searchList.c){}
               searchList.add(BuildingModel(
                   buildingDataList[i].type,
-                  isExpand: true,
+                  isExpand: false,
                   [buildingDataList[i].buildingDataModel![j]]));
             }
           }
@@ -112,6 +118,31 @@ class BuildingStandardsController extends BaseController {
       }
     }
     update();
+  }
+
+  searchStandards({required String searchText}) {
+    searchList.clear();
+    if (utils.isValidationEmpty(searchText)) {
+      if (status.toString() == BuildingStandardsStatus.all.toString()) {
+        searchList.addAll(buildingDataList);
+      } else {
+        for (int i = 0; i < buildingDataList.length; i++) {
+          for (int j = 0;
+              j < buildingDataList[i].buildingDataModel!.length;
+              j++) {
+            if (buildingDataList[i]
+                .buildingDataModel![j]
+                .title
+                .toString()
+                .toLowerCase()
+                .contains(searchText.toString().toLowerCase())) {
+              searchList.add(buildingDataList[i]);
+              update();
+            }
+          }
+        }
+      }
+    }
   }
 
   isExpanded() {
