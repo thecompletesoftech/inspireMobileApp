@@ -196,7 +196,6 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                   (Set<BuildingStandardsStatus> newSelection) {
                                 controller.status = newSelection.first;
                                 controller.searchTypeItem();
-
                                 controller.update();
                               },
                             ),
@@ -204,97 +203,150 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                         ),
                       ],
                     ).paddingSymmetric(vertical: 32.px),
-                    Row(
-                      children: [
-                        MyTextView(
-                          data['buildingTypeList'] ?? "",
-                          textStyleNew: MyTextStyle(
-                            textColor: controller.appColors.black,
-                            textWeight: FontWeight.w600,
-                            textFamily: fontFamilyBold,
-                            textSize: 32.px,
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 2.px,
-                            color: AppColors().divider,
-                          ).paddingSymmetric(horizontal: 16.px),
-                        ),
-                        GestureDetector(
-                          onTap: controller.isTypeExpanded,
-                          child: SizedBox(
-                            height: 24.px,
-                            width: 24.px,
-                            child: controller.isType
-                                ? SvgPicture.string(
-                                    icDownArrow,
-                                    color: controller.appColors.appColor,
-                                  )
-                                : SvgPicture.string(
-                                    icUpArrow,
-                                    color: controller.appColors.appColor,
-                                  ),
-                          ),
-                        )
-                      ],
-                    )
                   ],
                 ).paddingSymmetric(horizontal: 32.px),
                 Expanded(
-                    child: ListView.builder(
-                  itemCount: controller.searchList.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(BuildingCabinetsScreen.routes, arguments: {
-                          "buildingName": "${data['buildingName']}",
-                          "buildingDataModel": controller.searchList[index]
-                        });
-                      },
-                      child: ShadowContainer(
-                          padding: EdgeInsets.zero,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                controller.searchList[index].image ?? "",
-                                fit: BoxFit.fitHeight,
-                              ),
-                              Expanded(
-                                flex: 5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: controller.searchList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Row(
                                   children: [
                                     MyTextView(
-                                      controller.searchList[index].title,
-                                      isMaxLineWrap: true,
+                                      controller.searchList[index].type ?? "",
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
+                                        textWeight: FontWeight.w600,
                                         textFamily: fontFamilyBold,
-                                        textSize: 20.px,
+                                        textSize: 32.px,
                                       ),
                                     ),
-                                    MyTextView(
-                                      controller.searchList[index].description,
-                                      isMaxLineWrap: true,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 16.px,
+                                    Expanded(
+                                      child: Container(
+                                        height: 2.px,
+                                        color: AppColors().divider,
+                                      ).paddingSymmetric(horizontal: 16.px),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        controller.isItemExpanded(index);
+                                      },
+                                      child: SizedBox(
+                                        height: 24.px,
+                                        width: 24.px,
+                                        child: (controller.searchList[index]
+                                                    .isExpand ??
+                                                false)
+                                            ? SvgPicture.string(
+                                                icDownArrow,
+                                                color: controller
+                                                    .appColors.appColor,
+                                              )
+                                            : SvgPicture.string(
+                                                icUpArrow,
+                                                color: controller
+                                                    .appColors.appColor,
+                                              ).paddingAll(3.px),
                                       ),
-                                    ).paddingOnly(top: 8.px),
+                                    )
                                   ],
-                                ).paddingSymmetric(
-                                    horizontal: 24.px, vertical: 16.px),
-                              )
-                            ],
-                          )).marginSymmetric(vertical: 12.px),
-                    );
-                  },
-                ).paddingSymmetric(horizontal: 32.px))
+                                ),
+                                if (controller.searchList[index].isExpand ??
+                                    false)
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.searchList[index]
+                                        .buildingDataModel?.length,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, i) {
+                                      var buildingDataList = controller
+                                          .searchList[index]
+                                          .buildingDataModel?[i];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Get.toNamed(
+                                              BuildingCabinetsScreen.routes,
+                                              arguments: {
+                                                "buildingName":
+                                                    "${data['buildingName']}",
+                                                "buildingDataList":
+                                                    buildingDataList
+                                              });
+                                        },
+                                        child: ShadowContainer(
+                                            padding: EdgeInsets.zero,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  buildingDataList?.image ?? "",
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                                Expanded(
+                                                  flex: 5,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      MyTextView(
+                                                        buildingDataList
+                                                                ?.title ??
+                                                            "",
+                                                        isMaxLineWrap: true,
+                                                        textStyleNew:
+                                                            MyTextStyle(
+                                                          textColor: controller
+                                                              .appColors.black,
+                                                          textWeight:
+                                                              FontWeight.w400,
+                                                          textFamily:
+                                                              fontFamilyBold,
+                                                          textSize: 20.px,
+                                                        ),
+                                                      ),
+                                                      MyTextView(
+                                                        buildingDataList
+                                                                ?.description ??
+                                                            "",
+                                                        isMaxLineWrap: true,
+                                                        textStyleNew:
+                                                            MyTextStyle(
+                                                          textColor: controller
+                                                              .appColors.black,
+                                                          textWeight:
+                                                              FontWeight.w400,
+                                                          textFamily:
+                                                              fontFamilyBold,
+                                                          textSize: 16.px,
+                                                        ),
+                                                      ).paddingOnly(top: 8.px),
+                                                    ],
+                                                  ).paddingSymmetric(
+                                                      horizontal: 24.px,
+                                                      vertical: 16.px),
+                                                )
+                                              ],
+                                            )).marginSymmetric(vertical: 12.px),
+                                      );
+                                    },
+                                  )
+                              ],
+                            );
+                          },
+                        ).paddingSymmetric(horizontal: 32.px),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

@@ -159,4 +159,5 @@ class Strings {
   static String aDedicated = "A dedicated space for food, goods, or other items.";
   static String none = "None";
   static String laundry = "Kitchens, bathroom, laundry";
+  static String storageComponent = "D2 - INSIDE. Storage component is damaged, inoperable, or missing.";
 }
