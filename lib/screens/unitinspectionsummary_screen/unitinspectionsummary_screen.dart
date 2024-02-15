@@ -1,6 +1,8 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/unitinspection_controller.dart';
 import '../../commons/all.dart';
+import '../building_inspection_screen/building_inspection_screen.dart';
 import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
@@ -24,20 +26,20 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                   // }
                 },
               ),
-              SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  // mainAxisSize: MainAxisSize.min,
+              Expanded(
+                child: ListView(
                   children: [
-                    MyTextView(
-                      '${Strings.propertyNames}${"Building 13" ?? ""}-${"Unit 345" ?? ""}',
-                      textStyleNew: MyTextStyle(
-                        textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w600,
-                        textFamily: fontFamilyBold,
-                        textSize: 20.px,
-                      ),
-                    ).paddingOnly(top: 32.px, bottom: 48.px),
+                    Center(
+                      child: MyTextView(
+                        '${Strings.propertyNames}${"Building 13" ?? ""}-${"Unit 345" ?? ""}',
+                        textStyleNew: MyTextStyle(
+                          textColor: controller.appColors.appColor,
+                          textWeight: FontWeight.w600,
+                          textFamily: fontFamilyBold,
+                          textSize: 20.px,
+                        ),
+                      ).paddingOnly(top: 32.px, bottom: 48.px),
+                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: MyTextView(
@@ -56,23 +58,60 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                         Expanded(
                           child: CommonTextField(
                             isLable: true,
-                            readOnly: true,
-                            controller: controller.propertyAddressController,
+                            readOnly: false,
+                            controller: controller.unithousekeeping,
                             color: controller.appColors.transparent,
                             suffixIcon: PopupMenuButton(
+                              offset: Offset(-250, 10),
                               key: controller.popupKey1,
                               position: PopupMenuPosition.under,
                               tooltip: Strings.unitHousekeeping,
                               onSelected: (value) {
-                                // controller.actionPropertyNameSelected(value);
+                                print(value.toString());
+                                controller.actionunitHousekeeping(value);
                                 controller.update();
                               },
                               itemBuilder: (context) => List.generate(
-                                  controller.propertyList.length,
+                                  controller.unithousekeepingList.length,
                                   (index) => PopupMenuItem(
                                         value: index,
-                                        child: Text(
-                                            controller.propertyList[index]),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              controller
+                                                  .unithousekeepingList[index]
+                                                      ['title']
+                                                  .toString(),
+                                              style: MyTextStyle(
+                                                textColor:
+                                                    controller.appColors.black,
+                                                textWeight: FontWeight.w400,
+                                                textFamily: fontFamilyBold,
+                                                textSize: 16.px,
+                                              ),
+                                            ),
+                                            Text(
+                                              controller
+                                                  .unithousekeepingList[index]
+                                                      ['value']
+                                                  .toString(),
+                                              style: MyTextStyle(
+                                                textColor: controller
+                                                    .appColors.textcolor,
+                                                textWeight: FontWeight.w400,
+                                                textFamily: fontFamilyBold,
+                                                textSize: 14.px,
+                                              ),
+                                            ),
+                                            if (index !=
+                                                controller.unithousekeepingList
+                                                        .length -
+                                                    1)
+                                              Divider()
+                                          ],
+                                        ),
                                       )),
                               child: SvgPicture.string(
                                 icDownArrow,
@@ -89,23 +128,61 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                         Expanded(
                           child: CommonTextField(
                             isLable: true,
-                            readOnly: true,
-                            controller: controller.propertyAddressController,
+                            readOnly: false,
+                            controller: controller.generalphysicalcondition,
                             color: controller.appColors.transparent,
                             suffixIcon: PopupMenuButton(
-                              key: controller.popupKey1,
+                              offset: Offset(-55, 10),
+                              key: controller.popupKey2,
                               position: PopupMenuPosition.under,
                               tooltip: Strings.generalphysicalcondition,
                               onSelected: (value) {
-                                // controller.actionPropertyNameSelected(value);
+                                controller.actiongeneralphysical(value);
                                 controller.update();
                               },
                               itemBuilder: (context) => List.generate(
-                                  controller.propertyList.length,
+                                  controller
+                                      .generalphysicalconditionList.length,
                                   (index) => PopupMenuItem(
                                         value: index,
-                                        child: Text(
-                                            controller.propertyList[index]),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              controller
+                                                  .generalphysicalconditionList[
+                                                      index]['title']
+                                                  .toString(),
+                                              style: MyTextStyle(
+                                                textColor:
+                                                    controller.appColors.black,
+                                                textWeight: FontWeight.w400,
+                                                textFamily: fontFamilyBold,
+                                                textSize: 16.px,
+                                              ),
+                                            ),
+                                            Text(
+                                              controller
+                                                  .generalphysicalconditionList[
+                                                      index]['value']
+                                                  .toString(),
+                                              style: MyTextStyle(
+                                                textColor: controller
+                                                    .appColors.textcolor,
+                                                textWeight: FontWeight.w400,
+                                                textFamily: fontFamilyBold,
+                                                textSize: 14.px,
+                                              ),
+                                            ),
+                                            if (index !=
+                                                controller
+                                                        .generalphysicalconditionList
+                                                        .length -
+                                                    1)
+                                              Divider()
+                                          ],
+                                        ),
                                       )),
                               child: SvgPicture.string(
                                 icDownArrow,
@@ -118,63 +195,15 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             labelText: Strings.generalphysicalcondition,
                           ),
                         ),
-
-                        // Expanded(
-                        //   child: CommonTextField(
-                        //     readOnly: true,
-                        //     isLable: true,
-                        //     controller: controller.cityController,
-                        //     color: controller.appColors.transparent,
-                        //     suffixIcon: controller
-                        //             .propertyNameController.text.isNotEmpty
-                        //         ? PopupMenuButton(
-                        //             key: controller.popupKey2,
-                        //             position: PopupMenuPosition.under,
-                        //             tooltip: Strings.city,
-                        //             onSelected: controller
-                        //                     .propertyNameController.text.isNotEmpty
-                        //                 ? (value) {
-                        //                     controller.actionCitySelected(value);
-                        //                     controller.update();
-                        //                   }
-                        //                 : null,
-                        //             itemBuilder: (context) => List.generate(
-                        //                 controller.cityList.length,
-                        //                 (index) => PopupMenuItem(
-                        //                       value: index,
-                        //                       child: Text(controller.cityList[index]),
-                        //                     )),
-                        //             child: SvgPicture.string(
-                        //               icDownArrow,
-                        //               color: controller.appColors.textBlack1,
-                        //             ).paddingAll(10.px),
-                        //           )
-                        //         : SvgPicture.string(
-                        //             icDownArrow,
-                        //             color:
-                        //                 controller.appColors.black.withOpacity(.12),
-                        //           ).paddingAll(10.px),
-                        //     padding: EdgeInsets.zero,
-                        //     contentPadding: EdgeInsets.only(left: 15.px),
-                        //     shadowColor: controller.appColors.transparent,
-                        //     isLableColor:
-                        //         controller.propertyNameController.text.isNotEmpty
-                        //             ? controller.appColors.textBlack1
-                        //             : controller.appColors.black.withOpacity(.12),
-                        //     borderColor:
-                        //         controller.propertyNameController.text.isNotEmpty
-                        //             ? controller.appColors.textBlack1
-                        //             : controller.appColors.black.withOpacity(.12),
-                        //     labelText: Strings.city,
-                        //   ),
-                        // ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          // onTap: controller.isExpanded,
+                          onTap: (() {
+                            Get.toNamed(UnitInspection.routes);
+                          }),
                           child: Container(
                             alignment: Alignment.center,
                             height: 44.px,
@@ -230,15 +259,22 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,
-                          textColor: controller.getUnitInspectionSummary()
+                          textColor: controller.generalphysicalcondition.text
+                                      .isNotEmpty &&
+                                  controller.unithousekeeping.text.isNotEmpty
                               ? controller.appColors.black
                               : controller.appColors.border1,
-                          color: controller.getUnitInspectionSummary()
+                          color: controller
+                                  .generalphysicalcondition.text.isNotEmpty
                               ? controller.appColors.textPink
                               : controller.appColors.black
                                   .withOpacity(0.11999999731779099),
                           onTap: () {
-                            if (controller.getUnitInspectionSummary()) {}
+                            if (controller
+                                    .generalphysicalcondition.text.isNotEmpty &&
+                                controller.unithousekeeping.text.isNotEmpty) {
+                              Get.toNamed(BuildingInspectionScreen.routes);
+                            }
                           },
                         )
                       ],
@@ -303,7 +339,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           ],
                         ),
                       ],
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
+                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                     Row(
                       children: [
                         MyTextView(
@@ -343,6 +379,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     ShadowContainer(
                       radius: 8.px,
                       child: SingleChildScrollView(
+                        physics: NeverScrollableScrollPhysics(),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -489,6 +526,9 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                       onChanged: (value) {
                                         controller.switchbtn.value =
                                             !controller.switchbtn.value;
+                                        print(controller.switchbtn.value
+                                            .toString());
+                                        controller.update();
                                       },
                                     ),
                                     MyTextView(
@@ -504,15 +544,18 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                     ).paddingOnly(left: 10.px),
                                   ],
                                 ),
-                                MyTextView(
-                                  Strings.unitcannitbeinspected,
-                                  textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.border1,
-                                    textWeight: FontWeight.w500,
-                                    textFamily: fontFamilyBold,
-                                    textSize: 16.px,
-                                  ),
-                                ).paddingOnly(right: 10.px),
+                                GestureDetector(
+                                  onTap: (() {}),
+                                  child: MyTextView(
+                                    Strings.unitcannitbeinspected,
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.border1,
+                                      textWeight: FontWeight.w500,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 16.px,
+                                    ),
+                                  ).paddingOnly(right: 10.px),
+                                ),
                               ],
                             ),
                           ],
@@ -523,6 +566,98 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             left: 24.px),
                       ),
                     ).paddingOnly(left: 32.px, right: 32.px),
+                    Row(
+                      children: [
+                        MyTextView(
+                          Strings.deficiencies,
+                          textStyleNew: MyTextStyle(
+                            textColor: controller.appColors.black,
+                            textWeight: FontWeight.w400,
+                            textFamily: fontFamilyBold,
+                            textSize: 24.px,
+                          ),
+                        ).paddingOnly(right: 10.px),
+                        Expanded(
+                          child: Container(
+                            height: 2.px,
+                            color: AppColors().divider,
+                          ),
+                        ),
+                      ],
+                    ).paddingOnly(left: 32.px, right: 32.px, top: 30.px),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          // onTap: controller.isExpanded,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 44.px,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100.px),
+                                border: Border.all(
+                                    color: controller.appColors.appColor)),
+                            child: MyTextView(
+                              Strings.saveandunit,
+                              textStyleNew: MyTextStyle(
+                                textColor: controller.appColors.appColor,
+                                textWeight: FontWeight.w500,
+                                textFamily: fontFamilyBold,
+                                textSize: 16.px,
+                              ),
+                            )
+                                .paddingOnly(left: 8.px)
+                                .paddingSymmetric(horizontal: 16.px),
+                          ),
+                        ).paddingOnly(right: 16.px),
+                        // CommonButton(
+                        //   title: Strings.saveandunit,
+                        //   radius: 100.px,
+                        //   width: 171.px,
+                        //   height: 44.px,
+                        //   padding: EdgeInsets.symmetric(
+                        //     vertical: 15.px,
+                        //     horizontal: 24.px,
+                        //   ),
+                        //   textSize: 16.px,
+                        //   textWeight: FontWeight.w500,
+                        //   textFamily: fontFamilyRegular,
+                        //   textColor: controller.getUnitInspectionSummary()
+                        //       ? controller.appColors.black
+                        //       : controller.appColors.border1,
+                        //   color: controller.getUnitInspectionSummary()
+                        //       ? controller.appColors.textPink
+                        //       : controller.appColors.black
+                        //           .withOpacity(0.11999999731779099),
+                        //   onTap: () {
+                        //     if (controller.getUnitInspectionSummary()) {}
+                        //   },
+                        // ).paddingOnly(right: 10.px),
+                        CommonButton(
+                          title: Strings.CompleteInspection,
+                          radius: 100.px,
+                          width: 198.px,
+                          height: 44.px,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15.px,
+                            horizontal: 24.px,
+                          ),
+                          textSize: 16.px,
+                          textWeight: FontWeight.w500,
+                          textFamily: fontFamilyRegular,
+                          textColor: controller.getUnitInspectionSummary()
+                              ? controller.appColors.black
+                              : controller.appColors.border1,
+                          color: controller.getUnitInspectionSummary()
+                              ? controller.appColors.textPink
+                              : controller.appColors.black
+                                  .withOpacity(0.11999999731779099),
+                          onTap: () {
+                            if (controller.getUnitInspectionSummary()) {}
+                          },
+                        )
+                      ],
+                    ).paddingOnly(top: 30.px),
                   ],
                 ),
               ),

@@ -22,7 +22,6 @@ class UnitInspection extends GetView<UnitController> {
                 radius: 0.px,
                 onClickBack: () {
                   Get.back();
-                  // }
                 },
               ),
               GestureDetector(
@@ -74,7 +73,7 @@ class UnitInspection extends GetView<UnitController> {
                               readOnly: false,
                               controller: controller.unitnumberoRname,
                               onChange: ((value) {
-                                controller.getunitinspection();
+                                controller.update();
                               }),
                               color: controller.appColors.transparent,
                               prefixIcon: SvgPicture.string(
@@ -93,7 +92,7 @@ class UnitInspection extends GetView<UnitController> {
                               isLable: true,
                               readOnly: false,
                               onChange: ((value) {
-                                controller.getunitinspection();
+                                controller.update();
                               }),
                               controller: controller.unitAddress,
                               color: controller.appColors.transparent,
@@ -114,7 +113,7 @@ class UnitInspection extends GetView<UnitController> {
                           Expanded(
                             child: CommonTextField(
                               isLable: true,
-                              readOnly: true,
+                              readOnly: false,
                               controller: controller.bedrooms,
                               color: controller.appColors.transparent,
                               prefixIcon: SvgPicture.string(
@@ -131,7 +130,7 @@ class UnitInspection extends GetView<UnitController> {
                           Expanded(
                             child: CommonTextField(
                               isLable: true,
-                              readOnly: true,
+                              readOnly: false,
                               controller: controller.bathrooms,
                               color: controller.appColors.transparent,
                               prefixIcon: SvgPicture.string(
@@ -180,6 +179,7 @@ class UnitInspection extends GetView<UnitController> {
                                 onChanged: (value) {
                                   controller.switchbtn.value =
                                       !controller.switchbtn.value;
+                                  controller.update();
                                 },
                               ),
                               MyTextView(
@@ -195,15 +195,22 @@ class UnitInspection extends GetView<UnitController> {
                               ).paddingOnly(left: 10.px),
                             ],
                           ),
-                          MyTextView(
-                            Strings.unitcannitbeinspected,
-                            textStyleNew: MyTextStyle(
-                              textColor: controller.appColors.border1,
-                              textWeight: FontWeight.w500,
-                              textFamily: fontFamilyBold,
-                              textSize: 16.px,
-                            ),
-                          ).paddingOnly(right: 10.px),
+                          GestureDetector(
+                            onTap: (() {
+                              controller.unitCannotInspected(context);
+                            }),
+                            child: MyTextView(
+                              Strings.unitcannitbeinspected,
+                              textStyleNew: MyTextStyle(
+                                textColor: controller.getunitinspection()
+                                    ? controller.appColors.appColor
+                                    : controller.appColors.border1,
+                                textWeight: FontWeight.w500,
+                                textFamily: fontFamilyBold,
+                                textSize: 16.px,
+                              ),
+                            ).paddingOnly(right: 10.px),
+                          ),
                         ],
                       ),
                     ],

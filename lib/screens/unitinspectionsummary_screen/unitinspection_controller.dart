@@ -1,3 +1,5 @@
+import 'package:flutter_svg/svg.dart';
+
 import '../../commons/all.dart';
 
 class UnitInspectionsummaryController extends BaseController {
@@ -6,14 +8,34 @@ class UnitInspectionsummaryController extends BaseController {
   TextEditingController bathrooms = TextEditingController();
   TextEditingController bedrooms = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  TextEditingController propertyAddressController = TextEditingController();
+  TextEditingController unithousekeeping = TextEditingController();
+  TextEditingController generalphysicalcondition = TextEditingController();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
-  List<String> propertyList = [];
+  final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
+  List unithousekeepingList = [];
+  List generalphysicalconditionList = [];
   List<String> cityList = [];
   var switchbtn = false.obs;
   @override
   void onInit() {
-    propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
+    unithousekeepingList = [
+      {
+        "title": 'Poor',
+        "value":
+            "Damages to walls, hardware, doors, flooring, appliances beyond normal wear and tear."
+      },
+      {"title": 'Standards', "value": "No damage beyond normal wear and tear."},
+      {"title": 'clean', "value": "No or minimal defect."}
+    ];
+    generalphysicalconditionList = [
+      {
+        "title": 'Poor',
+        "value":
+            "Damages to walls, hardware, doors, flooring, appliances beyond normal wear and tear."
+      },
+      {"title": 'Standards', "value": "No damage beyond normal wear and tear."},
+      {"title": 'clean', "value": "No or minimal defect."}
+    ];
     super.onInit();
   }
 
@@ -35,6 +57,15 @@ class UnitInspectionsummaryController extends BaseController {
     }
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+  }
+
+  void actionunitHousekeeping(value) {
+    unithousekeeping.text = unithousekeepingList[value]['title'];
+  }
+
+  void actiongeneralphysical(value) {
+    generalphysicalcondition.text =
+        generalphysicalconditionList[value]['title'];
   }
 
   getUnitInspectionSummary() {

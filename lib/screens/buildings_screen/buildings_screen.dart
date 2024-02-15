@@ -359,8 +359,6 @@ class BuildingsScreen extends GetView<BuildingsController> {
                         ),
                       ),
                     ),
-                    
-                    
                     controller.visibleBtn
                         ? CommonButton(
                             title: Strings.HSAcknowledgment,

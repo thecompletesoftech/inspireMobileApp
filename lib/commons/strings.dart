@@ -117,7 +117,7 @@ class Strings {
   static const String signatures = "Signatures";
   static const String editInspection = "Edit Inspection";
   static const String sectionCompleted = "Section Completed";
-  static const String tenantSignatures = "Tenant Signature";
+  static const String tenantSignatures = "Tenant Signature";  
   static const String ownerSignatures = "Owner Signature";
   static const String unit = "Unit";
   static const String inside = "Inside";
@@ -151,6 +151,8 @@ class Strings {
   static const String unitHousekeeping = "Unit Housekeeping*";
   static const String generalphysicalcondition = "General Physical Condition*";
   static const String CompleteInspection = "Complete Inspection";
+  static const String Nokeyavailble = "No keys available";
+
 
   ///************** error message string **************///
 
