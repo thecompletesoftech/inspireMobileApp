@@ -90,70 +90,74 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                 child: Column(
                               children: [
                                 ShadowContainer(
+                                    radius: 8.px,
                                     padding: EdgeInsets.zero,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SvgPicture.string(icTimeColor),
-                                            MyTextView(
-                                              Strings.correctionTimeframe,
-                                              isMaxLineWrap: true,
-                                              textStyleNew: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.black,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
+                                    child: Container(
+                                      color: controller.appColors.white,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.string(icTimeColor),
+                                              MyTextView(
+                                                Strings.correctionTimeframe,
+                                                isMaxLineWrap: true,
+                                                textStyleNew: MyTextStyle(
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                  textWeight: FontWeight.w400,
+                                                  textFamily: fontFamilyBold,
+                                                  textSize: 16.px,
+                                                ),
                                               ),
-                                            ),
-                                            MyTextView(
-                                              Strings.days,
-                                              isMaxLineWrap: true,
-                                              textStyleNew: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.appColor,
-                                                textWeight: FontWeight.w600,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
+                                              MyTextView(
+                                                Strings.days,
+                                                isMaxLineWrap: true,
+                                                textStyleNew: MyTextStyle(
+                                                  textColor: controller
+                                                      .appColors.appColor,
+                                                  textWeight: FontWeight.w600,
+                                                  textFamily: fontFamilyBold,
+                                                  textSize: 16.px,
+                                                ),
+                                              ).paddingOnly(left: 30.px),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.string(icLike),
+                                              MyTextView(
+                                                Strings.determination,
+                                                isMaxLineWrap: true,
+                                                textStyleNew: MyTextStyle(
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                  textWeight: FontWeight.w400,
+                                                  textFamily: fontFamilyBold,
+                                                  textSize: 16.px,
+                                                ),
                                               ),
-                                            ).paddingOnly(left: 30.px),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SvgPicture.string(icLike),
-                                            MyTextView(
-                                              Strings.determination,
-                                              isMaxLineWrap: true,
-                                              textStyleNew: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.black,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
-                                              ),
-                                            ),
-                                            MyTextView(
-                                              Strings.moderate,
-                                              isMaxLineWrap: true,
-                                              textStyleNew: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.appColor,
-                                                textWeight: FontWeight.w600,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
-                                              ),
-                                            ).paddingOnly(left: 30.px),
-                                          ],
-                                        ).paddingOnly(top: 16.px),
-                                      ],
-                                    ).paddingSymmetric(
-                                        vertical: 16.px, horizontal: 20.px))
+                                              MyTextView(
+                                                Strings.moderate,
+                                                isMaxLineWrap: true,
+                                                textStyleNew: MyTextStyle(
+                                                  textColor: controller
+                                                      .appColors.appColor,
+                                                  textWeight: FontWeight.w600,
+                                                  textFamily: fontFamilyBold,
+                                                  textSize: 16.px,
+                                                ),
+                                              ).paddingOnly(left: 30.px),
+                                            ],
+                                          ).paddingOnly(top: 16.px),
+                                        ],
+                                      ).paddingSymmetric(
+                                          vertical: 16.px, horizontal: 20.px),
+                                    ))
                               ],
                             )),
                           ],
@@ -179,7 +183,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   Strings.deficiencyCriteriaDes,
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.black,
+                                    textColor: controller.appColors.textBlack2,
                                     textWeight: FontWeight.w400,
                                     textFamily: fontFamilyBold,
                                     textSize: 16.px,
@@ -193,16 +197,19 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 ShadowContainer(
+                                  radius: 8.px,
                                   padding: EdgeInsets.zero,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       RadioListTile(
                                         title: MyTextView(
                                           "Deficiency Present",
                                           textStyleNew: MyTextStyle(
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textSize: 16.px,
                                             textFamily: fontFamilyRegular,
                                             textWeight: FontWeight.w400,
@@ -240,7 +247,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         title: MyTextView(
                                           "Inconclusive",
                                           textStyleNew: MyTextStyle(
-                                            textColor: controller.appColors.black,
+                                            textColor:
+                                                controller.appColors.black,
                                             textSize: 16.px,
                                             textFamily: fontFamilyRegular,
                                             textWeight: FontWeight.w400,
@@ -277,11 +285,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     CommonIconButton(
-                                      textColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.sendImagesList.isNotEmpty
-                                          ? controller.appColors.delete
-                                          : controller.appColors.border1,
+                                      textColor:
+                                          controller.selectedItem != "null" &&
+                                                  controller
+                                                      .sendImagesList.isNotEmpty
+                                              ? controller.appColors.delete
+                                              : controller.appColors.border1,
                                       title: Strings.delete,
                                       onTap: () {
                                         if (controller.selectedItem != "null" &&
@@ -304,11 +313,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           : Utils.isTabletScreen(context)
                                               ? 40.px
                                               : 24.px,
-                                      iconColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.sendImagesList.isNotEmpty
-                                          ? controller.appColors.delete
-                                          : controller.appColors.border1,
+                                      iconColor:
+                                          controller.selectedItem != "null" &&
+                                                  controller
+                                                      .sendImagesList.isNotEmpty
+                                              ? controller.appColors.delete
+                                              : controller.appColors.border1,
                                       icon: icDeleteGrey,
                                     ),
                                   ],
@@ -336,7 +346,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         textColor: controller.selectedItem ==
                                                 "null"
                                             ? controller.appColors.black
-                                                .withOpacity(0.07999999821186066)
+                                                .withOpacity(
+                                                    0.07999999821186066)
                                             : AppColors().black,
                                         textSize: 24.px,
                                         textWeight: FontWeight.w400),
@@ -359,9 +370,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           itemCount:
                                               controller.sendImagesList.length,
                                           shrinkWrap: true,
-                                          physics: const ClampingScrollPhysics(),
-                                          itemBuilder:
-                                              (BuildContext context, int index) {
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
                                             return Row(
                                               children: [
                                                 Stack(children: [
@@ -405,17 +417,20 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                           } else {
                                                             controller
                                                                 .sendImagesList
-                                                                .removeAt(index);
+                                                                .removeAt(
+                                                                    index);
                                                           }
                                                           controller.update();
                                                         },
-                                                        child: SvgPicture.string(
+                                                        child:
+                                                            SvgPicture.string(
                                                           icDelete,
                                                           color: controller
                                                                       .selectedItem ==
                                                                   "null"
                                                               ? controller
-                                                                  .appColors.black
+                                                                  .appColors
+                                                                  .black
                                                                   .withOpacity(
                                                                       0.07999999821186066)
                                                               : null,
@@ -464,7 +479,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                   ),
                                                             ),
                                                           ),
-                                                          SizedBox(height: 10.px),
+                                                          SizedBox(
+                                                              height: 10.px),
                                                           MyTextView(
                                                             "Add picture",
                                                             textStyleNew:
@@ -482,7 +498,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                       .appColor,
                                                               textSize: 14.px,
                                                               textWeight:
-                                                                  FontWeight.w500,
+                                                                  FontWeight
+                                                                      .w500,
                                                               textFamily:
                                                                   fontFamilyRegular,
                                                             ),
@@ -497,7 +514,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                             );
                                           },
                                           separatorBuilder:
-                                              (BuildContext context, int index) {
+                                              (BuildContext context,
+                                                  int index) {
                                             return SizedBox(
                                               width: 32.px,
                                             );
@@ -511,9 +529,11 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                             color: Colors.white,
                                             child: Column(
                                               children: [
-                                                controller.selectedItem == "null"
+                                                controller.selectedItem ==
+                                                        "null"
                                                     ? Center(
-                                                        child: SvgPicture.string(
+                                                        child:
+                                                            SvgPicture.string(
                                                           icImage,
                                                           width: 80.px,
                                                           height: 80.px,
@@ -524,7 +544,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                         ),
                                                       )
                                                     : Center(
-                                                        child: SvgPicture.string(
+                                                        child:
+                                                            SvgPicture.string(
                                                           icImage,
                                                           width: 80.px,
                                                           height: 80.px,
@@ -561,7 +582,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                         ),
                                                         TextSpan(
                                                           text:
-                                                              " a photo of the deficiency",
+                                                              " a photo of the",
                                                           style: MyTextStyle(
                                                             textSize: 16.px,
                                                             textColor: controller
@@ -579,6 +600,27 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                 FontWeight.w400,
                                                             textFamily:
                                                                 fontFamilyRegular,
+                                                          ),
+                                                        ),
+                                                        TextSpan(
+                                                          text: " Deficiency",
+                                                          style: MyTextStyle(
+                                                            textSize: 16.px,
+                                                            textWeight:
+                                                                FontWeight.w600,
+                                                            textColor: controller
+                                                                        .selectedItem ==
+                                                                    "null"
+                                                                ? controller
+                                                                    .appColors
+                                                                    .black
+                                                                    .withOpacity(
+                                                                        0.07999999821186066)
+                                                                : controller
+                                                                    .appColors
+                                                                    .appColor,
+                                                            textFamily:
+                                                                fontFamilyBold,
                                                           ),
                                                         ),
                                                       ],
@@ -604,7 +646,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                     textStyleNew: MyTextStyle(
                                       textSize: 24.px,
                                       textWeight: FontWeight.w400,
-                                      textColor: controller.selectedItem == "null"
+                                      textColor: controller.selectedItem ==
+                                              "null"
                                           ? controller.appColors.black
                                               .withOpacity(0.07999999821186066)
                                           : controller.appColors.black,
@@ -637,14 +680,16 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                             ? controller.appColors.border1
                                             : controller.isListening.value
                                                 ? controller.appColors.appColor
-                                                : controller.appColors.lightText,
+                                                : controller
+                                                    .appColors.lightText,
                                       ),
                                     ),
                                     onChange: (str) {
                                       if (str.isNotEmpty &&
                                           controller
                                               .dateController.text.isNotEmpty &&
-                                          (controller.sendImagesList.isNotEmpty ||
+                                          (controller
+                                                  .sendImagesList.isNotEmpty ||
                                               controller.change)) {
                                         controller.visibleBtn = true;
                                       } else {
@@ -664,9 +709,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         controller.selectedItem == "null"
                                             ? controller.appColors.border1
                                             : null,
-                                    borderColor: controller.selectedItem == "null"
-                                        ? controller.appColors.border1
-                                        : null,
+                                    borderColor:
+                                        controller.selectedItem == "null"
+                                            ? controller.appColors.border1
+                                            : null,
                                   )),
                                   SizedBox(
                                     width: 180.px,
@@ -683,7 +729,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         color: controller.appColors.transparent,
                                         suffixIcon: SvgPicture.string(
                                           icCalender2,
-                                          color: controller.selectedItem == "null"
+                                          color: controller.selectedItem ==
+                                                  "null"
                                               ? controller.appColors.border1
                                               : controller.appColors.lightText,
                                         ),
@@ -728,7 +775,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                   controller.visibleBtn
                                               ? controller.appColors.black
                                               : controller.appColors.border1,
-                                      color: controller.selectedItem != "null" &&
+                                      color: controller.selectedItem !=
+                                                  "null" &&
                                               controller.visibleBtn
                                           ? controller.appColors.textPink
                                           : controller.appColors.black

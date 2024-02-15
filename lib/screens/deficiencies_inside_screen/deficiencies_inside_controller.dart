@@ -419,7 +419,7 @@ class DeficienciesInsideController extends BaseController {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Observation: \n',
+                              text: '1. Observation: \n',
                               style: MyTextStyle(
                                 textColor: appColors.textBlack,
                                 textSize: 16.px,
@@ -438,7 +438,7 @@ class DeficienciesInsideController extends BaseController {
                               ),
                             ),
                             TextSpan(
-                              text: 'Request for help: \n',
+                              text: '2. Request for help: \n',
                               style: MyTextStyle(
                                 textColor: appColors.textBlack,
                                 textSize: 16.px,
@@ -456,7 +456,7 @@ class DeficienciesInsideController extends BaseController {
                               ),
                             ),
                             TextSpan(
-                              text: 'Action: \n',
+                              text: '3. Action: \n',
                               style: MyTextStyle(
                                 textColor: appColors.textBlack,
                                 textSize: 16.px,
@@ -474,7 +474,7 @@ class DeficienciesInsideController extends BaseController {
                               ),
                             ),
                             TextSpan(
-                              text: 'More Information: \n',
+                              text: '4. More Information: \n',
                               style: MyTextStyle(
                                 textColor: appColors.textBlack,
                                 textSize: 16.px,
