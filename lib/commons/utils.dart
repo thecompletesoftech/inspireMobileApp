@@ -91,7 +91,9 @@ class Utils {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      showSnackBar(context: Get.context!, message: Languages.of(Get.context!)!.urlNotFound);
+      showSnackBar(
+          context: Get.context!,
+          message: Languages.of(Get.context!)!.urlNotFound);
       throw 'Could not launch $url';
     }
   }
@@ -137,19 +139,22 @@ class Utils {
     var cameraStatus = await Permission.camera.status;
     var microphoneStatus = await Permission.microphone.status;
     var storageStatus = await Permission.storage.status;
-    var manageExternalStorageStatus = await Permission.manageExternalStorage.status;
+    var manageExternalStorageStatus =
+        await Permission.manageExternalStorage.status;
     if (!photosStatus.isGranted) await Permission.photos.request();
     if (!cameraStatus.isGranted) await Permission.camera.request();
     if (!microphoneStatus.isGranted) await Permission.microphone.request();
     if (!storageStatus.isGranted) await Permission.storage.request();
-    if (!manageExternalStorageStatus.isGranted) await Permission.manageExternalStorage.request();
+    if (!manageExternalStorageStatus.isGranted)
+      await Permission.manageExternalStorage.request();
     if (await Permission.microphone.isGranted) {
       if (await Permission.camera.isGranted) {
         return true;
       } else {
         printError("App needs +++========");
         openAppSettings();
-        printError("App needs to access your storage, please provide permission");
+        printError(
+            "App needs to access your storage, please provide permission");
         return false;
       }
     } else {
@@ -201,7 +206,12 @@ class Utils {
 
   /// <<< To check data, string, list, object are empty or not --------- >>>
   bool isValidationEmpty(String? val) {
-    if (val == null || val.isEmpty || val == "null" || val == "" || val == "Null" || val == "NULL") {
+    if (val == null ||
+        val.isEmpty ||
+        val == "null" ||
+        val == "" ||
+        val == "Null" ||
+        val == "NULL") {
       return true;
     } else {
       return false;
@@ -218,7 +228,12 @@ class Utils {
 
   /// <<< To check data, string, list, object are empty or not --------- >>>
   bool isOTPValid(String? val) {
-    if (val == null || val.isEmpty || val == "null" || val == "" || val == "NULL" || val.length < 4) {
+    if (val == null ||
+        val.isEmpty ||
+        val == "null" ||
+        val == "" ||
+        val == "NULL" ||
+        val.length < 4) {
       return true;
     } else {
       return false;
@@ -227,7 +242,12 @@ class Utils {
 
   /// <<< To check data, string, list, object are empty or not --------- >>>
   bool isRoutingNoValid(String? val) {
-    if (val == null || val.isEmpty || val == "null" || val == "" || val == "NULL" || val.length < 9) {
+    if (val == null ||
+        val.isEmpty ||
+        val == "null" ||
+        val == "" ||
+        val == "NULL" ||
+        val.length < 9) {
       return true;
     } else {
       return false;
@@ -235,7 +255,10 @@ class Utils {
   }
 
   /// <<< To show snackBar massage  --------- >>>
-  void showSnackBar({required BuildContext context, required String message, bool? isOk = false}) {
+  void showSnackBar(
+      {required BuildContext context,
+      required String message,
+      bool? isOk = false}) {
     AppColors appColors = AppColors();
 
     Future<void>.delayed(Duration.zero, () {
@@ -247,7 +270,8 @@ class Utils {
         colorText: appColors.white,
         duration: const Duration(seconds: 3),
         isDismissible: true,
-        padding: const EdgeInsets.only(bottom: 15, top: 10, left: 15, right: 15),
+        padding:
+            const EdgeInsets.only(bottom: 15, top: 10, left: 15, right: 15),
         titleText: Container(),
       );
     });
@@ -255,20 +279,28 @@ class Utils {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<Uint8List> getBytesFromNetwork(String path, int width) async {
     Uint8List image = await loadNetworkImage(path);
-    final ui.Codec codec = await ui.instantiateImageCodec(image.buffer.asUint8List(),
-        targetHeight: Platform.isAndroid ? 150 : 160, targetWidth: Platform.isAndroid ? 150 : 160);
+    final ui.Codec codec = await ui.instantiateImageCodec(
+        image.buffer.asUint8List(),
+        targetHeight: Platform.isAndroid ? 150 : 160,
+        targetWidth: Platform.isAndroid ? 150 : 160);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
-  Future<BitmapDescriptor> convertNetworkImageToCustomBitmapDescriptor(String title,
+  Future<BitmapDescriptor> convertNetworkImageToCustomBitmapDescriptor(
+      String title,
       {int size = 100,
       bool addBorder = false,
       Color borderColor = Colors.white,
@@ -286,10 +318,12 @@ class Utils {
 
     //make canvas clip path to prevent image drawing over the circle
     final Path clipPath = Path();
-    clipPath
-        .addRRect(RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()), Radius.circular(100)));
-    clipPath.addRRect(
-        RRect.fromRectAndRadius(Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10), Radius.circular(100)));
+    clipPath.addRRect(RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+        Radius.circular(100)));
+    clipPath.addRRect(RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10),
+        Radius.circular(100)));
     canvas.clipPath(clipPath);
 
     //paintImage
@@ -342,7 +376,9 @@ class Utils {
     }
 
     //convert canvas as PNG bytes
-    final _image = await pictureRecorder.endRecording().toImage(size, (size * 1.1).toInt());
+    final _image = await pictureRecorder
+        .endRecording()
+        .toImage(size, (size * 1.1).toInt());
     final data = await _image.toByteData(
       format: ui.ImageByteFormat.png,
     );
@@ -351,7 +387,8 @@ class Utils {
     return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
   }
 
-  Future<BitmapDescriptor> convertNetworkImageToCustomBitmapDescriptor1(String imageUrl,
+  Future<BitmapDescriptor> convertNetworkImageToCustomBitmapDescriptor1(
+      String imageUrl,
       {int size = 150,
       bool addBorder = false,
       Color borderColor = Colors.white,
@@ -369,10 +406,12 @@ class Utils {
 
     //make canvas clip path to prevent image drawing over the circle
     final Path clipPath = Path();
-    clipPath
-        .addRRect(RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()), Radius.circular(100)));
-    clipPath.addRRect(
-        RRect.fromRectAndRadius(Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10), Radius.circular(100)));
+    clipPath.addRRect(RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, size.toDouble(), size.toDouble()),
+        Radius.circular(100)));
+    clipPath.addRRect(RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10),
+        Radius.circular(100)));
     canvas.clipPath(clipPath);
 
     //paintImage
@@ -410,7 +449,8 @@ class Utils {
       paint.style = PaintingStyle.fill;
       canvas.drawRRect(
           RRect.fromRectAndRadius(
-              Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10), Radius.circular(100)),
+              Rect.fromLTWH(0, size * 8 / 10, size.toDouble(), size * 3 / 10),
+              Radius.circular(100)),
           paint);
 
       //draw Title
@@ -423,10 +463,15 @@ class Utils {
             color: titleColor,
           ));
       textPainter.layout();
-      textPainter.paint(canvas, Offset(radius - textPainter.width / 2, size * 9.5 / 10 - textPainter.height / 2));
+      textPainter.paint(
+          canvas,
+          Offset(radius - textPainter.width / 2,
+              size * 9.5 / 10 - textPainter.height / 2));
     }
     //convert canvas as PNG bytes
-    final _image = await pictureRecorder.endRecording().toImage(size, (size * 1.1).toInt());
+    final _image = await pictureRecorder
+        .endRecording()
+        .toImage(size, (size * 1.1).toInt());
     final data = await _image.toByteData(
       format: ui.ImageByteFormat.png,
     );
@@ -450,7 +495,8 @@ class Utils {
       final jsonResult = json.decode(response.body);
       final results = jsonResult['results'] as List<dynamic>;
       if (results.isNotEmpty) {
-        final address = results[0]['formatted_address'].toString().split(',')[1];
+        final address =
+            results[0]['formatted_address'].toString().split(',')[1];
         printAction("Address==>>> $address");
 
         GetStorageData().saveString(GetStorageData().userLoc, address);
@@ -482,7 +528,10 @@ class Utils {
                   padding: EdgeInsets.only(bottom: 20.0, left: 20),
                   child: Text(
                     "Turn on Location Services \nfor your iPhone",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 17),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 17),
                   ),
                 ),
                 ListTile(
@@ -595,7 +644,10 @@ class Utils {
                   padding: EdgeInsets.only(bottom: 20.0, left: 20),
                   child: Text(
                     "Turn on Location Services \nfor your iPhone",
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 17),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 17),
                   ),
                 ),
                 ListTile(
@@ -684,15 +736,18 @@ class Utils {
       // AppSettings.openLocationSettings();
       // return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
   }
 
   Future<Uint8List> loadNetworkImage(path) async {
     final completed = Completer<ImageInfo>();
     var image = NetworkImage(path);
-    image.resolve(const ImageConfiguration()).addListener(ImageStreamListener((info, _) => completed.complete(info)));
+    image.resolve(const ImageConfiguration()).addListener(
+        ImageStreamListener((info, _) => completed.complete(info)));
     final imageInfo = await completed.future;
-    final byteData = await imageInfo.image.toByteData(format: ui.ImageByteFormat.png);
+    final byteData =
+        await imageInfo.image.toByteData(format: ui.ImageByteFormat.png);
     return byteData!.buffer.asUint8List();
   }
 
@@ -823,7 +878,8 @@ class Utils {
   /// Time Ago Since Date --------- >>>
   String timeAgoSinceDate(String dateString, {bool numericDates = true}) {
     DateTime dateUtc = DateTime.parse(dateString);
-    var dateTime = DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateUtc.toString(), true);
+    var dateTime =
+        DateFormat("yyyy-MM-dd HH:mm:ss").parse(dateUtc.toString(), true);
     DateTime date = dateTime.toLocal();
     final date2 = DateTime.now();
     final difference = date2.difference(date);
@@ -839,11 +895,15 @@ class Utils {
     } else if ((difference.inDays / 30).floor() >= 1) {
       return (numericDates) ? '1 M' : 'Last Month';
     } else if ((difference.inDays / 7).floor() >= 2) {
-      return (numericDates) ? '${(difference.inDays / 7).floor()} w' : '${(difference.inDays / 7).floor()} Weeks ago';
+      return (numericDates)
+          ? '${(difference.inDays / 7).floor()} w'
+          : '${(difference.inDays / 7).floor()} Weeks ago';
     } else if ((difference.inDays / 7).floor() >= 1) {
       return (numericDates) ? '1 w' : 'Last week';
     } else if (difference.inDays >= 2) {
-      return (numericDates) ? '${difference.inDays} d' : '${difference.inDays} Days ago';
+      return (numericDates)
+          ? '${difference.inDays} d'
+          : '${difference.inDays} Days ago';
     } else if (difference.inDays >= 1) {
       return (numericDates) ? '1 d' : 'Yesterday';
     } else if (difference.inHours >= 2) {
@@ -863,7 +923,8 @@ class Utils {
 
   String utcToLocal(String date, {bool? isChat}) {
     if (date.isNotEmpty) {
-      var dateTime = DateFormat(Constants.YYYY_MM_DD_HH_MM_SS_24).parse(date.toString(), true);
+      var dateTime = DateFormat(Constants.YYYY_MM_DD_HH_MM_SS_24)
+          .parse(date.toString(), true);
       DateTime dateLocal = dateTime.toLocal();
       return dateLocal.toString();
     }
