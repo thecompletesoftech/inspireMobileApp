@@ -193,7 +193,7 @@ class SigningScreen extends GetView<SigningController> {
                                           //   controller.checked = false;
                                           //   controller.update();
                                           // }
-                                           else {
+                                          else {
                                             controller.isPass = true;
                                             if (controller.isEmail) {
                                               controller.checked = true;
@@ -357,14 +357,14 @@ class SigningScreen extends GetView<SigningController> {
                                               controller.isPass = false;
                                               controller.checked = false;
                                               controller.update();
-                                            } 
+                                            }
                                             // else if (!controller.utils
                                             //     .passwordValidator(controller
                                             //         .pass.text
                                             //         .trim())) {
                                             //   controller.checked = false;
                                             //   controller.update();
-                                            // } 
+                                            // }
                                             else {
                                               controller.isPass = true;
                                               if (controller.isEmail) {

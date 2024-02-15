@@ -31,6 +31,8 @@ class AppColors {
   Color textFiledBgColor = const Color(0xFFE5E8EC);
   Color textFiledBorderColor = const Color(0xFFC3C8D3).withOpacity(0.8);
   Color textFiledLabelColor = const Color(0xFF666F80);
+  Color inactiveColor = const Color(0xFFE7E0EC);
+  Color textcolor = const Color(0xFF3F3F3F);
 
   ///=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-= APP COLORS ==-=-=-=--=-=-=-=-=-=-=-=-=///
   Color appColor = const Color(0xff002d74);

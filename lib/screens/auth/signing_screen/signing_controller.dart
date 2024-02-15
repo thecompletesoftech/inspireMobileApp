@@ -40,7 +40,6 @@ class SigningController extends BaseController {
             "We're sorry, but it seems that this account has been deleted. If you believe this is an error or need further assistance, please contact our support team";
         title = "Account deleted";
       }
-
       Get.snackbar("", "",
           titleText: Text(title,
               style: TextStyle(

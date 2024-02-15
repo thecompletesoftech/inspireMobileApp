@@ -68,7 +68,8 @@ class CommonAppBar extends StatelessWidget {
                               Icons.arrow_back,
                               color: Colors.transparent,
                             ),
-                            onSelected: (int value) => actionPopUpItemSelected(value),
+                            onSelected: (int value) =>
+                                actionPopUpItemSelected(value),
                             itemBuilder: (context) {
                               return <PopupMenuEntry<int>>[
                                 PopupMenuItem(
@@ -137,9 +138,12 @@ class CommonAppBar extends StatelessWidget {
                           image != null
                               ? CachedNetworkImage(
                                   imageUrl: image!,
-                                  placeholder: (context, url) =>
-                                      Container(color: AppColors().bottomSheetBackground.withOpacity(0.8)),
-                                  errorWidget: (context, url, error) => Image.asset(ImagePath.user),
+                                  placeholder: (context, url) => Container(
+                                      color: AppColors()
+                                          .bottomSheetBackground
+                                          .withOpacity(0.8)),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(ImagePath.user),
                                   fit: BoxFit.cover,
                                   width: 48.px,
                                   height: 48.px,
@@ -166,9 +170,12 @@ class CommonAppBar extends StatelessWidget {
                             image != null
                                 ? CachedNetworkImage(
                                     imageUrl: image!,
-                                    placeholder: (context, url) =>
-                                        Container(color: AppColors().bottomSheetBackground.withOpacity(0.8)),
-                                    errorWidget: (context, url, error) => Image.asset(ImagePath.user),
+                                    placeholder: (context, url) => Container(
+                                        color: AppColors()
+                                            .bottomSheetBackground
+                                            .withOpacity(0.8)),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset(ImagePath.user),
                                     fit: BoxFit.cover,
                                     width: 48.px,
                                     height: 48.px,
@@ -213,7 +220,8 @@ class CommonAppBar extends StatelessWidget {
                             Expanded(
                               flex: 0,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   PopupMenuButton<int>(
                                     key: _key,
@@ -222,7 +230,8 @@ class CommonAppBar extends StatelessWidget {
                                       // width: 16.px,
                                       height: 24.px,
                                     ),
-                                    onSelected: (int value) => actionPopUpItemSelected(value),
+                                    onSelected: (int value) =>
+                                        actionPopUpItemSelected(value),
                                     itemBuilder: (context) {
                                       return <PopupMenuEntry<int>>[
                                         PopupMenuItem(
@@ -237,8 +246,10 @@ class CommonAppBar extends StatelessWidget {
                                                   Strings.editProfile,
                                                   textStyleNew: MyTextStyle(
                                                       textSize: 16.px,
-                                                      textColor: AppColors().black,
-                                                      textWeight: FontWeight.w400),
+                                                      textColor:
+                                                          AppColors().black,
+                                                      textWeight:
+                                                          FontWeight.w400),
                                                 ))),
                                         PopupMenuItem(
                                             value: 1,
@@ -252,8 +263,10 @@ class CommonAppBar extends StatelessWidget {
                                                   Strings.inspectionHistory,
                                                   textStyleNew: MyTextStyle(
                                                       textSize: 16.px,
-                                                      textColor: AppColors().black,
-                                                      textWeight: FontWeight.w400),
+                                                      textColor:
+                                                          AppColors().black,
+                                                      textWeight:
+                                                          FontWeight.w400),
                                                 ))),
                                         PopupMenuItem(
                                             value: 2,
@@ -267,8 +280,10 @@ class CommonAppBar extends StatelessWidget {
                                                   Strings.nSPIREStandards,
                                                   textStyleNew: MyTextStyle(
                                                       textSize: 16.px,
-                                                      textColor: AppColors().black,
-                                                      textWeight: FontWeight.w400),
+                                                      textColor:
+                                                          AppColors().black,
+                                                      textWeight:
+                                                          FontWeight.w400),
                                                 ))),
                                         PopupMenuItem(
                                             value: 3,
@@ -282,8 +297,10 @@ class CommonAppBar extends StatelessWidget {
                                                   Strings.logOut,
                                                   textStyleNew: MyTextStyle(
                                                       textSize: 16.px,
-                                                      textColor: AppColors().black,
-                                                      textWeight: FontWeight.w400),
+                                                      textColor:
+                                                          AppColors().black,
+                                                      textWeight:
+                                                          FontWeight.w400),
                                                 ))),
                                       ];
                                     },
