@@ -14,7 +14,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   Widget build(BuildContext context) {
     return GetBuilder<BuildingInspectionController>(
       init: BuildingInspectionController(),
-      assignId: true,
+      autoRemove: false,
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -313,56 +313,18 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   isLable: true,
                                   controller: controller.cityController,
                                   color: controller.appColors.transparent,
-                                  suffixIcon: controller.propertyNameController
-                                          .text.isNotEmpty
-                                      ? PopupMenuButton(
-                                          key: controller.popupKey2,
-                                          position: PopupMenuPosition.under,
-                                          tooltip: Strings.city,
-                                          onSelected: controller
-                                                  .propertyNameController
-                                                  .text
-                                                  .isNotEmpty
-                                              ? (value) {
-                                                  controller.actionCitySelected(
-                                                      value);
-                                                  controller.update();
-                                                }
-                                              : null,
-                                          itemBuilder: (context) =>
-                                              List.generate(
-                                                  controller.cityList.length,
-                                                  (index) => PopupMenuItem(
-                                                        value: index,
-                                                        child: Text(controller
-                                                            .cityList[index]),
-                                                      )),
-                                          child: SvgPicture.string(
-                                            icDownArrow,
-                                            color:
-                                                controller.appColors.textBlack1,
-                                          ).paddingAll(10.px),
-                                        )
-                                      : SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.black
-                                              .withOpacity(.12),
-                                        ).paddingAll(10.px),
+                                  suffixIcon: SvgPicture.string(
+                                    icDownArrow,
+                                    color: controller.appColors.black
+                                        .withOpacity(.12),
+                                  ).paddingAll(10.px),
                                   padding: EdgeInsets.zero,
                                   contentPadding: EdgeInsets.only(left: 15.px),
                                   shadowColor: controller.appColors.transparent,
-                                  isLableColor: controller
-                                          .propertyNameController
-                                          .text
-                                          .isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
-                                  borderColor: controller.propertyNameController
-                                          .text.isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                   labelText: Strings.city,
                                 ),
                               ),
@@ -375,13 +337,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 flex: 11,
                                 child: CommonTextField(
                                   isLable: true,
-                                  readOnly:
-                                      controller.cityController.text.isNotEmpty
-                                          ? false
-                                          : true,
-                                  onChange: (value) {
-                                    controller.update();
-                                  },
+                                  readOnly: true,
                                   controller: controller.propertyIDController,
                                   color: controller.appColors.transparent,
                                   padding: EdgeInsets.zero,
@@ -389,16 +345,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       left: 15.px, top: 16.px, bottom: 16.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.propertyID,
-                                  isLableColor:
-                                      controller.cityController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
-                                  borderColor:
-                                      controller.cityController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                               SizedBox(width: 16.px),
@@ -406,13 +356,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 flex: 5,
                                 child: CommonTextField(
                                   isLable: true,
-                                  readOnly: controller
-                                          .propertyIDController.text.isNotEmpty
-                                      ? false
-                                      : true,
-                                  onChange: (value) {
-                                    controller.update();
-                                  },
+                                  readOnly: true,
                                   controller: controller.stateController,
                                   color: controller.appColors.transparent,
                                   padding: EdgeInsets.zero,
@@ -420,16 +364,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       left: 15.px, top: 16.px, bottom: 16.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.state,
-                                  isLableColor: controller
-                                          .propertyIDController.text.isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
-                                  borderColor: controller
-                                          .propertyIDController.text.isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                               SizedBox(width: 16.px),
@@ -437,13 +375,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 flex: 5,
                                 child: CommonTextField(
                                   isLable: true,
-                                  readOnly:
-                                      controller.stateController.text.isNotEmpty
-                                          ? false
-                                          : true,
-                                  onChange: (value) {
-                                    controller.update();
-                                  },
+                                  readOnly: true,
                                   controller: controller.zipController,
                                   color: controller.appColors.transparent,
                                   padding: EdgeInsets.zero,
@@ -451,16 +383,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       left: 15.px, top: 16.px, bottom: 16.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.zip,
-                                  isLableColor:
-                                      controller.stateController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
-                                  borderColor:
-                                      controller.stateController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                             ],
@@ -470,35 +396,23 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               Expanded(
                                 child: CommonTextField(
                                   isLable: true,
-                                  readOnly:
-                                      controller.zipController.text.isNotEmpty
-                                          ? false
-                                          : true,
+                                  readOnly: true,
                                   controller:
                                       controller.propertyAddressController,
                                   color: controller.appColors.transparent,
                                   prefixIcon: SvgPicture.string(
                                     icLocation,
-                                    color:
-                                        controller.zipController.text.isNotEmpty
-                                            ? controller.appColors.textBlack1
-                                            : controller.appColors.black
-                                                .withOpacity(.12),
+                                    color: controller.appColors.black
+                                        .withOpacity(.12),
                                   ).paddingOnly(left: 15.px),
                                   padding: EdgeInsets.zero,
                                   contentPadding: EdgeInsets.only(left: 15.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.propertyAddress,
-                                  isLableColor:
-                                      controller.zipController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
-                                  borderColor:
-                                      controller.zipController.text.isNotEmpty
-                                          ? controller.appColors.textBlack1
-                                          : controller.appColors.black
-                                              .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                             ],
@@ -568,13 +482,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               Expanded(
                                 child: CommonTextField(
                                   isLable: true,
-                                  readOnly: controller.buildingNameController
-                                          .text.isNotEmpty
-                                      ? false
-                                      : true,
-                                  onChange: (value) {
-                                    controller.update();
-                                  },
+                                  readOnly: true,
                                   controller:
                                       controller.yearConstructedController,
                                   color: controller.appColors.transparent,
@@ -583,18 +491,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       left: 15.px, top: 16.px, bottom: 16.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.yearConstructed,
-                                  isLableColor: controller
-                                          .buildingNameController
-                                          .text
-                                          .isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
-                                  borderColor: controller.buildingNameController
-                                          .text.isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                               SizedBox(width: 16.px),
@@ -604,57 +504,19 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   readOnly: true,
                                   controller: controller.buildingTypeController,
                                   color: controller.appColors.transparent,
-                                  suffixIcon: controller
-                                          .yearConstructedController
-                                          .text
-                                          .isNotEmpty
-                                      ? PopupMenuButton(
-                                          key: controller.popupKey1,
-                                          position: PopupMenuPosition.under,
-                                          tooltip: Strings.buildingType,
-                                          onSelected: (value) {
-                                            controller
-                                                .buildingTypeSelected(value);
-                                            controller.update();
-                                          },
-                                          itemBuilder: (context) =>
-                                              List.generate(
-                                                  controller
-                                                      .buildingTypeList.length,
-                                                  (index) => PopupMenuItem(
-                                                        value: index,
-                                                        child: Text(controller
-                                                                .buildingTypeList[
-                                                            index]),
-                                                      )),
-                                          child: SvgPicture.string(
-                                            icDownArrow,
-                                            color: controller.appColors.grey,
-                                          ).paddingAll(10.px),
-                                        )
-                                      : SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.black
-                                              .withOpacity(.12),
-                                        ).paddingAll(10.px),
+                                  suffixIcon: SvgPicture.string(
+                                    icDownArrow,
+                                    color: controller.appColors.black
+                                        .withOpacity(.12),
+                                  ).paddingAll(10.px),
                                   padding: EdgeInsets.zero,
                                   contentPadding: EdgeInsets.only(left: 15.px),
                                   shadowColor: controller.appColors.transparent,
                                   labelText: Strings.buildingType,
-                                  isLableColor: controller
-                                          .yearConstructedController
-                                          .text
-                                          .isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
-                                  borderColor: controller
-                                          .yearConstructedController
-                                          .text
-                                          .isNotEmpty
-                                      ? controller.appColors.textBlack1
-                                      : controller.appColors.black
-                                          .withOpacity(.12),
+                                  isLableColor: controller.appColors.black
+                                      .withOpacity(.12),
+                                  borderColor: controller.appColors.black
+                                      .withOpacity(.12),
                                 ),
                               ),
                             ],
@@ -768,13 +630,11 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       : controller.appColors.black
                           .withOpacity(0.11999999731779099),
                   onTap: () {
-                    if (controller.getStartInspection()) {
-                      Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                        "buildingName": controller.buildingNameController.text,
-                        "buildingTypeList":
-                            controller.buildingTypeController.text
-                      });
-                    }
+                    // if (controller.getStartInspection()) {
+                    Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                      "buildingName": controller.buildingNameController.text,
+                    });
+                    // }
                   },
                 ).paddingSymmetric(vertical: 24.px),
               ],

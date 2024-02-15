@@ -185,4 +185,18 @@ class Strings {
       "A dedicated space for food, goods, or other items.";
   static String none = "None";
   static String laundry = "Kitchens, bathroom, laundry";
+  static String storageComponent =
+      "D2 - INSIDE. Storage component is damaged, inoperable, or missing.";
+  static String noDataFound = "No data found";
+  static String correctionTimeframe = "Correction Timeframe:";
+  static String days = "30 days";
+  static String determination = "H&S Determination:";
+  static String moderate = "Moderate";
+  static String deficiencyCriteria = "Deficiency Criteria";
+  static String deficiencyCriteriaDes =
+      "50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are damaged (i.e., visibly defective; impacts functionality). \nOR\n50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are inoperable (i.e., overall system or component thereof is not meeting function or purpose; with or without visible damage). \nOR\n50% or more of the kitchen, bath, or laundry cabinet, drawers, or shelves are missing (i.e., evidence of prior installation, but now not present or is incomplete).";
+  static String deficiencyPresent = "Deficiency Present";
+  static String inconclusive = "Inconclusive";
+  static String takePhoto = "Take a Photo";
+  static String saveAddUnit = "Save and Add Unit";
 }

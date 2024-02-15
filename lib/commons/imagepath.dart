@@ -48,6 +48,7 @@ class ImagePath {
   static String chimney = "${base}chimney.png";
   static String clothes = "${base}clothes.png";
   static String cabinets = "${base}cabinets.png";
+  static String cooking = "${base}cooking.png";
   static String callaId = "${base}callaid.png";
   static String kitchen = "${base}kitchen.png";
   static String kitchenImg = "${base}kitchen_img.png";
