@@ -1,6 +1,8 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 
 import '../../commons/all.dart';
+import '../building_inspection_screen/building_inspection_screen.dart';
 
 class UnitController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -26,7 +28,7 @@ class UnitController extends BaseController {
         builder: (BuildContext context) {
           return StatefulBuilder(builder: (context, setState) {
             return Dialog(
-                backgroundColor: Colors.white,
+                backgroundColor: Color(0xffFFFFFF),
                 elevation: 8,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -74,23 +76,30 @@ class UnitController extends BaseController {
                             }),
                         Row(
                           children: [
-                            Container(
-                                alignment: Alignment.center,
-                                height: 44.px,
-                                width: 181.px,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100.px),
-                                    border:
-                                        Border.all(color: appColors.appColor)),
-                                child: MyTextView(
-                                  Strings.saveandunit,
-                                  textStyleNew: MyTextStyle(
-                                    textColor: appColors.appColor,
-                                    textWeight: FontWeight.w500,
-                                    textFamily: fontFamilyBold,
-                                    textSize: 16.px,
-                                  ),
-                                )).paddingOnly(right: 16.px),
+                            GestureDetector(
+                              onTap: (() {
+                                Get.back();
+                                Get.toNamed(UnitInspection.routes);
+                              }),
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  height: 44.px,
+                                  width: 181.px,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(100.px),
+                                      border: Border.all(
+                                          color: appColors.appColor)),
+                                  child: MyTextView(
+                                    Strings.saveandunit,
+                                    textStyleNew: MyTextStyle(
+                                      textColor: appColors.appColor,
+                                      textWeight: FontWeight.w500,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 16.px,
+                                    ),
+                                  )).paddingOnly(right: 16.px),
+                            ),
                             CommonButton(
                               title: Strings.CompleteInspection,
                               radius: 100.px,
@@ -111,7 +120,9 @@ class UnitController extends BaseController {
                                   : appColors.black
                                       .withOpacity(0.11999999731779099),
                               onTap: () {
-                                if (getreasonunitinspection()) {}
+                                if (getreasonunitinspection()) {
+                                  Get.toNamed(BuildingInspectionScreen.routes);
+                                }
                               },
                             )
                           ],
