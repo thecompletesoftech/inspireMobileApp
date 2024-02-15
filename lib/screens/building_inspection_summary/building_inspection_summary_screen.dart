@@ -582,7 +582,7 @@ class BuildingInspectionSummaryScreen
                                         ),
                                         textWeight: FontWeight.w500,
                                         textSize: 16.px,
-                                        color: controller.appColors.buttonColor,
+                                        color: controller.appColors.appBGColor,
                                         textColor:
                                             controller.appColors.textGreen,
                                       ).paddingOnly(left: 24.px),
