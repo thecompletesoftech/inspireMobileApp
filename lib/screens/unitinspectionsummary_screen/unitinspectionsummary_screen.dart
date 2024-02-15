@@ -121,7 +121,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             padding: EdgeInsets.zero,
                             contentPadding: EdgeInsets.only(left: 15.px),
                             shadowColor: controller.appColors.transparent,
-                            labelText: Strings.unitHousekeeping,
+                            labelText: Strings.unitHousekeeping,    
                           ),
                         ),
                         SizedBox(width: 16.px),
