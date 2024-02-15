@@ -52,49 +52,124 @@ import '../screens/standard_screen/standard_binding.dart';
 import '../screens/standard_screen/standard_screen.dart';
 import '../screens/text_message_screen/text_message_binding.dart';
 import '../screens/text_message_screen/text_message_screen.dart';
+import '../screens/unit_Inpection_screen/unit_inspection_screen.dart';
+import '../screens/unit_Inpection_screen/unitinspection_binding.dart';
+import '../screens/unitinspectionsummary_screen/unitinspection_binding.dart';
+import '../screens/unitinspectionsummary_screen/unitinspectionsummary_screen.dart';
 
 class AppPages {
   static var list = [
-    GetPage(name: SplashScreen.routes, page: () => const SplashScreen(), binding: SplashBinding()),
-    GetPage(name: PropertyScreen.routes, page: () => PropertyScreen(), binding: PropertyBinding()),
-    GetPage(name: BuildingsScreen.routes, page: () => BuildingsScreen(), binding: BuildingsBinding()),
-    GetPage(name: PropertyDetailsScreen.routes, page: () => PropertyDetailsScreen(), binding: PropertyDetailsBinding()),
-    GetPage(name: BuildingInspectionScreen.routes, page: () => const BuildingInspectionScreen(), binding: BuildingInspectionBinding()),
-    GetPage(name: BuildingStandardsScreen.routes, page: () => const BuildingStandardsScreen(), binding: BuildingStandardsBinding()),
-    GetPage(name: BuildingCabinetsScreen.routes, page: () => const BuildingCabinetsScreen(), binding: BuildingCabinetsBinding()),
+    GetPage(
+        name: SplashScreen.routes,
+        page: () => const SplashScreen(),
+        binding: SplashBinding()),
+    GetPage(
+        name: PropertyScreen.routes,
+        page: () => PropertyScreen(),
+        binding: PropertyBinding()),
+    GetPage(
+        name: BuildingsScreen.routes,
+        page: () => BuildingsScreen(),
+        binding: BuildingsBinding()),
+    GetPage(
+        name: PropertyDetailsScreen.routes,
+        page: () => PropertyDetailsScreen(),
+        binding: PropertyDetailsBinding()),
+    GetPage(
+        name: BuildingInspectionScreen.routes,
+        page: () => const BuildingInspectionScreen(),
+        binding: BuildingInspectionBinding()),
+    GetPage(
+        name: BuildingStandardsScreen.routes,
+        page: () => const BuildingStandardsScreen(),
+        binding: BuildingStandardsBinding()),
+    GetPage(
+        name: BuildingCabinetsScreen.routes,
+        page: () => const BuildingCabinetsScreen(),
+        binding: BuildingCabinetsBinding()),
     GetPage(
         name: BuildingDetailsScreen.routes,
         page: () => const BuildingDetailsScreen(),
         binding: BuildingDetailsBinding()),
-    GetPage(name: CertificatesScreen.routes, page: () => const CertificatesScreen(), binding: CertificatesBinding()),
+    GetPage(
+        name: CertificatesScreen.routes,
+        page: () => const CertificatesScreen(),
+        binding: CertificatesBinding()),
     GetPage(
         name: DeficienciesFoundScreen.routes,
         page: () => const DeficienciesFoundScreen(),
         binding: DeficienciesFoundBinding()),
-    GetPage(name: AresBuildingScreen.routes, page: () => const AresBuildingScreen(), binding: AreasBuildingBinding()),
+    GetPage(
+        name: AresBuildingScreen.routes,
+        page: () => const AresBuildingScreen(),
+        binding: AreasBuildingBinding()),
     GetPage(
         name: BuildingExteriorScreen.routes,
         page: () => const BuildingExteriorScreen(),
         binding: BuildingExteriorBinding()),
-    GetPage(name: PdfScreen.routes, page: () => const PdfScreen(), binding: PdfBinding()),
-    GetPage(name: HSAckScreen.routes, page: () => const HSAckScreen(), binding: HSAckBinding()),
+    GetPage(
+        name: PdfScreen.routes,
+        page: () => const PdfScreen(),
+        binding: PdfBinding()),
+    GetPage(
+        name: HSAckScreen.routes,
+        page: () => const HSAckScreen(),
+        binding: HSAckBinding()),
     GetPage(
         name: AuthoritySignatureScreen.routes,
         page: () => const AuthoritySignatureScreen(),
         binding: AuthoritySignatureBinding()),
-    GetPage(name: HomeScreen.routes, page: () => HomeScreen(), binding: HomeBinding()),
-    GetPage(name: InspectionScreen.routes, page: () => const InspectionScreen(), binding: InspectionBinding()),
-    GetPage(name: NoShowScreen.routes, page: () => const NoShowScreen(), binding: NoShowBinding()),
-    GetPage(name: TextMessageScreen.routes, page: () => TextMessageScreen(), binding: TextMessageBinding()),
-    GetPage(name: AresScreen.routes, page: () => const AresScreen(), binding: AreasBinding()),
-    GetPage(name: KitchenScreen.routes, page: () => const KitchenScreen(), binding: ItemDetailsBinding()),
-    GetPage(name: StandardScreen.routes, page: () => const StandardScreen(), binding: StandardBinding()),
-    GetPage(name: ProgressScreen.routes, page: () => const ProgressScreen(), binding: ProgressBinding()),
+    GetPage(
+        name: HomeScreen.routes,
+        page: () => HomeScreen(),
+        binding: HomeBinding()),
+    GetPage(
+        name: InspectionScreen.routes,
+        page: () => const InspectionScreen(),
+        binding: InspectionBinding()),
+    GetPage(
+        name: NoShowScreen.routes,
+        page: () => const NoShowScreen(),
+        binding: NoShowBinding()),
+    GetPage(
+        name: TextMessageScreen.routes,
+        page: () => TextMessageScreen(),
+        binding: TextMessageBinding()),
+    GetPage(
+        name: AresScreen.routes,
+        page: () => const AresScreen(),
+        binding: AreasBinding()),
+    GetPage(
+        name: KitchenScreen.routes,
+        page: () => const KitchenScreen(),
+        binding: ItemDetailsBinding()),
+    GetPage(
+        name: StandardScreen.routes,
+        page: () => const StandardScreen(),
+        binding: StandardBinding()),
+    GetPage(
+        name: ProgressScreen.routes,
+        page: () => const ProgressScreen(),
+        binding: ProgressBinding()),
     GetPage(
         name: InspectionSummaryScreen.routes,
         page: () => const InspectionSummaryScreen(),
         binding: InspectionSummaryBinding()),
-    GetPage(name: SignatureScreen.routes, page: () => const SignatureScreen(), binding: SignatureBinding()),
-    GetPage(name: SigningScreen.routes, page: () => const SigningScreen(), binding: SigningBinding()),
+    GetPage(
+        name: SignatureScreen.routes,
+        page: () => const SignatureScreen(),
+        binding: SignatureBinding()),
+    GetPage(
+        name: SigningScreen.routes,
+        page: () => const SigningScreen(),
+        binding: SigningBinding()),
+    GetPage(
+        name: UnitInspection.routes,
+        page: () => const UnitInspection(),
+        binding: UnitInspectionBinding()),
+    GetPage(
+        name: UnitInspectionSummary.routes,
+        page: () => const UnitInspectionSummary(),
+        binding: UnitInspectionSummaryBinding()),
   ];
 }

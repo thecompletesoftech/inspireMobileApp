@@ -50,9 +50,12 @@ class Strings {
   static const String noDeficienciesFound = "No deficiencies found";
   static const String boilerCertificate = "Boiler Certificate";
   static const String elevatorCertificate = "Elevator Certificate";
-  static const String fireAlarmInspectionReport = "Fire Alarm Inspection Report";
-  static const String leadBasedPaintDisclosureForm = "Lead-Based Paint Disclosure Form";
-  static const String sprinklerSystemCertificate = "Sprinkler System Certificate";
+  static const String fireAlarmInspectionReport =
+      "Fire Alarm Inspection Report";
+  static const String leadBasedPaintDisclosureForm =
+      "Lead-Based Paint Disclosure Form";
+  static const String sprinklerSystemCertificate =
+      "Sprinkler System Certificate";
   static const String share = "Share";
   static const String download = "Download";
   static const String upload = "Upload";
@@ -61,6 +64,7 @@ class Strings {
   static const String inspectionProcess = "Inspection process";
   static const String collapseStandards = "Collapse Standards";
   static const String startInspection = "Start Inspection";
+  static const String saveandunit = "Save and Add Unit";
   static const String resumeInspection = "Resume Inspection";
   static const String completedInspection = "Completed Inspection";
   static const String saveChanges = "Save Changes";
@@ -105,7 +109,8 @@ class Strings {
   static const String pointOfContact = 'Point of Contact';
   static const String pointOfContactName = "$pointOfContact Name";
   static const String pointOfContactSignatures = "$pointOfContact Signature";
-  static const String selectRoofAccessIndicator = 'Select Roof Access Indicator';
+  static const String selectRoofAccessIndicator =
+      'Select Roof Access Indicator';
   static const String selectReasonUninspectable = 'Select Reason Uninspectable';
   static const String addReasonUninspectable = 'Add Reason Uninspectable';
   static const String noOneIsPresent = "No one is present";
@@ -120,18 +125,32 @@ class Strings {
   static const String changesUnsaved = "Changes unsaved";
   static const String inspectionIncomplete = "Inspection Incomplete";
   static const String properties = "Properties";
+  static const String yes = "yes";
 
-  static const String messageHint = "This is the beginning of your chat with Fernando Devries";
+  static const String messageHint =
+      "This is the beginning of your chat with Fernando Devries";
   static const String commentHint = "Add a comment of the inspection...";
   static const String escortHint = "escort@mail.com";
   static const String comment =
       "“The name of the maintenance person is Henry Roberts. If you can’t enter ask him. -JF”";
   static const String arrival =
       "Hi, my name is Philip Martin, inspector of Gilson Inspection Services. I’m close to your unit, please make sure to be ready to provide access. We appreciate your cooperation.";
-
   static const String presentDuringInspection = "Present During Inspection";
-
   static const String HSAcknowledgment = "H&S Acknowledgment";
+
+  ///************** Unit Inspection Screen String **************///
+
+  static const String unitnumberName = "Unit Number or Name*";
+  static const String unitaddress = "Unit Address*";
+  static const String bathroom = "Bathrooms";
+  static const String bedroom = "Bedrooms";
+  static const String unitoccupied = "Unit Occupied?";
+  static const String unitcannitbeinspected = "Unit Cannot be Inspected";
+  static const String unitinpection = "Unit Inspection";
+  static const String unitinpectionsummary = "Unit Inspection Summary";
+  static const String unitHousekeeping = "Unit Housekeeping*";
+  static const String generalphysicalcondition = "General Physical Condition*";
+  static const String CompleteInspection = "Complete Inspection";
 
   ///************** error message string **************///
 
@@ -139,9 +158,11 @@ class Strings {
 
   static String buildingInspection = "Building Inspection";
   static String inspectionInformation = "Inspection Information";
+  static String unitInformation = "Unit Information";
   static String propertyInformation = "Property Information";
   static String inspectionDate = "Inspection Date";
   static String propertyName = "Property Name";
+
   static String city = "City";
   static String propertyID = "Property ID";
   static String state = "State";
@@ -154,9 +175,12 @@ class Strings {
   static String propertyNames = "*propertyName* - ";
   static String searchStandards = "Search standards";
   static String callForAidSystem = "Call for Aid System";
-  static String stowItems = "Stow items, including food, sanitation, and household supplies.";
-  static String door = "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
-  static String aDedicated = "A dedicated space for food, goods, or other items.";
+  static String stowItems =
+      "Stow items, including food, sanitation, and household supplies.";
+  static String door =
+      "Door; Drawer; Hinge; Knob; Drawer guide or slide; Shelf; Case or box";
+  static String aDedicated =
+      "A dedicated space for food, goods, or other items.";
   static String none = "None";
   static String laundry = "Kitchens, bathroom, laundry";
 }

@@ -82,4 +82,6 @@ class ImagePath {
   static String sprinkler = "${base}sprinkler.png";
   static String smokeAlarm = "${base}smoke-alarm.png";
   static String sinkWasteWater = "${base}sink-waste-water.png";
+  static String checkmark = "${base}checkmark.png";
+  static String uncheckmark = "${base}uncheckmark.png";
 }
