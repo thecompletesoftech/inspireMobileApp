@@ -16,6 +16,8 @@ import 'package:public_housing/screens/building_inspection_summary/building_insp
 import 'package:public_housing/screens/inspection_screen/deficienciesCard_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../unit_Inpection_screen/unit_inspection_screen.dart';
+
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
   const BuildingInspectionSummaryScreen({Key? key}) : super(key: key);
@@ -698,8 +700,6 @@ class BuildingInspectionSummaryScreen
                             );
                           },
                         ),
-                        
-                        
                         CommonButton(
                           title: Strings.saveAddUnit,
                           radius: 100.px,
@@ -719,7 +719,9 @@ class BuildingInspectionSummaryScreen
                               ? controller.appColors.textPink
                               : controller.appColors.black
                                   .withOpacity(0.11999999731779099),
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(UnitInspection.routes);
+                          },
                         ).paddingSymmetric(vertical: 24.px),
                       ],
                     ),

@@ -168,21 +168,15 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                     )
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                GestureDetector(
-                  onTap: (() {
-                    print("asddsadas");
-                    Get.toNamed(UnitInspection.routes);
-                  }),
-                  child: MyTextView(
-                    Strings.buildingInspection,
-                    textStyleNew: MyTextStyle(
-                      textColor: controller.appColors.appColor,
-                      textWeight: FontWeight.w600,
-                      textFamily: fontFamilyBold,
-                      textSize: 32.px,
-                    ),
-                  ).paddingOnly(top: 24.px, bottom: 32.px),
-                ),
+                MyTextView(
+                  Strings.buildingInspection,
+                  textStyleNew: MyTextStyle(
+                    textColor: controller.appColors.appColor,
+                    textWeight: FontWeight.w600,
+                    textFamily: fontFamilyBold,
+                    textSize: 32.px,
+                  ),
+                ).paddingOnly(top: 24.px, bottom: 32.px),
                 Expanded(
                   child: ShadowContainer(
                     radius: 8.px,
@@ -330,7 +324,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               ),
                             ],
                           ),
-                         
                           Row(
                             children: [
                               Expanded(
@@ -474,7 +467,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   labelText: Strings.buildingName,
                                 ),
                               ),
-                           
                             ],
                           ).paddingOnly(bottom: 32.px),
                           Row(
