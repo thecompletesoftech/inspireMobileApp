@@ -199,4 +199,5 @@ class Strings {
   static String inconclusive = "Inconclusive";
   static String takePhoto = "Take a Photo";
   static String saveAddUnit = "Save and Add Unit";
+  static String buildingInspectionSummary = "Building Inspection Summary";
 }

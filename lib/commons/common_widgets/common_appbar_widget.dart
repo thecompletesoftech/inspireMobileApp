@@ -23,6 +23,7 @@ class CommonAppBar extends StatelessWidget {
   }) : super(key: key);
 
   final GlobalKey<PopupMenuButtonState<int>> _key = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return ShadowContainer(
@@ -30,7 +31,8 @@ class CommonAppBar extends StatelessWidget {
       padding: EdgeInsets.zero,
       margin: EdgeInsets.zero,
       elevation: 3.0,
-      child: SizedBox(
+      child: Container(
+        color: AppColors().white,
         height: 116.px,
         child: Padding(
           padding: EdgeInsets.all(32.px),
