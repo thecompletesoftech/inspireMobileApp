@@ -16,6 +16,8 @@ import 'package:public_housing/screens/building_inspection_summary/building_insp
 import 'package:public_housing/screens/inspection_screen/deficienciesCard_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../unit_Inpection_screen/unit_inspection_screen.dart';
+
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
   const BuildingInspectionSummaryScreen({Key? key}) : super(key: key);
@@ -744,9 +746,11 @@ class BuildingInspectionSummaryScreen
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,
+
                           textColor: controller.appColors.lightText,
                           color: controller.appColors.buttonColor,
                           onTap: () {},
+
                         ).paddingSymmetric(vertical: 24.px),
                       ],
                     ),

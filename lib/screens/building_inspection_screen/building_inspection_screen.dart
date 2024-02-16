@@ -3,6 +3,8 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/building_standards_screen.dart';
 
+import '../unit_Inpection_screen/unit_inspection_screen.dart';
+
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
 

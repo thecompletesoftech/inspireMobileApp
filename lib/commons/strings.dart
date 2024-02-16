@@ -64,6 +64,7 @@ class Strings {
   static const String inspectionProcess = "Inspection process";
   static const String collapseStandards = "Collapse Standards";
   static const String startInspection = "Start Inspection";
+  static const String saveandunit = "Save and Add Unit";
   static const String resumeInspection = "Resume Inspection";
   static const String completedInspection = "Completed Inspection";
   static const String saveChanges = "Save Changes";
@@ -116,7 +117,7 @@ class Strings {
   static const String signatures = "Signatures";
   static const String editInspection = "Edit Inspection";
   static const String sectionCompleted = "Section Completed";
-  static const String tenantSignatures = "Tenant Signature";
+  static const String tenantSignatures = "Tenant Signature";  
   static const String ownerSignatures = "Owner Signature";
   static const String unit = "Unit";
   static const String inside = "Inside";
@@ -124,6 +125,7 @@ class Strings {
   static const String changesUnsaved = "Changes unsaved";
   static const String inspectionIncomplete = "Inspection Incomplete";
   static const String properties = "Properties";
+  static const String yes = "yes";
 
   static const String messageHint =
       "This is the beginning of your chat with Fernando Devries";
@@ -133,10 +135,24 @@ class Strings {
       "“The name of the maintenance person is Henry Roberts. If you can’t enter ask him. -JF”";
   static const String arrival =
       "Hi, my name is Philip Martin, inspector of Gilson Inspection Services. I’m close to your unit, please make sure to be ready to provide access. We appreciate your cooperation.";
-
   static const String presentDuringInspection = "Present During Inspection";
-
   static const String HSAcknowledgment = "H&S Acknowledgment";
+
+  ///************** Unit Inspection Screen String **************///
+
+  static const String unitnumberName = "Unit Number or Name*";
+  static const String unitaddress = "Unit Address*";
+  static const String bathroom = "Bathrooms";
+  static const String bedroom = "Bedrooms";
+  static const String unitoccupied = "Unit Occupied?";
+  static const String unitcannitbeinspected = "Unit Cannot be Inspected";
+  static const String unitinpection = "Unit Inspection";
+  static const String unitinpectionsummary = "Unit Inspection Summary";
+  static const String unitHousekeeping = "Unit Housekeeping*";
+  static const String generalphysicalcondition = "General Physical Condition*";
+  static const String CompleteInspection = "Complete Inspection";
+  static const String Nokeyavailble = "No keys available";
+
 
   ///************** error message string **************///
 
@@ -144,9 +160,11 @@ class Strings {
 
   static String buildingInspection = "Building Inspection";
   static String inspectionInformation = "Inspection Information";
+  static String unitInformation = "Unit Information";
   static String propertyInformation = "Property Information";
   static String inspectionDate = "Inspection Date";
   static String propertyName = "Property Name";
+
   static String city = "City";
   static String propertyID = "Property ID";
   static String state = "State";
