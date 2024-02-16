@@ -82,7 +82,9 @@ class BuildingInspectionSummaryScreen
                               textFamily: fontFamilyRegular,
                               textColor: controller.appColors.lightText,
                               color: controller.appColors.buttonColor,
-                              onTap: () {},
+                              onTap: () {
+                                Get.toNamed(UnitInspection.routes);
+                              },
                             ),
                           ],
                         ).paddingOnly(
@@ -746,11 +748,11 @@ class BuildingInspectionSummaryScreen
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,
-
                           textColor: controller.appColors.lightText,
                           color: controller.appColors.buttonColor,
-                          onTap: () {},
-
+                          onTap: () {
+                            Get.toNamed(UnitInspection.routes);
+                          },
                         ).paddingSymmetric(vertical: 24.px),
                       ],
                     ),
