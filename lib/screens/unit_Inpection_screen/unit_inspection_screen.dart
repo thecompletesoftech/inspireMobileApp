@@ -27,11 +27,7 @@ class UnitInspection extends GetView<UnitController> {
               Expanded(
                 child: ListView(
                   children: [
-                    GestureDetector(
-                      onTap: (() {
-                        print("asddsadas");
-                        Get.toNamed(UnitInspection.routes);
-                      }),
+                    Center(
                       child: MyTextView(
                         Strings.unitinpection,
                         textStyleNew: MyTextStyle(
@@ -40,10 +36,13 @@ class UnitInspection extends GetView<UnitController> {
                           textFamily: fontFamilyBold,
                           textSize: 32.px,
                         ),
-                      ).paddingOnly(top: 24.px,left: 32.px, right: 32.px, bottom: 32.px),
+                      ).paddingOnly(
+                          top: 24.px, left: 32.px, right: 32.px, bottom: 32.px),
                     ),
-                    ShadowContainer(
-                      radius: 8.px,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
                       child: SingleChildScrollView(
                         physics: NeverScrollableScrollPhysics(),
                         child: Column(

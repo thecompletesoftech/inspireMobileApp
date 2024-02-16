@@ -376,8 +376,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       title: Strings.yearConstructed,
                       value: '1945',
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
-                    ShadowContainer(
-                      radius: 8.px,
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
                       child: SingleChildScrollView(
                         physics: NeverScrollableScrollPhysics(),
                         child: Column(
