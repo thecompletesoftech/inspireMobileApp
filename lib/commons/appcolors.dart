@@ -33,6 +33,7 @@ class AppColors {
   Color textFiledLabelColor = const Color(0xFF666F80);
   Color inactiveColor = const Color(0xFFE7E0EC);
   Color textcolor = const Color(0xFF3F3F3F);
+  Color cardcolor = const Color(0xFFFFFBFE);
 
   ///=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-= APP COLORS ==-=-=-=--=-=-=-=-=-=-=-=-=///
   Color appColor = const Color(0xff002d74);

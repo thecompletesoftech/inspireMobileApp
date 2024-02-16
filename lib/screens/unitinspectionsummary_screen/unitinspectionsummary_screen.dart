@@ -121,7 +121,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             padding: EdgeInsets.zero,
                             contentPadding: EdgeInsets.only(left: 15.px),
                             shadowColor: controller.appColors.transparent,
-                            labelText: Strings.unitHousekeeping,    
+                            labelText: Strings.unitHousekeeping,
                           ),
                         ),
                         SizedBox(width: 16.px),
@@ -584,7 +584,162 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           ),
                         ),
                       ],
-                    ).paddingOnly(left: 32.px, right: 32.px, top: 30.px),
+                    ).paddingOnly(
+                        left: 32.px, right: 32.px, top: 30.px, bottom: 30.px),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: controller.dataList.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        final item = controller.dataList[index];
+                        return Container(
+                          padding: EdgeInsets.zero,
+                          decoration: BoxDecoration(
+                              color: controller.appColors.cardcolor,
+                              border: Border.all(
+                                  color: controller.appColors.divider),
+                              borderRadius: BorderRadius.circular(15)),
+                          // divider: controller.appColors.divider,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: controller.appColors.cardcolor,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        topRight: Radius.circular(15))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    MyTextView(
+                                      "Cabinet and Storage",
+                                      isMaxLineWrap: true,
+                                      textStyleNew: MyTextStyle(
+                                        textSize: 20.px,
+                                        textWeight: FontWeight.w600,
+                                        textColor:
+                                            controller.appColors.lightText,
+                                        textFamily: fontFamilyRegular,
+                                      ),
+                                    ),
+                                    CommonButton(
+                                      radius: 100.px,
+                                      title: Strings.inside,
+                                      onTap: () {},
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 24.px,
+                                        vertical: 10.px,
+                                      ),
+                                      textWeight: FontWeight.w500,
+                                      textSize: 16.px,
+                                      color: controller.appColors.appBGColor,
+                                      textColor: controller.appColors.textGreen,
+                                    ).paddingOnly(left: 24.px),
+                                  ],
+                                ).paddingAll(18.px),
+                              ),
+                              ShadowContainer2(
+                                padding: EdgeInsets.zero,
+                                divider: controller.appColors.divider,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: 184.px,
+                                        alignment: Alignment.center,
+                                        child: Center(
+                                          child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  height: 184.px,
+                                                  width: 184.px,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              13.px),
+                                                      image: DecorationImage(
+                                                          image: AssetImage(
+                                                              item.image ?? ""),
+                                                          fit: BoxFit.cover)),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) {
+                                                return SizedBox(width: 24.px);
+                                              },
+                                              itemCount: 3),
+                                        ),
+                                      ).paddingAll(10.px),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              MyTextView(
+                                item.title,
+                                isMaxLineWrap: true,
+                                textStyleNew: MyTextStyle(
+                                  textSize: 20.px,
+                                  textWeight: FontWeight.w400,
+                                  textColor: controller.appColors.black,
+                                  textFamily: fontFamilyRegular,
+                                ),
+                              ).paddingOnly(
+                                  top: 18.px, left: 18.px, right: 18.px),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        dotIcons(controller, Strings.comments,
+                                            '6 of 10 cabinets are missing -NJ'),
+                                        dotIcons(
+                                            controller, 'Date', '06/18/2023'),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      CommonIconButton(
+                                          icon: icEditNotes,
+                                          iconheigth: 24.px,
+                                          title: 'Edit',
+                                          radius: 100.px,
+                                          padding: EdgeInsets.fromLTRB(
+                                              16.px, 16.px, 20.px, 16.px),
+                                          color:
+                                              controller.appColors.transparent,
+                                          textColor:
+                                              controller.appColors.appColor,
+                                          textWeight: FontWeight.w500,
+                                          textSize: 14.px,
+                                          onTap: () {}),
+                                    ],
+                                  )
+                                ],
+                              ).paddingOnly(
+                                  top: 15.px,
+                                  left: 18.px,
+                                  right: 18.px,
+                                  bottom: 18.px)
+                            ],
+                          ),
+                        ).marginSymmetric(horizontal: 32.px);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 24.px,
+                        );
+                      },
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -657,7 +812,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           },
                         )
                       ],
-                    ).paddingOnly(top: 30.px),
+                    ).paddingOnly(top: 30.px, bottom: 30.px),
                   ],
                 ),
               ),
@@ -665,6 +820,39 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
           ),
         );
       },
+    );
+  }
+
+  Widget dotIcons(controller, title, description) {
+    return Row(
+      children: [
+        Container(
+          decoration:
+              BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+          width: 5,
+          height: 5,
+        ),
+        MyTextView(
+          '${title}: ',
+          isMaxLineWrap: true,
+          textStyleNew: MyTextStyle(
+            textSize: 20.px,
+            textWeight: FontWeight.w400,
+            textColor: controller.appColors.black,
+            textFamily: fontFamilyRegular,
+          ),
+        ).paddingOnly(left: 10.px),
+        MyTextView(
+          description,
+          isMaxLineWrap: true,
+          textStyleNew: MyTextStyle(
+            textSize: 18.px,
+            textWeight: FontWeight.w300,
+            textColor: controller.appColors.black,
+            textFamily: fontFamilyRegular,
+          ),
+        ),
+      ],
     );
   }
 }

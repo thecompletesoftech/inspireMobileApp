@@ -698,6 +698,8 @@ class BuildingInspectionSummaryScreen
                             );
                           },
                         ),
+                        
+                        
                         CommonButton(
                           title: Strings.saveAddUnit,
                           radius: 100.px,

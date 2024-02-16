@@ -15,6 +15,21 @@ class UnitInspectionsummaryController extends BaseController {
   List unithousekeepingList = [];
   List generalphysicalconditionList = [];
   List<String> cityList = [];
+  String inspectionName = '';
+  var dataList = [
+    RxCommonModel(
+      title: "D1. Cabinets are missing",
+      status: "false",
+      image: ImagePath.kitchen,
+      imgId: ImagePath.cabinets,
+    ),
+    RxCommonModel(
+      title: "D3. Refrigerator is missing",
+      image: ImagePath.cooking,
+      imgId: ImagePath.bedroom,
+      status: "false",
+    ),
+  ];
   var switchbtn = false.obs;
   @override
   void onInit() {
