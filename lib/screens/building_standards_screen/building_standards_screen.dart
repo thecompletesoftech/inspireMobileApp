@@ -295,86 +295,90 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                               },
                                               child: ShadowContainer(
                                                       padding: EdgeInsets.zero,
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Image.asset(
-                                                                buildingDataList
-                                                                        ?.image ??
-                                                                    "",
-                                                                fit: BoxFit
-                                                                    .cover),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 5,
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Row(
-                                                                  children: [
-                                                                    MyTextView(
-                                                                      buildingDataList
-                                                                              ?.title ??
-                                                                          "",
-                                                                      isMaxLineWrap:
-                                                                          true,
-                                                                      textStyleNew:
-                                                                          MyTextStyle(
-                                                                        textColor: controller
-                                                                            .appColors
-                                                                            .black,
-                                                                        textWeight:
-                                                                            FontWeight.w400,
-                                                                        textFamily:
-                                                                            fontFamilyBold,
-                                                                        textSize:
-                                                                            20.px,
-                                                                      ),
-                                                                    ),
-                                                                    if ((buildingDataList?.isSuccess ??
-                                                                            false) ==
-                                                                        true)
-                                                                      ClipOval(
-                                                                          child:
-                                                                              SvgPicture.string(
-                                                                        icComplete,
-                                                                      )),
-                                                                  ],
-                                                                ),
-                                                                MyTextView(
+                                                      child: Container(
+                                                        color: controller
+                                                            .appColors.white,
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Image.asset(
                                                                   buildingDataList
-                                                                          ?.description ??
+                                                                          ?.image ??
                                                                       "",
-                                                                  isMaxLineWrap:
-                                                                      true,
-                                                                  textStyleNew:
-                                                                      MyTextStyle(
-                                                                    textColor: controller
-                                                                        .appColors
-                                                                        .black,
-                                                                    textWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    textFamily:
-                                                                        fontFamilyBold,
-                                                                    textSize:
-                                                                        16.px,
+                                                                  fit: BoxFit
+                                                                      .cover),
+                                                            ),
+                                                            Expanded(
+                                                              flex: 5,
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      MyTextView(
+                                                                        buildingDataList?.title ??
+                                                                            "",
+                                                                        isMaxLineWrap:
+                                                                            true,
+                                                                        textStyleNew:
+                                                                            MyTextStyle(
+                                                                          textColor: controller
+                                                                              .appColors
+                                                                              .black,
+                                                                          textWeight:
+                                                                              FontWeight.w400,
+                                                                          textFamily:
+                                                                              fontFamilyBold,
+                                                                          textSize:
+                                                                              20.px,
+                                                                        ),
+                                                                      ),
+                                                                      if ((buildingDataList?.isSuccess ??
+                                                                              false) ==
+                                                                          true)
+                                                                        ClipOval(
+                                                                            child:
+                                                                                SvgPicture.string(
+                                                                          icComplete,
+                                                                        )),
+                                                                    ],
                                                                   ),
-                                                                ).paddingOnly(
-                                                                    top: 8.px),
-                                                              ],
-                                                            ).paddingSymmetric(
-                                                                horizontal:
-                                                                    24.px,
-                                                                vertical:
-                                                                    16.px),
-                                                          )
-                                                        ],
+                                                                  MyTextView(
+                                                                    buildingDataList
+                                                                            ?.description ??
+                                                                        "",
+                                                                    isMaxLineWrap:
+                                                                        true,
+                                                                    textStyleNew:
+                                                                        MyTextStyle(
+                                                                      textColor: controller
+                                                                          .appColors
+                                                                          .black,
+                                                                      textWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      textFamily:
+                                                                          fontFamilyBold,
+                                                                      textSize:
+                                                                          16.px,
+                                                                    ),
+                                                                  ).paddingOnly(
+                                                                      top:
+                                                                          8.px),
+                                                                ],
+                                                              ).paddingSymmetric(
+                                                                  horizontal:
+                                                                      24.px,
+                                                                  vertical:
+                                                                      16.px),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ))
                                                   .marginSymmetric(
                                                       vertical: 12.px),

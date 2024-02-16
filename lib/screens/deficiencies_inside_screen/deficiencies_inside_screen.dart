@@ -773,12 +773,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                       textColor:
                                           controller.selectedItem != "null" &&
                                                   controller.visibleBtn
-                                              ? controller.appColors.black
+                                              ? controller.appColors.white
                                               : controller.appColors.border1,
                                       color: controller.selectedItem !=
                                                   "null" &&
                                               controller.visibleBtn
-                                          ? controller.appColors.textPink
+                                          ? controller.appColors.appColor
                                           : controller.appColors.black
                                               .withOpacity(0.11999999731779099),
                                       radius: 35.px,

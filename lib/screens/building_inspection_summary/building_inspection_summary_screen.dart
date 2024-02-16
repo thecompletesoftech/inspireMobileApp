@@ -54,6 +54,40 @@ class BuildingInspectionSummaryScreen
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyTextView(
+                              Strings.buildingInspectionSummary,
+                              textStyleNew: MyTextStyle(
+                                textColor: controller.appColors.appColor,
+                                textWeight: FontWeight.w600,
+                                textFamily: fontFamilyBold,
+                                textSize: 32.px,
+                              ),
+                            ),
+                            CommonButton(
+                              title: Strings.saveAddUnit,
+                              radius: 100.px,
+                              width: 171.px,
+                              height: 44.px,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 15.px,
+                                horizontal: 24.px,
+                              ),
+                              textSize: 16.px,
+                              textWeight: FontWeight.w500,
+                              textFamily: fontFamilyRegular,
+                              textColor: controller.appColors.lightText,
+                              color: controller.appColors.buttonColor,
+                              onTap: () {},
+                            ),
+                          ],
+                        ).paddingOnly(
+                            left: 32.px,
+                            top: 48.px,
+                            right: 32.px,
+                            bottom: 48.px),
                         ShadowContainer(
                           radius: 8.px,
                           child: SingleChildScrollView(
@@ -523,7 +557,7 @@ class BuildingInspectionSummaryScreen
                                 right: 24.px,
                                 left: 24.px),
                           ),
-                        ).paddingOnly(left: 32.px, right: 32.px),
+                        ).paddingSymmetric(horizontal: 32.px),
                         Row(
                           children: [
                             MyTextView(
@@ -710,13 +744,8 @@ class BuildingInspectionSummaryScreen
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,
-                          textColor: controller.getStartInspection()
-                              ? controller.appColors.black
-                              : controller.appColors.border1,
-                          color: controller.getStartInspection()
-                              ? controller.appColors.textPink
-                              : controller.appColors.black
-                                  .withOpacity(0.11999999731779099),
+                          textColor: controller.appColors.lightText,
+                          color: controller.appColors.buttonColor,
                           onTap: () {},
                         ).paddingSymmetric(vertical: 24.px),
                       ],
