@@ -26,6 +26,8 @@ class BuildingInspectionController extends BaseController {
 
   @override
   void onInit() {
+    searchPropertyNameList == propertyList;
+    searchBuildingList == buildingList;
     checked.addAll([
       Certificates(true, 'Boiler Certificate'),
       Certificates(false, 'Elevator Certificate'),
@@ -118,6 +120,53 @@ class BuildingInspectionController extends BaseController {
 
   void buildingTypeSelected(value) {
     buildingTypeController.text = buildingTypeList[value];
+  }
+
+  void actionProperty(value) {
+    propertyNameController.text = value;
+  }
+
+  void actionBuilding(value) {
+    buildingNameController.text = value;
+  }
+
+  var searchPropertyNameList = [].obs;
+  var searchBuildingList = [].obs;
+
+  searchProperty({required String searchText}) {
+    searchPropertyNameList.clear();
+    if (!utils.isValidationEmpty(searchText)) {
+      for (int i = 0; i < propertyList.length; i++) {
+        if (propertyList[i]
+            .toString()
+            .toLowerCase()
+            .contains(searchText.toString().toLowerCase())) {
+          searchPropertyNameList.add(propertyList[i]);
+          update();
+        }
+      }
+    } else {
+      searchPropertyNameList.addAll(propertyList);
+      update();
+    }
+  }
+
+  searchBuilding({required String searchText}) {
+    searchBuildingList.clear();
+    if (!utils.isValidationEmpty(searchText)) {
+      for (int i = 0; i < buildingList.length; i++) {
+        if (buildingList[i]
+            .toString()
+            .toLowerCase()
+            .contains(searchText.toString().toLowerCase())) {
+          searchBuildingList.add(buildingList[i]);
+          update();
+        }
+      }
+    } else {
+      searchBuildingList.addAll(buildingList);
+      update();
+    }
   }
 }
 

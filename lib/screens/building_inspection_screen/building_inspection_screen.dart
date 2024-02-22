@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/building_standards_screen.dart';
@@ -271,45 +272,54 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: CommonTextField(
-                                    isLable: true,
-                                    readOnly: true,
-                                    controller:
-                                        controller.propertyNameController,
-                                    color: controller.appColors.transparent,
-                                    prefixIcon: SvgPicture.string(
-                                      icBuildingss,
-                                      color: controller.appColors.grey,
-                                    ).paddingOnly(left: 15.px),
-                                    suffixIcon: PopupMenuButton(
-                                      key: controller.popupKey1,
-                                      position: PopupMenuPosition.under,
-                                      tooltip: Strings.propertyName,
-                                      onSelected: (value) {
-                                        controller
-                                            .actionPropertyNameSelected(value);
-                                        controller.update();
-                                      },
-                                      itemBuilder: (context) => List.generate(
-                                          controller.propertyList.length,
-                                          (index) => PopupMenuItem(
-                                                value: index,
-                                                child: Text(controller
-                                                    .propertyList[index]),
-                                              )),
-                                      child: SvgPicture.string(
+                                    child: TypeAheadField(
+                                  controller: controller.propertyNameController,
+                                  suggestionsCallback: (search) {
+                                    controller.searchProperty(
+                                        searchText: search);
+                                    controller.update();
+                                    return controller.searchPropertyNameList;
+                                  },
+                                  builder: (context, c, focusNode) {
+                                    return CommonTextField(
+                                      focusNode: focusNode,
+                                      isLable: true,
+                                      color: controller.appColors.transparent,
+                                      prefixIcon: SvgPicture.string(
+                                        icBuildingss,
+                                        color: controller.appColors.grey,
+                                      ).paddingOnly(left: 15.px),
+                                      suffixIcon: SvgPicture.string(
                                         icDownArrow,
                                         color: controller.appColors.grey,
                                       ).paddingAll(10.px),
-                                    ),
-                                    padding: EdgeInsets.zero,
-                                    contentPadding:
-                                        EdgeInsets.only(left: 15.px),
-                                    shadowColor:
-                                        controller.appColors.transparent,
-                                    labelText: Strings.propertyName,
-                                  ),
-                                ),
+                                      padding: EdgeInsets.zero,
+                                      contentPadding:
+                                          EdgeInsets.only(left: 15.px),
+                                      shadowColor:
+                                          controller.appColors.transparent,
+                                      labelText: Strings.propertyName,
+                                      controller: c,
+                                    );
+                                  },
+                                  itemBuilder: (context, dynamic i) {
+                                    return ListTile(
+                                      title: MyTextView(
+                                        i,
+                                        textStyleNew: MyTextStyle(
+                                          textColor: controller.appColors.black,
+                                          textWeight: FontWeight.w400,
+                                          textFamily: fontFamilyBold,
+                                          textSize: 16.px,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onSelected: (value) {
+                                    controller.actionProperty(value);
+                                    controller.update();
+                                  },
+                                )),
                                 SizedBox(width: 16.px),
                                 Expanded(
                                   child: CommonTextField(
@@ -449,44 +459,54 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: CommonTextField(
-                                    isLable: true,
-                                    readOnly: true,
-                                    controller:
-                                        controller.buildingNameController,
-                                    color: controller.appColors.transparent,
-                                    prefixIcon: SvgPicture.string(
-                                      icBuildingss,
-                                      color: controller.appColors.grey,
-                                    ).paddingOnly(left: 15.px),
-                                    suffixIcon: PopupMenuButton(
-                                      key: controller.popupKey3,
-                                      position: PopupMenuPosition.under,
-                                      tooltip: Strings.buildingName,
-                                      onSelected: (value) {
-                                        controller.buildingSelected(value);
-                                        controller.update();
-                                      },
-                                      itemBuilder: (context) => List.generate(
-                                          controller.buildingList.length,
-                                          (index) => PopupMenuItem(
-                                                value: index,
-                                                child: Text(controller
-                                                    .buildingList[index]),
-                                              )),
-                                      child: SvgPicture.string(
+                                    child: TypeAheadField(
+                                  controller: controller.buildingNameController,
+                                  suggestionsCallback: (search) {
+                                    controller.searchBuilding(
+                                        searchText: search);
+                                    controller.update();
+                                    return controller.searchBuildingList;
+                                  },
+                                  builder: (context, c, focusNode) {
+                                    return CommonTextField(
+                                      focusNode: focusNode,
+                                      isLable: true,
+                                      controller: c,
+                                      color: controller.appColors.transparent,
+                                      prefixIcon: SvgPicture.string(
+                                        icBuildingss,
+                                        color: controller.appColors.grey,
+                                      ).paddingOnly(left: 15.px),
+                                      suffixIcon: SvgPicture.string(
                                         icDownArrow,
                                         color: controller.appColors.grey,
                                       ).paddingAll(10.px),
-                                    ),
-                                    padding: EdgeInsets.zero,
-                                    contentPadding:
-                                        EdgeInsets.only(left: 15.px),
-                                    shadowColor:
-                                        controller.appColors.transparent,
-                                    labelText: Strings.buildingName,
-                                  ),
-                                ),
+                                      padding: EdgeInsets.zero,
+                                      contentPadding:
+                                          EdgeInsets.only(left: 15.px),
+                                      shadowColor:
+                                          controller.appColors.transparent,
+                                      labelText: Strings.buildingName,
+                                    );
+                                  },
+                                  itemBuilder: (context, dynamic i) {
+                                    return ListTile(
+                                      title: MyTextView(
+                                        i,
+                                        textStyleNew: MyTextStyle(
+                                          textColor: controller.appColors.black,
+                                          textWeight: FontWeight.w400,
+                                          textFamily: fontFamilyBold,
+                                          textSize: 16.px,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  onSelected: (value) {
+                                    controller.actionBuilding(value);
+                                    controller.update();
+                                  },
+                                )),
                               ],
                             ).paddingOnly(bottom: 32.px),
                             Row(
