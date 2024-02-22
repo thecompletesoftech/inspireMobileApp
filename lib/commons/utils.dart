@@ -820,7 +820,7 @@ class Utils {
   /// <<< To launch url --------- >>>
   void urlLaunch(Uri url) async {
     if (await canLaunchUrl(url)) {
-      await launchUrl(url);
+      await launchUrl(url); 
     }
   }
 
