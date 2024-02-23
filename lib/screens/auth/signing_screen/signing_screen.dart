@@ -306,14 +306,17 @@ class SigningScreen extends GetView<SigningController> {
                                               controller.isEmail = false;
                                               controller.checked = false;
                                               controller.update();
-                                            } else if (!controller.utils
-                                                .emailValidator(controller
-                                                    .email.text
-                                                    .trim())) {
-                                              controller.isEmail = false;
-                                              controller.checked = false;
-                                              controller.update();
-                                            } else {
+                                            }
+                                            // else if (!controller.utils
+                                            //     .emailValidator(controller
+                                            //         .email.text
+                                            //         .trim())) {
+                                            //   controller.isEmail = false;
+                                            //   controller.checked = false;
+                                            //   controller.update();
+                                            // }
+
+                                            else {
                                               controller.isEmail = true;
                                               if (controller.isPass) {
                                                 controller.checked = true;

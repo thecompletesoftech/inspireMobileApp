@@ -15,12 +15,13 @@ class SigningController extends BaseController {
   TokenAccount? tokenAccount;
   var hide = true;
 
-  loginApiCall() async {
+  loginApiCallcarecart() async {
     String user = email.text;
     String password = pass.text;
     try {
       TokenAccount tokenAccount = await loginAccount(user, password);
       print("account token" + tokenAccount.toString());
+
       saveAccount(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
       // Get.offAllNamed(PropertyScreen.routes);
@@ -88,11 +89,14 @@ class SigningController extends BaseController {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterEmail);
-    } else if (!utils.emailValidator(email.text.trim())) {
-      utils.showSnackBar(
-          context: Get.context!,
-          message: Languages.of(Get.context!)!.pleaseEnterValidEmail);
-    } else if (utils.isValidationEmpty(pass.text.trim())) {
+    }
+    // else if (!utils.emailValidator(email.text.trim())) {
+    //   utils.showSnackBar(
+    //       context: Get.context!,
+    //       message: Languages.of(Get.context!)!.pleaseEnterValidEmail);
+    // }
+
+    else if (utils.isValidationEmpty(pass.text.trim())) {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterPassword);
@@ -104,11 +108,11 @@ class SigningController extends BaseController {
     // }
     else {
       // checked = true;
-      loginApiCall();
+      loginApicall();
     }
   }
 
-  saveAccount(TokenAccount tokenAccount) async {
+  saveAccountcarecart(TokenAccount tokenAccount) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     await sharedPreferences.setString('token', tokenAccount.token);
@@ -117,5 +121,31 @@ class SigningController extends BaseController {
     print(
         "shared pref" + sharedPreferences.getString('accountModel').toString());
     tokenAccount = tokenAccount;
+  }
+
+  saveAccount(token) async {
+    getStorageData.saveString(getStorageData.token, tokenAccount);
+
+    // await sharedPreferences.setString(
+    //     'accountModel', jsonEncode(tokenAccount.account.toJson()));
+  }
+
+  loginApicall() async {
+    // var token = await loginApiCallcarecart();
+    // if (token != null) {
+    var map = {"username": email.text, "password": pass.text};
+
+    await ApidunctionGet().getApi(Constants.login, map, true).then((value) {
+      if (value.statusCode == 200) {
+        var result = jsonDecode(value.body);
+        getStorageData.saveString(getStorageData.isLogin, true);
+        saveAccount(result['token']);
+        Get.offAllNamed(BuildingInspectionScreen.routes);
+      } else {
+        utils.showSnackBar(
+            context: Get.context!,
+            message: jsonDecode(value.body)['detail'].toString());
+      }
+    });
   }
 }

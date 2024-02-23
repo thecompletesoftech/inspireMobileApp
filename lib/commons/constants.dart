@@ -65,9 +65,10 @@ class Constants {
   static const String languageCodeAr = 'ar';
 
   //API calling....
-  static const String baseUrl = "http://xyz.co.in:3030/api/";
+  static const String baseUrl =
+      "https://inspections.dev.gccs.gilsonsoftware.com/";
   static const String signUp = "user/signUp";
-  static const String login = "user/login";
+  static const String login = "pha-api/accounts/login/";
   static const String forgotPassword = "user/forgotPassword";
   static const String getUserProfile = "user/getUserProfile";
   static const String updateProfile = "user/updateProfile";

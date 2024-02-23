@@ -28,6 +28,8 @@ class PropertyDetailsController extends BaseController {
       token: getStorageData.readObject(getStorageData.token),
     );
 
+    
+    
     // HomeModel model = HomeModel.fromJson(data);
     // if (model.responseCode == 1) {
     //   if (model.data!.isNotEmpty) {

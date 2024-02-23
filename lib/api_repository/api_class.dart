@@ -176,7 +176,7 @@ class HttpUtil {
                 return ErrorEntity(
                     code: errCode,
                     message: error.response != null
-                        ? error.response!.data!['ResponseMsg']
+                        ? error.response!.data!['detail']
                         : "");
             }
           } on Exception catch (_) {
