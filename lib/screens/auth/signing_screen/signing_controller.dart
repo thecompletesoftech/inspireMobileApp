@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
+import 'package:public_housing/screens/auth/model/LoginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
 import '../../building_inspection_screen/building_inspection_screen.dart';
+import '../../building_standards_screen/repository/building_standards_repository.dart';
+import '../repositry/log_repo.dart';
 
 class SigningController extends BaseController {
   TextEditingController email = TextEditingController();
@@ -14,7 +17,8 @@ class SigningController extends BaseController {
   bool isPass = false;
   TokenAccount? tokenAccount;
   var hide = true;
-
+  LoginRepository loginrepo = LoginRepository();
+  var islogin = false.obs;
   loginApiCallcarecart() async {
     String user = email.text;
     String password = pass.text;
@@ -108,7 +112,7 @@ class SigningController extends BaseController {
     // }
     else {
       // checked = true;
-      loginApicall();
+      Login();
     }
   }
 
@@ -147,5 +151,18 @@ class SigningController extends BaseController {
             message: jsonDecode(value.body)['detail'].toString());
       }
     });
+  }
+
+  Login() async {
+    var map = {"username": email.text, "password": pass.text};
+    var response = await loginrepo.login(map);
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (Loginmodel r) {
+      getStorageData.saveString(getStorageData.isLogin, true);
+      saveAccount(r.token.toString());
+      Get.offAllNamed(BuildingInspectionScreen.routes);
+    });
+    update();
   }
 }
