@@ -112,7 +112,7 @@ class SigningController extends BaseController {
     // }
     else {
       // checked = true;
-      Login();
+      login();
     }
   }
 
@@ -153,7 +153,7 @@ class SigningController extends BaseController {
     });
   }
 
-  Login() async {
+  login() async {
     var map = {"username": email.text, "password": pass.text};
     var response = await loginrepo.login(map);
     response.fold((l) {

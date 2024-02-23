@@ -81,7 +81,7 @@ class ApiBaseHelperImplementation extends ApiBaseHelper {
         queryParameters: queryParameter ?? {},
         data: body,
         options: Options(headers: headers ?? {}));
-
+    print(response.statusCode.toString());
     return response;
   }
 

@@ -36,8 +36,6 @@ class ApiProviders {
     try {
       Response response = await apiBaseHelperImplementation.post(
           endPoint: Constants.login, body: mapjson);
-          
-      print("res" + response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(Loginmodel.fromJson(response.data));
       } else {
@@ -45,8 +43,7 @@ class ApiProviders {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      print("e" + e.toString());
-      return Left(Failure(errorMessage: e.response?.data['message']));
+      return Left(Failure(errorMessage: e.response?.data['detail']));
     }
   }
 }
