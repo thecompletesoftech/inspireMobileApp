@@ -3,8 +3,8 @@ import 'package:public_housing/api/api_helper/api_base_helper.dart';
 import 'package:public_housing/commons/constants.dart';
 
 class ApiBaseHelperImplementation extends ApiBaseHelper {
-  final Dio _dio = Dio(
-      BaseOptions(baseUrl: Constants.baseUrl, followRedirects: true));
+  final Dio _dio =
+      Dio(BaseOptions(baseUrl: Constants.baseUrl, followRedirects: true));
 
   @override
   Future<dynamic> get(
@@ -109,7 +109,7 @@ class ApiBaseHelperImplementation extends ApiBaseHelper {
         data: body);
 
     return response;
-    }
+  }
 
   @override
   void cancelRequest() {}

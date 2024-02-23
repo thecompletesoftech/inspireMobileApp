@@ -8,7 +8,8 @@ class BuildingStandardsRepository {
 
   BuildingStandardsRepository();
 
-  Future<Either<Failure, DeficiencyAreasResponseModel>> getDeficiencyAreas() async {
+  Future<Either<Failure, DeficiencyAreasResponseModel>>
+      getDeficiencyAreas() async {
     var response = await _provider.getDeficiencyAreasRequest();
     return response.fold((l) => Left(l), (r) => Right(r));
   }

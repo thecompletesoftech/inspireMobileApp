@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_binding.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_controller.dart';
+import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 
 class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
   const DeficienciesInsideScreen({Key? key}) : super(key: key);
@@ -57,7 +56,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MyTextView(
-                                  '${controller.deficiencies}',
+                                  '${controller.deficiencyAreaItem.description}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.appColor,
@@ -97,8 +96,6 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                       child: Column(
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.string(icTimeColor),
                                               MyTextView(
@@ -111,9 +108,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                   textFamily: fontFamilyBold,
                                                   textSize: 16.px,
                                                 ),
-                                              ),
+                                              ).paddingOnly(left: 20.px),
+                                              Spacer(),
                                               MyTextView(
-                                                Strings.days,
+                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.correctionTimeFrame ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -126,8 +124,6 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                             ],
                                           ),
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.string(icLike),
                                               MyTextView(
@@ -140,9 +136,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                   textFamily: fontFamilyBold,
                                                   textSize: 16.px,
                                                 ),
-                                              ),
+                                              ).paddingOnly(left: 20.px),
+                                              Spacer(),
                                               MyTextView(
-                                                Strings.moderate,
+                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.healthySafetyDesignation ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -180,7 +177,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   ),
                                 ),
                                 MyTextView(
-                                  Strings.deficiencyCriteriaDes,
+                                  '${controller.deficiencyAreaItem.criteria}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.textBlack2,
