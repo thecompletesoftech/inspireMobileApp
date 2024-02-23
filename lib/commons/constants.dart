@@ -66,9 +66,9 @@ class Constants {
 
   //API calling....
   static const String baseUrl =
-      "https://inspections.dev.gccs.gilsonsoftware.com/";
+      "https://inspections.dev.gccs.gilsonsoftware.com/inspection/api/";
   static const String signUp = "user/signUp";
-  static const String login = "pha-api/accounts/login/";
+  static const String login = "user/login";
   static const String forgotPassword = "user/forgotPassword";
   static const String getUserProfile = "user/getUserProfile";
   static const String updateProfile = "user/updateProfile";
@@ -103,6 +103,7 @@ class Constants {
 
   static const String kUriPrefix = "";
   static const String apiKey = "";
+
   // static const String googleApiKey = "AIzaSyC6LvoJFvAIK3Gpa_SkIgz-oRzhN4RyZwc";
   static const String googleApiKey = "AIzaSyAHAmJ0f-Q9xHKfd-rsddiqm4Mq7mb0xUY";
   static const String languageCodeDefault = languageCodeEn;

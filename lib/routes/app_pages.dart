@@ -6,8 +6,8 @@ import 'package:public_housing/screens/building_inspection_screen/building_inspe
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_binding.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_screen.dart';
-import 'package:public_housing/screens/building_standards_screen/building_standards_binding.dart';
-import 'package:public_housing/screens/building_standards_screen/building_standards_screen.dart';
+import 'package:public_housing/screens/building_standards_screen/binding/building_standards_binding.dart';
+import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_screen.dart';

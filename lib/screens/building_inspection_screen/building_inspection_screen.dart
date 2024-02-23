@@ -2,7 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_controller.dart';
-import 'package:public_housing/screens/building_standards_screen/building_standards_screen.dart';
+import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 
 import '../unit_Inpection_screen/unit_inspection_screen.dart';
 

@@ -1,6 +1,5 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
-import 'package:public_housing/screens/building_standards_screen/building_standards_controller.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
