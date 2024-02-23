@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
 import '../../building_inspection_screen/building_inspection_screen.dart';
-import '../../building_standards_screen/repository/building_standards_repository.dart';
 import '../repositry/log_repo.dart';
 
 class SigningController extends BaseController {
@@ -19,6 +18,7 @@ class SigningController extends BaseController {
   var hide = true;
   LoginRepository loginrepo = LoginRepository();
   var islogin = false.obs;
+
   loginApiCallcarecart() async {
     String user = email.text;
     String password = pass.text;
@@ -129,28 +129,6 @@ class SigningController extends BaseController {
 
   saveAccount(token) async {
     getStorageData.saveString(getStorageData.token, tokenAccount);
-
-    // await sharedPreferences.setString(
-    //     'accountModel', jsonEncode(tokenAccount.account.toJson()));
-  }
-
-  loginApicall() async {
-    // var token = await loginApiCallcarecart();
-    // if (token != null) {
-    var map = {"username": email.text, "password": pass.text};
-
-    await ApidunctionGet().getApi(Constants.login, map, true).then((value) {
-      if (value.statusCode == 200) {
-        var result = jsonDecode(value.body);
-        getStorageData.saveString(getStorageData.isLogin, true);
-        saveAccount(result['token']);
-        Get.offAllNamed(BuildingInspectionScreen.routes);
-      } else {
-        utils.showSnackBar(
-            context: Get.context!,
-            message: jsonDecode(value.body)['detail'].toString());
-      }
-    });
   }
 
   login() async {
