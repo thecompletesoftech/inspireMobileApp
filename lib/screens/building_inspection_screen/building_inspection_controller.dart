@@ -25,17 +25,20 @@ class BuildingInspectionController extends BaseController {
   TextEditingController buildingNameController = TextEditingController();
   TextEditingController yearConstructedController = TextEditingController();
   TextEditingController buildingTypeController = TextEditingController();
+  TextEditingController buildingidController = TextEditingController();
+  TextEditingController buildingTypeidController = TextEditingController();
   List checked = [];
   // List<String> propertyList = [];
   List<String> cityList = [];
   // List<String> buildingList = [];
-  List<Buildings> buildingList = [];
+  List<Building> buildingList = [];
   List<String> buildingTypeList = [];
   List<Properties>? propertyList = [];
   List<Certificates>? certificates = [];
   bool? isData;
   Account? account;
   var propertyinfo = {}.obs;
+  var buildinginfo = {}.obs;
   var certificatesinfo = [].obs;
   @override
   void onInit() {
@@ -123,6 +126,17 @@ class BuildingInspectionController extends BaseController {
     print(propertyinfo.toString());
   }
 
+  getbuildingjson() {
+    buildinginfo.addAll({
+      "id": buildingidController.text,
+      "name": buildingNameController.text,
+      "constructed_year": yearConstructedController.text,
+      "building_type_id": buildingTypeidController.text
+    });
+    print(buildinginfo.toString());
+    print(propertyinfo.toString());
+  }
+
   getcurrentdate() {
     inspectionDateController.text = Utils().currentTime();
   }
@@ -146,6 +160,7 @@ class BuildingInspectionController extends BaseController {
             stateController.text.isNotEmpty &&
             zipController.text.isNotEmpty &&
             propertyAddressController.text.isNotEmpty &&
+            buildingNameController.text.isNotEmpty &&
             certificatesinfo.length > 0
         ? true
         : false;
@@ -190,8 +205,13 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  void actionBuilding(value) {
-    buildingNameController.text = value;
+  void actionBuilding(Building value) {
+    buildingNameController.text = value.name;
+    yearConstructedController.text = value.constructedYear.toString();
+    buildingTypeController.text = value.buildingType.name.toString();
+    buildingTypeidController.text = value.buildingType.id.toString();
+    buildingidController.text = value.id.toString();
+    update();
   }
 
   var searchPropertyNameList = [].obs;
@@ -222,6 +242,7 @@ class BuildingInspectionController extends BaseController {
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < buildingList.length; i++) {
         if (buildingList[i]
+            .name
             .toString()
             .toLowerCase()
             .contains(searchText.toString().toLowerCase())) {
@@ -263,6 +284,7 @@ class BuildingInspectionController extends BaseController {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
       buildingList = r.buildings!;
+      print("building" + buildingList.toString());
       // buildingList = r;
     });
     update();
