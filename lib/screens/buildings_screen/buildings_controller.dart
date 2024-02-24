@@ -403,6 +403,4 @@ class BuildingsController extends BaseController {
       // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
     }
   }
-
-
 }

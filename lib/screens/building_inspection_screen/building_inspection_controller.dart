@@ -1,11 +1,6 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 
-import '../../Models/BuildingstypeModel/buildingtype_model.dart';
-import '../../Models/CertificateModel/certificate_model.dart';
-import '../../Models/buildingModel/building_model.dart';
-import '../../Models/propertymodel/property_model.dart';
-
 class BuildingInspectionController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
@@ -28,10 +23,7 @@ class BuildingInspectionController extends BaseController {
   List<String> buildingList = [];
   List<String> buildingTypeList = [];
   bool? isData;
-  var property = <Properties>[].obs;
-  var buildings = <Buildings>[].obs;
-  var certificatesdata = <Certificates>[].obs;
-  var buildingTypes = <BuildingTypes>[].obs;
+
   @override
   void onInit() {
     checked.addAll([
@@ -126,82 +118,6 @@ class BuildingInspectionController extends BaseController {
 
   void buildingTypeSelected(value) {
     buildingTypeController.text = buildingTypeList[value];
-  }
-
-  getpropertydata() async {
-    final data = await GetAPIFunction().apiCall(
-      context: Get.context!,
-      apiName: Constants.propertylist,
-      token: getStorageData.readObject(getStorageData.token),
-    );
-
-    PropertyModel model = PropertyModel.fromJson(data);
-    if (model.type == "SUCCESS") {
-      if (model.properties!.length > 0) {
-        property.value = model.properties!;
-        update();
-      } else {}
-      update();
-    } else if (model.type == "FAILED") {
-      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-    }
-  }
-
-  getbuildingdata() async {
-    final data = await GetAPIFunction().apiCall(
-      context: Get.context!,
-      apiName: Constants.buildingslist,
-      token: getStorageData.readObject(getStorageData.token),
-    );
-
-    BuildingModel model = BuildingModel.fromJson(data);
-    if (model.type == "SUCCESS") {
-      if (model.buildings!.length > 0) {
-        buildings.value = model.buildings!;
-        update();
-      } else {}
-      update();
-    } else if (model.type == "FAILED") {
-      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-    }
-  }
-
-  getCertificatesdata() async {
-    final data = await GetAPIFunction().apiCall(
-      context: Get.context!,
-      apiName: Constants.certificatesList,
-      token: getStorageData.readObject(getStorageData.token),
-    );
-
-    CertificateModel model = CertificateModel.fromJson(data);
-    if (model.type == "SUCCESS") {
-      if (model.certificates!.length > 0) {
-        certificatesdata.value = model.certificates!.cast<Certificates>();
-        update();
-      } else {}
-      update();
-    } else if (model.type == "FAILED") {
-      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-    }
-  }
-
-  getBuildingTypedata() async {
-    final data = await GetAPIFunction().apiCall(
-      context: Get.context!,
-      apiName: Constants.certificatesList,
-      token: getStorageData.readObject(getStorageData.token),
-    );
-
-    BuildingTypesModel model = BuildingTypesModel.fromJson(data);
-    if (model.type == "SUCCESS") {
-      if (model.type!.length > 0) {
-        buildingTypes.value = model.buildingTypes!;
-        update();
-      } else {}
-      update();
-    } else if (model.type == "FAILED") {
-      // utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-    }
   }
 }
 
