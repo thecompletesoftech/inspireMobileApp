@@ -21,8 +21,8 @@ class BudingInpectionRepository {
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, BuildingModel>> getbuilding() async {
-    var response = await _provider.getBuildinginfo();
+  Future<Either<Failure, BuildingModel>> getbuilding(id) async {
+    var response = await _provider.getBuildinginfo(id);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

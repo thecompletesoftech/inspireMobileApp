@@ -95,7 +95,6 @@ class BuildingInspectionController extends BaseController {
     var accountdata = await getStorageData.readString(getStorageData.account);
     account = Account.fromJson(jsonDecode(accountdata.toString()));
     inspectorController.text = await account!.userName;
-
     update();
   }
 
@@ -169,6 +168,7 @@ class BuildingInspectionController extends BaseController {
   var searchBuildingList = [].obs;
 
   searchProperty({required String searchText}) {
+    // getpropertyinfo(searchText);
     searchPropertyNameList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < propertyList!.length; i++) {
@@ -227,7 +227,8 @@ class BuildingInspectionController extends BaseController {
   }
 
   getbuilding() async {
-    var response = await BudingInpectionRepository().getbuilding();
+    var response = await BudingInpectionRepository()
+        .getbuilding(propertyIDController.text);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {

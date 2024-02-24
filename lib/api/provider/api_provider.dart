@@ -52,14 +52,10 @@ class ApiProviders extends BaseController {
 
   Future<Either<Failure, PropertyModel>> getpropetyinfo() async {
     try {
-      print("gettoken" +
-          getStorageData.readString(getStorageData.token).toString());
-      Response response = await apiBaseHelperImplementation.get(
-        endPoint: Constants.propertyinfo,
-        headers: {
-          'Authorization': '${getStorageData.readString(getStorageData.token)}',
-        },
-      );
+      Response response = await apiBaseHelperImplementation
+          .get(endPoint: Constants.propertyinfo, headers: {
+        'Authorization': '${getStorageData.readString(getStorageData.token)}',
+      });
       print("asddas" + response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(PropertyModel.fromJson(response.data));
@@ -76,8 +72,7 @@ class ApiProviders extends BaseController {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.certificates,
         headers: {
-          'Authorization':
-              '${getStorageData.readString(getStorageData.token)}',
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -90,15 +85,16 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, BuildingModel>> getBuildinginfo() async {
+  Future<Either<Failure, BuildingModel>> getBuildinginfo(id) async {
     try {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.buildings,
+        queryParameter: {"property_id": id},
         headers: {
-          'Authorization':
-              '${getStorageData.readString(getStorageData.token)}',
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
+      print("asddsd" + response.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(BuildingModel.fromJson(response.data));
       } else {

@@ -41,11 +41,11 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Image.asset(
-                              ImagePath.user,
-                              width: 48.px,
-                              height: 48.px,
-                            ).paddingOnly(right: 8.px),
+                            // Image.asset(
+                            //   ImagePath.user,
+                            //   width: 48.px,
+                            //   height: 48.px,
+                            // ).paddingOnly(right: 8.px),
                             Flexible(
                               flex: 1,
                               child: Column(
@@ -60,7 +60,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          Strings.userName,
+                                          controller.account!.userName
+                                              .toString(),
                                           textStyleNew: MyTextStyle(
                                             textColor:
                                                 controller.appColors.lightText,
