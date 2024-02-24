@@ -284,17 +284,20 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value: 'name of property',
+                          value:
+                              Get.arguments['propertyinfo']['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: 'Los Angeles',
+                              value: Get.arguments['propertyinfo']['city']
+                                  .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['id']
+                                  .toString(),
                             ),
                           ],
                         ),
@@ -305,17 +308,20 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: 'address',
+                          value: Get.arguments['propertyinfo']['address']
+                              .toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
-                              value: '11',
+                              value: Get.arguments['propertyinfo']['state']
+                                  .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['zip']
+                                  .toString(),
                             ),
                           ],
                         ),
