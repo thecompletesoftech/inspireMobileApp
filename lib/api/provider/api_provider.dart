@@ -56,7 +56,7 @@ class ApiProviders extends BaseController {
           .get(endPoint: Constants.propertyinfo, headers: {
         'Authorization': '${getStorageData.readString(getStorageData.token)}',
       });
-      print("asddas" + response.statusCode.toString());
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(PropertyModel.fromJson(response.data));
       } else {
@@ -94,6 +94,7 @@ class ApiProviders extends BaseController {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
+      print("asdxsdsa" + id.toString());
       print("asddsd" + response.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(BuildingModel.fromJson(response.data));

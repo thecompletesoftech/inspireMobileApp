@@ -42,11 +42,10 @@ class BuildingInspectionController extends BaseController {
   var certificatesinfo = [].obs;
   @override
   void onInit() {
-    searchPropertyNameList == propertyList;
-    searchBuildingList == buildingList;
+    // searchPropertyNameList == propertyList;
+    // searchBuildingList == buildingList;
     getpropertyinfo();
     getcertificates();
-    getbuilding();
     getaccount();
     getcurrentdate();
     // checked.addAll([
@@ -217,8 +216,7 @@ class BuildingInspectionController extends BaseController {
   var searchPropertyNameList = [].obs;
   var searchBuildingList = [].obs;
 
-  searchProperty({required String searchText}) {
-    // getpropertyinfo(searchText);
+  searchProperty({required String searchText}) async {
     searchPropertyNameList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < propertyList!.length; i++) {
@@ -237,7 +235,8 @@ class BuildingInspectionController extends BaseController {
     }
   }
 
-  searchBuilding({required String searchText}) {
+  searchBuilding({required String searchText}) async {
+    await getpropertyinfo();
     searchBuildingList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < buildingList.length; i++) {
@@ -258,7 +257,7 @@ class BuildingInspectionController extends BaseController {
 
   getpropertyinfo() async {
     var response = await BudingInpectionRepository().getpropetyinfoapi();
-    response.fold((l) {
+    await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (PropertyModel r) {
       propertyList = r.properties;
@@ -277,14 +276,14 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  getbuilding() async {
-    var response = await BudingInpectionRepository()
-        .getbuilding(propertyIDController.text);
+  getbuildingapi(id) async {
+    var response = await BudingInpectionRepository().getbuilding(id);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
-      buildingList = r.buildings!;
-      print("building" + buildingList.toString());
+      buildingList = r.buildings;
+      searchBuildingList.value = buildingList;
+      print("building" + searchBuildingList.toString());
       // buildingList = r;
     });
     update();

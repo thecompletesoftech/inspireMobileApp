@@ -318,7 +318,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     );
                                   },
                                   onSelected: (value) {
+                                    print("print");
                                     controller.actionProperty(value);
+                                    controller.getbuildingapi(value.id);
                                     controller.update();
                                   },
                                 )),
@@ -550,8 +552,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                     );
                                   },
-                                  onSelected: (value) {
+                                  onSelected: (value) async {
                                     controller.actionBuilding(value);
+
                                     controller.update();
                                   },
                                 )),
