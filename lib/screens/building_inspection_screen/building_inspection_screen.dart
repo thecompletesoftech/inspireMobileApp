@@ -539,7 +539,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   itemBuilder: (context, dynamic i) {
                                     return ListTile(
                                       title: MyTextView(
-                                        i,
+                                        i.name.toString(),
                                         textStyleNew: MyTextStyle(
                                           textColor: controller.appColors.black,
                                           textWeight: FontWeight.w400,
@@ -572,9 +572,19 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.yearConstructed,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .yearConstructedController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .yearConstructedController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                                 SizedBox(width: 16.px),
@@ -597,9 +607,19 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.buildingType,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .buildingTypeController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .buildingTypeController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                               ],
@@ -723,6 +743,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                     if (controller.getStartInspection()) {
                       controller.getcertificatesjson();
                       controller.getpropertyjson();
+                      controller.getbuildingjson();
                       Get.toNamed(BuildingInspectionSummaryScreen.routes,
                           arguments: {
                             "buildingName":
