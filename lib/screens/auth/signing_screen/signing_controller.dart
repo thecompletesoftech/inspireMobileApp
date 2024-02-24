@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
 import '../../building_inspection_screen/building_inspection_screen.dart';
-import '../repositry/log_repo.dart';
+import '../repository/log_repo.dart';
 
 class SigningController extends BaseController {
   TextEditingController email = TextEditingController();
@@ -26,7 +26,7 @@ class SigningController extends BaseController {
       TokenAccount tokenAccount = await loginAccount(user, password);
       print("account token" + tokenAccount.toString());
 
-      saveAccount(tokenAccount);
+      saveAccountcarecart(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
       // Get.offAllNamed(PropertyScreen.routes);
       Get.offAllNamed(BuildingInspectionScreen.routes);
@@ -127,8 +127,9 @@ class SigningController extends BaseController {
     tokenAccount = tokenAccount;
   }
 
-  saveAccount(token) async {
-    getStorageData.saveString(getStorageData.token, tokenAccount);
+  saveAccount(token, name) async {
+    getStorageData.saveString(getStorageData.token, token);
+    getStorageData.saveString(getStorageData.inspectorname, name);
   }
 
   login() async {
@@ -138,7 +139,7 @@ class SigningController extends BaseController {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (Loginmodel r) {
       getStorageData.saveString(getStorageData.isLogin, true);
-      saveAccount(r.token.toString());
+      saveAccount(r.token.toString(), r.username);
       Get.offAllNamed(BuildingInspectionScreen.routes);
     });
     update();

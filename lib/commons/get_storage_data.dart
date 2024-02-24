@@ -14,6 +14,7 @@ class GetStorageData {
   String userLAT = "userLAT";
   String userLNG = "userLNG";
   String userLoc = "userLocation";
+  String inspectorname = "inspectorname";
 
   /// <<< To save string data --------- >>>
   saveString(String key, value) async {

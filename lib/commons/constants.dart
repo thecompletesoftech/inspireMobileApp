@@ -67,8 +67,14 @@ class Constants {
   //API calling....
   static const String baseUrl =
       "https://inspections.dev.gccs.gilsonsoftware.com/";
-  static const String signUp = "user/signUp";
+
   static const String login = "pha-api/accounts/login/";
+  static const String propertyinfo = "inspection/api/properties/";
+  static const String certificates = "inspection/api/certificates";
+  static const String buildings = "/inspection/api/buildings";
+
+  static const String signUp = "user/signUp";
+
   static const String forgotPassword = "user/forgotPassword";
   static const String getUserProfile = "user/getUserProfile";
   static const String updateProfile = "user/updateProfile";
@@ -78,7 +84,6 @@ class Constants {
   static const String resendOTP = "user/resendOTP";
   static const String logOut = "user/logOut";
   static const String deleteAccount = "user/deleteAccount";
-
   static const String refreshToken = "user/refreshToken";
   static const String isRegister = "user/isRegister";
 
