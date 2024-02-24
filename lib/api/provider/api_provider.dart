@@ -22,7 +22,7 @@ class ApiProviders extends BaseController {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: "deficiency_areas/",
         headers: {
-          'Authorization': 'Token 6ace4a1b46b1bd1eee6ee162f88290d4db987913',
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -52,20 +52,22 @@ class ApiProviders extends BaseController {
 
   Future<Either<Failure, PropertyModel>> getpropetyinfo() async {
     try {
+      print("gettoken" +
+          getStorageData.readString(getStorageData.token).toString());
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.propertyinfo,
         headers: {
-          'Authorization':
-              'Token ${getStorageData.readString(getStorageData.token)}',
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
+      print("asddas" + response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(PropertyModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['detail']));
+      return Left(Failure(errorMessage: e.response?.data['message']));
     }
   }
 
@@ -75,7 +77,7 @@ class ApiProviders extends BaseController {
         endPoint: Constants.certificates,
         headers: {
           'Authorization':
-              'Token ${getStorageData.readString(getStorageData.token)}',
+              '${getStorageData.readString(getStorageData.token)}',
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -84,7 +86,7 @@ class ApiProviders extends BaseController {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['detail']));
+      return Left(Failure(errorMessage: e.response?.data['message']));
     }
   }
 
@@ -94,7 +96,7 @@ class ApiProviders extends BaseController {
         endPoint: Constants.buildings,
         headers: {
           'Authorization':
-              'Token ${getStorageData.readString(getStorageData.token)}',
+              '${getStorageData.readString(getStorageData.token)}',
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -103,7 +105,7 @@ class ApiProviders extends BaseController {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['detail']));
+      return Left(Failure(errorMessage: e.response?.data['message']));
     }
   }
 }

@@ -25,10 +25,8 @@ class SigningController extends BaseController {
     try {
       TokenAccount tokenAccount = await loginAccount(user, password);
       print("account token" + tokenAccount.toString());
-
       saveAccountcarecart(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
-      // Get.offAllNamed(PropertyScreen.routes);
       Get.offAllNamed(BuildingInspectionScreen.routes);
       return tokenAccount;
     } catch (e) {
@@ -112,20 +110,25 @@ class SigningController extends BaseController {
     // }
     else {
       // checked = true;
-      login();
+      loginApiCallcarecart();
     }
   }
 
-  saveAccountcarecart(TokenAccount tokenAccount) async {
+  saveAccountcarecart(TokenAccount tokenac) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    await sharedPreferences.setString('token', tokenAccount.token);
+    print("token" + tokenac.token.toString());
+    getStorageData.saveString(getStorageData.token, tokenac.token);
+    await sharedPreferences.setString('token', tokenac.token);
     await sharedPreferences.setString(
-        'accountModel', jsonEncode(tokenAccount.account.toJson()));
+        'accountModel', jsonEncode(tokenac.account.toJson()));
+
     print(
         "shared pref" + sharedPreferences.getString('accountModel').toString());
-    tokenAccount = tokenAccount;
+    // tokenAccount = tokenac;
   }
+
+  //inspection api data
 
   saveAccount(token, name) async {
     getStorageData.saveString(getStorageData.token, token);
