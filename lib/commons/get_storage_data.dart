@@ -8,6 +8,7 @@ class GetStorageData {
   String isLogin = "isLogin";
   String userId = "userId";
   String token = "token";
+  String account = "accountdata";
   String email = "email";
   String password = "password";
   String fcmToken = "fcmToken";

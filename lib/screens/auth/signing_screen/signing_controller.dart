@@ -115,16 +115,9 @@ class SigningController extends BaseController {
   }
 
   saveAccountcarecart(TokenAccount tokenac) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    print("token" + tokenac.token.toString());
     getStorageData.saveString(getStorageData.token, tokenac.token);
-    await sharedPreferences.setString('token', tokenac.token);
-    await sharedPreferences.setString(
-        'accountModel', jsonEncode(tokenac.account.toJson()));
-
-    print(
-        "shared pref" + sharedPreferences.getString('accountModel').toString());
+    getStorageData.saveString(
+        getStorageData.account, jsonEncode(tokenac.account.toJson()));
     // tokenAccount = tokenac;
   }
 

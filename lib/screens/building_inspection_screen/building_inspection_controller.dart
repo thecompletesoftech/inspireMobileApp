@@ -6,6 +6,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/buildin
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Models/accountmodel/account_model.dart';
 import 'models/certificate_model.dart';
 
 class BuildingInspectionController extends BaseController {
@@ -34,7 +35,7 @@ class BuildingInspectionController extends BaseController {
   List<Properties>? propertyList = [];
   List<Certificates>? certificates = [];
   bool? isData;
-  
+  Account? account;
   @override
   void onInit() {
     searchPropertyNameList == propertyList;
@@ -42,6 +43,8 @@ class BuildingInspectionController extends BaseController {
     getpropertyinfo();
     getcertificates();
     getbuilding();
+    getaccount();
+    getcurrentdate();
     // checked.addAll([
     //   Certificates(true, 'Boiler Certificate'),
     //   Certificates(false, 'Elevator Certificate'),
@@ -89,14 +92,10 @@ class BuildingInspectionController extends BaseController {
   }
 
   getaccount() async {
-   
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var accountdata = await sharedPreferences.getString('accountModel');
-    print("account data" + accountdata.toString());
+    var accountdata = await getStorageData.readString(getStorageData.account);
     account = Account.fromJson(jsonDecode(accountdata.toString()));
     inspectorController.text = await account!.userName;
-    isloadingaccount.value = false;
+
     update();
   }
 
