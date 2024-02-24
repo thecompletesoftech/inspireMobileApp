@@ -4,7 +4,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 
-import '../unit_Inpection_screen/unit_inspection_screen.dart';
+import '../building_inspection_summary/building_inspection_summary_screen.dart';
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
@@ -40,11 +40,11 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Image.asset(
-                              ImagePath.user,
-                              width: 48.px,
-                              height: 48.px,
-                            ).paddingOnly(right: 8.px),
+                            // Image.asset(
+                            //   ImagePath.user,
+                            //   width: 48.px,
+                            //   height: 48.px,
+                            // ).paddingOnly(right: 8.px),
                             Flexible(
                               flex: 1,
                               child: Column(
@@ -59,7 +59,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          Strings.userName,
+                                          controller.account!.userName
+                                              .toString(),
                                           textStyleNew: MyTextStyle(
                                             textColor:
                                                 controller.appColors.lightText,
@@ -302,10 +303,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       controller: c,
                                     );
                                   },
-                                  itemBuilder: (context, dynamic i) {
+                                  itemBuilder: (context, i) {
                                     return ListTile(
                                       title: MyTextView(
-                                        i,
+                                        i.name.toString(),
                                         textStyleNew: MyTextStyle(
                                           textColor: controller.appColors.black,
                                           textWeight: FontWeight.w400,
@@ -323,14 +324,17 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 SizedBox(width: 16.px),
                                 Expanded(
                                   child: CommonTextField(
-                                    readOnly: true,
+                                    readOnly: false,
                                     isLable: true,
                                     controller: controller.cityController,
                                     color: controller.appColors.transparent,
                                     suffixIcon: SvgPicture.string(
                                       icDownArrow,
                                       color: controller.appColors.black
-                                          .withOpacity(.12),
+                                          .withOpacity(controller
+                                                  .cityController.text.isEmpty
+                                              ? .12
+                                              : 1.0),
                                     ).paddingAll(10.px),
                                     padding: EdgeInsets.zero,
                                     contentPadding:
@@ -338,9 +342,15 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     shadowColor:
                                         controller.appColors.transparent,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .cityController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .cityController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                     labelText: Strings.city,
                                   ),
                                 ),
@@ -362,9 +372,19 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.propertyID,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .propertyIDController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .propertyIDController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                                 SizedBox(width: 16.px),
@@ -382,9 +402,15 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.state,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .stateController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .stateController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                                 SizedBox(width: 16.px),
@@ -402,9 +428,15 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.zip,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .zipController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .zipController.text.isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                               ],
@@ -421,7 +453,12 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     prefixIcon: SvgPicture.string(
                                       icLocation,
                                       color: controller.appColors.black
-                                          .withOpacity(.12),
+                                          .withOpacity(controller
+                                                  .propertyAddressController
+                                                  .text
+                                                  .isEmpty
+                                              ? .12
+                                              : 1.0),
                                     ).paddingOnly(left: 15.px),
                                     padding: EdgeInsets.zero,
                                     contentPadding:
@@ -430,9 +467,19 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         controller.appColors.transparent,
                                     labelText: Strings.propertyAddress,
                                     isLableColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .propertyAddressController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                     borderColor: controller.appColors.black
-                                        .withOpacity(.12),
+                                        .withOpacity(controller
+                                                .propertyAddressController
+                                                .text
+                                                .isEmpty
+                                            ? .12
+                                            : 1.0),
                                   ),
                                 ),
                               ],
@@ -612,18 +659,20 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                               children: [
                                                 Checkbox(
                                                   onChanged: (value) {
-                                                    controller.checked[i]
-                                                        .isChecked = value;
+                                                    controller.checked[i] =
+                                                        value;
                                                     controller.allSelected();
+                                                    controller
+                                                        .getcertificatesjson();
                                                     controller.update();
                                                   },
-                                                  value: controller
-                                                      .checked[i].isChecked,
+                                                  value: controller.checked[i],
                                                   activeColor: controller
                                                       .appColors.appColor,
                                                 ),
                                                 MyTextView(
-                                                  controller.checked[i].name,
+                                                  controller.certificates![i]
+                                                      .certificate,
                                                   textStyleNew: MyTextStyle(
                                                     textColor: controller
                                                         .appColors.black,
@@ -671,11 +720,20 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       : controller.appColors.black
                           .withOpacity(0.11999999731779099),
                   onTap: () {
-                    // if (controller.getStartInspection()) {
-                    Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                      "buildingName": controller.buildingNameController.text,
-                    });
-                    // }
+                    if (controller.getStartInspection()) {
+                      controller.getcertificatesjson();
+                      controller.getpropertyjson();
+                      Get.toNamed(BuildingInspectionSummaryScreen.routes,
+                          arguments: {
+                            "buildingName":
+                                controller.buildingNameController.text,
+                            "imagesList": "assa",
+                            "inspectionName": "sasadsad",
+                          });
+                      // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                      //   "buildingName": controller.buildingNameController.text,
+                      // });
+                    }
                   },
                 ).paddingSymmetric(vertical: 24.px),
               ],

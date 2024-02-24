@@ -13,7 +13,6 @@ import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_binding.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_controller.dart';
-import 'package:public_housing/screens/inspection_screen/deficienciesCard_widget.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../unit_Inpection_screen/unit_inspection_screen.dart';

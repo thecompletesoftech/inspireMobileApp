@@ -1,5 +1,13 @@
+import 'dart:convert';
+
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../Models/accountmodel/account_model.dart';
+import 'models/certificate_model.dart';
 
 class BuildingInspectionController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -17,39 +25,49 @@ class BuildingInspectionController extends BaseController {
   TextEditingController buildingNameController = TextEditingController();
   TextEditingController yearConstructedController = TextEditingController();
   TextEditingController buildingTypeController = TextEditingController();
-  List<Certificates> checked = [];
-  List<String> propertyList = [];
+  List checked = [];
+  // List<String> propertyList = [];
   List<String> cityList = [];
-  List<String> buildingList = [];
+  // List<String> buildingList = [];
+  List<Buildings> buildingList = [];
   List<String> buildingTypeList = [];
+  List<Properties>? propertyList = [];
+  List<Certificates>? certificates = [];
   bool? isData;
-
+  Account? account;
+  var propertyinfo = {}.obs;
+  var certificatesinfo = [].obs;
   @override
   void onInit() {
     searchPropertyNameList == propertyList;
     searchBuildingList == buildingList;
-    checked.addAll([
-      Certificates(true, 'Boiler Certificate'),
-      Certificates(false, 'Elevator Certificate'),
-      Certificates(true, 'Fire Alarm Inspection Report'),
-      Certificates(false, 'Lead-Based Paint Disclosure Form'),
-      Certificates(true, 'Lead-Based Paint Inspection Report'),
-      Certificates(false, 'Sprinkler System Certificate'),
-    ]);
+    getpropertyinfo();
+    getcertificates();
+    getbuilding();
+    getaccount();
+    getcurrentdate();
+    // checked.addAll([
+    //   Certificates(true, 'Boiler Certificate'),
+    //   Certificates(false, 'Elevator Certificate'),
+    //   Certificates(true, 'Fire Alarm Inspection Report'),
+    //   Certificates(false, 'Lead-Based Paint Disclosure Form'),
+    //   Certificates(true, 'Lead-Based Paint Inspection Report'),
+    //   Certificates(false, 'Sprinkler System Certificate'),
+    // ]);
 
-    propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
+    // propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
 
     cityList = ['CITY 1', 'CITY 2', 'CITY 3', 'CITY 4'];
 
     buildingTypeList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
-    buildingList = [
-      'BUILDING 1',
-      'BUILDING 2',
-      'BUILDING 3',
-      'BUILDING 4',
-      'BUILDING 5'
-    ];
+    // buildingList = [
+    //   'BUILDING 1',
+    //   'BUILDING 2',
+    //   'BUILDING 3',
+    //   'BUILDING 4',
+    //   'BUILDING 5'
+    // ];
 
     super.onInit();
   }
@@ -74,8 +92,43 @@ class BuildingInspectionController extends BaseController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
+  getaccount() async {
+    var accountdata = await getStorageData.readString(getStorageData.account);
+    account = Account.fromJson(jsonDecode(accountdata.toString()));
+    inspectorController.text = await account!.userName;
+    update();
+  }
+
+  getcertificatesjson() {
+    certificatesinfo.clear();
+    for (var i = 0; i < certificates!.length; i += 1) {
+      if (checked[i]) {
+        certificatesinfo.add({"id": certificates![i].id.toString()});
+        print(certificates![i].certificate.toString());
+      }
+    }
+    print(certificatesinfo.toJson());
+    update();
+  }
+
+  getpropertyjson() {
+    propertyinfo.addAll({
+      "id": propertyIDController.text,
+      "name": propertyNameController.text,
+      "city": cityController.text,
+      "state": stateController.text,
+      "zip": zipController.text,
+      "address": propertyAddressController.text
+    });
+    print(propertyinfo.toString());
+  }
+
+  getcurrentdate() {
+    inspectionDateController.text = Utils().currentTime();
+  }
+
   bool? allSelected() {
-    final data = checked.where((element) => element.isChecked == true);
+    final data = checked.where((element) => element == true);
     if (data.length == checked.length) {
       isData = true;
     } else if (data.length > 0) {
@@ -88,26 +141,31 @@ class BuildingInspectionController extends BaseController {
 
   getStartInspection() {
     return propertyNameController.text.isNotEmpty &&
-        cityController.text.isNotEmpty &&
-        propertyIDController.text.isNotEmpty &&
-        stateController.text.isNotEmpty &&
-        zipController.text.isNotEmpty &&
-        propertyAddressController.text.isNotEmpty &&
-        buildingNameController.text.isNotEmpty &&
-        yearConstructedController.text.isNotEmpty &&
-        buildingTypeController.text.isNotEmpty;
+            cityController.text.isNotEmpty &&
+            propertyIDController.text.isNotEmpty &&
+            stateController.text.isNotEmpty &&
+            zipController.text.isNotEmpty &&
+            propertyAddressController.text.isNotEmpty &&
+            certificatesinfo.length > 0
+        ? true
+        : false;
+    //  &&
+    // buildingNameController.text.isNotEmpty;
+    // &&
+    // yearConstructedController.text.isNotEmpty &&
+    // buildingTypeController.text.isNotEmpty;
   }
 
   isAllSelected(value) {
     for (int i = 0; i < checked.length; i++) {
-      checked[i].isChecked = value;
+      checked[i] = value;
     }
     isData = value;
     update();
   }
 
   void actionPropertyNameSelected(value) {
-    propertyNameController.text = propertyList[value];
+    propertyNameController.text = propertyList![value].name!;
   }
 
   void actionCitySelected(value) {
@@ -115,15 +173,21 @@ class BuildingInspectionController extends BaseController {
   }
 
   void buildingSelected(value) {
-    buildingNameController.text = buildingList[value];
+    buildingNameController.text = buildingList[value].name!;
   }
 
   void buildingTypeSelected(value) {
     buildingTypeController.text = buildingTypeList[value];
   }
 
-  void actionProperty(value) {
-    propertyNameController.text = value;
+  void actionProperty(Properties value) {
+    propertyNameController.text = value.name!;
+    cityController.text = value.city!;
+    propertyIDController.text = value.id.toString();
+    stateController.text = value.state!;
+    zipController.text = value.zip!;
+    propertyAddressController.text = value.address1!;
+    update();
   }
 
   void actionBuilding(value) {
@@ -134,19 +198,21 @@ class BuildingInspectionController extends BaseController {
   var searchBuildingList = [].obs;
 
   searchProperty({required String searchText}) {
+    // getpropertyinfo(searchText);
     searchPropertyNameList.clear();
     if (!utils.isValidationEmpty(searchText)) {
-      for (int i = 0; i < propertyList.length; i++) {
-        if (propertyList[i]
+      for (int i = 0; i < propertyList!.length; i++) {
+        if (propertyList![i]
+            .name
             .toString()
             .toLowerCase()
             .contains(searchText.toString().toLowerCase())) {
-          searchPropertyNameList.add(propertyList[i]);
+          searchPropertyNameList.add(propertyList![i]);
           update();
         }
       }
     } else {
-      searchPropertyNameList.addAll(propertyList);
+      searchPropertyNameList.addAll(propertyList!);
       update();
     }
   }
@@ -168,11 +234,44 @@ class BuildingInspectionController extends BaseController {
       update();
     }
   }
+
+  getpropertyinfo() async {
+    var response = await BudingInpectionRepository().getpropetyinfoapi();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (PropertyModel r) {
+      propertyList = r.properties;
+    });
+    update();
+  }
+
+  getcertificates() async {
+    var response = await BudingInpectionRepository().getcertificates();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (CertificateModel r) {
+      certificates = r.certificates;
+      checked = List.filled(certificates!.length, false);
+    });
+    update();
+  }
+
+  getbuilding() async {
+    var response = await BudingInpectionRepository()
+        .getbuilding(propertyIDController.text);
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (BuildingModel r) {
+      buildingList = r.buildings!;
+      // buildingList = r;
+    });
+    update();
+  }
 }
 
-class Certificates {
-  bool? isChecked;
-  String? name;
+// class Certificates {
+//   bool? isChecked;
+//   String? name;
 
-  Certificates(this.isChecked, this.name);
-}
+//   Certificates(this.isChecked, this.name);
+// }
