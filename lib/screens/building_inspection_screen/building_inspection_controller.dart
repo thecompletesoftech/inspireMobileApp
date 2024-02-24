@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'models/certificate_model.dart';
 
 class BuildingInspectionController extends BaseController {
@@ -31,7 +34,7 @@ class BuildingInspectionController extends BaseController {
   List<Properties>? propertyList = [];
   List<Certificates>? certificates = [];
   bool? isData;
-
+  
   @override
   void onInit() {
     searchPropertyNameList == propertyList;
@@ -83,6 +86,22 @@ class BuildingInspectionController extends BaseController {
     }
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+  }
+
+  getaccount() async {
+   
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var accountdata = await sharedPreferences.getString('accountModel');
+    print("account data" + accountdata.toString());
+    account = Account.fromJson(jsonDecode(accountdata.toString()));
+    inspectorController.text = await account!.userName;
+    isloadingaccount.value = false;
+    update();
+  }
+
+  getcurrentdate() {
+    inspectionDateController.text = Utils().currentTime();
   }
 
   bool? allSelected() {
