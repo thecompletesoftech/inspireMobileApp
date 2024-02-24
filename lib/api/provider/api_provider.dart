@@ -20,7 +20,7 @@ class ApiProviders extends BaseController {
       getDeficiencyAreasRequest() async {
     try {
       Response response = await apiBaseHelperImplementation.get(
-        endPoint: "deficiency_areas/",
+        endPoint: Constants.getdeficieny,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },

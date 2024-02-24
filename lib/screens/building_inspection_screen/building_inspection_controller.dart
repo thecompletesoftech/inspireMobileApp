@@ -31,11 +31,12 @@ class BuildingInspectionController extends BaseController {
   // List<String> buildingList = [];
   List<Buildings> buildingList = [];
   List<String> buildingTypeList = [];
-
   List<Properties>? propertyList = [];
   List<Certificates>? certificates = [];
   bool? isData;
   Account? account;
+  var propertyinfo = {}.obs;
+  var certificatesinfo = [].obs;
   @override
   void onInit() {
     searchPropertyNameList == propertyList;
@@ -98,6 +99,30 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
+  getcertificatesjson() {
+    certificatesinfo.clear();
+    for (var i = 0; i < certificates!.length; i += 1) {
+      if (checked[i]) {
+        certificatesinfo.add({"id": certificates![i].id.toString()});
+        print(certificates![i].certificate.toString());
+      }
+    }
+    print(certificatesinfo.toJson());
+    update();
+  }
+
+  getpropertyjson() {
+    propertyinfo.addAll({
+      "id": propertyIDController.text,
+      "name": propertyNameController.text,
+      "city": cityController.text,
+      "state": stateController.text,
+      "zip": zipController.text,
+      "address": propertyAddressController.text
+    });
+    print(propertyinfo.toString());
+  }
+
   getcurrentdate() {
     inspectionDateController.text = Utils().currentTime();
   }
@@ -116,14 +141,19 @@ class BuildingInspectionController extends BaseController {
 
   getStartInspection() {
     return propertyNameController.text.isNotEmpty &&
-        cityController.text.isNotEmpty &&
-        propertyIDController.text.isNotEmpty &&
-        stateController.text.isNotEmpty &&
-        zipController.text.isNotEmpty &&
-        propertyAddressController.text.isNotEmpty &&
-        buildingNameController.text.isNotEmpty &&
-        yearConstructedController.text.isNotEmpty &&
-        buildingTypeController.text.isNotEmpty;
+            cityController.text.isNotEmpty &&
+            propertyIDController.text.isNotEmpty &&
+            stateController.text.isNotEmpty &&
+            zipController.text.isNotEmpty &&
+            propertyAddressController.text.isNotEmpty &&
+            certificatesinfo.length > 0
+        ? true
+        : false;
+    //  &&
+    // buildingNameController.text.isNotEmpty;
+    // &&
+    // yearConstructedController.text.isNotEmpty &&
+    // buildingTypeController.text.isNotEmpty;
   }
 
   isAllSelected(value) {
