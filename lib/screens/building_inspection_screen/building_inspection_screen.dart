@@ -751,10 +751,14 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         controller.getpropertyjson();
                         controller.getbuildingjson();
 
-                        Get.toNamed(UnitInspection.routes, arguments: {
-                          "propertyinfo": controller.propertyinfo,
-                          "buildinginfo": controller.buildinginfo,
-                          "buildingtype": controller.buildingTypeController.text
+                        // Get.toNamed(UnitInspection.routes, arguments: {
+                        //   "propertyinfo": controller.propertyinfo,
+                        //   "buildinginfo": controller.buildinginfo,
+                        //   "buildingtype": controller.buildingTypeController.text
+                        // });
+                        Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                          "buildingName":
+                              controller.buildingNameController.text,
                         });
                       }
 
@@ -765,10 +769,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       //       "imagesList": "assa",
                       //       "inspectionName": "sasadsad",
                       //     });
-
-                      // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                      //   "buildingName": controller.buildingNameController.text,
-                      // });
 
                       // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                       //   "buildingName": controller.buildingNameController.text,
