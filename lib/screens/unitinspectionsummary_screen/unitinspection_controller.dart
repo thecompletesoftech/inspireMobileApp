@@ -33,6 +33,7 @@ class UnitInspectionsummaryController extends BaseController {
   var switchbtn = false.obs;
   @override
   void onInit() {
+    setdataController();
     unithousekeepingList = [
       {
         "title": 'Poor',
@@ -85,5 +86,13 @@ class UnitInspectionsummaryController extends BaseController {
 
   getUnitInspectionSummary() {
     return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
+  }
+
+  setdataController() {
+    unitnumberoRname.text = Get.arguments['unitinfo']['name'];
+    unitAddress.text = Get.arguments['unitinfo']['address'];
+    bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
+    bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
+    switchbtn.value = Get.arguments['switchvalue'];
   }
 }

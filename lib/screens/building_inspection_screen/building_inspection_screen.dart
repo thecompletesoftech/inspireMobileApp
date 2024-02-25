@@ -771,6 +771,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                       //   "buildingName": controller.buildingNameController.text,
                       // });
+                      
                     }).paddingSymmetric(vertical: 24.px),
               ],
             ),

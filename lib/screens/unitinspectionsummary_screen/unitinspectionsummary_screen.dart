@@ -303,17 +303,17 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value: 'name of property',
+                          value: Get.arguments['propertyinfo']['name'],
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: 'Los Angeles',
+                              value: Get.arguments['propertyinfo']['city'],
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['id'],
                             ),
                           ],
                         ),
@@ -324,17 +324,17 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: 'address',
+                          value: Get.arguments['propertyinfo']['address'],
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
-                              value: '11',
+                              value: Get.arguments['propertyinfo']['state'],
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['zip'],
                             ),
                           ],
                         ),
@@ -364,17 +364,17 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value: 'Building 13',
+                          value: Get.arguments['buildinginfo']['name'],
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: 'Building 1',
+                          value: Get.arguments['buildingtype'],
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: '1945',
+                      value: Get.arguments['buildinginfo']['constructed_year'].toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                     Container(
                       decoration: BoxDecoration(

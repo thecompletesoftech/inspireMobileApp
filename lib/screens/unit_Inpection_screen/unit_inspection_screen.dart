@@ -255,7 +255,15 @@ class UnitInspection extends GetView<UnitController> {
                                 .withOpacity(0.11999999731779099),
                         onTap: () {
                           if (controller.getunitinspection()) {
-                            Get.toNamed(UnitInspectionSummary.routes);
+                            controller.getunitjson();
+                            Get.toNamed(UnitInspectionSummary.routes,
+                                arguments: {
+                                  "unitinfo": controller.unitjson,
+                                  "propertyinfo": Get.arguments['propertyinfo'],
+                                  "buildinginfo": Get.arguments['buildinginfo'],
+                                  "buildingtype": Get.arguments['buildingtype'],
+                                  "switchvalue": controller.switchbtn.value
+                                });
                           }
                         },
                       ).paddingSymmetric(vertical: 24.px),
