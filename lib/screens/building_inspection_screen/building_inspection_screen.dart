@@ -759,6 +759,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                           "buildingName":
                               controller.buildingNameController.text,
+                          "propertyinfo": controller.propertyinfo,
+                          "buildinginfo": controller.buildinginfo,
+                          "buildingtype": controller.buildingTypeController.text
                         });
                       }
 
