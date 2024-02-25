@@ -725,35 +725,36 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                   ).paddingOnly(left: 32.px, right: 32.px),
                 ),
                 CommonButton(
-                  title: Strings.startInspection,
-                  radius: 100.px,
-                  width: 171.px,
-                  height: 44.px,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.px,
-                    horizontal: 24.px,
-                  ),
-                  textSize: 16.px,
-                  textWeight: FontWeight.w500,
-                  textFamily: fontFamilyRegular,
-                  textColor: controller.getStartInspection()
-                      ? controller.appColors.black
-                      : controller.appColors.border1,
-                  color: controller.getStartInspection()
-                      ? controller.appColors.textPink
-                      : controller.appColors.black
-                          .withOpacity(0.11999999731779099),
-                  onTap: () {
-                    if (controller.getStartInspection()) {
-                      controller.getcertificatesjson();
-                      controller.getpropertyjson();
+                    title: Strings.startInspection,
+                    radius: 100.px,
+                    width: 171.px,
+                    height: 44.px,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 15.px,
+                      horizontal: 24.px,
+                    ),
+                    textSize: 16.px,
+                    textWeight: FontWeight.w500,
+                    textFamily: fontFamilyRegular,
+                    textColor: controller.getStartInspection()
+                        ? controller.appColors.black
+                        : controller.appColors.border1,
+                    color: controller.getStartInspection()
+                        ? controller.appColors.textPink
+                        : controller.appColors.black
+                            .withOpacity(0.11999999731779099),
+                    onTap: () {
+                      if (controller.getStartInspection()) {
+                        controller.getcertificatesjson();
+                        controller.getpropertyjson();
+                        controller.getbuildingjson();
 
-                      Get.toNamed(UnitInspection.routes, arguments: {
-                        "propertyinfo": controller.propertyinfo,
-                        "buildinginfo": ""
-                      });
-
-                      controller.getbuildingjson();
+                        Get.toNamed(UnitInspection.routes, arguments: {
+                          "propertyinfo": controller.propertyinfo,
+                          "buildinginfo": controller.buildinginfo,
+                          "buildingtype": controller.buildingTypeController.text
+                        });
+                      }
 
                       // Get.toNamed(BuildingInspectionSummaryScreen.routes,
                       //     arguments: {
@@ -767,12 +768,10 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       //   "buildingName": controller.buildingNameController.text,
                       // });
 
-                      Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                        "buildingName": controller.buildingNameController.text,
-
-                    }
-                  },
-                ).paddingSymmetric(vertical: 24.px),
+                      // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                      //   "buildingName": controller.buildingNameController.text,
+                      // });
+                    }).paddingSymmetric(vertical: 24.px),
               ],
             ),
           ),
