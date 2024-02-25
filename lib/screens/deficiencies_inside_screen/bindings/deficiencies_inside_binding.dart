@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_controller.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 
 class DeficienciesInsideBinding implements Bindings {
   @override

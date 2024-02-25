@@ -1,6 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_screen.dart';
+import 'package:public_housing/screens/building_cabinets_screen/screen/standards_details_screen.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 
@@ -82,7 +82,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 6,
+                          flex: 10,
                           child: CommonTextField(
                             isLable: true,
                             onChange: (value) =>
@@ -102,7 +102,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                         ),
                         SizedBox(width: 16.px),
                         Expanded(
-                          flex: 6,
+                          flex: 4,
+                          // flex: 6,
                           child: GestureDetector(
                             onTap: controller.isExpanded,
                             child: Container(
@@ -138,7 +139,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 16.px),
+                        /* SizedBox(width: 16.px),
                         Expanded(
                           flex: 5,
                           child: SizedBox(
@@ -189,29 +190,29 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               },
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ).paddingSymmetric(vertical: 32.px),
                   ],
                 ).paddingSymmetric(horizontal: 32.px),
-                controller.deficiencyAreas!.isNotEmpty
+                controller.deficiencyAreas.isNotEmpty
                     ? Expanded(
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              controller.deficiencyAreas.isNotEmpty
+                              controller.searchList.isNotEmpty
                                   ? ListView.builder(
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
-                                      itemCount: controller.deficiencyAreas.length,
+                                      itemCount: controller.searchList.length,
                                       itemBuilder: (context, index) {
                                         return Column(
                                           children: [
                                             Row(
                                               children: [
                                                 MyTextView(
-                                                  controller.deficiencyAreas[index]
+                                                  controller.searchList[index]
                                                           .type ??
                                                       "",
                                                   textStyleNew: MyTextStyle(
@@ -238,7 +239,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                     height: 24.px,
                                                     width: 24.px,
                                                     child: (controller
-                                                                .deficiencyAreas[
+                                                                .searchList[
                                                                     index]
                                                                 .isExpand ??
                                                             false)
@@ -258,13 +259,13 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                 )
                                               ],
                                             ),
-                                            if (controller.deficiencyAreas[index]
+                                            if (controller.searchList[index]
                                                     .isExpand ??
                                                 false)
                                               ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount: controller
-                                                    .deficiencyAreas[index]
+                                                    .searchList[index]
                                                     .buildingDataModel
                                                     ?.length,
                                                 physics:
@@ -272,7 +273,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                 itemBuilder: (context, i) {
                                                   var buildingDataList =
                                                       controller
-                                                          .deficiencyAreas[index]
+                                                          .searchList[index]
                                                           .buildingDataModel?[i];
                                                   return GestureDetector(
                                                     onTap: () {
@@ -283,9 +284,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                             "buildingName":
                                                                 controller
                                                                     .buildingName,
-                                                            "buildingDataList":
+                                                            "deficiencyArea":
                                                                 buildingDataList
-                                                          })?.then((value) {
+                                                          }); /*?.then((value) {
                                                         controller.imagesList =
                                                             value['imagesList'];
                                                         controller.isSuccess =
@@ -302,7 +303,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                   'buildingName']);
                                                         }
                                                         controller.update();
-                                                      });
+                                                      });*/
                                                     },
                                                     child: ShadowContainer(
                                                             padding:
@@ -336,12 +337,14 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                                 textSize: 20.px,
                                                                               ),
                                                                             ),
-                                                                            /* if ((buildingDataList?.isSuccess ?? false) ==
-                                                                                true)
-                                                                              ClipOval(
-                                                                                  child: SvgPicture.string(
-                                                                                icComplete,
-                                                                              )),*/
+                                                                            // if ((buildingDataList?.isSuccess ??
+                                                                            //         false) ==
+                                                                            //     true)
+                                                                            //   ClipOval(
+                                                                            //       child:
+                                                                            //           SvgPicture.string(
+                                                                            //     icComplete,
+                                                                            //   )),
                                                                           ],
                                                                         ),
                                                                         MyTextView(
@@ -399,7 +402,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                       )
                     : Center(
                         child: CircularProgressIndicator(),
-                      )
+                      ),
               ],
             ),
           ),

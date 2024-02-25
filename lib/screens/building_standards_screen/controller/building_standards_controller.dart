@@ -2,13 +2,14 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
 
-enum BuildingStandardsStatus { all, failed }
+// enum BuildingStandardsStatus { all, failed }
 
 class BuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
   BuildingStandardsRepository buildingStandardsRepository =
       BuildingStandardsRepository();
-  BuildingStandardsStatus status = BuildingStandardsStatus.all;
+
+  // BuildingStandardsStatus status = BuildingStandardsStatus.all;
   bool isCollapseStandards = false;
   String buildingName = '';
   bool isSuccess = false;
@@ -20,11 +21,15 @@ class BuildingStandardsController extends BaseController {
 
   void onInit() {
     super.onInit();
-    getDeficiencyAreasData();
+
+    () async {
+      await getDeficiencyAreasData();
+      searchList.addAll(deficiencyAreas);
+    }();
+
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
     }
-    searchList.addAll(deficiencyAreas);
     update();
   }
 
@@ -72,7 +77,32 @@ class BuildingStandardsController extends BaseController {
   searchStandards({required String searchText}) {
     searchList.clear();
     if (!utils.isValidationEmpty(searchText)) {
-      if (status.toString() == BuildingStandardsStatus.all.toString()) {
+      for (int i = 0; i < deficiencyAreas.length; i++) {
+        for (int j = 0; j < deficiencyAreas[i].buildingDataModel!.length; j++) {
+          if (deficiencyAreas[i]
+              .buildingDataModel![j]
+              .name
+              .toString()
+              .toLowerCase()
+              .contains(searchText.toString().toLowerCase())) {
+            int itemIndex =
+                searchList.indexWhere((e) => e.type == deficiencyAreas[i].type);
+
+            if (itemIndex != -1) {
+              searchList[itemIndex]
+                  .buildingDataModel
+                  ?.add(deficiencyAreas[i].buildingDataModel![j]);
+            } else {
+              searchList.add(BuildingModel(
+                  deficiencyAreas[i].type,
+                  isExpand: true,
+                  [deficiencyAreas[i].buildingDataModel![j]]));
+            }
+          }
+        }
+      }
+      update();
+      /* if (status.toString() == BuildingStandardsStatus.all.toString()) {
         for (int i = 0; i < deficiencyAreas.length; i++) {
           for (int j = 0;
               j < deficiencyAreas[i].buildingDataModel!.length;
@@ -130,10 +160,12 @@ class BuildingStandardsController extends BaseController {
         //   }
         // }
       }
-      update();
+      update();*/
     } else {
+      searchList.addAll(deficiencyAreas);
       // searchTypeItem();
     }
+    update();
   }
 
   isExpanded() {
@@ -176,7 +208,7 @@ class BuildingStandardsController extends BaseController {
             deficiencyAreas.add(BuildingModel(
               element.name.toString()[0],
               [element],
-              isExpand: true,
+              isExpand: false,
             ));
           } else {
             deficiencyAreas[deficiencyAreas.indexWhere(
@@ -199,13 +231,13 @@ class BuildingModel {
   BuildingModel(this.type, this.buildingDataModel, {this.isExpand = false});
 }
 
-class BuildingDataModel {
-  String? image;
-  bool? isSuccess;
-  String? title;
-  String? description;
-  String? status = '';
-
-  BuildingDataModel(
-      this.image, this.title, this.description, this.status, this.isSuccess);
-}
+// class BuildingDataModel {
+//   String? image;
+//   bool? isSuccess;
+//   String? title;
+//   String? description;
+//   String? status = '';
+//
+//   BuildingDataModel(
+//       this.image, this.title, this.description, this.status, this.isSuccess);
+// }

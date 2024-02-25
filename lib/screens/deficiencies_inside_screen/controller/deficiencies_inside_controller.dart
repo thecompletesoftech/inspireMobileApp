@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
@@ -9,17 +8,23 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class DeficienciesInsideController extends BaseController {
   String buildingName = '';
   String deficiencies = '';
+  DeficiencyAreaItem deficiencyAreaItem = DeficiencyAreaItem();
+  DeficienciesInsideRepository deficienciesInsideRepository =
+      DeficienciesInsideRepository();
   var selectedItem = "null";
   bool visibleBtn = false;
   var sendImagesList = [];
   final commentController = TextEditingController();
   final dateController = TextEditingController();
   bool change = true;
+  List<String> imageList = [];
 
   var isListening = false.obs;
   var speechText = "".obs;
@@ -31,6 +36,7 @@ class DeficienciesInsideController extends BaseController {
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
       deficiencies = Get.arguments['deficiencies'];
+      deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
     }
     update();
   }
@@ -355,7 +361,16 @@ class DeficienciesInsideController extends BaseController {
                 .create();
             file.writeAsBytesSync(editedImage);
 
-            sendImagesList.add(file.path);
+            var response = await deficienciesInsideRepository.getImageUpload(
+                filePath: file.path);
+
+            response.fold((l) {
+              return null;
+            }, (r) {
+              imageList.add(r.images?.image ?? '');
+              sendImagesList.add(file.path);
+            });
+
             if (!utils.isValidationEmpty(commentController.text) &&
                 !utils.isValidationEmpty(dateController.text)) {
               visibleBtn = true;
@@ -582,15 +597,24 @@ class DeficienciesInsideController extends BaseController {
                 .create();
             file.writeAsBytesSync(editedImage);
 
-            sendImagesList.add(file.path);
+            var response = await deficienciesInsideRepository.getImageUpload(
+                filePath: file.path);
+
+            response.fold((l) {
+              return null;
+            }, (r) {
+              imageList.add(r.images?.image ?? '');
+              sendImagesList.add(file.path);
+            });
+
             if (!utils.isValidationEmpty(commentController.text) &&
                 !utils.isValidationEmpty(dateController.text)) {
               visibleBtn = true;
             } else {
               visibleBtn = false;
             }
+
             update();
-            // utils.showToast(message: "Section Completed", context: Get.context!);
           }
         }
       } catch (e) {

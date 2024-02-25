@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:public_housing/screens/authority_signatures_screen/authority_signature_screen.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_binding.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_screen.dart';
+import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/building_cabinets_screen/screen/standards_details_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_binding.dart';
 import 'package:public_housing/screens/building_inspection_screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_binding.dart';
@@ -9,8 +9,8 @@ import 'package:public_housing/screens/building_inspection_summary/building_insp
 import 'package:public_housing/screens/building_standards_screen/binding/building_standards_binding.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_binding.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_screen.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 
 import '../screens/areas_screen/areas_binding.dart';
 import '../screens/areas_screen/areas_screen.dart';

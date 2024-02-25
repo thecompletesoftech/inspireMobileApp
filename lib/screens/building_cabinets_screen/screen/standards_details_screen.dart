@@ -1,10 +1,11 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_binding.dart';
-import 'package:public_housing/screens/building_cabinets_screen/standards_details_controller.dart';
-import 'package:public_housing/screens/building_cabinets_screen/building_text_common_widget.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/deficiencies_inside_screen.dart';
+import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
+import 'package:public_housing/screens/building_cabinets_screen/widgets/building_text_common_widget.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 
 class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
   const StandardsDetailsScreen({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                         "isSuccess": controller.isSuccess,
                         "imagesList": controller.imagesList,
                         "buildingName":
-                            "${controller.buildingDataModel?.title ?? ""}",
+                            "${controller.buildingDataModel.name ?? ""}",
                       });
                     },
                   ),
@@ -52,7 +53,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyTextView(
-                            controller.buildingDataModel?.title ?? "",
+                            controller.buildingDataModel.name ?? "",
                             textStyleNew: MyTextStyle(
                               textColor: controller.appColors.appColor,
                               textWeight: FontWeight.w500,
@@ -101,33 +102,42 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             children: [
                               CommonText(
                                   title: Strings.definition,
-                                  description: Strings.aDedicated),
+                                  description: (controller
+                                          .buildingDataModel.definition ??
+                                      "")),
                               CommonText(
                                 title: Strings.purpose,
-                                description: Strings.stowItems,
+                                description:
+                                    (controller.buildingDataModel.purpose ??
+                                        ""),
                               ).paddingSymmetric(vertical: 24.px),
                               CommonText(
                                   title: Strings.commonComponents,
-                                  description: Strings.door),
+                                  description: (controller
+                                          .buildingDataModel.commonComponents ??
+                                      "")),
                               CommonText(
                                       title: Strings.moreInfo,
-                                      description: Strings.none)
+                                      description: (controller.buildingDataModel
+                                              .moreInformation ??
+                                          ""))
                                   .paddingSymmetric(vertical: 24.px),
                             ],
                           )),
+                          SizedBox(width: 20.px),
                           Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Center(
+                              /*Center(
                                 child: Image.asset(
                                   controller.buildingDataModel?.image ?? "",
                                   height: 248.px,
                                   width: 332.px,
                                   fit: BoxFit.cover,
                                 ),
-                              ),
+                              ),*/
                               MyTextView(
                                 Strings.location,
                                 isMaxLineWrap: true,
@@ -204,56 +214,68 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                         height: 2.px,
                         color: controller.appColors.divider,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MyTextView(
-                              Strings.storageComponent,
-                              isMaxLineWrap: true,
-                              textStyleNew: MyTextStyle(
-                                textColor: controller.appColors.black,
-                                textWeight: FontWeight.w400,
-                                textFamily: fontFamilyBold,
-                                textSize: 20.px,
-                              ),
+                      ...List.generate(
+                          controller.buildingDataModel.deficiencyAreaItems
+                                  ?.length ??
+                              0, (index) {
+                        DeficiencyAreaItem? data = controller
+                            .buildingDataModel.deficiencyAreaItems?[index];
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: MyTextView(
+                                    '${data?.description ?? ""}',
+                                    isMaxLineWrap: true,
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.black,
+                                      textWeight: FontWeight.w400,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 20.px,
+                                    ),
+                                  ),
+                                ),
+                                if (controller.isSuccess == true)
+                                  ClipOval(
+                                      child: SvgPicture.string(
+                                    icComplete,
+                                  )),
+                                CommonButton(
+                                  radius: 100.px,
+                                  title: Strings.seeMore,
+                                  onTap: () {
+                                    Get.toNamed(DeficienciesInsideScreen.routes,
+                                        arguments: {
+                                          "buildingName":
+                                              "${controller.buildingName}",
+                                          "deficiencies":
+                                              "${Strings.storageComponent}",
+                                          "deficiencyAreaItem": data,
+                                        }); /*?.then((value) {
+                                    controller.isSuccess = value['isSuccess'];
+                                    controller.imagesList = value['imagesList'];
+                                    controller.update();
+                                  });*/
+                                  },
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 24.px,
+                                    vertical: 10.px,
+                                  ),
+                                  textWeight: FontWeight.w500,
+                                  textSize: 16.px,
+                                  color: controller.appColors.buttonColor,
+                                  textColor: controller.appColors.black,
+                                ).paddingOnly(left: 24.px),
+                              ],
+                            ).paddingSymmetric(vertical: 16.px),
+                            Container(
+                              height: 2.px,
+                              color: controller.appColors.divider,
                             ),
-                          ),
-                          if (controller.isSuccess == true)
-                            ClipOval(
-                                child: SvgPicture.string(
-                              icComplete,
-                            )),
-                          CommonButton(
-                            radius: 100.px,
-                            title: Strings.seeMore,
-                            onTap: () {
-                              Get.toNamed(DeficienciesInsideScreen.routes,
-                                  arguments: {
-                                    "buildingName":
-                                        "${controller.buildingName}",
-                                    "deficiencies":
-                                        "${Strings.storageComponent}",
-                                  })?.then((value) {
-                                controller.isSuccess = value['isSuccess'];
-                                controller.imagesList = value['imagesList'];
-                                controller.update();
-                              });
-                            },
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 24.px,
-                              vertical: 10.px,
-                            ),
-                            textWeight: FontWeight.w500,
-                            textSize: 16.px,
-                            color: controller.appColors.buttonColor,
-                            textColor: controller.appColors.black,
-                          ).paddingOnly(left: 24.px),
-                        ],
-                      ).paddingSymmetric(vertical: 16.px),
-                      Container(
-                        height: 2.px,
-                        color: controller.appColors.divider,
-                      ),
+                          ],
+                        );
+                      }),
                     ],
                   ).paddingSymmetric(horizontal: 32.px),
                 ],
