@@ -255,7 +255,15 @@ class UnitInspection extends GetView<UnitController> {
                                 .withOpacity(0.11999999731779099),
                         onTap: () {
                           if (controller.getunitinspection()) {
-                            Get.toNamed(UnitInspectionSummary.routes);
+                            controller.getunitjson();
+                            Get.toNamed(UnitInspectionSummary.routes,
+                                arguments: {
+                                  "unitinfo": controller.unitjson,
+                                  "propertyinfo": Get.arguments['propertyinfo'],
+                                  "buildinginfo": Get.arguments['buildinginfo'],
+                                  "buildingtype": Get.arguments['buildingtype'],
+                                  "switchvalue": controller.switchbtn.value
+                                });
                           }
                         },
                       ).paddingSymmetric(vertical: 24.px),
@@ -284,17 +292,20 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value: 'name of property',
+                          value:
+                              Get.arguments['propertyinfo']['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: 'Los Angeles',
+                              value: Get.arguments['propertyinfo']['city']
+                                  .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['id']
+                                  .toString(),
                             ),
                           ],
                         ),
@@ -305,17 +316,20 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: 'address',
+                          value: Get.arguments['propertyinfo']['address']
+                              .toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
-                              value: '11',
+                              value: Get.arguments['propertyinfo']['state']
+                                  .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: '11111',
+                              value: Get.arguments['propertyinfo']['zip']
+                                  .toString(),
                             ),
                           ],
                         ),
@@ -345,17 +359,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value: 'Building 13',
+                          value:
+                              Get.arguments['buildinginfo']['name'].toString(),
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: 'Building 1',
+                          value: Get.arguments['buildingtype'].toString(),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: '1945',
+                      value: Get.arguments['buildinginfo']['constructed_year'],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

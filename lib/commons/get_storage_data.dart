@@ -8,12 +8,14 @@ class GetStorageData {
   String isLogin = "isLogin";
   String userId = "userId";
   String token = "token";
+  String account = "accountdata";
   String email = "email";
   String password = "password";
   String fcmToken = "fcmToken";
   String userLAT = "userLAT";
   String userLNG = "userLNG";
   String userLoc = "userLocation";
+  String inspectorname = "inspectorname";
 
   /// <<< To save string data --------- >>>
   saveString(String key, value) async {
