@@ -16,7 +16,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   Widget build(BuildContext context) {
     return GetBuilder<BuildingInspectionController>(
       init: BuildingInspectionController(),
-      autoRemove: false,
+      autoRemove: true,
+      assignId: true,
       builder: (controller) {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
@@ -317,10 +318,12 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                     );
                                   },
-                                  onSelected: (value) {
-                                    print("print");
+                                  onSelected: (value) async {
                                     controller.actionProperty(value);
-                                    controller.getbuildingapi(value.id);
+                                    await controller.getbuildingapi(value.id);
+                                    await controller.searchBuilding(
+                                        searchText: value.name);
+
                                     controller.update();
                                   },
                                 )),
@@ -554,7 +557,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   },
                                   onSelected: (value) async {
                                     controller.actionBuilding(value);
-
                                     controller.update();
                                   },
                                 )),
@@ -771,7 +773,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                       //   "buildingName": controller.buildingNameController.text,
                       // });
-                      
                     }).paddingSymmetric(vertical: 24.px),
               ],
             ),

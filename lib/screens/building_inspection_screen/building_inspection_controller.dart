@@ -5,7 +5,6 @@ import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../Models/accountmodel/account_model.dart';
 import 'models/certificate_model.dart';
 
@@ -56,7 +55,6 @@ class BuildingInspectionController extends BaseController {
     //   Certificates(true, 'Lead-Based Paint Inspection Report'),
     //   Certificates(false, 'Sprinkler System Certificate'),
     // ]);
-
     // propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
 
     cityList = ['CITY 1', 'CITY 2', 'CITY 3', 'CITY 4'];
@@ -201,6 +199,7 @@ class BuildingInspectionController extends BaseController {
     stateController.text = value.state!;
     zipController.text = value.zip!;
     propertyAddressController.text = value.address1!;
+
     update();
   }
 
@@ -236,9 +235,23 @@ class BuildingInspectionController extends BaseController {
   }
 
   searchBuilding({required String searchText}) async {
-    await getpropertyinfo();
+    searchBuildingList.value = [];
+    if (buildingList.length > 0) {
+      buildingNameController.text = buildingList[0].name;
+      yearConstructedController.text =
+          buildingList[0].constructedYear.toString();
+      buildingTypeController.text =
+          buildingList[0].buildingType.name.toString();
+      buildingTypeidController.text =
+          buildingList[0].buildingType.id.toString();
+    } else {
+      buildingNameController.clear();
+      yearConstructedController.clear();
+      buildingTypeController.clear();
+      buildingTypeidController.clear();
+    }
+
     update();
-    searchBuildingList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < buildingList.length; i++) {
         if (buildingList[i]
@@ -257,6 +270,7 @@ class BuildingInspectionController extends BaseController {
   }
 
   getpropertyinfo() async {
+    propertyList!.clear();
     var response = await BudingInpectionRepository().getpropetyinfoapi();
     await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
@@ -278,13 +292,17 @@ class BuildingInspectionController extends BaseController {
   }
 
   getbuildingapi(id) async {
+    buildingList.clear();
     var response = await BudingInpectionRepository().getbuilding(id);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
       buildingList = r.buildings;
-      searchBuildingList.value = buildingList;
-      print("building" + searchBuildingList.toString());
+      // searchBuildingList.value = buildingList;
+      print("building" + propertyNameController.text.toString());
+      searchBuilding(searchText: propertyNameController.text);
+      update();
+
       // buildingList = r;
     });
     update();
