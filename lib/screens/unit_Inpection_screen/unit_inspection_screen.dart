@@ -351,17 +351,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value: 'Building 13',
+                          value:
+                              Get.arguments['buildinginfo']['name'].toString(),
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: 'Building 1',
+                          value: Get.arguments['buildingtype'].toString(),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: '1945',
+                      value: Get.arguments['buildinginfo']['constructed_year'],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

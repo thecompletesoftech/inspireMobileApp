@@ -237,6 +237,7 @@ class BuildingInspectionController extends BaseController {
 
   searchBuilding({required String searchText}) async {
     await getpropertyinfo();
+    update();
     searchBuildingList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < buildingList.length; i++) {
