@@ -16,7 +16,7 @@ class BuildingStandardsController extends BaseController {
   var imagesList;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-
+  var successlistofstandards = [].obs;
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
 
   void onInit() {
@@ -25,6 +25,7 @@ class BuildingStandardsController extends BaseController {
     () async {
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
+      getsucceslistdeficiency();
     }();
 
     if (Get.arguments != null) {
@@ -220,6 +221,32 @@ class BuildingStandardsController extends BaseController {
       }
     });
     update();
+  }
+
+  getsucceslistdeficiency() {
+    successlistofstandards.clear();
+    for (var i = 0; i < searchList.length; i++) {
+      var serchdata = searchList[i].buildingDataModel;
+      for (var j = 0; j < serchdata!.length; j++)
+        successlistofstandards.add({
+          "id": serchdata[j].id,
+          "success": false,
+        });
+    }
+  }
+
+  setsucceslistdeficiency(standard_id) {
+    for (var i = 0; i < searchList.length; i++) {
+      var serchdata = searchList[i].buildingDataModel;
+      for (var j = 0; j < serchdata!.length; j++) {
+        if (serchdata[j].id.toString() == standard_id.toString()) {
+          print("serach data" + serchdata[j].id.toString());
+          successlistofstandards[i]["success"] = true;
+        }
+      }
+    }
+    update();
+    print("sucess" + successlistofstandards.toString());
   }
 }
 

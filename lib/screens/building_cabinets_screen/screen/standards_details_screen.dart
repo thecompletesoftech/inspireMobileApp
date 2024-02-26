@@ -31,8 +31,10 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                     radius: 0.px,
                     onClickBack: () {
                       Get.back(result: {
-                        "isSuccess": controller.isSuccess,
-                        "imagesList": controller.imagesList,
+                        "successlist": controller.successlistofdeficiencies,
+                        "standardid": controller.buildingDataModel.id,
+                        // "isSuccess": controller.isSuccess,
+                        // "imagesList": controller.imagesList,
                         "buildingName":
                             "${controller.buildingDataModel.name ?? ""}",
                       });
@@ -236,7 +238,9 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                     ),
                                   ),
                                 ),
-                                if (controller.isSuccess == true)
+                                if (controller.successlistofdeficiencies[index]
+                                        ['success'] ==
+                                    true)
                                   ClipOval(
                                       child: SvgPicture.string(
                                     icComplete,
@@ -244,8 +248,9 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                 CommonButton(
                                   radius: 100.px,
                                   title: Strings.seeMore,
-                                  onTap: () {
-                                    Get.toNamed(DeficienciesInsideScreen.routes,
+                                  onTap: () async {
+                                    var result = await Get.toNamed(
+                                        DeficienciesInsideScreen.routes,
                                         arguments: {
                                           "buildingName":
                                               "${controller.buildingName}",
@@ -257,6 +262,13 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                     controller.imagesList = value['imagesList'];
                                     controller.update();
                                   });*/
+                                    // print("adsaasd" + result.toString());
+                                    // controller.isSuccess = result['isSuccess'];
+                                    // controller.imagesList =
+                                    //     result['imagesList'];
+                                    controller.Setsuccesdeficiencies(
+                                        result['isSuccess'],
+                                        result['imagesList']);
                                   },
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 24.px,
