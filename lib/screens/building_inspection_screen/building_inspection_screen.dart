@@ -61,8 +61,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Flexible(
                                         flex: 1,
                                         child: MyTextView(
-                                          controller.account!.userName
-                                              .toString(),
+                                          controller.account?.userName ?? "",
                                           textStyleNew: MyTextStyle(
                                             textColor:
                                                 controller.appColors.lightText,

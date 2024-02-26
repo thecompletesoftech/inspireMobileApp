@@ -13,11 +13,12 @@ class BuildingStandardsController extends BaseController {
   bool isCollapseStandards = false;
   String buildingName = '';
   bool isSuccess = false;
-  var imagesList;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-  var successlistofstandards = [].obs;
+  var successData = [].obs;
+
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
+  RxList<BuildingModel> dataList = <BuildingModel>[].obs;
 
   void onInit() {
     super.onInit();
@@ -25,7 +26,6 @@ class BuildingStandardsController extends BaseController {
     () async {
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
-      getsucceslistdeficiency();
     }();
 
     if (Get.arguments != null) {
@@ -223,30 +223,54 @@ class BuildingStandardsController extends BaseController {
     update();
   }
 
-  getsucceslistdeficiency() {
-    successlistofstandards.clear();
-    for (var i = 0; i < searchList.length; i++) {
-      var serchdata = searchList[i].buildingDataModel;
-      for (var j = 0; j < serchdata!.length; j++)
-        successlistofstandards.add({
-          "id": serchdata[j].id,
-          "success": false,
-        });
-    }
+  isSuccessStandards(successList, standardsId) {
+    int i = 0;
+    searchList.forEach((element) {
+      element.buildingDataModel?.forEach((element1) {
+        if (element1.id == standardsId) {
+          var data = successList.where((e) => e['success'] == true);
+
+          /*successList.forEach((e) {
+            if (e['success']) {
+              i = i + 1;
+            }
+          });*/
+
+          print("dgfgdf  ${element.buildingDataModel!.length}");
+          print("sfgdsfdglkjhjnjldjgtkh  ${data.length}");
+
+          if (element.buildingDataModel?.length == data.length) {
+            print("dglkjhjnjldjgtkh ");
+            searchList[searchList.indexOf(element)].buildingDataModel![searchList[searchList.indexOf(element)].buildingDataModel!.indexOf(element1)].isArea = true;
+          }
+        }
+      });
+    });
+    update();
   }
 
-  setsucceslistdeficiency(standard_id) {
-    for (var i = 0; i < searchList.length; i++) {
-      var serchdata = searchList[i].buildingDataModel;
-      for (var j = 0; j < serchdata!.length; j++) {
-        if (serchdata[j].id.toString() == standard_id.toString()) {
-          print("serach data" + serchdata[j].id.toString());
-          successlistofstandards[i]["success"] = true;
+  isSuccessStandards1(successList, standardsId) {
+    for (int i = 0; i < searchList.length; i++) {
+      for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
+        if (searchList[i].buildingDataModel![j].id == standardsId) {
+          var data = successList.where((e) => e['success'] == true);
+          print("dgfgdf  ${searchList[i].buildingDataModel!.length}");
+          print("sfgdsfdglkjhjnjldjgtkh  ${data.length}");
+          if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length == data.length) {
+            print(
+                "fhgdjgjhgjkhjkljklkjl kjlgjkklghjftghgdfghtgujkhfyukhghjfrghy ");
+
+            searchList[i].buildingDataModel![j].isArea = true;
+
+
+
+            print(
+                "l;ksdfjgnklthgΩdt ifsgji  ${searchList[i].buildingDataModel![j].isArea}");
+          }
         }
       }
     }
     update();
-    print("sucess" + successlistofstandards.toString());
   }
 }
 

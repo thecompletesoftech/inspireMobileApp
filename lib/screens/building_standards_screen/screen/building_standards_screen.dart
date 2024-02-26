@@ -66,15 +66,15 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           textColor: controller.appColors.white,
                           color: controller.appColors.appColor,
                           onTap: () {
-                            if (controller.imagesList != null) {
-                              Get.toNamed(
-                                  BuildingInspectionSummaryScreen.routes,
-                                  arguments: {
-                                    "buildingName": controller.buildingName,
-                                    "imagesList": controller.imagesList,
-                                    "inspectionName": controller.inspectionName,
-                                  });
-                            }
+                            // if (controller.imagesList != null) {
+                            //   Get.toNamed(
+                            //       BuildingInspectionSummaryScreen.routes,
+                            //       arguments: {
+                            //         "buildingName": controller.buildingName,
+                            //         "imagesList": controller.imagesList,
+                            //         "inspectionName": controller.inspectionName,
+                            //       });
+                            // }
                           },
                         )
                       ],
@@ -286,28 +286,24 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                 controller
                                                                     .buildingName,
                                                             "deficiencyArea":
-                                                                buildingDataList
-                                                          }); /*?.then((value) {
-                                                        controller.imagesList =
-                                                            value['imagesList'];
-                                                        controller.isSuccess =
-                                                            value['isSuccess'];
-
-                                                        controller
-                                                                .inspectionName =
-                                                            value[
-                                                                'buildingName'];
-                                                        if (controller
-                                                            .isSuccess) {
-                                                          controller.isUpdateList(
-                                                              name: value[
-                                                                  'buildingName']);
+                                                                buildingDataList,
+                                                            "successListOfStandards":
+                                                                controller
+                                                                    .successData
+                                                          })?.then((value) {
+                                                        if (value != null) {
+                                                          controller
+                                                                  .successData =
+                                                              value[
+                                                                  'successList'];
+                                                          controller.isSuccessStandards1(
+                                                              value[
+                                                                  'successList'],
+                                                              value[
+                                                                  'standardsId']);
+                                                          controller.update();
                                                         }
-                                                        controller.update();
-                                                      });*/
-                                                      print("deficiencyadata" +
-                                                          result.toString());
-                                                      // controller.setsucceslistdeficiency(result['standardid'].toString());
+                                                      });
                                                     },
                                                     child: ShadowContainer(
                                                             padding:
@@ -341,7 +337,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                                 textSize: 20.px,
                                                                               ),
                                                                             ),
-                                                                            if (controller.successlistofstandards[index]['success'] ==
+                                                                            if (buildingDataList!.isArea ==
                                                                                 true)
                                                                               ClipOval(
                                                                                   child: SvgPicture.string(

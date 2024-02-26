@@ -10,7 +10,10 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+
+enum ImageUploadStatus { initial, uploading, success }
 
 class DeficienciesInsideController extends BaseController {
   String buildingName = '';
@@ -20,11 +23,13 @@ class DeficienciesInsideController extends BaseController {
       DeficienciesInsideRepository();
   var selectedItem = "null";
   bool visibleBtn = false;
-  var sendImagesList = [];
+
+  ImageUploadStatus imageUploadStatus = ImageUploadStatus.initial;
   final commentController = TextEditingController();
   final dateController = TextEditingController();
   bool change = true;
   List<String> imageList = [];
+  List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
 
   var isListening = false.obs;
   var speechText = "".obs;
@@ -37,6 +42,19 @@ class DeficienciesInsideController extends BaseController {
       buildingName = Get.arguments['buildingName'];
       deficiencies = Get.arguments['deficiencies'];
       deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
+
+      deficiencyInspectionsReqModel = [
+        DeficiencyInspectionsReqModel(
+            housingDeficiencyId: Get.arguments['successListOfDeficiencies']
+                    ['housingDeficiencyId']
+                .toString(),
+            deficiencyProofPictures: Get.arguments['successListOfDeficiencies']
+                ['deficiencyProofPictures'] as List<String>,
+            date: Get.arguments['successListOfDeficiencies']['date'] ?? "",
+            comment:
+                Get.arguments['successListOfDeficiencies']['comment'] ?? "")
+      ];
+      dataFill();
     }
     update();
   }
@@ -44,6 +62,23 @@ class DeficienciesInsideController extends BaseController {
   final Rx<DateTime> _selectedDate = DateTime.now().obs;
 
   Rx<DateTime> get selectedDate => _selectedDate;
+
+  dataFill() {
+    deficiencyInspectionsReqModel.forEach((element) {
+      element.deficiencyProofPictures?.forEach((element1) {
+        imageList.add(element1);
+      });
+      commentController.text = element.comment ?? "";
+      dateController.text = element.date ?? "";
+    });
+    if (imageList.isNotEmpty) {
+      imageUploadStatus = ImageUploadStatus.success;
+      visibleBtn = true;
+      selectedItem ='present';
+    }
+    print("fljfnbjlhn ${deficiencyInspectionsReqModel}");
+    update();
+  }
 
   void selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
@@ -213,7 +248,7 @@ class DeficienciesInsideController extends BaseController {
                           radius: 100.px,
                           onTap: () {
                             selectedItem = "null";
-                            sendImagesList.clear();
+                            imageList.clear();
                             visibleBtn = false;
                             update();
                             Get.back();
@@ -360,24 +395,25 @@ class DeficienciesInsideController extends BaseController {
                     '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
                 .create();
             file.writeAsBytesSync(editedImage);
-
+            imageUploadStatus = ImageUploadStatus.uploading;
+            update();
             var response = await deficienciesInsideRepository.getImageUpload(
                 filePath: file.path);
 
             response.fold((l) {
-              return null;
+              imageUploadStatus = ImageUploadStatus.initial;
             }, (r) {
+              imageUploadStatus = ImageUploadStatus.success;
               imageList.add(r.images?.image ?? '');
-              sendImagesList.add(file.path);
+              if (!utils.isValidationEmpty(commentController.text) &&
+                  !utils.isValidationEmpty(dateController.text)) {
+                visibleBtn = true;
+              } else {
+                visibleBtn = false;
+              }
+              update();
             });
 
-            if (!utils.isValidationEmpty(commentController.text) &&
-                !utils.isValidationEmpty(dateController.text)) {
-              visibleBtn = true;
-            } else {
-              visibleBtn = false;
-            }
-            update();
             // utils.showToast(message: "Section Completed", context: Get.context!);
           }
         }
@@ -596,25 +632,28 @@ class DeficienciesInsideController extends BaseController {
                     '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
                 .create();
             file.writeAsBytesSync(editedImage);
+            imageUploadStatus = ImageUploadStatus.uploading;
+            update();
 
             var response = await deficienciesInsideRepository.getImageUpload(
                 filePath: file.path);
 
             response.fold((l) {
+              imageUploadStatus = ImageUploadStatus.initial;
+
               return null;
             }, (r) {
+              imageUploadStatus = ImageUploadStatus.success;
+
               imageList.add(r.images?.image ?? '');
-              sendImagesList.add(file.path);
+              if (!utils.isValidationEmpty(commentController.text) &&
+                  !utils.isValidationEmpty(dateController.text)) {
+                visibleBtn = true;
+              } else {
+                visibleBtn = false;
+              }
+              update();
             });
-
-            if (!utils.isValidationEmpty(commentController.text) &&
-                !utils.isValidationEmpty(dateController.text)) {
-              visibleBtn = true;
-            } else {
-              visibleBtn = false;
-            }
-
-            update();
           }
         }
       } catch (e) {
@@ -623,5 +662,17 @@ class DeficienciesInsideController extends BaseController {
       }
       update();
     }
+  }
+
+  saveChanges() {
+    deficiencyInspectionsReqModel.add(
+      DeficiencyInspectionsReqModel(
+        comment: commentController.text,
+        date: dateController.text,
+        deficiencyProofPictures: imageList,
+        housingDeficiencyId: deficiencyAreaItem.id.toString(),
+      ),
+    );
+    update();
   }
 }

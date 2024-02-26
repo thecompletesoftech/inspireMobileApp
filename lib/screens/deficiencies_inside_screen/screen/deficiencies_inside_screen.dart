@@ -282,17 +282,15 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     CommonIconButton(
-                                      textColor:
-                                          controller.selectedItem != "null" &&
-                                                  controller
-                                                      .sendImagesList.isNotEmpty
-                                              ? controller.appColors.delete
-                                              : controller.appColors.border1,
+                                      textColor: controller.selectedItem !=
+                                                  "null" &&
+                                              controller.imageList.isNotEmpty
+                                          ? controller.appColors.delete
+                                          : controller.appColors.border1,
                                       title: Strings.delete,
                                       onTap: () {
                                         if (controller.selectedItem != "null" &&
-                                            controller
-                                                .sendImagesList.isNotEmpty) {
+                                            controller.imageList.isNotEmpty) {
                                           controller.dialogDelete();
                                         }
                                       },
@@ -310,12 +308,11 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           : Utils.isTabletScreen(context)
                                               ? 40.px
                                               : 24.px,
-                                      iconColor:
-                                          controller.selectedItem != "null" &&
-                                                  controller
-                                                      .sendImagesList.isNotEmpty
-                                              ? controller.appColors.delete
-                                              : controller.appColors.border1,
+                                      iconColor: controller.selectedItem !=
+                                                  "null" &&
+                                              controller.imageList.isNotEmpty
+                                          ? controller.appColors.delete
+                                          : controller.appColors.border1,
                                       icon: icDeleteGrey,
                                     ),
                                   ],
@@ -361,11 +358,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   height: 200.px,
                                   width: Get.width,
                                   padding: EdgeInsets.all(32.px),
-                                  child: controller.sendImagesList.isNotEmpty
+                                  child: controller.imageUploadStatus ==
+                                          ImageUploadStatus.success
                                       ? ListView.separated(
                                           scrollDirection: Axis.horizontal,
                                           itemCount:
-                                              controller.sendImagesList.length,
+                                              controller.imageList.length,
                                           shrinkWrap: true,
                                           physics:
                                               const ClampingScrollPhysics(),
@@ -381,7 +379,24 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.px),
-                                                      child: Image.file(
+                                                      child: Image.network(
+                                                        controller
+                                                            .imageList[index],
+                                                        headers: {
+                                                          "Host":
+                                                              "inspections.dev.gccs.gilsonsoftware.com"
+                                                        },
+                                                        fit: BoxFit.cover,
+                                                        scale: 1.0,
+                                                        color: controller
+                                                                    .selectedItem ==
+                                                                "null"
+                                                            ? controller
+                                                                .appColors.black
+                                                                .withOpacity(
+                                                                    0.07999999821186066)
+                                                            : null,
+                                                      ) /*Image.file(
                                                         File(controller
                                                                 .sendImagesList[
                                                             index]),
@@ -394,7 +409,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                 .withOpacity(
                                                                     0.07999999821186066)
                                                             : null,
-                                                      ),
+                                                      )*/
+                                                      ,
                                                     ),
                                                   ),
                                                   Positioned(
@@ -403,17 +419,16 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                     child: GestureDetector(
                                                         onTap: () {
                                                           if (controller
-                                                                  .sendImagesList
+                                                                  .imageList
                                                                   .length ==
                                                               1) {
                                                             controller
-                                                                .sendImagesList = [];
+                                                                .imageList = [];
                                                             controller
                                                                     .visibleBtn =
                                                                 false;
                                                           } else {
-                                                            controller
-                                                                .sendImagesList
+                                                            controller.imageList
                                                                 .removeAt(
                                                                     index);
                                                           }
@@ -434,8 +449,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                         )),
                                                   )
                                                 ]),
-                                                if (controller.sendImagesList
-                                                            .length -
+                                                if (controller
+                                                            .imageList.length -
                                                         1 ==
                                                     index) ...[
                                                   GestureDetector(
@@ -518,116 +533,130 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                             );
                                           },
                                         )
-                                      : GestureDetector(
-                                          onTap: () {
-                                            controller.imagePicker();
-                                          },
-                                          child: Container(
-                                            color: Colors.white,
-                                            child: Column(
-                                              children: [
-                                                controller.selectedItem ==
-                                                        "null"
-                                                    ? Center(
-                                                        child:
-                                                            SvgPicture.string(
-                                                          icImage,
-                                                          width: 80.px,
-                                                          height: 80.px,
-                                                          color: controller
-                                                              .appColors.black
-                                                              .withOpacity(
-                                                                  0.07999999821186066),
-                                                        ),
-                                                      )
-                                                    : Center(
-                                                        child:
-                                                            SvgPicture.string(
-                                                          icImage,
-                                                          width: 80.px,
-                                                          height: 80.px,
+                                      : controller.imageUploadStatus ==
+                                              ImageUploadStatus.initial
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                controller.imagePicker();
+                                              },
+                                              child: Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  children: [
+                                                    controller.selectedItem ==
+                                                            "null"
+                                                        ? Center(
+                                                            child: SvgPicture
+                                                                .string(
+                                                              icImage,
+                                                              width: 80.px,
+                                                              height: 80.px,
+                                                              color: controller
+                                                                  .appColors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.07999999821186066),
+                                                            ),
+                                                          )
+                                                        : Center(
+                                                            child: SvgPicture
+                                                                .string(
+                                                              icImage,
+                                                              width: 80.px,
+                                                              height: 80.px,
+                                                            ),
+                                                          ),
+                                                    SizedBox(
+                                                      height: 16.px,
+                                                    ),
+                                                    Flexible(
+                                                      child: Text.rich(
+                                                        TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text:
+                                                                  "Tap to Take or Upload",
+                                                              style:
+                                                                  MyTextStyle(
+                                                                textSize: 16.px,
+                                                                textWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                textColor: controller
+                                                                            .selectedItem ==
+                                                                        "null"
+                                                                    ? controller
+                                                                        .appColors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.07999999821186066)
+                                                                    : controller
+                                                                        .appColors
+                                                                        .appColor,
+                                                                textFamily:
+                                                                    fontFamilyBold,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text:
+                                                                  " a photo of the",
+                                                              style:
+                                                                  MyTextStyle(
+                                                                textSize: 16.px,
+                                                                textColor: controller
+                                                                            .selectedItem ==
+                                                                        "null"
+                                                                    ? controller
+                                                                        .appColors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.07999999821186066)
+                                                                    : controller
+                                                                        .appColors
+                                                                        .black,
+                                                                textWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                textFamily:
+                                                                    fontFamilyRegular,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text:
+                                                                  " Deficiency",
+                                                              style:
+                                                                  MyTextStyle(
+                                                                textSize: 16.px,
+                                                                textWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                textColor: controller
+                                                                            .selectedItem ==
+                                                                        "null"
+                                                                    ? controller
+                                                                        .appColors
+                                                                        .black
+                                                                        .withOpacity(
+                                                                            0.07999999821186066)
+                                                                    : controller
+                                                                        .appColors
+                                                                        .appColor,
+                                                                textFamily:
+                                                                    fontFamilyBold,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                SizedBox(
-                                                  height: 16.px,
-                                                ),
-                                                Flexible(
-                                                  child: Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                          text:
-                                                              "Tap to Take or Upload",
-                                                          style: MyTextStyle(
-                                                            textSize: 16.px,
-                                                            textWeight:
-                                                                FontWeight.w600,
-                                                            textColor: controller
-                                                                        .selectedItem ==
-                                                                    "null"
-                                                                ? controller
-                                                                    .appColors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.07999999821186066)
-                                                                : controller
-                                                                    .appColors
-                                                                    .appColor,
-                                                            textFamily:
-                                                                fontFamilyBold,
-                                                          ),
-                                                        ),
-                                                        TextSpan(
-                                                          text:
-                                                              " a photo of the",
-                                                          style: MyTextStyle(
-                                                            textSize: 16.px,
-                                                            textColor: controller
-                                                                        .selectedItem ==
-                                                                    "null"
-                                                                ? controller
-                                                                    .appColors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.07999999821186066)
-                                                                : controller
-                                                                    .appColors
-                                                                    .black,
-                                                            textWeight:
-                                                                FontWeight.w400,
-                                                            textFamily:
-                                                                fontFamilyRegular,
-                                                          ),
-                                                        ),
-                                                        TextSpan(
-                                                          text: " Deficiency",
-                                                          style: MyTextStyle(
-                                                            textSize: 16.px,
-                                                            textWeight:
-                                                                FontWeight.w600,
-                                                            textColor: controller
-                                                                        .selectedItem ==
-                                                                    "null"
-                                                                ? controller
-                                                                    .appColors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.07999999821186066)
-                                                                : controller
-                                                                    .appColors
-                                                                    .appColor,
-                                                            textFamily:
-                                                                fontFamilyBold,
-                                                          ),
-                                                        ),
-                                                      ],
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
+                                            )
+                                          : Center(
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ),
-                                          ),
-                                        ),
                                 ),
                               ),
                               Container(
@@ -685,8 +714,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                       if (str.isNotEmpty &&
                                           controller
                                               .dateController.text.isNotEmpty &&
-                                          (controller
-                                                  .sendImagesList.isNotEmpty ||
+                                          (controller.imageList.isNotEmpty ||
                                               controller.change)) {
                                         controller.visibleBtn = true;
                                       } else {
@@ -785,13 +813,13 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         horizontal: 24.px,
                                         vertical: 12.px,
                                       ),
-                                      onTap: () {
+                                      onTap: () async {
                                         if (controller.visibleBtn) {
+                                          await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
                                                 .deficiencyAreaItem.id,
-                                            "imagesList":
-                                                controller.sendImagesList
+                                            "imagesList": controller.imageList
                                           });
                                         }
                                       }),

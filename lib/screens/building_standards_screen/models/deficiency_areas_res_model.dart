@@ -43,6 +43,7 @@ class DeficiencyArea {
   String? purpose;
   String? commonComponents;
   String? moreInformation;
+  bool isArea;
   List<DeficiencyAreaItem>? deficiencyAreaItems;
 
   DeficiencyArea({
@@ -51,6 +52,7 @@ class DeficiencyArea {
     this.definition,
     this.purpose,
     this.commonComponents,
+    this.isArea = false,
     this.moreInformation,
     this.deficiencyAreaItems,
   });
@@ -90,6 +92,7 @@ class DeficiencyAreaItem {
   String? action;
   String? moreInformation;
   String? requestForHelp;
+  bool? status;
   List<DeficiencyItemHousingDeficiency>? deficiencyItemHousingDeficiency;
 
   DeficiencyAreaItem({
@@ -100,6 +103,7 @@ class DeficiencyAreaItem {
     this.observation,
     this.action,
     this.moreInformation,
+    this.status,
     this.requestForHelp,
     this.deficiencyItemHousingDeficiency,
   });
