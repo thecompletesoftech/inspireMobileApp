@@ -9,13 +9,7 @@ class StandardsDetailsController extends BaseController {
   dynamic isSuccess;
   var imagesList;
   var successListOfDeficiencies = [].obs;
-  var data = [].obs;
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // super.dispose();
-  }
+  List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
 
   @override
   void onInit() {
@@ -23,37 +17,46 @@ class StandardsDetailsController extends BaseController {
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
       buildingDataModel = Get.arguments['deficiencyArea'];
-      if (Get.arguments['successListOfStandards'].value != 0) {
-        data.addAll(Get.arguments['successListOfStandards'].value);
-        successListOfDeficiencies.forEach((element) {
-          if (element['housingDeficiencyId'] ==
-              Get.arguments['successListOfStandards']['housingDeficiencyId']) {
-            successListOfDeficiencies[
-                    successListOfDeficiencies.indexOf(element)]['success'] =
-                Get.arguments['successListOfStandards']['success'];
+      getSuccessList();
+      Get.arguments['successListOfStandards'];
 
-            successListOfDeficiencies[successListOfDeficiencies
-                    .indexOf(element)]['housingDeficiencyId'] =
-                Get.arguments['successListOfStandards']['housingDeficiencyId'];
+      Get.arguments['successListOfStandards'].forEach((e) {
+        deficiencyInspectionsReqModel.add(DeficiencyInspectionsReqModel(
+          isSuccess: e.isSuccess,
+          comment: e.comment,
+          date: e.date,
+          deficiencyProofPictures: e.deficiencyProofPictures,
+          housingDeficiencyId: e.housingDeficiencyId.toString(),
+        ));
+      });
 
-            successListOfDeficiencies[successListOfDeficiencies
-                    .indexOf(element)]['deficiencyProofPictures'] =
-                Get.arguments['successListOfStandards']
-                    ['deficiencyProofPictures'];
+      for (var i = 0; i < buildingDataModel.deficiencyAreaItems!.length; i++) {
+        for (var j = 0; j < deficiencyInspectionsReqModel.length; j++) {
+          if (buildingDataModel.deficiencyAreaItems![i].id.toString() ==
+              deficiencyInspectionsReqModel[j].housingDeficiencyId.toString()) {
+            int itemIndex = successListOfDeficiencies.indexWhere((element) =>
+                element['housingDeficiencyId'].toString() ==
+                deficiencyInspectionsReqModel[j]
+                    .housingDeficiencyId
+                    .toString());
 
-            successListOfDeficiencies[
-                    successListOfDeficiencies.indexOf(element)]['comment'] =
-                Get.arguments['successListOfStandards']['comment'];
-
-            successListOfDeficiencies[
-                    successListOfDeficiencies.indexOf(element)]['date'] =
-                Get.arguments['successListOfStandards']['date'];
+            if (itemIndex != -1) {
+              successListOfDeficiencies[itemIndex]['housingDeficiencyId'] =
+                  deficiencyInspectionsReqModel[j].housingDeficiencyId;
+              successListOfDeficiencies[itemIndex]['success'] =
+                  deficiencyInspectionsReqModel[j].isSuccess;
+              successListOfDeficiencies[itemIndex]['deficiencyProofPictures'] =
+                  deficiencyInspectionsReqModel[j].deficiencyProofPictures;
+              successListOfDeficiencies[itemIndex]['comment'] =
+                  deficiencyInspectionsReqModel[j].comment;
+              successListOfDeficiencies[itemIndex]['date'] =
+                  deficiencyInspectionsReqModel[j].date;
+            }
           }
-        });
+        }
       }
-      if (Get.arguments['successListOfStandards'].value != 0) {
-        getSuccessList();
-      }
+
+      print("fkjhbkfdsj ${successListOfDeficiencies}");
     }
     update();
   }
@@ -68,17 +71,6 @@ class StandardsDetailsController extends BaseController {
         'date': '',
       });
     }
-  }
-
-  Setsuccesdeficiencies(id, imagelist) {
-    for (var j = 0; j < successListOfDeficiencies.length; j++) {
-      if (successListOfDeficiencies[j]['id'].toString() == id.toString()) {
-        successListOfDeficiencies[j]['success'] = true;
-        successListOfDeficiencies[j]['imagelist'] = imagelist;
-      }
-    }
-    update();
-    print("succeslist" + successListOfDeficiencies.toString());
   }
 
   setSuccessDeficiencies(

@@ -2,7 +2,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/unitinspection_controller.dart';
 import '../../commons/all.dart';
-import '../building_inspection_screen/building_inspection_screen.dart';
+import '../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {

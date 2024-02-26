@@ -819,7 +819,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           Get.back(result: {
                                             "isSuccess": controller
                                                 .deficiencyAreaItem.id,
-                                            "imagesList": controller.imageList
+                                            "imagesList": controller.imageList,
+                                            "deficiencyInspectionsReqModel":
+                                                controller
+                                                    .deficiencyInspectionsReqModel
                                           });
                                         }
                                       }),

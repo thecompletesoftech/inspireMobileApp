@@ -1,8 +1,9 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_cabinets_screen/screen/standards_details_screen.dart';
-import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_screen.dart';
+import 'package:public_housing/screens/building_inspection_summary/screen/building_inspection_summary_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
   const BuildingStandardsScreen({Key? key}) : super(key: key);
@@ -66,15 +67,30 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           textColor: controller.appColors.white,
                           color: controller.appColors.appColor,
                           onTap: () {
-                            // if (controller.imagesList != null) {
-                            //   Get.toNamed(
-                            //       BuildingInspectionSummaryScreen.routes,
-                            //       arguments: {
-                            //         "buildingName": controller.buildingName,
-                            //         "imagesList": controller.imagesList,
-                            //         "inspectionName": controller.inspectionName,
-                            //       });
-                            // }
+                            List<DeficiencyArea> deficiencyArea = [];
+                            controller.searchList.forEach((element) {
+                              element.buildingDataModel?.forEach((e) {
+                                if (e.isArea == true) {
+                                  deficiencyArea.add(e);
+                                }
+                              });
+                            });
+
+                            if (deficiencyArea.isNotEmpty) {
+                              Get.toNamed(
+                                  BuildingInspectionSummaryScreen.routes,
+                                  arguments: {
+                                    "buildingName": controller.buildingName,
+                                    "deficiencyArea": deficiencyArea,
+                                    "inspectionName": controller.inspectionName,
+                                    "buildingInfo": controller.buildingInfo,
+                                    "propertyInfo": controller.propertyInfo,
+                                    "certificatesInfo":
+                                        controller.certificatesInfo,
+                                    "inspectorName": controller.inspectorName,
+                                    "inspectorDate": controller.inspectorDate,
+                                  });
+                            }
                           },
                         )
                       ],
@@ -288,14 +304,11 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                             "deficiencyArea":
                                                                 buildingDataList,
                                                             "successListOfStandards":
-                                                                controller
-                                                                    .successData
+                                                                buildingDataList
+                                                                        .deficiencyInspectionsReqModel ??
+                                                                    []
                                                           })?.then((value) {
                                                         if (value != null) {
-                                                          controller
-                                                                  .successData =
-                                                              value[
-                                                                  'successList'];
                                                           controller.isSuccessStandards1(
                                                               value[
                                                                   'successList'],

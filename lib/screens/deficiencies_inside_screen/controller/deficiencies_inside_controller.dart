@@ -19,11 +19,11 @@ class DeficienciesInsideController extends BaseController {
   String buildingName = '';
   String deficiencies = '';
   DeficiencyAreaItem deficiencyAreaItem = DeficiencyAreaItem();
+
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
   var selectedItem = "null";
   bool visibleBtn = false;
-
   ImageUploadStatus imageUploadStatus = ImageUploadStatus.initial;
   final commentController = TextEditingController();
   final dateController = TextEditingController();
@@ -39,21 +39,39 @@ class DeficienciesInsideController extends BaseController {
   void onInit() {
     super.onInit();
     if (Get.arguments != null) {
-      buildingName = Get.arguments['buildingName'];
-      deficiencies = Get.arguments['deficiencies'];
-      deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
+      buildingName = Get.arguments['buildingName'] ?? "";
+      deficiencies = Get.arguments['deficiencies'] ?? "";
 
-      deficiencyInspectionsReqModel = [
-        DeficiencyInspectionsReqModel(
-            housingDeficiencyId: Get.arguments['successListOfDeficiencies']
-                    ['housingDeficiencyId']
-                .toString(),
-            deficiencyProofPictures: Get.arguments['successListOfDeficiencies']
-                ['deficiencyProofPictures'] as List<String>,
-            date: Get.arguments['successListOfDeficiencies']['date'] ?? "",
-            comment:
-                Get.arguments['successListOfDeficiencies']['comment'] ?? "")
-      ];
+      if (Get.arguments['deficiencyAreaList'] != null) {
+        deficiencyAreaItem = Get.arguments['deficiencyAreaList'][0];
+        deficiencyInspectionsReqModel = [
+          DeficiencyInspectionsReqModel(
+              housingDeficiencyId: Get
+                  .arguments['deficiencyInspectionsReqModel']
+                  .housingDeficiencyId
+                  .toString(),
+              deficiencyProofPictures: Get
+                  .arguments['deficiencyInspectionsReqModel']
+                  .deficiencyProofPictures as List<String>,
+              date: Get.arguments['deficiencyInspectionsReqModel'].date ?? "",
+              comment:
+                  Get.arguments['deficiencyInspectionsReqModel'].comment ?? "")
+        ];
+      } else {
+        deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
+        deficiencyInspectionsReqModel = [
+          DeficiencyInspectionsReqModel(
+              housingDeficiencyId: Get.arguments['successListOfDeficiencies']
+                      ['housingDeficiencyId']
+                  .toString(),
+              deficiencyProofPictures:
+                  Get.arguments['successListOfDeficiencies']
+                      ['deficiencyProofPictures'] as List<String>,
+              date: Get.arguments['successListOfDeficiencies']['date'] ?? "",
+              comment:
+                  Get.arguments['successListOfDeficiencies']['comment'] ?? "")
+        ];
+      }
       dataFill();
     }
     update();
@@ -74,7 +92,7 @@ class DeficienciesInsideController extends BaseController {
     if (imageList.isNotEmpty) {
       imageUploadStatus = ImageUploadStatus.success;
       visibleBtn = true;
-      selectedItem ='present';
+      selectedItem = 'present';
     }
     print("fljfnbjlhn ${deficiencyInspectionsReqModel}");
     update();
@@ -665,14 +683,14 @@ class DeficienciesInsideController extends BaseController {
   }
 
   saveChanges() {
-    deficiencyInspectionsReqModel.add(
+    deficiencyInspectionsReqModel = [
       DeficiencyInspectionsReqModel(
         comment: commentController.text,
         date: dateController.text,
         deficiencyProofPictures: imageList,
         housingDeficiencyId: deficiencyAreaItem.id.toString(),
-      ),
-    );
+      )
+    ];
     update();
   }
 }

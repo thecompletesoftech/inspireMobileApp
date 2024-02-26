@@ -1,11 +1,11 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_inspection_screen/building_inspection_controller.dart';
+import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 
-import '../building_inspection_summary/building_inspection_summary_screen.dart';
-import '../unit_Inpection_screen/unit_inspection_screen.dart';
+import '../../building_inspection_summary/screen/building_inspection_summary_screen.dart';
+import '../../unit_Inpection_screen/unit_inspection_screen.dart';
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
@@ -758,9 +758,14 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                           "buildingName":
                               controller.buildingNameController.text,
-                          "propertyinfo": controller.propertyinfo,
-                          "buildinginfo": controller.buildinginfo,
-                          "buildingtype": controller.buildingTypeController.text
+                          "propertyInfo": controller.propertyInfo,
+                          "buildingInfo": controller.buildingInfo,
+                          "buildingtype":
+                              controller.buildingTypeController.text,
+                          "certificatesInfo": controller.certificatesInfo,
+                          "inspectorName": controller.inspectorController.text,
+                          "inspectorDate":
+                              controller.inspectionDateController.text
                         });
                       }
 

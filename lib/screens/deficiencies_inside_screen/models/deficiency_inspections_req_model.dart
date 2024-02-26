@@ -16,6 +16,7 @@ class DeficiencyInspectionsReqModel {
   String? housingDeficiencyId;
   List<String>? deficiencyProofPictures;
   String? comment;
+  bool? isSuccess;
   String? date;
 
   DeficiencyInspectionsReqModel({
@@ -23,6 +24,7 @@ class DeficiencyInspectionsReqModel {
     this.deficiencyProofPictures,
     this.comment,
     this.date,
+    this.isSuccess,
   });
 
   factory DeficiencyInspectionsReqModel.fromJson(Map<String, dynamic> json) =>

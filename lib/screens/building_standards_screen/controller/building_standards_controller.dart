@@ -1,6 +1,8 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 // enum BuildingStandardsStatus { all, failed }
 
@@ -15,10 +17,14 @@ class BuildingStandardsController extends BaseController {
   bool isSuccess = false;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-  var successData = [].obs;
 
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
   RxList<BuildingModel> dataList = <BuildingModel>[].obs;
+  RxMap propertyInfo = {}.obs;
+  RxMap buildingInfo = {}.obs;
+  var certificatesInfo = [].obs;
+  String inspectorName = '';
+  String inspectorDate = '';
 
   void onInit() {
     super.onInit();
@@ -30,6 +36,11 @@ class BuildingStandardsController extends BaseController {
 
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
+      propertyInfo = Get.arguments['propertyInfo'];
+      buildingInfo = Get.arguments['buildingInfo'];
+      certificatesInfo = Get.arguments['certificatesInfo'];
+      inspectorName = Get.arguments['inspectorName'];
+      inspectorDate = Get.arguments['inspectorDate'];
     }
     update();
   }
@@ -223,50 +234,48 @@ class BuildingStandardsController extends BaseController {
     update();
   }
 
-  isSuccessStandards(successList, standardsId) {
-    int i = 0;
-    searchList.forEach((element) {
-      element.buildingDataModel?.forEach((element1) {
-        if (element1.id == standardsId) {
-          var data = successList.where((e) => e['success'] == true);
-
-          /*successList.forEach((e) {
-            if (e['success']) {
-              i = i + 1;
-            }
-          });*/
-
-          print("dgfgdf  ${element.buildingDataModel!.length}");
-          print("sfgdsfdglkjhjnjldjgtkh  ${data.length}");
-
-          if (element.buildingDataModel?.length == data.length) {
-            print("dglkjhjnjldjgtkh ");
-            searchList[searchList.indexOf(element)].buildingDataModel![searchList[searchList.indexOf(element)].buildingDataModel!.indexOf(element1)].isArea = true;
-          }
-        }
-      });
-    });
-    update();
-  }
-
   isSuccessStandards1(successList, standardsId) {
     for (int i = 0; i < searchList.length; i++) {
       for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
         if (searchList[i].buildingDataModel![j].id == standardsId) {
           var data = successList.where((e) => e['success'] == true);
-          print("dgfgdf  ${searchList[i].buildingDataModel!.length}");
-          print("sfgdsfdglkjhjnjldjgtkh  ${data.length}");
-          if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length == data.length) {
-            print(
-                "fhgdjgjhgjkhjkljklkjl kjlgjkklghjftghgdfghtgujkhfyukhghjfrghy ");
-
+          if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length ==
+              data.length) {
             searchList[i].buildingDataModel![j].isArea = true;
-
-
-
-            print(
-                "l;ksdfjgnklthgΩdt ifsgji  ${searchList[i].buildingDataModel![j].isArea}");
           }
+          successList.forEach((dataElement) {
+            if (searchList[i]
+                    .buildingDataModel![j]
+                    .deficiencyInspectionsReqModel !=
+                null) {
+              searchList[i]
+                  .buildingDataModel![j]
+                  .deficiencyInspectionsReqModel
+                  ?.add(DeficiencyInspectionsReqModel(
+                    isSuccess: dataElement['success'],
+                    housingDeficiencyId:
+                        dataElement['housingDeficiencyId'].toString(),
+                    date: dataElement['date'],
+                    deficiencyProofPictures:
+                        dataElement['deficiencyProofPictures'],
+                    comment: dataElement['comment'],
+                  ));
+            } else {
+              searchList[i]
+                  .buildingDataModel![j]
+                  .deficiencyInspectionsReqModel = [
+                DeficiencyInspectionsReqModel(
+                  isSuccess: dataElement['success'],
+                  housingDeficiencyId:
+                      dataElement['housingDeficiencyId'].toString(),
+                  date: dataElement['date'],
+                  deficiencyProofPictures:
+                      dataElement['deficiencyProofPictures'],
+                  comment: dataElement['comment'],
+                )
+              ];
+            }
+          });
         }
       }
     }
