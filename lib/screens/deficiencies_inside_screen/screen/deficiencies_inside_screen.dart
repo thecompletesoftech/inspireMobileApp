@@ -788,7 +788,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                       onTap: () {
                                         if (controller.visibleBtn) {
                                           Get.back(result: {
-                                            "isSuccess": true,
+                                            "isSuccess": controller
+                                                .deficiencyAreaItem.id,
                                             "imagesList":
                                                 controller.sendImagesList
                                           });

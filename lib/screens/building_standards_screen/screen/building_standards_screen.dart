@@ -276,11 +276,12 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                           .searchList[index]
                                                           .buildingDataModel?[i];
                                                   return GestureDetector(
-                                                    onTap: () {
-                                                      Get.toNamed(
-                                                          StandardsDetailsScreen
-                                                              .routes,
-                                                          arguments: {
+                                                    onTap: () async {
+                                                      var result =
+                                                          await Get.toNamed(
+                                                              StandardsDetailsScreen
+                                                                  .routes,
+                                                              arguments: {
                                                             "buildingName":
                                                                 controller
                                                                     .buildingName,
@@ -304,6 +305,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                         }
                                                         controller.update();
                                                       });*/
+                                                      print("deficiencyadata" +
+                                                          result.toString());
+                                                      // controller.setsucceslistdeficiency(result['standardid'].toString());
                                                     },
                                                     child: ShadowContainer(
                                                             padding:
@@ -337,14 +341,12 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                                 textSize: 20.px,
                                                                               ),
                                                                             ),
-                                                                            // if ((buildingDataList?.isSuccess ??
-                                                                            //         false) ==
-                                                                            //     true)
-                                                                            //   ClipOval(
-                                                                            //       child:
-                                                                            //           SvgPicture.string(
-                                                                            //     icComplete,
-                                                                            //   )),
+                                                                            if (controller.successlistofstandards[index]['success'] ==
+                                                                                true)
+                                                                              ClipOval(
+                                                                                  child: SvgPicture.string(
+                                                                                icComplete,
+                                                                              )).paddingOnly(left: 2),
                                                                           ],
                                                                         ),
                                                                         MyTextView(
