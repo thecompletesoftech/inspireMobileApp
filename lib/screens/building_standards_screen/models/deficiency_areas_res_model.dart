@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+
 DeficiencyAreasResponseModel deficiencyAreasResponseModelFromJson(String str) =>
     DeficiencyAreasResponseModel.fromJson(json.decode(str));
 
@@ -43,7 +45,9 @@ class DeficiencyArea {
   String? purpose;
   String? commonComponents;
   String? moreInformation;
+  bool isArea;
   List<DeficiencyAreaItem>? deficiencyAreaItems;
+  List<DeficiencyInspectionsReqModel>? deficiencyInspectionsReqModel = [];
 
   DeficiencyArea({
     this.id,
@@ -51,8 +55,10 @@ class DeficiencyArea {
     this.definition,
     this.purpose,
     this.commonComponents,
+    this.isArea = false,
     this.moreInformation,
     this.deficiencyAreaItems,
+    this.deficiencyInspectionsReqModel,
   });
 
   factory DeficiencyArea.fromJson(Map<String, dynamic> json) => DeficiencyArea(
@@ -90,6 +96,7 @@ class DeficiencyAreaItem {
   String? action;
   String? moreInformation;
   String? requestForHelp;
+  bool? status;
   List<DeficiencyItemHousingDeficiency>? deficiencyItemHousingDeficiency;
 
   DeficiencyAreaItem({
@@ -100,6 +107,7 @@ class DeficiencyAreaItem {
     this.observation,
     this.action,
     this.moreInformation,
+    this.status,
     this.requestForHelp,
     this.deficiencyItemHousingDeficiency,
   });
