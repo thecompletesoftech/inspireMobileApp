@@ -745,7 +745,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         : controller.appColors.black
                             .withOpacity(0.11999999731779099),
                     onTap: () {
-                      if (controller.getStartInspection()) {
+                      // if (controller.getStartInspection()) {
                         controller.getcertificatesjson();
                         controller.getpropertyjson();
                         controller.getbuildingjson();
@@ -780,7 +780,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                       //   "buildingName": controller.buildingNameController.text,
                       // });
-                    }).paddingSymmetric(vertical: 24.px),
+                    // }
+                    ).paddingSymmetric(vertical: 24.px),
               ],
             ),
           ),

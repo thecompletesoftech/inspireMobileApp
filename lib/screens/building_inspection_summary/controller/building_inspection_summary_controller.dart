@@ -42,6 +42,7 @@ class BuildingInspectionSummaryController extends BaseController {
   @override
   void onInit() {
     if (Get.arguments != null) {
+      print("certificate info" + Get.arguments['certificatesInfo'].toString());
       buildingName = Get.arguments['buildingName'];
       imagesList = Get.arguments['imagesList'];
       inspectionName = Get.arguments['inspectionName'];
@@ -163,13 +164,16 @@ class BuildingInspectionSummaryController extends BaseController {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (CertificateModel r) {
       certificates = r.certificates;
+      checked = List.filled(certificates!.length, false);
+
       for (int i = 0; i < certificates!.length; i++) {
         for (int j = 0; j < certificatesInfo.length; j++) {
           if (certificates![i].id.toString() ==
               certificatesInfo[j]['id'].toString()) {
-            checked.add(true);
+            checked[i] = true;
           } else {
-            checked.add(false);
+            checked[i] = false;
+            // checked.add(false);
           }
         }
       }

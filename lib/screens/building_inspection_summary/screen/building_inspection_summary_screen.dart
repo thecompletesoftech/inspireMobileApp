@@ -796,7 +796,17 @@ class BuildingInspectionSummaryScreen
                           textColor: controller.appColors.lightText,
                           color: controller.appColors.buttonColor,
                           onTap: () {
-                            Get.toNamed(UnitInspection.routes);
+                            Get.toNamed(UnitInspection.routes, arguments: {
+                              "deficiencyArea": controller.deficiencyArea,
+                              "buildingName": controller.buildingName,
+                              "imagesList": controller.imagesList,
+                              "inspectionName": controller.inspectionName,
+                              "propertyInfo": controller.propertyInfo,
+                              "buildingInfo": controller.buildingInfo,
+                              "certificatesInfo": controller.buildingInfo,
+                              "inspectorName": controller.inspectorName,
+                              "inspectorDate": controller.inspectorDate
+                            });
                           },
                         ).paddingSymmetric(vertical: 24.px),
                       ],
