@@ -258,7 +258,8 @@ class UnitInspection extends GetView<UnitController> {
                         onTap: () async {
                           if (controller.getunitinspection()) {
                             controller.getunitjson();
-                            await Get.toNamed(UnitInspectionSummary.routes,
+                            var result = await Get.toNamed(
+                                UnitInspectionSummary.routes,
                                 arguments: {
                                   "unitinfo": controller.unitjson,
                                   "propertyinfo": Get.arguments['propertyInfo'],
@@ -378,7 +379,8 @@ class UnitInspection extends GetView<UnitController> {
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: Get.arguments['buildingInfo']['constructed_year'].toString(),
+                      value: Get.arguments['buildingInfo']['constructed_year']
+                          .toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

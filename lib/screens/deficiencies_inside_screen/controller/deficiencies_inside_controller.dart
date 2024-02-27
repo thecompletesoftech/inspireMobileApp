@@ -634,7 +634,13 @@ class DeficienciesInsideController extends BaseController {
           maxHeight: 1800,
         );
         if (pickedFile != null) {
-          var tempDir = await getTemporaryDirectory();
+          var tempDir;
+          if (Platform.isIOS) {
+            tempDir = await getApplicationDocumentsDirectory();
+          } else {
+            tempDir = await getTemporaryDirectory();
+          }
+          print("temp file" + tempDir.toString());
           final editedImage = await Navigator.push(
             Get.context!,
             MaterialPageRoute(
@@ -645,6 +651,7 @@ class DeficienciesInsideController extends BaseController {
               ),
             ),
           );
+
           if (editedImage != null) {
             File file = await File(
                     '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')

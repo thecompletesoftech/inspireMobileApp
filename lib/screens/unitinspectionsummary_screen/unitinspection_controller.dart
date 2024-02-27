@@ -191,7 +191,7 @@ class UnitInspectionsummaryController extends BaseController {
         propertyjsons: Get.arguments['propertyinfo'],
         unitjsons: Get.arguments['unitinfo']);
 
-    response.fold((l) {
+    await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
       islaoding.value = false;
       update();

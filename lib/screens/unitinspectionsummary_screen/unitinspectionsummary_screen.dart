@@ -3,7 +3,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/unitinspection_controller.dart';
 import '../../commons/all.dart';
-import '../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
@@ -19,16 +18,21 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
           backgroundColor: controller.appColors.appBGColor,
           child: Stack(
             children: [
-              controller.islaoding.value
-                  ? Center(child: CircularProgressIndicator())
-                  : Container(),
               Column(
                 children: [
                   CommonAppBar(
                     color: controller.appColors.transparent,
                     radius: 0.px,
                     onClickBack: () {
-                      Get.back();
+                      Get.back(result: {
+                        "propertyinfo": Get.arguments['propertyInfo'],
+                        "buildinginfo": Get.arguments['buildingInfo'],
+                        "buildingtype": Get.arguments['buildingtype'],
+                        "cerificateList": Get.arguments['certificatesInfo'],
+                        "deficiencyArea": Get.arguments['deficiencyArea'],
+                        "switchvalue": controller.switchbtn.value,
+                        "inspectorDate": Get.arguments['inspectorDate']
+                      });
                       // }
                     },
                   ),
@@ -334,10 +338,17 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() {
-                                Get.toNamed(UnitInspection.routes, arguments: {
-                                  "propertyinfo": Get.arguments['propertyinfo'],
-                                  "buildinginfo": Get.arguments['buildinginfo'],
+                                Get.back(result: {
+                                  "propertyinfo": Get.arguments['propertyInfo'],
+                                  "buildinginfo": Get.arguments['buildingInfo'],
                                   "buildingtype": Get.arguments['buildingtype'],
+                                  "cerificateList":
+                                      Get.arguments['certificatesInfo'],
+                                  "deficiencyArea":
+                                      Get.arguments['deficiencyArea'],
+                                  "switchvalue": controller.switchbtn.value,
+                                  "inspectorDate":
+                                      Get.arguments['inspectorDate']
                                 });
                               }),
                               child: Container(
@@ -1185,6 +1196,11 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     ),
                   ),
                 ],
+              ),
+              Obx(
+                () => controller.islaoding.value == true
+                    ? Center(child: CircularProgressIndicator())
+                    : Container(),
               ),
             ],
           ),
