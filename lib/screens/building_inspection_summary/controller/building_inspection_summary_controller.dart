@@ -1,5 +1,9 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -17,7 +21,7 @@ class BuildingInspectionSummaryController extends BaseController {
   TextEditingController buildingNameController = TextEditingController();
   TextEditingController yearConstructedController = TextEditingController();
   TextEditingController buildingTypeController = TextEditingController();
-  List<Certificates> checked = [];
+  List checked = [];
   List<String> propertyList = [];
   List<String> cityList = [];
   List<String> buildingList = [];
@@ -26,52 +30,49 @@ class BuildingInspectionSummaryController extends BaseController {
   String? buildingName = '';
   String inspectionName = '';
   var imagesList;
+  List<DeficiencyArea> deficiencyArea = [];
+  RxMap propertyInfo = {}.obs;
+  RxMap buildingInfo = {}.obs;
+  var certificatesInfo = [].obs;
+  String inspectorName = '';
+  String inspectorDate = '';
 
-  var dataList = [
-    RxCommonModel(
-      title: "D1. Cabinets are missing",
-      status: "false",
-      image: ImagePath.kitchen,
-      imgId: ImagePath.cabinets,
-    ),
-    RxCommonModel(
-      title: "D3. Refrigerator is missing",
-      image: ImagePath.cooking,
-      imgId: ImagePath.bedroom,
-      status: "false",
-    ),
-  ];
+  List<Certificates>? certificates = [];
+
   @override
   void onInit() {
     if (Get.arguments != null) {
+      print("certificate info" + Get.arguments['certificatesInfo'].toString());
       buildingName = Get.arguments['buildingName'];
       imagesList = Get.arguments['imagesList'];
       inspectionName = Get.arguments['inspectionName'];
+      deficiencyArea = Get.arguments['deficiencyArea'];
+      propertyInfo = Get.arguments['propertyInfo'];
+      buildingInfo = Get.arguments['buildingInfo'];
+      certificatesInfo = Get.arguments['certificatesInfo'];
+      inspectorName = Get.arguments['inspectorName'];
+      inspectorDate = Get.arguments['inspectorDate'];
+      () async {
+        await getCertificates();
+      }();
+      setControllerData(
+          propertyInfo, buildingInfo, inspectorName, inspectorDate);
     }
-    checked.addAll([
-      Certificates(true, 'Boiler Certificate'),
-      Certificates(false, 'Elevator Certificate'),
-      Certificates(true, 'Fire Alarm Inspection Report'),
-      Certificates(false, 'Lead-Based Paint Disclosure Form'),
-      Certificates(true, 'Lead-Based Paint Inspection Report'),
-      Certificates(false, 'Sprinkler System Certificate'),
-    ]);
-
-    propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
-
-    cityList = ['CITY 1', 'CITY 2', 'CITY 3', 'CITY 4'];
-
-    buildingTypeList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-
-    buildingList = [
-      'BUILDING 1',
-      'BUILDING 2',
-      'BUILDING 3',
-      'BUILDING 4',
-      'BUILDING 5'
-    ];
 
     super.onInit();
+  }
+
+  getCertificatesJson() {
+    certificatesInfo.clear();
+    for (var i = 0; i < certificates!.length; i += 1) {
+      if (checked[i]) {
+        certificatesInfo.add({
+          "id": certificates![i].id.toString(),
+          "name": certificates![i].certificate.toString(),
+        });
+      }
+    }
+    update();
   }
 
   void actionPopUpItemSelected(int value) {
@@ -103,6 +104,21 @@ class BuildingInspectionSummaryController extends BaseController {
     } else {
       isData = false;
     }
+    update();
+  }
+
+  setControllerData(propertyInfo, buildingInfo, inspectorName, inspectorDate) {
+    propertyNameController.text = propertyInfo['name'] ?? "";
+    cityController.text = propertyInfo['city'] ?? "";
+    propertyIDController.text = propertyInfo['id'] ?? "";
+    stateController.text = propertyInfo['state'] ?? "";
+    zipController.text = propertyInfo['zip'] ?? "";
+    propertyAddressController.text = propertyInfo['address'] ?? "";
+    buildingNameController.text = buildingInfo['name'] ?? "";
+    yearConstructedController.text = propertyInfo['constructed_year'] ?? "";
+    buildingTypeController.text = buildingInfo['building_type_id'] ?? "";
+    inspectorController.text = inspectorName ?? "";
+    inspectionDateController.text = inspectorDate ?? "";
     update();
   }
 
@@ -141,11 +157,40 @@ class BuildingInspectionSummaryController extends BaseController {
   void buildingTypeSelected(value) {
     buildingTypeController.text = buildingTypeList[value];
   }
+
+  getCertificates() async {
+    var response = await BudingInpectionRepository().getcertificates();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (CertificateModel r) {
+      certificates = r.certificates;
+      checked = List.filled(certificates!.length, false);
+
+      for (int i = 0; i < certificates!.length; i++) {
+        for (int j = 0; j < certificatesInfo.length; j++) {
+          if (certificates![i].id.toString() ==
+              certificatesInfo[j]['id'].toString()) {
+            checked[i] = true;
+          } else {
+            checked[i] = false;
+            // checked.add(false);
+          }
+        }
+      }
+    });
+    update();
+  }
+
+  isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
+    deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
+        deficiencyInspectionsReqModel[0];
+    update();
+  }
 }
 
-class Certificates {
+class CertificatesData {
   bool? isChecked;
   String? name;
 
-  Certificates(this.isChecked, this.name);
+  CertificatesData(this.isChecked, this.name);
 }

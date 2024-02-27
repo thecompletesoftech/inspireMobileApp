@@ -75,6 +75,7 @@ class Constants {
   static const String getdeficieny = "inspection/api/deficiency_areas";
   static const String createinspection = "inspection/api/create/";
   static const String createinspector = "inspection/api/inspector/create/";
+  // static const String getdeficieny = "inspection/api/deficiency_areas/";
 
   static const String signUp = "user/signUp";
 

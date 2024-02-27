@@ -5,8 +5,8 @@ import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
-import '../../Models/accountmodel/account_model.dart';
-import 'models/certificate_model.dart';
+import '../../../Models/accountmodel/account_model.dart';
+import '../models/certificate_model.dart';
 
 class BuildingInspectionController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -27,8 +27,10 @@ class BuildingInspectionController extends BaseController {
   TextEditingController buildingidController = TextEditingController();
   TextEditingController buildingTypeidController = TextEditingController();
   List checked = [];
+
   // List<String> propertyList = [];
   List<String> cityList = [];
+
   // List<String> buildingList = [];
   List<Building> buildingList = [];
   List<String> buildingTypeList = [];
@@ -36,9 +38,10 @@ class BuildingInspectionController extends BaseController {
   List<Certificates>? certificates = [];
   bool? isData;
   Account? account;
-  var propertyinfo = {}.obs;
-  var buildinginfo = {}.obs;
-  var certificatesinfo = [].obs;
+  var propertyInfo = {}.obs;
+  var buildingInfo = {}.obs;
+  var certificatesInfo = [].obs;
+
   @override
   void onInit() {
     // searchPropertyNameList == propertyList;
@@ -100,19 +103,19 @@ class BuildingInspectionController extends BaseController {
   }
 
   getcertificatesjson() {
-    certificatesinfo.clear();
+    certificatesInfo.clear();
     for (var i = 0; i < certificates!.length; i += 1) {
       if (checked[i]) {
-        certificatesinfo.add({"id": certificates![i].id.toString()});
+        certificatesInfo.add({"id": certificates![i].id.toString()});
         print(certificates![i].certificate.toString());
       }
     }
-    print(certificatesinfo.toJson());
+    print('fgdsfg${certificatesInfo.toJson()}');
     update();
   }
 
   getpropertyjson() {
-    propertyinfo.addAll({
+    propertyInfo.addAll({
       "id": propertyIDController.text,
       "name": propertyNameController.text,
       "city": cityController.text,
@@ -120,18 +123,18 @@ class BuildingInspectionController extends BaseController {
       "zip": zipController.text,
       "address": propertyAddressController.text
     });
-    print(propertyinfo.toString());
+    print(propertyInfo.toString());
   }
 
   getbuildingjson() {
-    buildinginfo.addAll({
+    buildingInfo.addAll({
       "id": buildingidController.text,
       "name": buildingNameController.text,
       "constructed_year": yearConstructedController.text,
       "building_type_id": buildingTypeidController.text
     });
-    print(buildinginfo.toString());
-    print(propertyinfo.toString());
+    print(buildingInfo.toString());
+    print(propertyInfo.toString());
   }
 
   getcurrentdate() {
@@ -158,7 +161,7 @@ class BuildingInspectionController extends BaseController {
             zipController.text.isNotEmpty &&
             propertyAddressController.text.isNotEmpty &&
             buildingNameController.text.isNotEmpty &&
-            certificatesinfo.length > 0
+            certificatesInfo.length > 0
         ? true
         : false;
     //  &&

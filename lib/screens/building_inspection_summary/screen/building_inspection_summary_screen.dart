@@ -11,11 +11,12 @@ import 'package:public_housing/commons/common_widgets/textfeild_widgets.dart';
 import 'package:public_housing/commons/constants.dart';
 import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
-import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_binding.dart';
-import 'package:public_housing/screens/building_inspection_summary/building_inspection_summary_controller.dart';
+import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
+import 'package:public_housing/screens/building_inspection_summary/controller/building_inspection_summary_controller.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../unit_Inpection_screen/unit_inspection_screen.dart';
+import '../../unit_Inpection_screen/unit_inspection_screen.dart';
 
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
@@ -40,6 +41,7 @@ class BuildingInspectionSummaryScreen
                   radius: 0.px,
                   onClickBack: () {
                     Get.back();
+                    controller.deficiencyArea.clear();
                   },
                 ),
                 MyTextView(
@@ -520,20 +522,23 @@ class BuildingInspectionSummaryScreen
                                                   children: [
                                                     Checkbox(
                                                       onChanged: (value) {
-                                                        controller.checked[i]
-                                                            .isChecked = value;
+                                                        controller.checked[i] =
+                                                            value;
                                                         controller
                                                             .allSelected();
+                                                        controller
+                                                            .getCertificatesJson();
                                                         controller.update();
                                                       },
-                                                      value: controller
-                                                          .checked[i].isChecked,
+                                                      value:
+                                                          controller.checked[i],
                                                       activeColor: controller
                                                           .appColors.appColor,
                                                     ),
                                                     MyTextView(
                                                       controller
-                                                          .checked[i].name,
+                                                          .certificates![i]
+                                                          .certificate,
                                                       textStyleNew: MyTextStyle(
                                                         textColor: controller
                                                             .appColors.black,
@@ -581,69 +586,83 @@ class BuildingInspectionSummaryScreen
                             ),
                           ],
                         ).paddingAll(32.px),
-                        ListView.separated(
+                        ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: controller.dataList.length,
+                          itemCount: controller.deficiencyArea.length,
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
-                            final item = controller.dataList[index];
-                            return ShadowContainer2(
-                              padding: EdgeInsets.zero,
-                              divider: controller.appColors.divider,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                            final item = controller.deficiencyArea[index];
+                            return ListView.separated(
+                              itemCount:
+                                  item.deficiencyInspectionsReqModel!.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                var data =
+                                    item.deficiencyInspectionsReqModel?[i];
+                                return ShadowContainer2(
+                                  padding: EdgeInsets.zero,
+                                  divider: controller.appColors.divider,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      MyTextView(
-                                        controller.inspectionName,
-                                        isMaxLineWrap: true,
-                                        textStyleNew: MyTextStyle(
-                                          textSize: 20.px,
-                                          textWeight: FontWeight.w600,
-                                          textColor:
-                                              controller.appColors.lightText,
-                                          textFamily: fontFamilyRegular,
-                                        ),
-                                      ),
-                                      CommonButton(
-                                        radius: 100.px,
-                                        title: Strings.inside,
-                                        onTap: () {},
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 24.px,
-                                          vertical: 10.px,
-                                        ),
-                                        textWeight: FontWeight.w500,
-                                        textSize: 16.px,
-                                        color: controller.appColors.appBGColor,
-                                        textColor:
-                                            controller.appColors.textGreen,
-                                      ).paddingOnly(left: 24.px),
-                                    ],
-                                  ).paddingAll(18.px),
-                                  ShadowContainer2(
-                                    padding: EdgeInsets.zero,
-                                    divider: controller.appColors.divider,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            height: 184.px,
-                                            alignment: Alignment.center,
-                                            child: Center(
-                                              child: ListView.separated(
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          MyTextView(
+                                            item.name,
+                                            isMaxLineWrap: true,
+                                            textStyleNew: MyTextStyle(
+                                              textSize: 20.px,
+                                              textWeight: FontWeight.w600,
+                                              textColor: controller
+                                                  .appColors.lightText,
+                                              textFamily: fontFamilyRegular,
+                                            ),
+                                          ),
+                                          CommonButton(
+                                            radius: 100.px,
+                                            title: Strings.inside,
+                                            onTap: () {},
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 24.px,
+                                              vertical: 10.px,
+                                            ),
+                                            textWeight: FontWeight.w500,
+                                            textSize: 16.px,
+                                            color:
+                                                controller.appColors.appBGColor,
+                                            textColor:
+                                                controller.appColors.textGreen,
+                                          ).paddingOnly(left: 24.px),
+                                        ],
+                                      ).paddingAll(18.px),
+                                      ShadowContainer2(
+                                        padding: EdgeInsets.zero,
+                                        divider: controller.appColors.divider,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                height: 184.px,
+                                                child: ListView.separated(
+                                                  itemCount: data
+                                                          ?.deficiencyProofPictures
+                                                          ?.length ??
+                                                      0,
                                                   scrollDirection:
                                                       Axis.horizontal,
-                                                  itemBuilder:
-                                                      (context, index) {
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (context, iz) {
+                                                    var subData = data!
+                                                        .deficiencyProofPictures?[iz];
                                                     return Container(
                                                       height: 184.px,
                                                       width: 184.px,
@@ -653,9 +672,10 @@ class BuildingInspectionSummaryScreen
                                                                   .circular(
                                                                       13.px),
                                                           image: DecorationImage(
-                                                              image: AssetImage(
-                                                                  item.image ??
-                                                                      ""),
+                                                              image:
+                                                                  NetworkImage(
+                                                                      subData ??
+                                                                          ""),
                                                               fit: BoxFit
                                                                   .cover)),
                                                     );
@@ -665,73 +685,99 @@ class BuildingInspectionSummaryScreen
                                                     return SizedBox(
                                                         width: 24.px);
                                                   },
-                                                  itemCount: 3),
-                                            ),
-                                          ).paddingAll(10.px),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  MyTextView(
-                                    item.title,
-                                    isMaxLineWrap: true,
-                                    textStyleNew: MyTextStyle(
-                                      textSize: 20.px,
-                                      textWeight: FontWeight.w400,
-                                      textColor: controller.appColors.black,
-                                      textFamily: fontFamilyRegular,
-                                    ),
-                                  ).paddingOnly(
-                                      top: 18.px, left: 18.px, right: 18.px),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            dotIcons(
-                                                controller,
-                                                Strings.comments,
-                                                '6 of 10 cabinets are missing -NJ'),
-                                            dotIcons(controller, 'Date',
-                                                '06/18/2023'),
+                                                ),
+                                              ).paddingAll(10.px),
+                                            )
                                           ],
                                         ),
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                      MyTextView(
+                                        item.definition,
+                                        isMaxLineWrap: true,
+                                        textStyleNew: MyTextStyle(
+                                          textSize: 20.px,
+                                          textWeight: FontWeight.w400,
+                                          textColor: controller.appColors.black,
+                                          textFamily: fontFamilyRegular,
+                                        ),
+                                      ).paddingOnly(
+                                          top: 18.px,
+                                          left: 18.px,
+                                          right: 18.px),
+                                      Row(
                                         children: [
-                                          CommonIconButton(
-                                              icon: icEditNotes,
-                                              iconheigth: 24.px,
-                                              title: 'Edit',
-                                              radius: 100.px,
-                                              padding: EdgeInsets.fromLTRB(
-                                                  16.px, 16.px, 20.px, 16.px),
-                                              color: controller
-                                                  .appColors.transparent,
-                                              textColor:
-                                                  controller.appColors.appColor,
-                                              textWeight: FontWeight.w500,
-                                              textSize: 14.px,
-                                              onTap: () {}),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                dotIcons(
+                                                    controller,
+                                                    Strings.comments,
+                                                    data?.comment ?? ""),
+                                                dotIcons(controller, 'Date',
+                                                    data?.date ?? ""),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              CommonIconButton(
+                                                icon: icEditNotes,
+                                                iconheigth: 24.px,
+                                                title: 'Edit',
+                                                radius: 100.px,
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16.px, 16.px, 20.px, 16.px),
+                                                color: controller
+                                                    .appColors.transparent,
+                                                textColor: controller
+                                                    .appColors.appColor,
+                                                textWeight: FontWeight.w500,
+                                                textSize: 14.px,
+                                                onTap: () {
+                                                  int mainIndex = index;
+                                                  int subIndex = i;
+                                                  Get.toNamed(
+                                                      DeficienciesInsideScreen
+                                                          .routes,
+                                                      arguments: {
+                                                        "deficiencyAreaList": item
+                                                            .deficiencyAreaItems,
+                                                        "deficiencyInspectionsReqModel":
+                                                            data
+                                                      })?.then((value) {
+                                                    if (value != null) {
+                                                      controller.isDataUpdate(
+                                                          mainIndex,
+                                                          subIndex,
+                                                          value[
+                                                              'deficiencyInspectionsReqModel']);
+                                                      controller.update();
+                                                    }
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          )
                                         ],
-                                      )
+                                      ).paddingOnly(
+                                          top: 15.px,
+                                          left: 18.px,
+                                          right: 18.px,
+                                          bottom: 18.px)
                                     ],
-                                  ).paddingOnly(
-                                      top: 15.px,
-                                      left: 18.px,
-                                      right: 18.px,
-                                      bottom: 18.px)
-                                ],
-                              ),
-                            ).marginSymmetric(horizontal: 32.px);
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              height: 24.px,
+                                  ),
+                                ).marginSymmetric(horizontal: 32.px);
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 24.px,
+                                );
+                              },
                             );
                           },
                         ),
@@ -750,7 +796,17 @@ class BuildingInspectionSummaryScreen
                           textColor: controller.appColors.lightText,
                           color: controller.appColors.buttonColor,
                           onTap: () {
-                            Get.toNamed(UnitInspection.routes);
+                            Get.toNamed(UnitInspection.routes, arguments: {
+                              "deficiencyArea": controller.deficiencyArea,
+                              "buildingName": controller.buildingName,
+                              "imagesList": controller.imagesList,
+                              "inspectionName": controller.inspectionName,
+                              "propertyInfo": controller.propertyInfo,
+                              "buildingInfo": controller.buildingInfo,
+                              "certificatesInfo": controller.buildingInfo,
+                              "inspectorName": controller.inspectorName,
+                              "inspectorDate": controller.inspectorDate
+                            });
                           },
                         ).paddingSymmetric(vertical: 24.px),
                       ],

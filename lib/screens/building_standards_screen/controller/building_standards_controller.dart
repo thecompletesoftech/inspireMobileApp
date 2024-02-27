@@ -1,6 +1,8 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 // enum BuildingStandardsStatus { all, failed }
 
@@ -13,11 +15,16 @@ class BuildingStandardsController extends BaseController {
   bool isCollapseStandards = false;
   String buildingName = '';
   bool isSuccess = false;
-  var imagesList;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-  var successlistofstandards = [].obs;
+
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
+  RxList<BuildingModel> dataList = <BuildingModel>[].obs;
+  RxMap propertyInfo = {}.obs;
+  RxMap buildingInfo = {}.obs;
+  var certificatesInfo = [].obs;
+  String inspectorName = '';
+  String inspectorDate = '';
 
   void onInit() {
     super.onInit();
@@ -25,11 +32,15 @@ class BuildingStandardsController extends BaseController {
     () async {
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
-      getsucceslistdeficiency();
     }();
 
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
+      propertyInfo = Get.arguments['propertyInfo'];
+      buildingInfo = Get.arguments['buildingInfo'];
+      certificatesInfo = Get.arguments['certificatesInfo'];
+      inspectorName = Get.arguments['inspectorName'];
+      inspectorDate = Get.arguments['inspectorDate'];
     }
     update();
   }
@@ -223,30 +234,52 @@ class BuildingStandardsController extends BaseController {
     update();
   }
 
-  getsucceslistdeficiency() {
-    successlistofstandards.clear();
-    for (var i = 0; i < searchList.length; i++) {
-      var serchdata = searchList[i].buildingDataModel;
-      for (var j = 0; j < serchdata!.length; j++)
-        successlistofstandards.add({
-          "id": serchdata[j].id,
-          "success": false,
-        });
-    }
-  }
-
-  setsucceslistdeficiency(standard_id) {
-    for (var i = 0; i < searchList.length; i++) {
-      var serchdata = searchList[i].buildingDataModel;
-      for (var j = 0; j < serchdata!.length; j++) {
-        if (serchdata[j].id.toString() == standard_id.toString()) {
-          print("serach data" + serchdata[j].id.toString());
-          successlistofstandards[i]["success"] = true;
+  isSuccessStandards1(successList, standardsId) {
+    for (int i = 0; i < searchList.length; i++) {
+      for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
+        if (searchList[i].buildingDataModel![j].id == standardsId) {
+          var data = successList.where((e) => e['success'] == true);
+          if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length ==
+              data.length) {
+            searchList[i].buildingDataModel![j].isArea = true;
+          }
+          successList.forEach((dataElement) {
+            if (searchList[i]
+                    .buildingDataModel![j]
+                    .deficiencyInspectionsReqModel !=
+                null) {
+              searchList[i]
+                  .buildingDataModel![j]
+                  .deficiencyInspectionsReqModel
+                  ?.add(DeficiencyInspectionsReqModel(
+                    isSuccess: dataElement['success'],
+                    housingDeficiencyId:
+                        dataElement['housingDeficiencyId'].toString(),
+                    date: dataElement['date'],
+                    deficiencyProofPictures:
+                        dataElement['deficiencyProofPictures'],
+                    comment: dataElement['comment'],
+                  ));
+            } else {
+              searchList[i]
+                  .buildingDataModel![j]
+                  .deficiencyInspectionsReqModel = [
+                DeficiencyInspectionsReqModel(
+                  isSuccess: dataElement['success'],
+                  housingDeficiencyId:
+                      dataElement['housingDeficiencyId'].toString(),
+                  date: dataElement['date'],
+                  deficiencyProofPictures:
+                      dataElement['deficiencyProofPictures'],
+                  comment: dataElement['comment'],
+                )
+              ];
+            }
+          });
         }
       }
     }
     update();
-    print("sucess" + successlistofstandards.toString());
   }
 }
 
