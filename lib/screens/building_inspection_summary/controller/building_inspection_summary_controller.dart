@@ -28,6 +28,8 @@ class BuildingInspectionSummaryController extends BaseController {
   List<String> buildingTypeList = [];
   bool? isData;
   String? buildingName = '';
+  String? buildingtype = '';
+  String? propertyname = '';
   String inspectionName = '';
   var imagesList;
   List<DeficiencyArea> deficiencyArea = [];
@@ -44,6 +46,8 @@ class BuildingInspectionSummaryController extends BaseController {
     if (Get.arguments != null) {
       print("certificate info" + Get.arguments['certificatesInfo'].toString());
       buildingName = Get.arguments['buildingName'];
+      buildingtype = Get.arguments['buildingtype'];
+      propertyname = Get.arguments['propertyInfo']['name'];
       imagesList = Get.arguments['imagesList'];
       inspectionName = Get.arguments['inspectionName'];
       deficiencyArea = Get.arguments['deficiencyArea'];
@@ -52,8 +56,11 @@ class BuildingInspectionSummaryController extends BaseController {
       certificatesInfo = Get.arguments['certificatesInfo'];
       inspectorName = Get.arguments['inspectorName'];
       inspectorDate = Get.arguments['inspectorDate'];
+
       () async {
-        await getCertificates();
+        Future.delayed(const Duration(milliseconds: 1), () async {
+          await getCertificates();
+        });
       }();
       setControllerData(
           propertyInfo, buildingInfo, inspectorName, inspectorDate);
@@ -115,8 +122,8 @@ class BuildingInspectionSummaryController extends BaseController {
     zipController.text = propertyInfo['zip'] ?? "";
     propertyAddressController.text = propertyInfo['address'] ?? "";
     buildingNameController.text = buildingInfo['name'] ?? "";
-    yearConstructedController.text = propertyInfo['constructed_year'] ?? "";
-    buildingTypeController.text = buildingInfo['building_type_id'] ?? "";
+    yearConstructedController.text = buildingInfo['constructed_year'] ?? "";
+    buildingTypeController.text = Get.arguments['buildingtype'] ?? "";
     inspectorController.text = inspectorName ?? "";
     inspectionDateController.text = inspectorDate ?? "";
     update();
@@ -171,12 +178,19 @@ class BuildingInspectionSummaryController extends BaseController {
           if (certificates![i].id.toString() ==
               certificatesInfo[j]['id'].toString()) {
             checked[i] = true;
+            // Future.delayed(Duration(milliseconds: 10));
+            print("dasdsad" +
+                i.toString() +
+                certificates![i].id.toString() +
+                certificatesInfo[j]['id'].toString());
           } else {
             checked[i] = false;
+
             // checked.add(false);
           }
         }
       }
+      print("asdsadsa" + checked.toString());
     });
     update();
   }

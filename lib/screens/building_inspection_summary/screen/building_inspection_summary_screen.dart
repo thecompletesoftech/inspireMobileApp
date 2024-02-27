@@ -45,7 +45,7 @@ class BuildingInspectionSummaryScreen
                   },
                 ),
                 MyTextView(
-                  '${Strings.propertyNames}${controller.buildingName}',
+                  '${controller.propertyname}-${controller.buildingName}',
                   textStyleNew: MyTextStyle(
                     textColor: controller.appColors.appColor,
                     textWeight: FontWeight.w600,
@@ -84,7 +84,19 @@ class BuildingInspectionSummaryScreen
                               textColor: controller.appColors.lightText,
                               color: controller.appColors.buttonColor,
                               onTap: () {
-                                Get.toNamed(UnitInspection.routes);
+                                Get.toNamed(UnitInspection.routes, arguments: {
+                                  "deficiencyArea": controller.deficiencyArea,
+                                  "buildingName": controller.buildingName,
+                                  "buildingtype": controller.buildingtype,
+                                  "imagesList": controller.imagesList,
+                                  "inspectionName": controller.inspectionName,
+                                  "propertyInfo": controller.propertyInfo,
+                                  "buildingInfo": controller.buildingInfo,
+                                  "certificatesInfo":
+                                      controller.certificatesInfo,
+                                  "inspectorName": controller.inspectorName,
+                                  "inspectorDate": controller.inspectorDate
+                                });
                               },
                             ),
                           ],
@@ -799,11 +811,12 @@ class BuildingInspectionSummaryScreen
                             Get.toNamed(UnitInspection.routes, arguments: {
                               "deficiencyArea": controller.deficiencyArea,
                               "buildingName": controller.buildingName,
+                              "buildingtype": controller.buildingtype,
                               "imagesList": controller.imagesList,
                               "inspectionName": controller.inspectionName,
                               "propertyInfo": controller.propertyInfo,
                               "buildingInfo": controller.buildingInfo,
-                              "certificatesInfo": controller.buildingInfo,
+                              "certificatesInfo": controller.certificatesInfo,
                               "inspectorName": controller.inspectorName,
                               "inspectorDate": controller.inspectorDate
                             });

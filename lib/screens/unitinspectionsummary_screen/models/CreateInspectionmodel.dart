@@ -508,8 +508,8 @@ class InspectionType {
 
 class Inspector {
   int id;
-  int externalAccountId;
-  int externalPersonalId;
+  String externalAccountId;
+  String externalPersonalId;
 
   Inspector({
     required this.id,
@@ -519,13 +519,13 @@ class Inspector {
 
   factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
         id: json["id"],
-        externalAccountId: json["external_account_id"],
-        externalPersonalId: json["external_personal_id"],
+        externalAccountId: json["external_account_id"].toString(),
+        externalPersonalId: json["external_personal_id"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "external_account_id": externalAccountId,
-        "external_personal_id": externalPersonalId,
+        "external_account_id": externalAccountId.toString(),
+        "external_personal_id": externalPersonalId.toString(),
       };
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/api_helper/api_base_helper_implementation.dart';
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
@@ -164,15 +166,15 @@ class ApiProviders extends BaseController {
       required certificatelist,
       required deficiencylist}) async {
     try {
-      FormData formData = FormData.fromMap({
+      var formData = {
         "inspection": insepctionjson,
         "property": propertyjson,
         "building": buildingjson,
         "unit": unitjson,
         "certificates": certificatelist,
         "deficiency_inspections": deficiencylist
-      });
-
+      };
+      print("formdata" + jsonEncode(formData).toString());
       Response response = await apiBaseHelperImplementation.post(
         endPoint: Constants.createinspection,
         body: formData,

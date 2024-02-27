@@ -32,7 +32,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 Column(
                   children: [
                     MyTextView(
-                      '${Strings.propertyNames}${controller.buildingName}',
+                      '${controller.propertyname}-${controller.buildingName}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -81,6 +81,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                   BuildingInspectionSummaryScreen.routes,
                                   arguments: {
                                     "buildingName": controller.buildingName,
+                                    "buildingtype": controller.buildingtype,
                                     "deficiencyArea": deficiencyArea,
                                     "inspectionName": controller.inspectionName,
                                     "buildingInfo": controller.buildingInfo,
