@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/unitinspection_controller.dart';
 import '../../commons/all.dart';
@@ -56,144 +57,259 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     Row(
                       children: [
                         Expanded(
-                          child: CommonTextField(
-                            isLable: true,
-                            readOnly: false,
-                            controller: controller.unithousekeeping,
-                            color: controller.appColors.transparent,
-                            suffixIcon: PopupMenuButton(
-                              offset: Offset(-250, 10),
-                              key: controller.popupKey1,
-                              position: PopupMenuPosition.under,
-                              tooltip: Strings.unitHousekeeping,
-                              onSelected: (value) {
-                                print(value.toString());
-                                controller.actionunitHousekeeping(value);
-                                controller.update();
-                              },
-                              itemBuilder: (context) => List.generate(
-                                  controller.unithousekeepingList.length,
-                                  (index) => PopupMenuItem(
-                                        value: index,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .unithousekeepingList[index]
-                                                      ['title']
-                                                  .toString(),
-                                              style: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.black,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
-                                              ),
-                                            ),
-                                            Text(
-                                              controller
-                                                  .unithousekeepingList[index]
-                                                      ['value']
-                                                  .toString(),
-                                              style: MyTextStyle(
-                                                textColor: controller
-                                                    .appColors.textcolor,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 14.px,
-                                              ),
-                                            ),
-                                            if (index !=
-                                                controller.unithousekeepingList
-                                                        .length -
-                                                    1)
-                                              Divider()
-                                          ],
-                                        ),
-                                      )),
-                              child: SvgPicture.string(
+                            child: TypeAheadField(
+                          controller: controller.unithousekeeping,
+                          suggestionsCallback: (search) {
+                            // controller.searchBuilding(
+                            //     searchText: search);
+                            controller.update();
+                            return controller.unithousekeepingList;
+                          },
+                          builder: (context, c, focusNode) {
+                            return CommonTextField(
+                              focusNode: focusNode,
+                              isLable: true,
+                              controller: c,
+                              color: controller.appColors.transparent,
+                              suffixIcon: SvgPicture.string(
                                 icDownArrow,
                                 color: controller.appColors.grey,
                               ).paddingAll(10.px),
+                              padding: EdgeInsets.zero,
+                              contentPadding: EdgeInsets.only(left: 15.px),
+                              shadowColor: controller.appColors.transparent,
+                              labelText: Strings.unitHousekeeping,
+                            );
+                          },
+                          itemBuilder: (context, dynamic i) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  i['title'].toString(),
+                                  style: MyTextStyle(
+                                    textColor: controller.appColors.black,
+                                    textWeight: FontWeight.w400,
+                                    textFamily: fontFamilyBold,
+                                    textSize: 16.px,
+                                  ),
+                                ),
+                                Text(
+                                  i['value'].toString(),
+                                  style: MyTextStyle(
+                                    textColor: controller.appColors.textcolor,
+                                    textWeight: FontWeight.w400,
+                                    textFamily: fontFamilyBold,
+                                    textSize: 14.px,
+                                  ),
+                                ),
+                                if (i !=
+                                    controller.unithousekeepingList.length - 1)
+                                  Divider()
+                              ],
+                            ).paddingSymmetric(horizontal: 10, vertical: 5);
+                          },
+                          onSelected: (value) async {
+                            controller.actionunitHousekeeping(value['title']);
+                            controller.update();
+                          },
+                        )
+                            // CommonTextField(
+                            //   isLable: true,
+                            //   readOnly: false,
+                            //   controller: controller.unithousekeeping,
+                            //   color: controller.appColors.transparent,
+                            //   suffixIcon: PopupMenuButton(
+                            //     offset: Offset(-250, 10),
+                            //     key: controller.popupKey1,
+                            //     position: PopupMenuPosition.under,
+                            //     tooltip: Strings.unitHousekeeping,
+                            //     onSelected: (value) {
+                            //       print(value.toString());
+                            //       controller.actionunitHousekeeping(value);
+                            //       controller.update();
+                            //     },
+                            //     itemBuilder: (context) => List.generate(
+                            //         controller.unithousekeepingList.length,
+                            //         (index) => PopupMenuItem(
+                            //               value: index,
+                            //               child: Column(
+                            //                 crossAxisAlignment:
+                            //                     CrossAxisAlignment.start,
+                            //                 children: [
+                            //                   Text(
+                            //                     controller
+                            //                         .unithousekeepingList[index]
+                            //                             ['title']
+                            //                         .toString(),
+                            //                     style: MyTextStyle(
+                            //                       textColor:
+                            //                           controller.appColors.black,
+                            //                       textWeight: FontWeight.w400,
+                            //                       textFamily: fontFamilyBold,
+                            //                       textSize: 16.px,
+                            //                     ),
+                            //                   ),
+                            //                   Text(
+                            //                     controller
+                            //                         .unithousekeepingList[index]
+                            //                             ['value']
+                            //                         .toString(),
+                            //                     style: MyTextStyle(
+                            //                       textColor: controller
+                            //                           .appColors.textcolor,
+                            //                       textWeight: FontWeight.w400,
+                            //                       textFamily: fontFamilyBold,
+                            //                       textSize: 14.px,
+                            //                     ),
+                            //                   ),
+                            //                   if (index !=
+                            //                       controller.unithousekeepingList
+                            //                               .length -
+                            //                           1)
+                            //                     Divider()
+                            //                 ],
+                            //               ),
+                            //             )),
+                            //     child: SvgPicture.string(
+                            //       icDownArrow,
+                            //       color: controller.appColors.grey,
+                            //     ).paddingAll(10.px),
+                            //   ),
+                            //   padding: EdgeInsets.zero,
+                            //   contentPadding: EdgeInsets.only(left: 15.px),
+                            //   shadowColor: controller.appColors.transparent,
+                            //   labelText: Strings.unitHousekeeping,
+                            // ),
+
                             ),
-                            padding: EdgeInsets.zero,
-                            contentPadding: EdgeInsets.only(left: 15.px),
-                            shadowColor: controller.appColors.transparent,
-                            labelText: Strings.unitHousekeeping,
-                          ),
-                        ),
                         SizedBox(width: 16.px),
                         Expanded(
-                          child: CommonTextField(
-                            isLable: true,
-                            readOnly: false,
+                          child: TypeAheadField(
                             controller: controller.generalphysicalcondition,
-                            color: controller.appColors.transparent,
-                            suffixIcon: PopupMenuButton(
-                              offset: Offset(-55, 10),
-                              key: controller.popupKey2,
-                              position: PopupMenuPosition.under,
-                              tooltip: Strings.generalphysicalcondition,
-                              onSelected: (value) {
-                                controller.actiongeneralphysical(value);
-                                controller.update();
-                              },
-                              itemBuilder: (context) => List.generate(
-                                  controller
-                                      .generalphysicalconditionList.length,
-                                  (index) => PopupMenuItem(
-                                        value: index,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .generalphysicalconditionList[
-                                                      index]['title']
-                                                  .toString(),
-                                              style: MyTextStyle(
-                                                textColor:
-                                                    controller.appColors.black,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 16.px,
-                                              ),
-                                            ),
-                                            Text(
-                                              controller
-                                                  .generalphysicalconditionList[
-                                                      index]['value']
-                                                  .toString(),
-                                              style: MyTextStyle(
-                                                textColor: controller
-                                                    .appColors.textcolor,
-                                                textWeight: FontWeight.w400,
-                                                textFamily: fontFamilyBold,
-                                                textSize: 14.px,
-                                              ),
-                                            ),
-                                            if (index !=
-                                                controller
-                                                        .generalphysicalconditionList
-                                                        .length -
-                                                    1)
-                                              Divider()
-                                          ],
-                                        ),
-                                      )),
-                              child: SvgPicture.string(
-                                icDownArrow,
-                                color: controller.appColors.grey,
-                              ).paddingAll(10.px),
-                            ),
-                            padding: EdgeInsets.zero,
-                            contentPadding: EdgeInsets.only(left: 15.px),
-                            shadowColor: controller.appColors.transparent,
-                            labelText: Strings.generalphysicalcondition,
+                            suggestionsCallback: (search) {
+                              controller.update();
+                              return controller.generalphysicalconditionList;
+                            },
+                            builder: (context, c, focusNode) {
+                              return CommonTextField(
+                                focusNode: focusNode,
+                                isLable: true,
+                                controller: c,
+                                color: controller.appColors.transparent,
+                                suffixIcon: SvgPicture.string(
+                                  icDownArrow,
+                                  color: controller.appColors.grey,
+                                ).paddingAll(10.px),
+                                padding: EdgeInsets.zero,
+                                contentPadding: EdgeInsets.only(left: 15.px),
+                                shadowColor: controller.appColors.transparent,
+                                labelText: Strings.generalphysicalcondition,
+                              );
+                            },
+                            itemBuilder: (context, dynamic i) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    i['title'].toString(),
+                                    style: MyTextStyle(
+                                      textColor: controller.appColors.black,
+                                      textWeight: FontWeight.w400,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 16.px,
+                                    ),
+                                  ),
+                                  Text(
+                                    i['value'].toString(),
+                                    style: MyTextStyle(
+                                      textColor: controller.appColors.textcolor,
+                                      textWeight: FontWeight.w400,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 14.px,
+                                    ),
+                                  ),
+                                  if (i !=
+                                      controller.unithousekeepingList.length -
+                                          1)
+                                    Divider()
+                                ],
+                              ).paddingSymmetric(horizontal: 10, vertical: 5);
+                            },
+                            onSelected: (value) async {
+                              controller.actiongeneralphysical(value['title']);
+                              controller.update();
+                            },
                           ),
+
+                          // CommonTextField(
+                          //   isLable: true,
+                          //   readOnly: false,
+                          //   controller: controller.generalphysicalcondition,
+                          //   color: controller.appColors.transparent,
+                          //   suffixIcon: PopupMenuButton(
+                          //     offset: Offset(-55, 10),
+                          //     key: controller.popupKey2,
+                          //     position: PopupMenuPosition.under,
+                          //     tooltip: Strings.generalphysicalcondition,
+                          //     onSelected: (value) {
+                          //       controller.actiongeneralphysical(value);
+                          //       controller.update();
+                          //     },
+                          //     itemBuilder: (context) => List.generate(
+                          //         controller
+                          //             .generalphysicalconditionList.length,
+                          //         (index) => PopupMenuItem(
+                          //               value: index,
+                          //               child: Column(
+                          //                 crossAxisAlignment:
+                          //                     CrossAxisAlignment.start,
+                          //                 children: [
+                          //                   Text(
+                          //                     controller
+                          //                         .generalphysicalconditionList[
+                          //                             index]['title']
+                          //                         .toString(),
+                          //                     style: MyTextStyle(
+                          //                       textColor:
+                          //                           controller.appColors.black,
+                          //                       textWeight: FontWeight.w400,
+                          //                       textFamily: fontFamilyBold,
+                          //                       textSize: 16.px,
+                          //                     ),
+                          //                   ),
+                          //                   Text(
+                          //                     controller
+                          //                         .generalphysicalconditionList[
+                          //                             index]['value']
+                          //                         .toString(),
+                          //                     style: MyTextStyle(
+                          //                       textColor: controller
+                          //                           .appColors.textcolor,
+                          //                       textWeight: FontWeight.w400,
+                          //                       textFamily: fontFamilyBold,
+                          //                       textSize: 14.px,
+                          //                     ),
+                          //                   ),
+                          //                   if (index !=
+                          //                       controller
+                          //                               .generalphysicalconditionList
+                          //                               .length -
+                          //                           1)
+                          //                     Divider()
+                          //                 ],
+                          //               ),
+                          //             )),
+                          //     child: SvgPicture.string(
+                          //       icDownArrow,
+                          //       color: controller.appColors.grey,
+                          //     ).paddingAll(10.px),
+                          //   ),
+                          //   padding: EdgeInsets.zero,
+                          //   contentPadding: EdgeInsets.only(left: 15.px),
+                          //   shadowColor: controller.appColors.transparent,
+                          //   labelText: Strings.generalphysicalcondition,
+                          // ),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
@@ -202,7 +318,11 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         GestureDetector(
                           onTap: (() {
-                            Get.toNamed(UnitInspection.routes);
+                            Get.toNamed(UnitInspection.routes, arguments: {
+                              "propertyinfo": Get.arguments['propertyinfo'],
+                              "buildinginfo": Get.arguments['buildinginfo'],
+                              "buildingtype": Get.arguments['buildingtype'],
+                            });
                           }),
                           child: Container(
                             alignment: Alignment.center,
@@ -269,11 +389,12 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                               ? controller.appColors.textPink
                               : controller.appColors.black
                                   .withOpacity(0.11999999731779099),
-                          onTap: () {
+                          onTap: () async {
                             if (controller
                                     .generalphysicalcondition.text.isNotEmpty &&
                                 controller.unithousekeeping.text.isNotEmpty) {
-                              Get.toNamed(BuildingInspectionScreen.routes);
+                              await controller.getinspectioninfojson();
+                              controller.createinspection();
                             }
                           },
                         )
@@ -374,7 +495,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: Get.arguments['buildinginfo']['constructed_year'].toString(),
+                      value: Get.arguments['buildinginfo']['constructed_year']
+                          .toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                     Container(
                       decoration: BoxDecoration(
@@ -746,7 +868,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          // onTap: controller.isExpanded,
+                          onTap: (() {}),
                           child: Container(
                             alignment: Alignment.center,
                             height: 44.px,
@@ -802,15 +924,23 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,
-                          textColor: controller.getUnitInspectionSummary()
+                          textColor: controller.generalphysicalcondition.text
+                                      .isNotEmpty &&
+                                  controller.unithousekeeping.text.isNotEmpty
                               ? controller.appColors.black
                               : controller.appColors.border1,
-                          color: controller.getUnitInspectionSummary()
+                          color: controller
+                                  .generalphysicalcondition.text.isNotEmpty
                               ? controller.appColors.textPink
                               : controller.appColors.black
                                   .withOpacity(0.11999999731779099),
-                          onTap: () {
-                            if (controller.getUnitInspectionSummary()) {}
+                          onTap: () async {
+                            if (controller
+                                    .generalphysicalcondition.text.isNotEmpty &&
+                                controller.unithousekeeping.text.isNotEmpty) {
+                              await controller.getinspectioninfojson();
+                              controller.createinspection();
+                            }
                           },
                         )
                       ],

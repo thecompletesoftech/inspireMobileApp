@@ -745,26 +745,28 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         ? controller.appColors.textPink
                         : controller.appColors.black
                             .withOpacity(0.11999999731779099),
-                    onTap: () {
+                    onTap: () async {
                       if (controller.getStartInspection()) {
                         controller.getcertificatesjson();
                         controller.getpropertyjson();
                         controller.getbuildingjson();
 
-                        // Get.toNamed(UnitInspection.routes, arguments: {
+                        Get.toNamed(UnitInspection.routes, arguments: {
+                          "propertyinfo": controller.propertyinfo,
+                          "buildinginfo": controller.buildinginfo,
+                          "buildingtype":
+                              controller.buildingTypeController.text,
+                          "cerificateList": controller.certificatesinfo
+                        });
+
+                        // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
+                        //   "buildingName":
+                        //       controller.buildingNameController.text,
                         //   "propertyinfo": controller.propertyinfo,
                         //   "buildinginfo": controller.buildinginfo,
                         //   "buildingtype": controller.buildingTypeController.text
                         // });
-                        Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                          "buildingName":
-                              controller.buildingNameController.text,
-                          "propertyinfo": controller.propertyinfo,
-                          "buildinginfo": controller.buildinginfo,
-                          "buildingtype": controller.buildingTypeController.text
-                        });
                       }
-
                       // Get.toNamed(BuildingInspectionSummaryScreen.routes,
                       //     arguments: {
                       //       "buildingName":
@@ -772,7 +774,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       //       "imagesList": "assa",
                       //       "inspectionName": "sasadsad",
                       //     });
-
                       // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
                       //   "buildingName": controller.buildingNameController.text,
                       // });

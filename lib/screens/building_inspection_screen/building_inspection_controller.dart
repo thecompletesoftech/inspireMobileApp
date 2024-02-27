@@ -205,10 +205,10 @@ class BuildingInspectionController extends BaseController {
 
   void actionBuilding(Building value) {
     buildingNameController.text = value.name;
+    buildingidController.text = value.id.toString();
     yearConstructedController.text = value.constructedYear.toString();
     buildingTypeController.text = value.buildingType.name.toString();
     buildingTypeidController.text = value.buildingType.id.toString();
-    buildingidController.text = value.id.toString();
     update();
   }
 
@@ -244,13 +244,14 @@ class BuildingInspectionController extends BaseController {
           buildingList[0].buildingType.name.toString();
       buildingTypeidController.text =
           buildingList[0].buildingType.id.toString();
+      buildingidController.text = buildingList[0].id.toString();
     } else {
       buildingNameController.clear();
       yearConstructedController.clear();
       buildingTypeController.clear();
       buildingTypeidController.clear();
+      buildingidController.clear();
     }
-
     update();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < buildingList.length; i++) {
@@ -312,6 +313,5 @@ class BuildingInspectionController extends BaseController {
 // class Certificates {
 //   bool? isChecked;
 //   String? name;
-
 //   Certificates(this.isChecked, this.name);
 // }
