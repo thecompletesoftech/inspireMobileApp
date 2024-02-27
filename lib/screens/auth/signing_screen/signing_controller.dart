@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
+import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
 import 'package:public_housing/screens/auth/model/LoginModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api_authentication/get_token_account.dart';
 import '../../../api_authentication/login_account_direct_request.dart';
+// import '../../building_inspection_screen/building_inspection_screen.dart';
+import '../../unitinspectionsummary_screen/models/CreateInspectionmodel.dart';
 import '../../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../repository/log_repo.dart';
 
@@ -118,25 +121,37 @@ class SigningController extends BaseController {
     getStorageData.saveString(getStorageData.token, tokenac.token);
     getStorageData.saveString(
         getStorageData.account, jsonEncode(tokenac.account.toJson()));
+    await createinspector(tokenac.account.userName);
     // tokenAccount = tokenac;
   }
 
   //inspection api data
 
-  saveAccount(token, name) async {
-    getStorageData.saveString(getStorageData.token, token);
-    getStorageData.saveString(getStorageData.inspectorname, name);
-  }
+  // saveAccount(token, name) async {
+  //   getStorageData.saveString(getStorageData.token, token);
+  //   getStorageData.saveString(getStorageData.inspectorname, name);
+  // }
 
-  login() async {
-    var map = {"username": email.text, "password": pass.text};
-    var response = await loginrepo.login(map);
+  // login() async {
+  //   var map = {"username": email.text, "password": pass.text};
+  //   var response = await loginrepo.login(map);
+  //   response.fold((l) {
+  //     utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+  //   }, (Loginmodel r) async {
+  //     getStorageData.saveString(getStorageData.isLogin, true);
+  //     saveAccount(r.token.toString(), r.username);
+  //     Get.offAllNamed(BuildingInspectionScreen.routes);
+  //   });
+  //   update();
+  // }
+
+  createinspector(name) async {
+    var response = await loginrepo.createinspectorapi(name);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
-    }, (Loginmodel r) {
-      getStorageData.saveString(getStorageData.isLogin, true);
-      saveAccount(r.token.toString(), r.username);
-      Get.offAllNamed(BuildingInspectionScreen.routes);
+    }, (InspectorModel r) {
+      print("rname" + r.inspector.id.toString());
+      getStorageData.saveString(getStorageData.inspectorId, r.inspector.id);
     });
     update();
   }

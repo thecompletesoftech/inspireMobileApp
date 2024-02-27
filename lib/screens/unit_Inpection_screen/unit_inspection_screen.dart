@@ -121,6 +121,7 @@ class UnitInspection extends GetView<UnitController> {
                                   child: CommonTextField(
                                     isLable: true,
                                     readOnly: false,
+                                    inputType: TextInputType.number,
                                     controller: controller.bedrooms,
                                     color: controller.appColors.transparent,
                                     prefixIcon: SvgPicture.string(
@@ -140,6 +141,7 @@ class UnitInspection extends GetView<UnitController> {
                                   child: CommonTextField(
                                     isLable: true,
                                     readOnly: false,
+                                    inputType: TextInputType.number,
                                     controller: controller.bathrooms,
                                     color: controller.appColors.transparent,
                                     prefixIcon: SvgPicture.string(
@@ -253,15 +255,17 @@ class UnitInspection extends GetView<UnitController> {
                             ? controller.appColors.textPink
                             : controller.appColors.black
                                 .withOpacity(0.11999999731779099),
-                        onTap: () {
+                        onTap: () async {
                           if (controller.getunitinspection()) {
                             controller.getunitjson();
-                            Get.toNamed(UnitInspectionSummary.routes,
+                            await Get.toNamed(UnitInspectionSummary.routes,
                                 arguments: {
                                   "unitinfo": controller.unitjson,
                                   "propertyinfo": Get.arguments['propertyinfo'],
                                   "buildinginfo": Get.arguments['buildinginfo'],
                                   "buildingtype": Get.arguments['buildingtype'],
+                                  "cerificateList":
+                                      Get.arguments['cerificateList'],
                                   "switchvalue": controller.switchbtn.value
                                 });
                           }
