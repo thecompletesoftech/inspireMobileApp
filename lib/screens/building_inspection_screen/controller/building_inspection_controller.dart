@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:convert';
-
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
@@ -264,23 +262,6 @@ class BuildingInspectionController extends BaseController {
 
   searchBuilding({required String searchText}) async {
     searchBuildingList.value = [];
-    // if (buildingList.length > 0) {
-    //   buildingNameController.text = buildingList[0].name;
-    //   yearConstructedController.text =
-    //       buildingList[0].constructedYear.toString();
-    //   buildingTypeController.text =
-    //       buildingList[0].buildingType.name.toString();
-    //   buildingTypeidController.text =
-    //       buildingList[0].buildingType.id.toString();
-    //   buildingidController.text = buildingList[0].id.toString();
-    // } else {
-    //   buildingNameController.clear();
-    //   yearConstructedController.clear();
-    //   buildingTypeController.clear();
-    //   buildingTypeidController.clear();
-    //   buildingidController.clear();
-    // }
-    // update();
     if (buildingNameController.text.length > 0) {
       for (int i = 0; i < buildingList.length; i++) {
         if (buildingList[i]
@@ -293,12 +274,9 @@ class BuildingInspectionController extends BaseController {
         }
       }
     } else {
-      print("saddsadasdsadsa" + buildingList.toString());
       searchBuildingList.value = buildingList;
-      print("searching" + searchBuildingList.toString());
       update();
     }
-    print("searching data" + searchBuildingList.toString());
   }
 
   getpropertyinfo() async {
@@ -323,15 +301,15 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  getbuildingapi(id) async {
+  getbuildingapi(value) async {
     buildingList.clear();
-    var response = await BudingInpectionRepository().getbuilding(id);
+    var response = await BudingInpectionRepository().getbuilding(value.id);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
       buildingList = r.buildings;
       // searchBuildingList.value = buildingList;
-      searchBuilding(searchText: "");
+      searchBuilding(searchText: value.name);
       update();
     });
     update();

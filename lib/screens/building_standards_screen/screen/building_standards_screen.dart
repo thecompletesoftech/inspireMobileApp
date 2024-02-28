@@ -32,7 +32,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 Column(
                   children: [
                     MyTextView(
-                      '${controller.propertyname}-${controller.propertyInfo['name'] ?? ""}',
+                      '${controller.propertyInfo['name'] ?? ""} - ${controller.buildingInfo['name'] ?? ""}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -356,11 +356,11 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                               ClipOval(
                                                                                   child: SvgPicture.string(
                                                                                 icComplete,
-                                                                              )).paddingOnly(left: 2),
+                                                                              )).paddingOnly(left: 10.px),
                                                                           ],
                                                                         ),
                                                                         MyTextView(
-                                                                          buildingDataList?.definition ??
+                                                                          buildingDataList.definition ??
                                                                               "",
                                                                           isMaxLineWrap:
                                                                               true,

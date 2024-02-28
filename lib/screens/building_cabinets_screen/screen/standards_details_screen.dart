@@ -1,6 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/commons/common_widgets/common_container.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
 import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
 import 'package:public_housing/screens/building_cabinets_screen/widgets/building_text_common_widget.dart';
@@ -47,7 +46,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                          '${Strings.propertyNames}${buildingStandardsController.propertyInfo['name'] ?? ""}',
+                          '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}',
                           textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,

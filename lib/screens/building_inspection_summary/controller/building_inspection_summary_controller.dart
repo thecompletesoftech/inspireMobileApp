@@ -3,7 +3,6 @@ import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -173,25 +172,13 @@ class BuildingInspectionSummaryController extends BaseController {
       certificates = r.certificates;
       checked = List.filled(certificates!.length, false);
 
-      for (int i = 0; i < certificates!.length; i++) {
-        for (int j = 0; j < certificatesInfo.length; j++) {
-          if (certificates![i].id.toString() ==
-              certificatesInfo[j]['id'].toString()) {
-            checked[i] = true;
-            // Future.delayed(Duration(milliseconds: 10));
-            print("dasdsad" +
-                i.toString() +
-                certificates![i].id.toString() +
-                certificatesInfo[j]['id'].toString());
-          } else {
-            checked[i] = false;
-
-            // checked.add(false);
-          }
-        }
-      }
-      print("asdsadsa" + checked.toString());
+      certificatesInfo.forEach((e) {
+        int index = certificates!.indexWhere(
+            (element) => element.id.toString() == e['id'].toString());
+        checked[index] = true;
+      });
     });
+
     update();
   }
 

@@ -115,7 +115,7 @@ class ApiProviders extends BaseController {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['message']));
+      return Left(createFailure(e));
     }
   }
 
@@ -133,7 +133,7 @@ class ApiProviders extends BaseController {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['message']));
+      return Left(createFailure(e));
     }
   }
 
@@ -154,7 +154,7 @@ class ApiProviders extends BaseController {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
-      return Left(Failure(errorMessage: e.response?.data['message']));
+      return Left(createFailure(e));
     }
   }
 
