@@ -49,7 +49,7 @@ class BuildingInspectionSummaryScreen
                   },
                 ),
                 MyTextView(
-                  '${Strings.propertyNames}${buildingStandardsController.propertyInfo['name'] ?? ""}',
+                  '${controller.propertyname}-${buildingStandardsController.propertyInfo['name'] ?? ""}',
                   textStyleNew: MyTextStyle(
                     textColor: controller.appColors.appColor,
                     textWeight: FontWeight.w600,

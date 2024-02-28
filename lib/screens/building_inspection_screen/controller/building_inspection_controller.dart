@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:public_housing/commons/all.dart';
@@ -44,6 +45,7 @@ class BuildingInspectionController extends BaseController {
 
   @override
   void onInit() {
+    clearalldata();
     // searchPropertyNameList == propertyList;
     // searchBuildingList == buildingList;
     getpropertyinfo();
@@ -130,7 +132,10 @@ class BuildingInspectionController extends BaseController {
     buildingInfo.addAll({
       "id": buildingidController.text,
       "name": buildingNameController.text,
-      "constructed_year": yearConstructedController.text,
+      "constructed_year": yearConstructedController.text == "null" ||
+              yearConstructedController.text == ""
+          ? "0"
+          : yearConstructedController.text,
       "building_type_id": buildingTypeidController.text
     });
     print(buildingInfo.toString());
@@ -195,27 +200,47 @@ class BuildingInspectionController extends BaseController {
     buildingTypeController.text = buildingTypeList[value];
   }
 
-  void actionProperty(Properties value) {
+  actionProperty(Properties value) async {
+    buildingNameController.clear();
+    yearConstructedController.clear();
+    buildingTypeController.clear();
+    buildingTypeidController.clear();
+    buildingidController.clear();
+    // await getbuildingapi(value.id.toString());
     propertyNameController.text = value.name!;
     cityController.text = value.city!;
     propertyIDController.text = value.id.toString();
     stateController.text = value.state!;
     zipController.text = value.zip!;
     propertyAddressController.text = value.address1!;
-
+    certificatesInfo.value = [];
     update();
+  }
+
+  clearalldata() {
+    buildingNameController.clear();
+    yearConstructedController.clear();
+    buildingTypeController.clear();
+    buildingTypeidController.clear();
+    buildingidController.clear();
+    propertyNameController.clear();
+    propertyAddressController.clear();
+    cityController.clear();
+    propertyIDController.clear();
+    stateController.clear();
+    zipController.clear();
   }
 
   void actionBuilding(Building value) {
     buildingNameController.text = value.name;
+    buildingidController.text = value.id.toString();
     yearConstructedController.text = value.constructedYear.toString();
     buildingTypeController.text = value.buildingType.name.toString();
     buildingTypeidController.text = value.buildingType.id.toString();
-    buildingidController.text = value.id.toString();
     update();
   }
 
-  var searchPropertyNameList = [].obs;
+  var searchPropertyNameList = [];
   var searchBuildingList = [].obs;
 
   searchProperty({required String searchText}) async {
@@ -239,23 +264,24 @@ class BuildingInspectionController extends BaseController {
 
   searchBuilding({required String searchText}) async {
     searchBuildingList.value = [];
-    if (buildingList.length > 0) {
-      buildingNameController.text = buildingList[0].name;
-      yearConstructedController.text =
-          buildingList[0].constructedYear.toString();
-      buildingTypeController.text =
-          buildingList[0].buildingType.name.toString();
-      buildingTypeidController.text =
-          buildingList[0].buildingType.id.toString();
-    } else {
-      buildingNameController.clear();
-      yearConstructedController.clear();
-      buildingTypeController.clear();
-      buildingTypeidController.clear();
-    }
-
-    update();
-    if (!utils.isValidationEmpty(searchText)) {
+    // if (buildingList.length > 0) {
+    //   buildingNameController.text = buildingList[0].name;
+    //   yearConstructedController.text =
+    //       buildingList[0].constructedYear.toString();
+    //   buildingTypeController.text =
+    //       buildingList[0].buildingType.name.toString();
+    //   buildingTypeidController.text =
+    //       buildingList[0].buildingType.id.toString();
+    //   buildingidController.text = buildingList[0].id.toString();
+    // } else {
+    //   buildingNameController.clear();
+    //   yearConstructedController.clear();
+    //   buildingTypeController.clear();
+    //   buildingTypeidController.clear();
+    //   buildingidController.clear();
+    // }
+    // update();
+    if (buildingNameController.text.length > 0) {
       for (int i = 0; i < buildingList.length; i++) {
         if (buildingList[i]
             .name
@@ -267,9 +293,12 @@ class BuildingInspectionController extends BaseController {
         }
       }
     } else {
-      searchBuildingList.addAll(buildingList);
+      print("saddsadasdsadsa" + buildingList.toString());
+      searchBuildingList.value = buildingList;
+      print("searching" + searchBuildingList.toString());
       update();
     }
+    print("searching data" + searchBuildingList.toString());
   }
 
   getpropertyinfo() async {
@@ -302,11 +331,8 @@ class BuildingInspectionController extends BaseController {
     }, (BuildingModel r) {
       buildingList = r.buildings;
       // searchBuildingList.value = buildingList;
-      print("building" + propertyNameController.text.toString());
-      searchBuilding(searchText: propertyNameController.text);
+      searchBuilding(searchText: "");
       update();
-
-      // buildingList = r;
     });
     update();
   }
@@ -315,6 +341,5 @@ class BuildingInspectionController extends BaseController {
 // class Certificates {
 //   bool? isChecked;
 //   String? name;
-
 //   Certificates(this.isChecked, this.name);
 // }

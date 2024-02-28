@@ -32,7 +32,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 Column(
                   children: [
                     MyTextView(
-                      '${Strings.propertyNames}${controller.propertyInfo['name'] ?? ""}',
+                      '${controller.propertyname}-${controller.propertyInfo['name'] ?? ""}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,

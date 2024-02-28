@@ -1,6 +1,8 @@
-import 'package:flutter_svg/svg.dart';
-
+import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
+import '../building_inspection_screen/controller/building_inspection_controller.dart';
+import '../building_inspection_screen/screen/building_inspection_screen.dart';
+import '../building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -12,9 +14,12 @@ class UnitInspectionsummaryController extends BaseController {
   TextEditingController generalphysicalcondition = TextEditingController();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
+  BuildingInspectionController _buildingInspectionController =
+      Get.put(BuildingInspectionController());
   List unithousekeepingList = [];
   List generalphysicalconditionList = [];
   List<String> cityList = [];
+  var islaoding = false.obs;
   String inspectionName = '';
   var dataList = [
     RxCommonModel(
@@ -31,8 +36,16 @@ class UnitInspectionsummaryController extends BaseController {
     ),
   ];
   var switchbtn = false.obs;
+
+  List<DeficiencyArea> deficiencyArea = [];
+  var inspectioninfo = {};
+
+  var deficiencyinfo = [].obs;
   @override
   void onInit() {
+    if (Get.arguments != null) {
+      deficiencyArea = Get.arguments['deficiencyArea'];
+    }
     setdataController();
     unithousekeepingList = [
       {
@@ -47,12 +60,29 @@ class UnitInspectionsummaryController extends BaseController {
       {
         "title": 'Poor',
         "value":
-            "Damages to walls, hardware, doors, flooring, appliances beyond normal wear and tear."
+            "Bad odor, greasy stove, food left out, infestation, or clutter."
       },
-      {"title": 'Standards', "value": "No damage beyond normal wear and tear."},
-      {"title": 'clean', "value": "No or minimal defect."}
+      {"title": 'Standards', "value": "Generally clean with no clutter"},
+      {"title": 'clean', "value": "Very clean and neat."}
     ];
+    getdeficienyjson();
+    update();
+
     super.onInit();
+  }
+
+  getinspectioninfojson() {
+    inspectioninfo.addAll({
+      "inspector_id":
+          getStorageData.readString(getStorageData.inspectorId).toString(),
+      "date": Get.arguments['inspectorDate'],
+      "comment": "A test inspection",
+      "inspection_state_id": "1",
+      "inspection_type_id": "1",
+      "unit_house_keeping": unithousekeeping.text,
+      "general_physical_condition": generalphysicalcondition.text
+    });
+    print("inspection data" + inspectioninfo.toString());
   }
 
   void actionPopUpItemSelected(int value) {
@@ -76,15 +106,15 @@ class UnitInspectionsummaryController extends BaseController {
   }
 
   void actionunitHousekeeping(value) {
-    unithousekeeping.text = unithousekeepingList[value]['title'];
+    unithousekeeping.text = value;
   }
 
   void actiongeneralphysical(value) {
-    generalphysicalcondition.text =
-        generalphysicalconditionList[value]['title'];
+    generalphysicalcondition.text = value;
   }
 
   getUnitInspectionSummary() {
+    update();
     return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
   }
 
@@ -94,5 +124,83 @@ class UnitInspectionsummaryController extends BaseController {
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
     switchbtn.value = Get.arguments['switchvalue'];
+  }
+
+  getdeficienyjson() async {
+    deficiencyinfo.clear();
+    if (deficiencyArea.length > 0) {
+      for (var i = 0; i < deficiencyArea.length; i++) {
+        for (var j = 0;
+            j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+            j++) {
+          deficiencyinfo.add({
+            "housing_deficiency_id": deficiencyArea[i]
+                .deficiencyInspectionsReqModel![j]
+                .housingDeficiencyId,
+            "deficiency_proof_pictures": await getdeficienyimage(),
+            "comment": "deficiency commet 1"
+          });
+        }
+      }
+      print("deficiency" + deficiencyinfo.toString());
+    }
+  }
+
+  getdeficienyimage() {
+    var result = [];
+    for (var i = 0; i < deficiencyArea.length; i++) {
+      for (var j = 0;
+          j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+          j++) {
+        for (var k = 0;
+            k <
+                deficiencyArea[i]
+                    .deficiencyInspectionsReqModel![j]
+                    .deficiencyProofPictures!
+                    .length;
+            k++) {
+          result.add({
+            "picture_path": deficiencyArea[i]
+                .deficiencyInspectionsReqModel![j]
+                .deficiencyProofPictures![k],
+            "comment":
+                deficiencyArea[i].deficiencyInspectionsReqModel![j].comment
+          });
+        }
+      }
+    }
+    print("result" + result.toString());
+    return result;
+  }
+
+  createinspection() async {
+    islaoding.value = true;
+
+    print("unit" + Get.arguments['unitinfo'].toString());
+    print("buildinginfo" + Get.arguments['buildinginfo'].toString());
+    print("property info" + Get.arguments['propertyinfo'].toString());
+    print("building type info" + Get.arguments['buildingtype'].toString());
+    print("certificate info" + Get.arguments['cerificateList'].toString());
+    print("certificate info" + Get.arguments['inspectorDate'].toString());
+
+    var response = await UnitsummaryRepository().createinspection(
+        buildingjsons: Get.arguments['buildinginfo'],
+        certificatelists: Get.arguments['cerificateList'],
+        deficiencylists: deficiencyinfo,
+        insepctionjsons: inspectioninfo,
+        propertyjsons: Get.arguments['propertyinfo'],
+        unitjsons: Get.arguments['unitinfo']);
+
+    await response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      islaoding.value = false;
+      update();
+    }, (r) async {
+      _buildingInspectionController.clearalldata();
+      await _buildingInspectionController.getcertificates();
+      await Get.toNamed(BuildingInspectionScreen.routes);
+      islaoding.value = false;
+      update();
+    });
   }
 }

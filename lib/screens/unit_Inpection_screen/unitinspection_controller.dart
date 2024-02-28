@@ -3,6 +3,7 @@ import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_scr
 
 import '../../commons/all.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
+import '../building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class UnitController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -11,7 +12,10 @@ class UnitController extends BaseController {
   TextEditingController bathrooms = TextEditingController();
   TextEditingController commentController = TextEditingController();
   var switchbtn = false.obs;
+  
   var unitjson = {}.obs;
+  
+
   getunitinspection() {
     return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
   }
