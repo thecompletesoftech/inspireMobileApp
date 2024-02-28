@@ -32,7 +32,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 Column(
                   children: [
                     MyTextView(
-                      '${controller.propertyname}-${controller.buildingName}',
+                      '${controller.propertyname}-${controller.propertyInfo['name'] ?? ""}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -95,8 +95,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           },
                         )
                       ],
-                    ),
-                    Row(
+                    ).paddingOnly(bottom: 40.px),
+                    /*Row(
                       children: [
                         Expanded(
                           flex: 10,
@@ -156,7 +156,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             ),
                           ),
                         ),
-                        /* SizedBox(width: 16.px),
+                        */ /* SizedBox(width: 16.px),
                         Expanded(
                           flex: 5,
                           child: SizedBox(
@@ -207,9 +207,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               },
                             ),
                           ),
-                        ),*/
+                        ),*/ /*
                       ],
-                    ).paddingSymmetric(vertical: 32.px),
+                    ).paddingSymmetric(vertical: 32.px),*/
                   ],
                 ).paddingSymmetric(horizontal: 32.px),
                 controller.deficiencyAreas.isNotEmpty

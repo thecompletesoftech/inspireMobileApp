@@ -13,6 +13,7 @@ import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
 import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
 import 'package:public_housing/screens/building_inspection_summary/controller/building_inspection_summary_controller.dart';
+import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -26,6 +27,9 @@ class BuildingInspectionSummaryScreen
 
   @override
   Widget build(BuildContext context) {
+    BuildingStandardsController buildingStandardsController =
+        Get.put(BuildingStandardsController());
+
     return GetBuilder<BuildingInspectionSummaryController>(
       init: BuildingInspectionSummaryController(),
       autoRemove: false,
@@ -45,7 +49,7 @@ class BuildingInspectionSummaryScreen
                   },
                 ),
                 MyTextView(
-                  '${controller.propertyname}-${controller.buildingName}',
+                  '${controller.propertyname}-${buildingStandardsController.propertyInfo['name'] ?? ""}',
                   textStyleNew: MyTextStyle(
                     textColor: controller.appColors.appColor,
                     textWeight: FontWeight.w600,

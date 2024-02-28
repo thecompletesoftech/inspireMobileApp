@@ -67,7 +67,9 @@ class DeficienciesInsideController extends BaseController {
               deficiencyProofPictures:
                   Get.arguments['successListOfDeficiencies']
                       ['deficiencyProofPictures'] as List<String>,
-              date: Get.arguments['successListOfDeficiencies']['date'] ?? "",
+              date: Get.arguments['successListOfDeficiencies']['date'] == ""
+                  ? DateFormat("MM/dd/yyyy").format(DateTime.now())
+                  : Get.arguments['successListOfDeficiencies']['date'],
               comment:
                   Get.arguments['successListOfDeficiencies']['comment'] ?? "")
         ];
@@ -157,6 +159,12 @@ class DeficienciesInsideController extends BaseController {
     } else {
       printAction("Permission Denied");
     }
+  }
+
+  removeImage(index) {
+    imageList.removeAt(index);
+    imageUploadStatus = ImageUploadStatus.initial;
+    update();
   }
 
   dialogDelete() {
@@ -669,7 +677,6 @@ class DeficienciesInsideController extends BaseController {
               return null;
             }, (r) {
               imageUploadStatus = ImageUploadStatus.success;
-
               imageList.add(r.images?.image ?? '');
               if (!utils.isValidationEmpty(commentController.text) &&
                   !utils.isValidationEmpty(dateController.text)) {
