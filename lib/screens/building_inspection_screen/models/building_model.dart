@@ -40,7 +40,7 @@ class Building {
   String name;
   dynamic number;
   Property property;
-  dynamic constructedYear;
+  String constructedYear;
   BuildingType buildingType;
 
   Building({
@@ -67,7 +67,7 @@ class Building {
         name: json["name"],
         number: json["number"],
         property: Property.fromJson(json["property"]),
-        constructedYear: json["constructed_year"],
+        constructedYear: json["constructed_year"].toString(),
         buildingType: BuildingType.fromJson(json["building_type"]),
       );
 
@@ -81,7 +81,7 @@ class Building {
         "name": name,
         "number": number,
         "property": property.toJson(),
-        "constructed_year": constructedYear,
+        "constructed_year": constructedYear.toString(),
         "building_type": buildingType.toJson(),
       };
 }
