@@ -4,6 +4,7 @@ import 'package:public_housing/commons/common_widgets/common_container.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
 import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
 import 'package:public_housing/screens/building_cabinets_screen/widgets/building_text_common_widget.dart';
+import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
@@ -15,6 +16,9 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
 
   @override
   Widget build(BuildContext context) {
+    BuildingStandardsController buildingStandardsController =
+        Get.put(BuildingStandardsController());
+
     return GetBuilder<StandardsDetailsController>(
       init: StandardsDetailsController(),
       autoRemove: false,
@@ -43,7 +47,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                          '${Strings.propertyNames}${controller.buildingName}',
+                          '${Strings.propertyNames}${buildingStandardsController.propertyInfo['name'] ?? ""}',
                           textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,
@@ -65,6 +69,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             ),
                           ],
                         ).paddingOnly(bottom: 24.px),
+/*
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -94,6 +99,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             ),
                           ],
                         ),
+*/
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -155,6 +161,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ),
+/*
                                     MyTextView(
                                       Strings.laundry,
                                       textStyleNew: MyTextStyle(
@@ -164,6 +171,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ).paddingOnly(left: 20.px),
+*/
                                   ],
                                 ).paddingSymmetric(vertical: 24.px),
                                 Row(
@@ -177,6 +185,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ),
+/*
                                     MyTextView(
                                       Strings.laundry,
                                       textStyleNew: MyTextStyle(
@@ -186,6 +195,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ).paddingOnly(left: 20.px),
+*/
                                   ],
                                 ),
                                 CommonText(

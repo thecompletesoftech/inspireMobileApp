@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 
 class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
@@ -11,6 +12,9 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
 
   @override
   Widget build(BuildContext context) {
+    BuildingStandardsController buildingStandardsController =
+        Get.put(BuildingStandardsController());
+
     return GetBuilder<DeficienciesInsideController>(
       init: DeficienciesInsideController(),
       autoRemove: false,
@@ -38,7 +42,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              '${Strings.propertyNames}${controller.buildingName}',
+                              '${Strings.propertyNames}${buildingStandardsController.propertyInfo['name'] ?? ""}',
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,
@@ -65,6 +69,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                     textSize: 32.px,
                                   ),
                                 ),
+/*
                                 CommonButton(
                                   radius: 100.px,
                                   height: 44.px,
@@ -82,6 +87,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   color: controller.appColors.buttonColor,
                                   textColor: controller.appColors.black,
                                 ).paddingOnly(top: 24.px),
+*/
                               ],
                             )),
                             SizedBox(width: 16.px),
@@ -382,6 +388,49 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                       child: Image.network(
                                                         controller
                                                             .imageList[index],
+                                                        frameBuilder: (_,
+                                                            image,
+                                                            loadingBuilder,
+                                                            __) {
+                                                          if (loadingBuilder ==
+                                                              null) {
+                                                            return const SizedBox(
+                                                              height: 100,
+                                                              width: 100,
+                                                              child: Center(
+                                                                  child:
+                                                                      CircularProgressIndicator()),
+                                                            );
+                                                          }
+                                                          return image;
+                                                        },
+                                                        loadingBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Widget image,
+                                                                ImageChunkEvent?
+                                                                    loadingProgress) {
+                                                          if (loadingProgress ==
+                                                              null)
+                                                            return image;
+                                                          return SizedBox(
+                                                            height: 100,
+                                                            width: 100,
+                                                            child: Center(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                value: loadingProgress
+                                                                            .expectedTotalBytes !=
+                                                                        null
+                                                                    ? loadingProgress
+                                                                            .cumulativeBytesLoaded /
+                                                                        loadingProgress
+                                                                            .expectedTotalBytes!
+                                                                    : null,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
                                                         headers: {
                                                           "Host":
                                                               "inspections.dev.gccs.gilsonsoftware.com"
@@ -417,19 +466,17 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                     right: 2,
                                                     top: 2,
                                                     child: GestureDetector(
-                                                        onTap: () {
+                                                        onTap: () async {
                                                           if (controller
                                                                   .imageList
-                                                                  .length ==
+                                                                  .length >
                                                               1) {
-                                                            controller
-                                                                .imageList = [];
-                                                            controller
-                                                                    .visibleBtn =
-                                                                false;
-                                                          } else {
                                                             controller.imageList
                                                                 .removeAt(
+                                                                    index);
+                                                          } else {
+                                                            await controller
+                                                                .removeImage(
                                                                     index);
                                                           }
                                                           controller.update();

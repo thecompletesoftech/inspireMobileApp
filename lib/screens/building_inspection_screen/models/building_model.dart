@@ -40,7 +40,7 @@ class Building {
   String name;
   dynamic number;
   Property property;
-  int constructedYear;
+  dynamic constructedYear;
   BuildingType buildingType;
 
   Building({
