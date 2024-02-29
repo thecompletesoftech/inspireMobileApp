@@ -41,7 +41,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         Center(
                           child: MyTextView(
-                            '${Strings.propertyNames}${"Building 13" ?? ""}-${"Unit 345" ?? ""}',
+                            '${}${"Building 13" ?? ""}-${controller.unitnumberoRname.text ?? ""}',
                             textStyleNew: MyTextStyle(
                               textColor: controller.appColors.appColor,
                               textWeight: FontWeight.w600,

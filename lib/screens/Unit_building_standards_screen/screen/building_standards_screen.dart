@@ -89,7 +89,7 @@ class UnitBuildingStandardsScreen
                                     "inspectionName": controller.inspectionName,
                                     "buildinginfo": controller.buildingInfo,
                                     "propertyinfo": controller.propertyInfo,
-                                    "certificatesInfo":
+                                    "cerificateList":
                                         controller.certificatesInfo,
                                     "inspectorName": controller.inspectorName,
                                     "inspectorDate": controller.inspectorDate,

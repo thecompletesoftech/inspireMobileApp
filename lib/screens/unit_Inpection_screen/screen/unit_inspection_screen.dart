@@ -274,6 +274,10 @@ class UnitInspection extends GetView<UnitController> {
                                 "buildingInfo": Get.arguments['buildingInfo'],
                                 "buildingtype": Get.arguments['buildingtype'],
                                 "switchvalue": controller.switchbtn.value,
+                                "certificatesInfo":
+                                    Get.arguments['certificatesInfo'],
+                                "inspectorName": Get.arguments['inspectorName'],
+                                "inspectorDate": Get.arguments['inspectorDate'],
                               },
                             );
                             // var result = await Get.toNamed(

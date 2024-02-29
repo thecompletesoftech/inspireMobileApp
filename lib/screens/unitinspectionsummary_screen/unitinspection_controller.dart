@@ -21,6 +21,8 @@ class UnitInspectionsummaryController extends BaseController {
   List<String> cityList = [];
   var islaoding = false.obs;
   String inspectionName = '';
+  String buildingname = '';
+  String propertyname = '';
   var dataList = [
     RxCommonModel(
       title: "D1. Cabinets are missing",
@@ -124,6 +126,8 @@ class UnitInspectionsummaryController extends BaseController {
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
     switchbtn.value = Get.arguments['switchvalue'];
+    buildingname = Get.arguments['buildinginfo']['name'];
+    propertyname = Get.arguments['propertyinfo']['name'];
   }
 
   getdeficienyjson() async {
