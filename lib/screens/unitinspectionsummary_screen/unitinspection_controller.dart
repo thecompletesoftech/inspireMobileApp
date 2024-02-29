@@ -3,6 +3,7 @@ import 'package:public_housing/screens/unitinspectionsummary_screen/repository/u
 import '../../commons/all.dart';
 import '../building_inspection_screen/controller/building_inspection_controller.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
+import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -16,6 +17,8 @@ class UnitInspectionsummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
   BuildingInspectionController _buildingInspectionController =
       Get.put(BuildingInspectionController());
+  BuildingInspectionSummaryController _buildingInspectionSummaryController =
+      Get.put(BuildingInspectionSummaryController());
   List unithousekeepingList = [];
   List generalphysicalconditionList = [];
   List<String> cityList = [];
@@ -201,6 +204,7 @@ class UnitInspectionsummaryController extends BaseController {
       update();
     }, (r) async {
       _buildingInspectionController.clearalldata();
+      _buildingInspectionSummaryController.cleardata();
       await _buildingInspectionController.getcertificates();
       await Get.toNamed(BuildingInspectionScreen.routes);
       islaoding.value = false;

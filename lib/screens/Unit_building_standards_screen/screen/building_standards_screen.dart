@@ -95,7 +95,6 @@ class UnitBuildingStandardsScreen
                                     "inspectorDate": controller.inspectorDate,
                                     "unitinfo": controller.unitinfo,
                                     "switchvalue": controller.switchbtn.value
-
                                   });
                             }
                           },

@@ -39,13 +39,13 @@ class UnitBuildingStandardsController extends BaseController {
 
     if (Get.arguments != null) {
       buildingtype = Get.arguments['buildingtype'];
-      buildingName = "";
+      buildingName = Get.arguments['buildingInfo']['name'];
       propertyname = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
-      certificatesInfo.value = [];
-      inspectorName = "";
-      inspectorDate = "";
+      certificatesInfo.value = Get.arguments['certificatesInfo'];
+      inspectorName = Get.arguments['inspectorName'];
+      inspectorDate = Get.arguments['inspectorDate'];
       unitinfo = Get.arguments['unitinfo'];
       switchbtn.value = bool.parse(Get.arguments['switchvalue'].toString());
     }
