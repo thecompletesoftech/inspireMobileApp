@@ -42,7 +42,7 @@ class UnitDeficienciesInsideScreen
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              '${Strings.propertyNames}${unibuildingStandardsController.propertyInfo['name'] ?? ""}',
+                              '${unibuildingStandardsController.propertyInfo['name'] ?? ""}-${unibuildingStandardsController.buildingName}-${unibuildingStandardsController.unitname}',
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,

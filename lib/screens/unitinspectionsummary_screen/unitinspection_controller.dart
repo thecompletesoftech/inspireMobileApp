@@ -4,6 +4,7 @@ import '../../commons/all.dart';
 import '../building_inspection_screen/controller/building_inspection_controller.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
+import '../building_standards_screen/controller/building_standards_controller.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -15,6 +16,8 @@ class UnitInspectionsummaryController extends BaseController {
   TextEditingController generalphysicalcondition = TextEditingController();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
+  BuildingStandardsController _buildingStandardsController =
+      Get.put(BuildingStandardsController());
   BuildingInspectionController _buildingInspectionController =
       Get.put(BuildingInspectionController());
   BuildingInspectionSummaryController _buildingInspectionSummaryController =
@@ -203,6 +206,7 @@ class UnitInspectionsummaryController extends BaseController {
       islaoding.value = false;
       update();
     }, (r) async {
+      _buildingStandardsController.cleardata ();
       _buildingInspectionController.clearalldata();
       _buildingInspectionSummaryController.cleardata();
       await _buildingInspectionController.getcertificates();

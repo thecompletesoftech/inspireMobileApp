@@ -46,7 +46,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                          '${Strings.propertyNames}${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}',
+                          '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
                           textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,

@@ -27,6 +27,7 @@ class UnitBuildingStandardsController extends BaseController {
   var certificatesInfo = [].obs;
   String inspectorName = '';
   String inspectorDate = '';
+  String unitname = '';
   var switchbtn = false.obs;
   void onInit() {
     super.onInit();
@@ -47,6 +48,7 @@ class UnitBuildingStandardsController extends BaseController {
       inspectorName = Get.arguments['inspectorName'];
       inspectorDate = Get.arguments['inspectorDate'];
       unitinfo = Get.arguments['unitinfo'];
+      unitname = Get.arguments['unitinfo']['name'];
       switchbtn.value = bool.parse(Get.arguments['switchvalue'].toString());
     }
     update();

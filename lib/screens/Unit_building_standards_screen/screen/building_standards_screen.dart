@@ -35,7 +35,7 @@ class UnitBuildingStandardsScreen
                 Column(
                   children: [
                     MyTextView(
-                      '${controller.propertyname}-${controller.propertyInfo['name'] ?? ""}',
+                      '${controller.propertyname}-${controller.buildingName ?? ""}-${controller.unitname ?? ""}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -307,6 +307,12 @@ class UnitBuildingStandardsScreen
                                                             "buildingName":
                                                                 controller
                                                                     .buildingName,
+                                                            "propetyName":
+                                                                controller
+                                                                    .propertyname,
+                                                            "unitName":
+                                                                controller
+                                                                    .unitname,
                                                             "deficiencyArea":
                                                                 buildingDataList,
                                                             "successListOfStandards":

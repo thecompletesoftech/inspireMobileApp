@@ -51,6 +51,12 @@ class BuildingStandardsController extends BaseController {
     update();
   }
 
+  cleardata() {
+    deficiencyAreas.clear();
+    searchList.clear();
+    dataList.clear();
+  }
+
   isUpdateList({required String name}) {
     searchList.forEach((e) {
       // e.buildingDataModel?.forEach((element) {
