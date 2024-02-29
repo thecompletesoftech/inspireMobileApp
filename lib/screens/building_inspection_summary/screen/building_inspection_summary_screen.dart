@@ -16,7 +16,9 @@ import 'package:public_housing/screens/building_inspection_summary/controller/bu
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../unit_Inpection_screen/unit_inspection_screen.dart';
+
+import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
+
 
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
@@ -28,7 +30,6 @@ class BuildingInspectionSummaryScreen
   Widget build(BuildContext context) {
     BuildingStandardsController buildingStandardsController =
         Get.put(BuildingStandardsController());
-
     return GetBuilder<BuildingInspectionSummaryController>(
       init: BuildingInspectionSummaryController(),
       autoRemove: false,

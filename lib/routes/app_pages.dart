@@ -12,6 +12,10 @@ import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 
+import '../screens/Unit_building_standards_screen/binding/building_standards_binding.dart';
+import '../screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
+import '../screens/Unit_deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
+import '../screens/Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import '../screens/areas_screen/areas_binding.dart';
 import '../screens/areas_screen/areas_screen.dart';
 import '../screens/areasbuilding_screen/areasbuilding_binding.dart';
@@ -56,25 +60,51 @@ import '../screens/standard_screen/standard_binding.dart';
 import '../screens/standard_screen/standard_screen.dart';
 import '../screens/text_message_screen/text_message_binding.dart';
 import '../screens/text_message_screen/text_message_screen.dart';
-import '../screens/unit_Inpection_screen/unit_inspection_screen.dart';
+import '../screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 import '../screens/unit_Inpection_screen/unitinspection_binding.dart';
+import '../screens/unit_cabinets_screen /binding/standards_details_binding.dart';
+import '../screens/unit_cabinets_screen /screen/standards_details_screen.dart';
 import '../screens/unitinspectionsummary_screen/unitinspection_binding.dart';
 import '../screens/unitinspectionsummary_screen/unitinspectionsummary_screen.dart';
 
 class AppPages {
   static var list = [
-
-
-    GetPage(name: SplashScreen.routes, page: () => const SplashScreen(), binding: SplashBinding()),
-    GetPage(name: PropertyScreen.routes, page: () => PropertyScreen(), binding: PropertyBinding()),
-    GetPage(name: BuildingsScreen.routes, page: () => BuildingsScreen(), binding: BuildingsBinding()),
-    GetPage(name: PropertyDetailsScreen.routes, page: () => PropertyDetailsScreen(), binding: PropertyDetailsBinding()),
-    GetPage(name: BuildingInspectionScreen.routes, page: () => const BuildingInspectionScreen(), binding: BuildingInspectionBinding()),
-    GetPage(name: BuildingStandardsScreen.routes, page: () => const BuildingStandardsScreen(), binding: BuildingStandardsBinding()),
-    GetPage(name: StandardsDetailsScreen.routes, page: () => const StandardsDetailsScreen(), binding: StandardsDetailsBinding()),
-    GetPage(name: DeficienciesInsideScreen.routes, page: () => const DeficienciesInsideScreen(), binding: DeficienciesInsideBinding()),
-    GetPage(name: BuildingInspectionSummaryScreen.routes, page: () => const BuildingInspectionSummaryScreen(), binding: BuildingInspectionSummaryBinding()),
-
+    GetPage(
+        name: SplashScreen.routes,
+        page: () => const SplashScreen(),
+        binding: SplashBinding()),
+    GetPage(
+        name: PropertyScreen.routes,
+        page: () => PropertyScreen(),
+        binding: PropertyBinding()),
+    GetPage(
+        name: BuildingsScreen.routes,
+        page: () => BuildingsScreen(),
+        binding: BuildingsBinding()),
+    GetPage(
+        name: PropertyDetailsScreen.routes,
+        page: () => PropertyDetailsScreen(),
+        binding: PropertyDetailsBinding()),
+    GetPage(
+        name: BuildingInspectionScreen.routes,
+        page: () => const BuildingInspectionScreen(),
+        binding: BuildingInspectionBinding()),
+    GetPage(
+        name: BuildingStandardsScreen.routes,
+        page: () => const BuildingStandardsScreen(),
+        binding: BuildingStandardsBinding()),
+    GetPage(
+        name: StandardsDetailsScreen.routes,
+        page: () => const StandardsDetailsScreen(),
+        binding: StandardsDetailsBinding()),
+    GetPage(
+        name: DeficienciesInsideScreen.routes,
+        page: () => const DeficienciesInsideScreen(),
+        binding: DeficienciesInsideBinding()),
+    GetPage(
+        name: BuildingInspectionSummaryScreen.routes,
+        page: () => const BuildingInspectionSummaryScreen(),
+        binding: BuildingInspectionSummaryBinding()),
     GetPage(
         name: BuildingDetailsScreen.routes,
         page: () => const BuildingDetailsScreen(),
@@ -159,5 +189,17 @@ class AppPages {
         name: UnitInspectionSummary.routes,
         page: () => const UnitInspectionSummary(),
         binding: UnitInspectionSummaryBinding()),
+    GetPage(
+        name: UnitBuildingStandardsScreen.routes,
+        page: () => UnitBuildingStandardsScreen(),
+        binding: UnitBuildingStandardsBinding()),
+    GetPage(
+        name: UnitStandardsDetailsScreen.routes,
+        page: () => UnitStandardsDetailsScreen(),
+        binding: UnitStandardsDetailsBinding()),
+    GetPage(
+        name: UnitDeficienciesInsideScreen.routes,
+        page: () => UnitDeficienciesInsideScreen(),
+        binding: UntiDeficienciesInsideBinding()),
   ];
 }
