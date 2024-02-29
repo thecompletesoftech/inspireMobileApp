@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
-
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
@@ -22,7 +20,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
           child: WillPopScope(
-            onWillPop: ()async => exit(1),
+            onWillPop: () async => exit(1),
             child: SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -326,7 +324,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     },
                                     onSelected: (value) async {
                                       controller.actionProperty(value);
-                                      await controller.getbuildingapi(value.id);
+                                      await controller.getbuildingapi(value);
                                       // await controller.searchBuilding(
                                       //     searchText: value.name);
 
@@ -525,135 +523,56 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               Row(
                                 children: [
                                   Expanded(
-                                    child: CommonTextField(
-                                      isLable: true,
-                                      readOnly: false,
-                                      isLableColor: controller.appColors.black
-                                          .withOpacity(controller
-                                                      .searchBuildingList
-                                                      .length <=
-                                                  0
-                                              ? .12
-                                              : 1.0),
-                                      borderColor: controller.appColors.black
-                                          .withOpacity(controller
-                                                      .searchBuildingList
-                                                      .length <=
-                                                  0
-                                              ? .12
-                                              : 1.0),
-                                      controller:
-                                          controller.buildingNameController,
-                                      color: controller.appColors.transparent,
-                                      prefixIcon: SvgPicture.string(
-                                        icBuildingss,
-                                        color: controller.appColors.grey,
-                                      ).paddingOnly(left: 15.px),
-                                      suffixIcon: PopupMenuButton(
-                                        offset: Offset(-250, 10),
-                                        key: controller.popupKey1,
-                                        position: PopupMenuPosition.under,
-                                        // tooltip: Strings.unitHousekeeping,
-                                        onSelected: (value) {
-                                          print(value.toString());
-
-                                          controller.update();
-                                        },
-                                        itemBuilder: (context) => List.generate(
-                                            controller
-                                                .searchBuildingList.length,
-                                            (index) => PopupMenuItem(
-                                                  value: index,
-                                                  onTap: (() {
-                                                    controller.actionBuilding(
-                                                        controller
-                                                                .searchBuildingList[
-                                                            index]);
-                                                  }),
-                                                  child: MyTextView(
-                                                    controller
-                                                        .searchBuildingList[
-                                                            index]
-                                                        .name
-                                                        .toString()
-                                                        .toString(),
-                                                    textStyleNew: MyTextStyle(
-                                                      textColor: controller
-                                                          .appColors.black,
-                                                      textWeight:
-                                                          FontWeight.w400,
-                                                      textFamily:
-                                                          fontFamilyBold,
-                                                      textSize: 16.px,
-                                                    ),
-                                                  ),
-                                                )),
-                                        child: SvgPicture.string(
+                                      child: TypeAheadField(
+                                    controller:
+                                        controller.buildingNameController,
+                                    suggestionsCallback: (search) async {
+                                      await controller.searchBuilding(
+                                          searchText: search);
+                                      controller.update();
+                                      return controller.searchBuildingList;
+                                    },
+                                    builder: (context, c, focusNode) {
+                                      return CommonTextField(
+                                        focusNode: focusNode,
+                                        isLable: true,
+                                        controller: c,
+                                        color: controller.appColors.transparent,
+                                        prefixIcon: SvgPicture.string(
+                                          icBuildingss,
+                                          color: controller.appColors.grey,
+                                        ).paddingOnly(left: 15.px),
+                                        suffixIcon: SvgPicture.string(
                                           icDownArrow,
                                           color: controller.appColors.grey,
                                         ).paddingAll(10.px),
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.px),
-                                      shadowColor:
-                                          controller.appColors.transparent,
-                                      labelText: Strings.buildingInspection,
-                                    ),
-                                  ),
-                                  // Expanded(
-                                  //     child: TypeAheadField(
-                                  //   controller: controller.buildingNameController,
-                                  //   suggestionsCallback: (search) async {
-                                  //     print("bulding text------");
-                                  //     await controller.searchBuilding(
-                                  //         searchText: search);
-                                  //     controller.update();
-                                  //     return controller.searchBuildingList;
-                                  //   },
-                                  //   builder: (context, c, focusNode) {
-                                  //     return CommonTextField(
-                                  //       focusNode: focusNode,
-                                  //       isLable: true,
-                                  //       controller: c,
-                                  //       color: controller.appColors.transparent,
-                                  //       prefixIcon: SvgPicture.string(
-                                  //         icBuildingss,
-                                  //         color: controller.appColors.grey,
-                                  //       ).paddingOnly(left: 15.px),
-                                  //       suffixIcon: SvgPicture.string(
-                                  //         icDownArrow,
-                                  //         color: controller.appColors.grey,
-                                  //       ).paddingAll(10.px),
-                                  //       padding: EdgeInsets.zero,
-                                  //       contentPadding:
-                                  //           EdgeInsets.only(left: 15.px),
-                                  //       shadowColor:
-                                  //           controller.appColors.transparent,
-                                  //       labelText: controller
-                                  //           .searchBuildingList.length
-                                  //           .toString(),
-                                  //     );
-                                  //   },
-                                  //   itemBuilder: (context, dynamic i) {
-                                  //     print("i name ------" + i.toString());
-                                  //     return ListTile(
-                                  //       title: MyTextView(
-                                  //         i.name.toString(),
-                                  //         textStyleNew: MyTextStyle(
-                                  //           textColor: controller.appColors.black,
-                                  //           textWeight: FontWeight.w400,
-                                  //           textFamily: fontFamilyBold,
-                                  //           textSize: 16.px,
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  //   onSelected: (value) async {
-                                  //     controller.actionBuilding(value);
-                                  //     controller.update();
-                                  //   },
-                                  // )),
+                                        padding: EdgeInsets.zero,
+                                        contentPadding:
+                                            EdgeInsets.only(left: 15.px),
+                                        shadowColor:
+                                            controller.appColors.transparent,
+                                        labelText: Strings.buildingName,
+                                      );
+                                    },
+                                    itemBuilder: (context, dynamic i) {
+                                      return ListTile(
+                                        title: MyTextView(
+                                          i.name.toString(),
+                                          textStyleNew: MyTextStyle(
+                                            textColor:
+                                                controller.appColors.black,
+                                            textWeight: FontWeight.w400,
+                                            textFamily: fontFamilyBold,
+                                            textSize: 16.px,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    onSelected: (value) async {
+                                      controller.actionBuilding(value);
+                                      controller.update();
+                                    },
+                                  )),
                                 ],
                               ).paddingOnly(bottom: 32.px),
                               Row(
@@ -845,30 +764,32 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                           : controller.appColors.black
                               .withOpacity(0.11999999731779099),
                       onTap: () {
-                        // if (controller.getStartInspection()) {
-                        controller.getcertificatesjson();
-                        controller.getpropertyjson();
-                        controller.getbuildingjson();
+                        if (controller.getStartInspection()) {
+                          controller.getcertificatesjson();
+                          controller.getpropertyjson();
+                          controller.getbuildingjson();
 
-                        // Get.toNamed(UnitInspection.routes, arguments: {
-                        //   "propertyinfo": controller.propertyinfo,
-                        //   "buildinginfo": controller.buildinginfo,
-                        //   "buildingtype": controller.buildingTypeController.text
-                        // });
-                        print("year" + controller.buildingInfo.toString());
-                        Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                          "buildingName":
-                              controller.buildingNameController.text,
-                          "propertyInfo": controller.propertyInfo,
-                          "buildingInfo": controller.buildingInfo,
-                          "buildingtype":
-                              controller.buildingTypeController.text,
-                          "certificatesInfo": controller.certificatesInfo,
-                          "inspectorName": controller.inspectorController.text,
-                          "inspectorDate":
-                              controller.inspectionDateController.text
-                        });
-                        // }
+                          // Get.toNamed(UnitInspection.routes, arguments: {
+                          //   "propertyinfo": controller.propertyinfo,
+                          //   "buildinginfo": controller.buildinginfo,
+                          //   "buildingtype": controller.buildingTypeController.text
+                          // });
+                          print("year" + controller.buildingInfo.toString());
+                          Get.toNamed(BuildingStandardsScreen.routes,
+                              arguments: {
+                                "buildingName":
+                                    controller.buildingNameController.text,
+                                "propertyInfo": controller.propertyInfo,
+                                "buildingInfo": controller.buildingInfo,
+                                "buildingtype":
+                                    controller.buildingTypeController.text,
+                                "certificatesInfo": controller.certificatesInfo,
+                                "inspectorName":
+                                    controller.inspectorController.text,
+                                "inspectorDate":
+                                    controller.inspectionDateController.text
+                              });
+                        }
 
                         // Get.toNamed(BuildingInspectionSummaryScreen.routes,
                         //     arguments: {

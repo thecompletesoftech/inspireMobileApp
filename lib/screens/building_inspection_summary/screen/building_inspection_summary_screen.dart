@@ -19,6 +19,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
+
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
   const BuildingInspectionSummaryScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class BuildingInspectionSummaryScreen
                   },
                 ),
                 MyTextView(
-                  '${controller.propertyname}-${buildingStandardsController.propertyInfo['name'] ?? ""}',
+                  '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}',
                   textStyleNew: MyTextStyle(
                     textColor: controller.appColors.appColor,
                     textWeight: FontWeight.w600,
