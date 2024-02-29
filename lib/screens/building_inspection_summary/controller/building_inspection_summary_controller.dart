@@ -229,6 +229,8 @@ class BuildingInspectionSummaryController extends BaseController {
         inspectionStateId: '1',
         inspectionTypeId: '1',
         inspectorId: inspectorInfo['id'].toString(),
+        general_physical_condition: "Average",
+        unit_house_keeping: "Best"
       ),
       property: Property(
         name: propertyInfo['name'],
@@ -247,6 +249,7 @@ class BuildingInspectionSummaryController extends BaseController {
       isSuccess = false;
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (r) {
+      utils.showSnackBar(context: Get.context!, message: "Building  inspection Submitted Successfully!!");
       isSuccess = true;
     });
     update();

@@ -29,7 +29,7 @@ class ApiProviders extends BaseController {
 
       if (isType) {
         endPoint =
-            'inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2';
+            'inspection/api/deficiency_areas?housing_item_id=1';
       } else {
         endPoint = 'inspection/api/deficiency_areas?housing_item_id=3';
       }
