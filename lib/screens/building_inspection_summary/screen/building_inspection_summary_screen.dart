@@ -88,19 +88,28 @@ class BuildingInspectionSummaryScreen
                               textColor: controller.appColors.lightText,
                               color: controller.appColors.buttonColor,
                               onTap: () {
-                                Get.toNamed(UnitInspection.routes, arguments: {
-                                  "deficiencyArea": controller.deficiencyArea,
-                                  "buildingName": controller.buildingName,
-                                  "buildingtype": controller.buildingtype,
-                                  "imagesList": controller.imagesList,
-                                  "inspectionName": controller.inspectionName,
-                                  "propertyInfo": controller.propertyInfo,
-                                  "buildingInfo": controller.buildingInfo,
-                                  "certificatesInfo":
-                                      controller.certificatesInfo,
-                                  "inspectorName": controller.inspectorName,
-                                  "inspectorDate": controller.inspectorDate
-                                });
+                                controller.createInspection();
+                                if (controller.isSuccess == true) {
+                                  Get.toNamed(UnitInspection.routes,
+                                      arguments: {
+                                        "deficiencyArea":
+                                            controller.deficiencyArea,
+                                        "buildingName": controller.buildingName,
+                                        "buildingtype": controller.buildingtype,
+                                        "imagesList": controller.imagesList,
+                                        "inspectionName":
+                                            controller.inspectionName,
+                                        "propertyInfo": controller.propertyInfo,
+                                        "buildingInfo": controller.buildingInfo,
+                                        "certificatesInfo":
+                                            controller.certificatesInfo,
+                                        "inspectorName":
+                                            controller.inspectorName,
+                                        "inspectorDate":
+                                            controller.inspectorDate
+                                      });
+                                }
+                                controller.update();
                               },
                             ),
                           ],
@@ -811,19 +820,23 @@ class BuildingInspectionSummaryScreen
                           textFamily: fontFamilyRegular,
                           textColor: controller.appColors.lightText,
                           color: controller.appColors.buttonColor,
-                          onTap: () {
-                            Get.toNamed(UnitInspection.routes, arguments: {
-                              "deficiencyArea": controller.deficiencyArea,
-                              "buildingName": controller.buildingName,
-                              "buildingtype": controller.buildingtype,
-                              "imagesList": controller.imagesList,
-                              "inspectionName": controller.inspectionName,
-                              "propertyInfo": controller.propertyInfo,
-                              "buildingInfo": controller.buildingInfo,
-                              "certificatesInfo": controller.certificatesInfo,
-                              "inspectorName": controller.inspectorName,
-                              "inspectorDate": controller.inspectorDate
-                            });
+                          onTap: () async {
+                            await controller.createInspection();
+                            if (controller.isSuccess == true) {
+                              Get.toNamed(UnitInspection.routes, arguments: {
+                                "deficiencyArea": controller.deficiencyArea,
+                                "buildingName": controller.buildingName,
+                                "buildingtype": controller.buildingtype,
+                                "imagesList": controller.imagesList,
+                                "inspectionName": controller.inspectionName,
+                                "propertyInfo": controller.propertyInfo,
+                                "buildingInfo": controller.buildingInfo,
+                                "certificatesInfo": controller.certificatesInfo,
+                                "inspectorName": controller.inspectorName,
+                                "inspectorDate": controller.inspectorDate
+                              });
+                            }
+                            controller.update();
                           },
                         ).paddingSymmetric(vertical: 24.px),
                       ],
