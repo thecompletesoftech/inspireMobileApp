@@ -2,7 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/buildings_screen/grid_itemcard_widget.dart';
 import 'package:public_housing/screens/buildings_screen/list_itemcard_widget.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
 import '../../responsive/scaling_query.dart';
 import '../hs_ack_screen/hs_ack_screen.dart';

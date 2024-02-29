@@ -1,9 +1,9 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
 import '../../commons/all.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
-import '../building_standards_screen/models/deficiency_areas_res_model.dart';
+
 
 class UnitController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();

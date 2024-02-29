@@ -69,6 +69,10 @@ class BuildingInspectionSummaryController extends BaseController {
     super.onInit();
   }
 
+  cleardata() {
+    deficiencyArea.clear();
+  }
+
   getCertificatesJson() {
     certificatesInfo.clear();
     for (var i = 0; i < certificates!.length; i += 1) {

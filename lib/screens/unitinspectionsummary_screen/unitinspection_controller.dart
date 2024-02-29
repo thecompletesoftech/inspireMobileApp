@@ -1,8 +1,10 @@
+import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
 import '../building_inspection_screen/controller/building_inspection_controller.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
-import '../building_standards_screen/models/deficiency_areas_res_model.dart';
+import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
+import '../building_standards_screen/controller/building_standards_controller.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -14,13 +16,19 @@ class UnitInspectionsummaryController extends BaseController {
   TextEditingController generalphysicalcondition = TextEditingController();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
+  BuildingStandardsController _buildingStandardsController =
+      Get.put(BuildingStandardsController());
   BuildingInspectionController _buildingInspectionController =
       Get.put(BuildingInspectionController());
+  BuildingInspectionSummaryController _buildingInspectionSummaryController =
+      Get.put(BuildingInspectionSummaryController());
   List unithousekeepingList = [];
   List generalphysicalconditionList = [];
   List<String> cityList = [];
   var islaoding = false.obs;
   String inspectionName = '';
+  String buildingname = '';
+  String propertyname = '';
   var dataList = [
     RxCommonModel(
       title: "D1. Cabinets are missing",
@@ -119,11 +127,13 @@ class UnitInspectionsummaryController extends BaseController {
   }
 
   setdataController() {
-    unitnumberoRname.text = Get.arguments['unitinfo']['name'];
+    unitnumberoRname.text = Get.arguments['unitinfo']['name'] ?? "";
     unitAddress.text = Get.arguments['unitinfo']['address'];
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
     switchbtn.value = Get.arguments['switchvalue'];
+    buildingname = Get.arguments['buildinginfo']['name'];
+    propertyname = Get.arguments['propertyinfo']['name'];
   }
 
   getdeficienyjson() async {
@@ -196,11 +206,19 @@ class UnitInspectionsummaryController extends BaseController {
       islaoding.value = false;
       update();
     }, (r) async {
+      _buildingStandardsController.cleardata ();
       _buildingInspectionController.clearalldata();
+      _buildingInspectionSummaryController.cleardata();
       await _buildingInspectionController.getcertificates();
       await Get.toNamed(BuildingInspectionScreen.routes);
       islaoding.value = false;
       update();
     });
+  }
+
+  isDataUpdate(mainIndex, subIndex, UnitdeficiencyInspectionsReqModel) {
+    deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
+        UnitdeficiencyInspectionsReqModel[0];
+    update();
   }
 }

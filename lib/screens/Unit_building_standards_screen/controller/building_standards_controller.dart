@@ -1,12 +1,11 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
-import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
-import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/Unit_building_standards_screen/repository/building_standards_repository.dart';
+import 'package:public_housing/screens/Unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 // enum BuildingStandardsStatus { all, failed }
 
-class BuildingStandardsController extends BaseController {
+class UnitBuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
   BuildingStandardsRepository buildingStandardsRepository =
       BuildingStandardsRepository();
@@ -23,38 +22,36 @@ class BuildingStandardsController extends BaseController {
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
   RxList<BuildingModel> dataList = <BuildingModel>[].obs;
   RxMap propertyInfo = {}.obs;
+  RxMap unitinfo = {}.obs;
   RxMap buildingInfo = {}.obs;
   var certificatesInfo = [].obs;
   String inspectorName = '';
   String inspectorDate = '';
-
+  String unitname = '';
+  var switchbtn = false.obs;
   void onInit() {
     super.onInit();
 
     () async {
-      print("onit asdadsad");
-      deficiencyAreas.clear();
+      searchList.clear();
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
     }();
 
     if (Get.arguments != null) {
       buildingtype = Get.arguments['buildingtype'];
-      buildingName = Get.arguments['buildingName'];
+      buildingName = Get.arguments['buildingInfo']['name'];
       propertyname = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
-      certificatesInfo = Get.arguments['certificatesInfo'];
+      certificatesInfo.value = Get.arguments['certificatesInfo'];
       inspectorName = Get.arguments['inspectorName'];
       inspectorDate = Get.arguments['inspectorDate'];
+      unitinfo = Get.arguments['unitinfo'];
+      unitname = Get.arguments['unitinfo']['name'];
+      switchbtn.value = bool.parse(Get.arguments['switchvalue'].toString());
     }
     update();
-  }
-
-  cleardata() {
-    deficiencyAreas.clear();
-    searchList.clear();
-    dataList.clear();
   }
 
   isUpdateList({required String name}) {
