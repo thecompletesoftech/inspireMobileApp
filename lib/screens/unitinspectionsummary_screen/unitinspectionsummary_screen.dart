@@ -1,8 +1,8 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/unitinspection_controller.dart';
 import '../../commons/all.dart';
+import '../Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
@@ -799,7 +799,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                           ),
                                           CommonButton(
                                             radius: 100.px,
-                                            title: Strings.inside,
+                                            title: Strings.unit,
                                             onTap: () {},
                                             padding: EdgeInsets.symmetric(
                                               horizontal: 24.px,
@@ -914,24 +914,24 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                 onTap: () {
                                                   int mainIndex = index;
                                                   int subIndex = i;
-                                                  // Get.toNamed(
-                                                  //     DeficienciesInsideScreen
-                                                  //         .routes,
-                                                  //     arguments: {
-                                                  //       "deficiencyAreaList": item
-                                                  //           .deficiencyAreaItems,
-                                                  //       "deficiencyInspectionsReqModel":
-                                                  //           data
-                                                  //     })?.then((value) {
-                                                  //   if (value != null) {
-                                                  //     controller.isDataUpdate(
-                                                  //         mainIndex,
-                                                  //         subIndex,
-                                                  //         value[
-                                                  //             'deficiencyInspectionsReqModel']);
-                                                  //     controller.update();
-                                                  //   }
-                                                  // });
+                                                  Get.toNamed(
+                                                      UnitDeficienciesInsideScreen
+                                                          .routes,
+                                                      arguments: {
+                                                        "deficiencyAreaList": item
+                                                            .deficiencyAreaItems,
+                                                        "deficiencyInspectionsReqModel":
+                                                            data
+                                                      })?.then((value) {
+                                                    if (value != null) {
+                                                      controller.isDataUpdate(
+                                                          mainIndex,
+                                                          subIndex,
+                                                          value[
+                                                              'deficiencyInspectionsReqModel']);
+                                                      controller.update();
+                                                    }
+                                                  });
                                                 },
                                               ),
                                             ],
@@ -955,6 +955,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             );
                           },
                         ),
+
                         // ListView.separated(
                         //   shrinkWrap: true,
                         //   physics: NeverScrollableScrollPhysics(),

@@ -1,8 +1,10 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/screens/Unit_building_standards_screen/controller/building_standards_controller.dart';
+import 'package:public_housing/screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unitinspection_controller.dart';
-import '../../commons/all.dart';
-import '../unitinspectionsummary_screen/unitinspectionsummary_screen.dart';
-import 'TitleheadmenuWidgte.dart';
+import '../../../commons/all.dart';
+
+import '../TitleheadmenuWidgte.dart';
 
 class UnitInspection extends GetView<UnitController> {
   const UnitInspection({Key? key}) : super(key: key);
@@ -258,21 +260,37 @@ class UnitInspection extends GetView<UnitController> {
                         onTap: () async {
                           if (controller.getunitinspection()) {
                             controller.getunitjson();
-                            var result = await Get.toNamed(
-                                UnitInspectionSummary.routes,
-                                arguments: {
-                                  "unitinfo": controller.unitjson,
-                                  "propertyinfo": Get.arguments['propertyInfo'],
-                                  "buildinginfo": Get.arguments['buildingInfo'],
-                                  "buildingtype": Get.arguments['buildingtype'],
-                                  "cerificateList":
-                                      Get.arguments['certificatesInfo'],
-                                  "deficiencyArea":
-                                      Get.arguments['deficiencyArea'],
-                                  "switchvalue": controller.switchbtn.value,
-                                  "inspectorDate":
-                                      Get.arguments['inspectorDate']
-                                });
+
+                            // Get.to(
+                            //   BuildingStandardsScreen(),
+                            //   arguments: {"unitinfo": controller.unitjson},
+                            // );
+                            Get.toNamed(
+                              UnitBuildingStandardsScreen.routes,
+                              preventDuplicates: false,
+                              arguments: {
+                                "unitinfo": controller.unitjson,
+                                "propertyInfo": Get.arguments['propertyInfo'],
+                                "buildingInfo": Get.arguments['buildingInfo'],
+                                "buildingtype": Get.arguments['buildingtype'],
+                                "switchvalue": controller.switchbtn.value,
+                              },
+                            );
+                            // var result = await Get.toNamed(
+                            //     UnitInspectionSummary.routes,
+                            //     arguments: {
+                            //       "unitinfo": controller.unitjson,
+                            //       "propertyinfo": Get.arguments['propertyInfo'],
+                            //       "buildinginfo": Get.arguments['buildingInfo'],
+                            //       "buildingtype": Get.arguments['buildingtype'],
+                            //       "cerificateList":
+                            //           Get.arguments['certificatesInfo'],
+                            //       "deficiencyArea":
+                            //           Get.arguments['deficiencyArea'],
+                            //       "switchvalue": controller.switchbtn.value,
+                            //       "inspectorDate":
+                            //           Get.arguments['inspectorDate']
+                            //     });
                           }
                         },
                       ).paddingSymmetric(vertical: 24.px),

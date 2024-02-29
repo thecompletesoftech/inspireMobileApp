@@ -9,6 +9,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
 
+import '../../screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 import '../../screens/auth/model/Inspectormodel.dart';
 import '../../screens/auth/model/LoginModel.dart';
 import '../../screens/building_inspection_screen/models/building_model.dart';
@@ -32,6 +33,25 @@ class ApiProviders extends BaseController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(DeficiencyAreasResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
+      getunitDeficiencyAreasRequest() async {
+    try {
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.getdeficieny,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(UnitDeficiencyAreasResponseModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

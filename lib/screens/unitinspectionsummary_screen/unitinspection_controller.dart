@@ -1,8 +1,8 @@
+import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
 import '../building_inspection_screen/controller/building_inspection_controller.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
-import '../building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -119,7 +119,7 @@ class UnitInspectionsummaryController extends BaseController {
   }
 
   setdataController() {
-    unitnumberoRname.text = Get.arguments['unitinfo']['name'];
+    unitnumberoRname.text = Get.arguments['unitinfo']['name'] ?? "";
     unitAddress.text = Get.arguments['unitinfo']['address'];
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
@@ -202,5 +202,11 @@ class UnitInspectionsummaryController extends BaseController {
       islaoding.value = false;
       update();
     });
+  }
+
+  isDataUpdate(mainIndex, subIndex, UnitdeficiencyInspectionsReqModel) {
+    deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
+        UnitdeficiencyInspectionsReqModel[0];
+    update();
   }
 }
