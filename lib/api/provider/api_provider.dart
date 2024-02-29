@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/api_helper/api_base_helper_implementation.dart';
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
+import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
 
@@ -23,10 +23,19 @@ class ApiProviders extends BaseController {
   ApiProviders();
 
   Future<Either<Failure, DeficiencyAreasResponseModel>>
-      getDeficiencyAreasRequest() async {
+      getDeficiencyAreasRequest({required bool isType}) async {
     try {
+      String endPoint;
+
+      if (isType) {
+        endPoint =
+            'inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2';
+      } else {
+        endPoint = 'inspection/api/deficiency_areas?housing_item_id=3';
+      }
+
       Response response = await apiBaseHelperImplementation.get(
-        endPoint: Constants.getdeficieny,
+        endPoint: endPoint,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
@@ -204,6 +213,27 @@ class ApiProviders extends BaseController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(CreateinspectionModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, dynamic>> createInspection(
+      {required CreateInspectionRequestModel
+          createInspectionRequestModel}) async {
+    try {
+      Response response = await apiBaseHelperImplementation.post(
+        endPoint: Constants.createinspection,
+        body: createInspectionRequestModel.toJson(),
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}'
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(true);
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

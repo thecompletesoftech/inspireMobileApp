@@ -580,7 +580,12 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   Expanded(
                                     child: CommonTextField(
                                       isLable: true,
-                                      readOnly: true,
+                                      readOnly: controller
+                                                  .yearConstructedController
+                                                  .text ==
+                                              "null"
+                                          ? false
+                                          : true,
                                       controller:
                                           controller.yearConstructedController,
                                       color: controller.appColors.transparent,

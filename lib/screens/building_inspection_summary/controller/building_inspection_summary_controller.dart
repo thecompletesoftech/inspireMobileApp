@@ -1,7 +1,11 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
+import 'package:public_housing/screens/auth/repository/log_repo.dart';
+import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
+import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
+import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repo.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
@@ -20,6 +24,13 @@ class BuildingInspectionSummaryController extends BaseController {
   TextEditingController buildingNameController = TextEditingController();
   TextEditingController yearConstructedController = TextEditingController();
   TextEditingController buildingTypeController = TextEditingController();
+  BuildingInspectionSummaryRepository buildingInspectionSummaryRepository =
+      BuildingInspectionSummaryRepository();
+  LoginRepository loginRepository = LoginRepository();
+  RxMap inspectorInfo = {}.obs;
+  bool isSuccess = false;
+
+  List<DeficiencyInspection>? deficiencyInspections = [];
   List checked = [];
   List<String> propertyList = [];
   List<String> cityList = [];
@@ -37,13 +48,14 @@ class BuildingInspectionSummaryController extends BaseController {
   var certificatesInfo = [].obs;
   String inspectorName = '';
   String inspectorDate = '';
+  BuildingInspectionController buildingInspectionController =
+      Get.put(BuildingInspectionController());
 
   List<Certificates>? certificates = [];
 
   @override
   void onInit() {
     if (Get.arguments != null) {
-      print("certificate info" + Get.arguments['certificatesInfo'].toString());
       buildingName = Get.arguments['buildingName'];
       buildingtype = Get.arguments['buildingtype'];
       propertyname = Get.arguments['propertyInfo']['name'];
@@ -56,11 +68,16 @@ class BuildingInspectionSummaryController extends BaseController {
       inspectorName = Get.arguments['inspectorName'];
       inspectorDate = Get.arguments['inspectorDate'];
 
+      createInspector(
+          inspectorName: buildingInspectionController.account?.userName ?? "");
+
       () async {
         Future.delayed(const Duration(milliseconds: 1), () async {
           await getCertificates();
+          getCertificatesJson();
         });
       }();
+
       setControllerData(
           propertyInfo, buildingInfo, inspectorName, inspectorDate);
     }
@@ -76,37 +93,14 @@ class BuildingInspectionSummaryController extends BaseController {
     certificatesInfo.clear();
     for (var i = 0; i < certificates!.length; i += 1) {
       if (checked[i]) {
-        certificatesInfo.add({
-          "id": certificates![i].id.toString(),
-          "name": certificates![i].certificate.toString(),
-        });
+        certificatesInfo.add({"id": certificates![i].id.toString()});
       }
     }
     update();
   }
 
-  void actionPopUpItemSelected(int value) {
-    ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
-    String message;
-    if (value == 0) {
-      message = 'You selected ${Strings.editProfile}';
-    } else if (value == 1) {
-      message = 'You selected ${Strings.inspectionHistory}';
-    } else if (value == 2) {
-      message = 'You selected ${Strings.nSPIREStandards}';
-    } else if (value == 3) {
-      message = 'You selected ${Strings.logOut}';
-      Get.offAllNamed(SigningScreen.routes);
-      getStorageData.removeData(getStorageData.isLogin);
-    } else {
-      message = 'Not implemented';
-    }
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-  }
-
   bool? allSelected() {
-    final data = checked.where((element) => element.isChecked == true);
+    final data = checked.where((element) => element == true);
     if (data.length == checked.length) {
       isData = true;
     } else if (data.length > 0) {
@@ -132,21 +126,9 @@ class BuildingInspectionSummaryController extends BaseController {
     update();
   }
 
-  getStartInspection() {
-    return propertyNameController.text.isNotEmpty &&
-        cityController.text.isNotEmpty &&
-        propertyIDController.text.isNotEmpty &&
-        stateController.text.isNotEmpty &&
-        zipController.text.isNotEmpty &&
-        propertyAddressController.text.isNotEmpty &&
-        buildingNameController.text.isNotEmpty &&
-        yearConstructedController.text.isNotEmpty &&
-        buildingTypeController.text.isNotEmpty;
-  }
-
   isAllSelected(value) {
     for (int i = 0; i < checked.length; i++) {
-      checked[i].isChecked = value;
+      checked[i] = value;
     }
     isData = value;
     update();
@@ -191,11 +173,82 @@ class BuildingInspectionSummaryController extends BaseController {
         deficiencyInspectionsReqModel[0];
     update();
   }
-}
 
-class CertificatesData {
-  bool? isChecked;
-  String? name;
+  createInspector({required String inspectorName}) async {
+    var response = await loginRepository.createinspectorapi(inspectorName);
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (InspectorModel r) {
+      inspectorInfo.addAll({
+        "id": r.inspector.id,
+        "name": r.inspector.name,
+        "externalPersonalId": r.inspector.externalPersonalId,
+        "externalAccountId": r.inspector.externalAccountId
+      });
+      getStorageData.saveString(getStorageData.inspectorId, r.inspector.id);
+    });
+    update();
+  }
 
-  CertificatesData(this.isChecked, this.name);
+  createInspection() async {
+    deficiencyInspections = [];
+    isSuccess = false;
+    deficiencyArea.forEach((element) {
+      element.deficiencyInspectionsReqModel?.forEach((e) {
+        List<DeficiencyProofPicture> listPicture = [];
+        e.deficiencyProofPictures?.forEach((pictureString) {
+          listPicture.add(DeficiencyProofPicture(picturePath: pictureString));
+        });
+
+        deficiencyInspections?.add(DeficiencyInspection(
+            housingDeficiencyId: e.housingDeficiencyId,
+            comment: e.comment,
+            date: e.date,
+            deficiencyProofPictures: listPicture));
+      });
+    });
+
+    List<Certificate>? certificates = [];
+    certificatesInfo.forEach((element) {
+      certificates.add(Certificate(id: element['id']));
+    });
+
+    CreateInspectionRequestModel createInspectionRequestModel =
+        CreateInspectionRequestModel(
+      building: Building(
+        id: buildingInfo['id'],
+        buildingTypeId: buildingInfo['building_type_id'],
+        constructedYear: buildingInfo['constructed_year'],
+        name: buildingInfo['name'],
+      ),
+      certificates: certificates,
+      deficiencyInspections: deficiencyInspections,
+      inspection: Inspection(
+        date: DateTime.now(),
+        comment: '',
+        inspectionStateId: '1',
+        inspectionTypeId: '1',
+        inspectorId: inspectorInfo['id'].toString(),
+      ),
+      property: Property(
+        name: propertyInfo['name'],
+        id: propertyInfo['id'],
+        address: propertyInfo['address'],
+        city: propertyInfo['city'],
+        state: propertyInfo['state'],
+        zip: propertyInfo['zip'],
+      ),
+    );
+
+    var response = await buildingInspectionSummaryRepository.getDeficiencyAreas(
+        createInspectionRequestModel: createInspectionRequestModel);
+
+    response.fold((l) {
+      isSuccess = false;
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      isSuccess = true;
+    });
+    update();
+  }
 }
