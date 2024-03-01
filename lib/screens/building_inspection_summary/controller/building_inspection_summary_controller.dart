@@ -8,6 +8,8 @@ import 'package:public_housing/screens/building_inspection_summary/model/create_
 import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repo.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
+import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
+
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
@@ -224,14 +226,13 @@ class BuildingInspectionSummaryController extends BaseController {
       certificates: certificates,
       deficiencyInspections: deficiencyInspections,
       inspection: Inspection(
-        date: DateTime.now(),
-        comment: '',
-        inspectionStateId: '1',
-        inspectionTypeId: '1',
-        inspectorId: inspectorInfo['id'].toString(),
-        general_physical_condition: "Average",
-        unit_house_keeping: "Best"
-      ),
+          date: DateTime.now(),
+          comment: '',
+          inspectionStateId: '1',
+          inspectionTypeId: '1',
+          inspectorId: inspectorInfo['id'].toString(),
+          general_physical_condition: "Average",
+          unit_house_keeping: "Best"),
       property: Property(
         name: propertyInfo['name'],
         id: propertyInfo['id'],
@@ -249,8 +250,22 @@ class BuildingInspectionSummaryController extends BaseController {
       isSuccess = false;
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (r) {
-      utils.showSnackBar(context: Get.context!, message: "Building  inspection Submitted Successfully!!");
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Building  inspection Submitted Successfully!!");
       isSuccess = true;
+      Get.toNamed(UnitInspection.routes, arguments: {
+        "deficiencyArea": deficiencyArea,
+        "buildingName": buildingName,
+        "buildingtype": buildingtype,
+        "imagesList": imagesList,
+        "inspectionName": inspectionName,
+        "propertyInfo": propertyInfo,
+        "buildingInfo": buildingInfo,
+        "certificatesInfo": certificatesInfo,
+        "inspectorName": inspectorName,
+        "inspectorDate": inspectorDate
+      });
     });
     update();
   }

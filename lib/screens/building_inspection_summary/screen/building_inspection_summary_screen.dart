@@ -89,26 +89,9 @@ class BuildingInspectionSummaryScreen
                               color: controller.appColors.buttonColor,
                               onTap: () {
                                 controller.createInspection();
-                                if (controller.isSuccess == true) {
-                                  Get.toNamed(UnitInspection.routes,
-                                      arguments: {
-                                        "deficiencyArea":
-                                            controller.deficiencyArea,
-                                        "buildingName": controller.buildingName,
-                                        "buildingtype": controller.buildingtype,
-                                        "imagesList": controller.imagesList,
-                                        "inspectionName":
-                                            controller.inspectionName,
-                                        "propertyInfo": controller.propertyInfo,
-                                        "buildingInfo": controller.buildingInfo,
-                                        "certificatesInfo":
-                                            controller.certificatesInfo,
-                                        "inspectorName":
-                                            controller.inspectorName,
-                                        "inspectorDate":
-                                            controller.inspectorDate
-                                      });
-                                }
+                                // if (controller.isSuccess == true) {
+                                 
+                                // }
                                 controller.update();
                               },
                             ),
