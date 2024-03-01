@@ -8,6 +8,8 @@ import 'package:public_housing/screens/building_inspection_summary/model/create_
 import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repo.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
+import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
+
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
@@ -262,6 +264,18 @@ class BuildingInspectionSummaryController extends BaseController {
           message: "Building  inspection Submitted Successfully!!",
           isOk: true);
       isSuccess = true;
+      Get.toNamed(UnitInspection.routes, arguments: {
+        "deficiencyArea": deficiencyArea,
+        "buildingName": buildingName,
+        "buildingtype": buildingtype,
+        "imagesList": imagesList,
+        "inspectionName": inspectionName,
+        "propertyInfo": propertyInfo,
+        "buildingInfo": buildingInfo,
+        "certificatesInfo": certificatesInfo,
+        "inspectorName": inspectorName,
+        "inspectorDate": inspectorDate
+      });
     });
     update();
   }

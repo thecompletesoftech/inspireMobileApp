@@ -354,6 +354,8 @@ class UnitDeficienciesInsideScreen
                                   ),
                                 ],
                               ).paddingSymmetric(vertical: 32.px),
+                              
+                              
                               ShadowContainer1(
                                 color: controller.appColors.white,
                                 margin: EdgeInsets.zero,
@@ -706,6 +708,8 @@ class UnitDeficienciesInsideScreen
                                             ),
                                 ),
                               ),
+                             
+                             
                               Container(
                                 height: 2.px,
                                 color: controller.selectedItem == "null"
