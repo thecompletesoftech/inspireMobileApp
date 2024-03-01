@@ -95,8 +95,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           },
                         )
                       ],
-                    ).paddingOnly(bottom: 40.px),
-                    /*Row(
+                    ),
+                    Row(
                       children: [
                         Expanded(
                           flex: 10,
@@ -156,8 +156,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             ),
                           ),
                         ),
-                        */ /* SizedBox(width: 16.px),
-                        Expanded(
+                     SizedBox(width: 16.px),
+                        /*Expanded(
                           flex: 5,
                           child: SizedBox(
                             width: 350.px,
@@ -207,9 +207,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               },
                             ),
                           ),
-                        ),*/ /*
+                        ),*/
                       ],
-                    ).paddingSymmetric(vertical: 32.px),*/
+                    ).paddingSymmetric(vertical: 32.px),
                   ],
                 ).paddingSymmetric(horizontal: 32.px),
                 controller.deficiencyAreas.isNotEmpty

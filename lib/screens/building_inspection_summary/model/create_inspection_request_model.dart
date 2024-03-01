@@ -162,13 +162,15 @@ class Inspection {
   String? comment;
   String? inspectionStateId;
   String? inspectionTypeId;
+  String? general_physical_condition;
+  String? unit_house_keeping;
 
   Inspection({
     this.inspectorId,
     this.date,
     this.comment,
     this.inspectionStateId,
-    this.inspectionTypeId,
+    this.inspectionTypeId,this.general_physical_condition,this.unit_house_keeping
   });
 
   factory Inspection.fromJson(Map<String, dynamic> json) => Inspection(
@@ -177,6 +179,8 @@ class Inspection {
         comment: json["comment"],
         inspectionStateId: json["inspection_state_id"],
         inspectionTypeId: json["inspection_type_id"],
+    general_physical_condition: json["general_physical_condition"],
+    unit_house_keeping: json["unit_house_keeping"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -186,6 +190,8 @@ class Inspection {
         "comment": comment,
         "inspection_state_id": inspectionStateId,
         "inspection_type_id": inspectionTypeId,
+        "unit_house_keeping": unit_house_keeping,
+        "general_physical_condition": general_physical_condition,
       };
 }
 
