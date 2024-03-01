@@ -275,6 +275,8 @@ class UnitDeficienciesInsideController extends BaseController {
                           onTap: () {
                             selectedItem = "null";
                             imageList.clear();
+                            commentController.clear();
+                            imageUploadStatus = ImageUploadStatus.initial;
                             visibleBtn = false;
                             update();
                             Get.back();
