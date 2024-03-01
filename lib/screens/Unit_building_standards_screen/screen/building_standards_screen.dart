@@ -80,23 +80,22 @@ class UnitBuildingStandardsScreen
                               });
                             });
                             print("asdadds" + deficiencyArea.toString());
-                            if (deficiencyArea.isNotEmpty) {
-                              Get.toNamed(UnitInspectionSummary.routes,
-                                  arguments: {
-                                    "buildingName": controller.buildingName,
-                                    "buildingtype": controller.buildingtype,
-                                    "deficiencyArea": deficiencyArea,
-                                    "inspectionName": controller.inspectionName,
-                                    "buildinginfo": controller.buildingInfo,
-                                    "propertyinfo": controller.propertyInfo,
-                                    "cerificateList":
-                                        controller.certificatesInfo,
-                                    "inspectorName": controller.inspectorName,
-                                    "inspectorDate": controller.inspectorDate,
-                                    "unitinfo": controller.unitinfo,
-                                    "switchvalue": controller.switchbtn.value
-                                  });
-                            }
+                            // if (deficiencyArea.isNotEmpty) {
+                            Get.toNamed(UnitInspectionSummary.routes,
+                                arguments: {
+                                  "buildingName": controller.buildingName,
+                                  "buildingtype": controller.buildingtype,
+                                  "deficiencyArea": deficiencyArea,
+                                  "inspectionName": controller.inspectionName,
+                                  "buildinginfo": controller.buildingInfo,
+                                  "propertyinfo": controller.propertyInfo,
+                                  "cerificateList": controller.certificatesInfo,
+                                  "inspectorName": controller.inspectorName,
+                                  "inspectorDate": controller.inspectorDate,
+                                  "unitinfo": controller.unitinfo,
+                                  "switchvalue": controller.switchbtn.value
+                                });
+                            // }
                           },
                         )
                       ],

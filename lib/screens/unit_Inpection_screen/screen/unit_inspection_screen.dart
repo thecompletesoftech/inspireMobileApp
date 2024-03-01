@@ -97,7 +97,7 @@ class UnitInspection extends GetView<UnitController> {
                                 Expanded(
                                   child: CommonTextField(
                                     isLable: true,
-                                    readOnly: false,
+                                    readOnly: true,
                                     onChange: ((value) {
                                       controller.update();
                                     }),

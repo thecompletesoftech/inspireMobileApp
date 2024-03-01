@@ -15,10 +15,10 @@ class UnitBuildingStandardsController extends BaseController {
   String buildingName = '';
   String buildingtype = '';
   String propertyname = '';
+
   bool isSuccess = false;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
   RxList<BuildingModel> dataList = <BuildingModel>[].obs;
   RxMap propertyInfo = {}.obs;
@@ -42,6 +42,7 @@ class UnitBuildingStandardsController extends BaseController {
       buildingtype = Get.arguments['buildingtype'];
       buildingName = Get.arguments['buildingInfo']['name'];
       propertyname = Get.arguments['propertyInfo']['name'];
+   
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
       certificatesInfo.value = Get.arguments['certificatesInfo'];

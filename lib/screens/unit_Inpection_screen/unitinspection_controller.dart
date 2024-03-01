@@ -4,7 +4,6 @@ import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspect
 import '../../commons/all.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
 
-
 class UnitController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
   TextEditingController unitAddress = TextEditingController();
@@ -12,9 +11,13 @@ class UnitController extends BaseController {
   TextEditingController bathrooms = TextEditingController();
   TextEditingController commentController = TextEditingController();
   var switchbtn = false.obs;
-  
+  String propertyaddress = '';
   var unitjson = {}.obs;
-  
+
+  void onInit() {
+    unitAddress.text = Get.arguments['propertyInfo']['address'].toString();
+    super.onInit();
+  }
 
   getunitinspection() {
     return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
