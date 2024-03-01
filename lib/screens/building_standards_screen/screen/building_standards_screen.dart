@@ -90,7 +90,9 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                         controller.certificatesInfo,
                                     "inspectorName": controller.inspectorName,
                                     "inspectorDate": controller.inspectorDate,
-                                  });
+                                  })?.then((value) {
+                                controller.update();
+                              });
                             }
                           },
                         )
@@ -156,7 +158,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             ),
                           ),
                         ),
-                     SizedBox(width: 16.px),
+                        SizedBox(width: 16.px),
                         /*Expanded(
                           flex: 5,
                           child: SizedBox(

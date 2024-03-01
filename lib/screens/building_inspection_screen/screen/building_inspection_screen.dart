@@ -277,60 +277,94 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: TypeAheadField(
-                                    controller:
-                                        controller.propertyNameController,
-                                    suggestionsCallback: (search) {
-                                      controller.searchProperty(
-                                          searchText: search);
-                                      controller.update();
-                                      return controller.searchPropertyNameList;
-                                    },
-                                    builder: (context, c, focusNode) {
-                                      return CommonTextField(
-                                        focusNode: focusNode,
-                                        isLable: true,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icBuildingss,
-                                          color: controller.appColors.grey,
-                                        ).paddingOnly(left: 15.px),
-                                        suffixIcon: SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.grey,
-                                        ).paddingAll(10.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.propertyName,
-                                        controller: c,
-                                      );
-                                    },
-                                    itemBuilder: (context, i) {
-                                      return ListTile(
-                                        title: MyTextView(
-                                          i.name.toString(),
-                                          textStyleNew: MyTextStyle(
-                                            textColor:
-                                                controller.appColors.black,
-                                            textWeight: FontWeight.w400,
-                                            textFamily: fontFamilyBold,
-                                            textSize: 16.px,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    onSelected: (value) async {
-                                      controller.actionProperty(value);
-                                      await controller.getbuildingapi(value);
-                                      // await controller.searchBuilding(
-                                      //     searchText: value.name);
+                                      child: controller.propertyList!.isNotEmpty
+                                          ? TypeAheadField(
+                                              controller: controller
+                                                  .propertyNameController,
+                                              suggestionsCallback: (search) {
+                                                controller.searchProperty(
+                                                    searchText: search);
+                                                controller.update();
+                                                return controller
+                                                    .searchPropertyNameList;
+                                              },
+                                              builder: (context, c, focusNode) {
+                                                return CommonTextField(
+                                                  focusNode: focusNode,
+                                                  isLable: true,
+                                                  color: controller
+                                                      .appColors.transparent,
+                                                  prefixIcon: SvgPicture.string(
+                                                    icBuildingss,
+                                                    color: controller
+                                                        .appColors.grey,
+                                                  ).paddingOnly(left: 15.px),
+                                                  suffixIcon: SvgPicture.string(
+                                                    icDownArrow,
+                                                    color: controller
+                                                        .appColors.grey,
+                                                  ).paddingAll(10.px),
+                                                  padding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.only(
+                                                          left: 15.px),
+                                                  shadowColor: controller
+                                                      .appColors.transparent,
+                                                  labelText:
+                                                      Strings.propertyName,
+                                                  controller: c,
+                                                );
+                                              },
+                                              itemBuilder: (context, i) {
+                                                return ListTile(
+                                                  title: MyTextView(
+                                                    i.name.toString(),
+                                                    textStyleNew: MyTextStyle(
+                                                      textColor: controller
+                                                          .appColors.black,
+                                                      textWeight:
+                                                          FontWeight.w400,
+                                                      textFamily:
+                                                          fontFamilyBold,
+                                                      textSize: 16.px,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              onSelected: (value) async {
+                                                controller
+                                                    .actionProperty(value);
+                                                await controller
+                                                    .getBuildingApi(value);
+                                                // await controller.searchBuilding(
+                                                //     searchText: value.name);
 
-                                      controller.update();
-                                    },
-                                  )),
+                                                controller.update();
+                                              },
+                                            )
+                                          : CommonTextField(
+                                              isLable: true,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icBuildingss,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              suffixIcon: SvgPicture.string(
+                                                icDownArrow,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingAll(10.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.propertyName,
+                                              controller:
+                                                  TextEditingController(),
+                                            )),
                                   SizedBox(width: 16.px),
                                   Expanded(
                                     child: CommonTextField(
@@ -523,56 +557,91 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: TypeAheadField(
-                                    controller:
-                                        controller.buildingNameController,
-                                    suggestionsCallback: (search) async {
-                                      await controller.searchBuilding(
-                                          searchText: search);
-                                      controller.update();
-                                      return controller.searchBuildingList;
-                                    },
-                                    builder: (context, c, focusNode) {
-                                      return CommonTextField(
-                                        focusNode: focusNode,
-                                        isLable: true,
-                                        controller: c,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icBuildingss,
-                                          color: controller.appColors.grey,
-                                        ).paddingOnly(left: 15.px),
-                                        suffixIcon: SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.grey,
-                                        ).paddingAll(10.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.buildingName,
-                                      );
-                                    },
-                                    itemBuilder: (context, dynamic i) {
-                                      return ListTile(
-                                        title: MyTextView(
-                                          i.name.toString(),
-                                          textStyleNew: MyTextStyle(
-                                            textColor:
-                                                controller.appColors.black,
-                                            textWeight: FontWeight.w400,
-                                            textFamily: fontFamilyBold,
-                                            textSize: 16.px,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    onSelected: (value) async {
-                                      controller.actionBuilding(value);
-                                      controller.update();
-                                    },
-                                  )),
+                                      child: controller.buildingList.isNotEmpty
+                                          ? TypeAheadField(
+                                              controller: controller
+                                                  .buildingNameController,
+                                              suggestionsCallback:
+                                                  (search) async {
+                                                await controller.searchBuilding(
+                                                    searchText: search);
+                                                controller.update();
+                                                return controller
+                                                    .searchBuildingList;
+                                              },
+                                              builder: (context, c, focusNode) {
+                                                return CommonTextField(
+                                                  focusNode: focusNode,
+                                                  isLable: true,
+                                                  controller: c,
+                                                  color: controller
+                                                      .appColors.transparent,
+                                                  prefixIcon: SvgPicture.string(
+                                                    icBuildingss,
+                                                    color: controller
+                                                        .appColors.grey,
+                                                  ).paddingOnly(left: 15.px),
+                                                  suffixIcon: SvgPicture.string(
+                                                    icDownArrow,
+                                                    color: controller
+                                                        .appColors.grey,
+                                                  ).paddingAll(10.px),
+                                                  padding: EdgeInsets.zero,
+                                                  contentPadding:
+                                                      EdgeInsets.only(
+                                                          left: 15.px),
+                                                  shadowColor: controller
+                                                      .appColors.transparent,
+                                                  labelText:
+                                                      Strings.buildingName,
+                                                );
+                                              },
+                                              itemBuilder:
+                                                  (context, dynamic i) {
+                                                return ListTile(
+                                                  title: MyTextView(
+                                                    i.name.toString(),
+                                                    textStyleNew: MyTextStyle(
+                                                      textColor: controller
+                                                          .appColors.black,
+                                                      textWeight:
+                                                          FontWeight.w400,
+                                                      textFamily:
+                                                          fontFamilyBold,
+                                                      textSize: 16.px,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              onSelected: (value) async {
+                                                controller
+                                                    .actionBuilding(value);
+                                                controller.update();
+                                              },
+                                            )
+                                          : CommonTextField(
+                                              isLable: true,
+                                              controller:
+                                                  TextEditingController(),
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icBuildingss,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              suffixIcon: SvgPicture.string(
+                                                icDownArrow,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingAll(10.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.buildingName,
+                                            )),
                                 ],
                               ).paddingOnly(bottom: 32.px),
                               Row(
@@ -667,9 +736,12 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               Checkbox(
-                                                onChanged: (value) {
-                                                  controller.isAllSelected(
-                                                      value ?? false);
+                                                onChanged: (value) async {
+                                                  await controller
+                                                      .isAllSelected(
+                                                          value ?? false);
+                                                  controller
+                                                      .getCertificatesJson();
                                                 },
                                                 tristate: true,
                                                 value: controller.isData,
@@ -709,7 +781,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                                           value;
                                                       controller.allSelected();
                                                       controller
-                                                          .getcertificatesjson();
+                                                          .getCertificatesJson();
                                                       controller.update();
                                                     },
                                                     value:
@@ -770,16 +842,16 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                               .withOpacity(0.11999999731779099),
                       onTap: () {
                         if (controller.getStartInspection()) {
-                          controller.getcertificatesjson();
-                          controller.getpropertyjson();
-                          controller.getbuildingjson();
+                          // controller.getcertificatesjson();
+                          controller.getPropertyJson();
+                          controller.getBuildingJson();
 
                           // Get.toNamed(UnitInspection.routes, arguments: {
                           //   "propertyinfo": controller.propertyinfo,
                           //   "buildinginfo": controller.buildinginfo,
                           //   "buildingtype": controller.buildingTypeController.text
                           // });
-                          print("year" + controller.buildingInfo.toString());
+                          // print("year" + controller.buildingInfo.toString());
                           Get.toNamed(BuildingStandardsScreen.routes,
                               arguments: {
                                 "buildingName":

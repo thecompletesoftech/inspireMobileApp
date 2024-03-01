@@ -29,7 +29,7 @@ class ApiProviders extends BaseController {
 
       if (isType) {
         endPoint =
-            'inspection/api/deficiency_areas?housing_item_id=1';
+            'inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2';
       } else {
         endPoint = 'inspection/api/deficiency_areas?housing_item_id=3';
       }
@@ -131,7 +131,7 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, PropertyModel>> getpropetyinfo() async {
+  Future<Either<Failure, PropertyModel>> getPropertyInfo() async {
     try {
       Response response = await apiBaseHelperImplementation
           .get(endPoint: Constants.propertyinfo, headers: {
@@ -166,7 +166,7 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, BuildingModel>> getBuildinginfo(id) async {
+  Future<Either<Failure, BuildingModel>> getBuildingInfo(id) async {
     try {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.buildings,

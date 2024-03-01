@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
+import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
@@ -30,10 +31,12 @@ class DeficienciesInsideController extends BaseController {
   bool change = true;
   List<String> imageList = [];
   List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
-
+  int? listIndex;
   var isListening = false.obs;
   var speechText = "".obs;
   SpeechToText speechToText = SpeechToText();
+  StandardsDetailsController standardsDetailsController =
+      Get.put(StandardsDetailsController());
 
   @override
   void onInit() {
@@ -41,6 +44,7 @@ class DeficienciesInsideController extends BaseController {
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'] ?? "";
       deficiencies = Get.arguments['deficiencies'] ?? "";
+      listIndex = Get.arguments['listIndex'] ?? 0;
 
       if (Get.arguments['deficiencyAreaList'] != null) {
         deficiencyAreaItem = Get.arguments['deficiencyAreaList'][0];
@@ -58,15 +62,21 @@ class DeficienciesInsideController extends BaseController {
                   Get.arguments['deficiencyInspectionsReqModel'].comment ?? "")
         ];
       } else {
+        List<String> deficiencyProofPictures = [];
+        if (Get
+            .arguments['successListOfDeficiencies']['deficiencyProofPictures']
+            .isNotEmpty) {
+          deficiencyProofPictures = Get.arguments['successListOfDeficiencies']
+              ['deficiencyProofPictures'] as List<String>;
+        }
         deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
+
         deficiencyInspectionsReqModel = [
           DeficiencyInspectionsReqModel(
               housingDeficiencyId: Get.arguments['successListOfDeficiencies']
                       ['housingDeficiencyId']
                   .toString(),
-              deficiencyProofPictures:
-                  Get.arguments['successListOfDeficiencies']
-                      ['deficiencyProofPictures'] as List<String>,
+              deficiencyProofPictures: deficiencyProofPictures,
               date: Get.arguments['successListOfDeficiencies']['date'] == ""
                   ? DateFormat("MM/dd/yyyy").format(DateTime.now())
                   : Get.arguments['successListOfDeficiencies']['date'],
@@ -274,8 +284,22 @@ class DeficienciesInsideController extends BaseController {
                           radius: 100.px,
                           onTap: () {
                             selectedItem = "null";
-                            imageList.clear();
                             visibleBtn = false;
+                            standardsDetailsController
+                                    .successListOfDeficiencies[listIndex ?? 0]
+                                ['deficiencyProofPictures'] = [];
+                            standardsDetailsController
+                                    .successListOfDeficiencies[listIndex ?? 0]
+                                ['success'] = false;
+                            standardsDetailsController
+                                    .successListOfDeficiencies[listIndex ?? 0]
+                                ['comment'] = "";
+                            standardsDetailsController
+                                    .successListOfDeficiencies[listIndex ?? 0]
+                                ['date'] = "";
+                            commentController.clear();
+                            dateController.clear();
+                            imageUploadStatus = ImageUploadStatus.initial;
                             update();
                             Get.back();
                           }),

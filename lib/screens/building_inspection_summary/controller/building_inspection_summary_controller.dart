@@ -29,6 +29,8 @@ class BuildingInspectionSummaryController extends BaseController {
   LoginRepository loginRepository = LoginRepository();
   RxMap inspectorInfo = {}.obs;
   bool isSuccess = false;
+  BuildingInspectionRepository buildingInspectionRepository =
+      BuildingInspectionRepository();
 
   List<DeficiencyInspection>? deficiencyInspections = [];
   List checked = [];
@@ -55,6 +57,7 @@ class BuildingInspectionSummaryController extends BaseController {
 
   @override
   void onInit() {
+    deficiencyArea = [];
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
       buildingtype = Get.arguments['buildingtype'];
@@ -99,7 +102,7 @@ class BuildingInspectionSummaryController extends BaseController {
     update();
   }
 
-  bool? allSelected() {
+  allSelected() {
     final data = checked.where((element) => element == true);
     if (data.length == checked.length) {
       isData = true;
@@ -151,7 +154,7 @@ class BuildingInspectionSummaryController extends BaseController {
   }
 
   getCertificates() async {
-    var response = await BudingInpectionRepository().getcertificates();
+    var response = await buildingInspectionRepository.getCertificates();
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (CertificateModel r) {
@@ -171,6 +174,12 @@ class BuildingInspectionSummaryController extends BaseController {
   isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
         deficiencyInspectionsReqModel[0];
+    update();
+  }
+
+  isDataUpdateSuccess(mainIndex, subIndex) {
+    deficiencyArea[mainIndex].isArea = false;
+    deficiencyArea[mainIndex].deficiencyInspectionsReqModel?.removeAt(subIndex);
     update();
   }
 
@@ -224,14 +233,13 @@ class BuildingInspectionSummaryController extends BaseController {
       certificates: certificates,
       deficiencyInspections: deficiencyInspections,
       inspection: Inspection(
-        date: DateTime.now(),
-        comment: '',
-        inspectionStateId: '1',
-        inspectionTypeId: '1',
-        inspectorId: inspectorInfo['id'].toString(),
-        general_physical_condition: "Average",
-        unit_house_keeping: "Best"
-      ),
+          date: DateTime.now(),
+          comment: '',
+          inspectionStateId: '1',
+          inspectionTypeId: '1',
+          inspectorId: inspectorInfo['id'].toString(),
+          general_physical_condition: "Average",
+          unit_house_keeping: "Best"),
       property: Property(
         name: propertyInfo['name'],
         id: propertyInfo['id'],
@@ -249,7 +257,10 @@ class BuildingInspectionSummaryController extends BaseController {
       isSuccess = false;
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (r) {
-      utils.showSnackBar(context: Get.context!, message: "Building  inspection Submitted Successfully!!");
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Building  inspection Submitted Successfully!!",
+          isOk: true);
       isSuccess = true;
     });
     update();

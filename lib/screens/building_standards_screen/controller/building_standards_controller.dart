@@ -260,6 +260,11 @@ class BuildingStandardsController extends BaseController {
                     .buildingDataModel![j]
                     .deficiencyInspectionsReqModel !=
                 null) {
+              List<String> deficiencyProofPictures = [];
+              if (dataElement['deficiencyProofPictures'].isNotEmpty) {
+                deficiencyProofPictures =
+                    dataElement['deficiencyProofPictures'] as List<String>;
+              }
               searchList[i]
                   .buildingDataModel![j]
                   .deficiencyInspectionsReqModel
@@ -268,11 +273,15 @@ class BuildingStandardsController extends BaseController {
                     housingDeficiencyId:
                         dataElement['housingDeficiencyId'].toString(),
                     date: dataElement['date'],
-                    deficiencyProofPictures:
-                        dataElement['deficiencyProofPictures'],
+                    deficiencyProofPictures: deficiencyProofPictures,
                     comment: dataElement['comment'],
                   ));
             } else {
+              List<String> deficiencyProofPictures = [];
+              if (dataElement['deficiencyProofPictures'].isNotEmpty) {
+                deficiencyProofPictures =
+                    dataElement['deficiencyProofPictures'] as List<String>;
+              }
               searchList[i]
                   .buildingDataModel![j]
                   .deficiencyInspectionsReqModel = [
@@ -281,8 +290,7 @@ class BuildingStandardsController extends BaseController {
                   housingDeficiencyId:
                       dataElement['housingDeficiencyId'].toString(),
                   date: dataElement['date'],
-                  deficiencyProofPictures:
-                      dataElement['deficiencyProofPictures'],
+                  deficiencyProofPictures: deficiencyProofPictures,
                   comment: dataElement['comment'],
                 )
               ];

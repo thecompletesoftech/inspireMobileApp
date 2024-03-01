@@ -26,6 +26,8 @@ class BuildingInspectionController extends BaseController {
   TextEditingController buildingidController = TextEditingController();
   TextEditingController buildingTypeidController = TextEditingController();
   List checked = [];
+  BuildingInspectionRepository buildingInspectionRepository =
+      BuildingInspectionRepository();
 
   // List<String> propertyList = [];
   List<String> cityList = [];
@@ -43,13 +45,13 @@ class BuildingInspectionController extends BaseController {
 
   @override
   void onInit() {
-    clearalldata();
+    clearAllData();
     // searchPropertyNameList == propertyList;
     // searchBuildingList == buildingList;
-    getpropertyinfo();
-    getcertificates();
-    getaccount();
-    getcurrentdate();
+    getPropertyInfo();
+    getCertificates();
+    getAccount();
+    getCurrentDate();
     // checked.addAll([
     //   Certificates(true, 'Boiler Certificate'),
     //   Certificates(false, 'Elevator Certificate'),
@@ -95,14 +97,14 @@ class BuildingInspectionController extends BaseController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
-  getaccount() async {
+  getAccount() async {
     var accountdata = await getStorageData.readString(getStorageData.account);
     account = Account.fromJson(jsonDecode(accountdata.toString()));
     inspectorController.text = await account!.userName;
     update();
   }
 
-  getcertificatesjson() {
+  getCertificatesJson() {
     certificatesInfo.clear();
     for (var i = 0; i < certificates!.length; i += 1) {
       if (checked[i]) {
@@ -114,7 +116,7 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  getpropertyjson() {
+  getPropertyJson() {
     propertyInfo.addAll({
       "id": propertyIDController.text,
       "name": propertyNameController.text,
@@ -126,7 +128,7 @@ class BuildingInspectionController extends BaseController {
     print(propertyInfo.toString());
   }
 
-  getbuildingjson() {
+  getBuildingJson() {
     buildingInfo.addAll({
       "id": buildingidController.text,
       "name": buildingNameController.text,
@@ -140,11 +142,11 @@ class BuildingInspectionController extends BaseController {
     print(propertyInfo.toString());
   }
 
-  getcurrentdate() {
+  getCurrentDate() {
     inspectionDateController.text = Utils().currentTime();
   }
 
-  bool? allSelected() {
+  allSelected() {
     final data = checked.where((element) => element == true);
     if (data.length == checked.length) {
       isData = true;
@@ -163,8 +165,9 @@ class BuildingInspectionController extends BaseController {
             stateController.text.isNotEmpty &&
             zipController.text.isNotEmpty &&
             propertyAddressController.text.isNotEmpty &&
-            buildingNameController.text.isNotEmpty &&
-            certificatesInfo.length > 0
+            buildingNameController
+                .text.isNotEmpty /*&&
+            certificatesInfo.length > 0*/
         ? true
         : false;
     //  &&
@@ -191,7 +194,7 @@ class BuildingInspectionController extends BaseController {
   }
 
   void buildingSelected(value) {
-    buildingNameController.text = buildingList[value].name!;
+    buildingNameController.text = buildingList[value].name;
   }
 
   void buildingTypeSelected(value) {
@@ -215,7 +218,7 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  clearalldata() {
+  clearAllData() {
     buildingNameController.clear();
     yearConstructedController.clear();
     buildingTypeController.clear();
@@ -239,7 +242,7 @@ class BuildingInspectionController extends BaseController {
   }
 
   var searchPropertyNameList = [];
-  var searchBuildingList = [].obs;
+  var searchBuildingList = [];
 
   searchProperty({required String searchText}) async {
     searchPropertyNameList.clear();
@@ -260,8 +263,8 @@ class BuildingInspectionController extends BaseController {
     }
   }
 
-  searchBuilding({required String searchText}) async {
-    searchBuildingList.value = [];
+  searchBuilding({required String searchText}) {
+    searchBuildingList.clear();
     if (buildingNameController.text.length > 0) {
       for (int i = 0; i < buildingList.length; i++) {
         if (buildingList[i]
@@ -274,24 +277,25 @@ class BuildingInspectionController extends BaseController {
         }
       }
     } else {
-      searchBuildingList.value = buildingList;
+      searchBuildingList.addAll(buildingList);
       update();
     }
   }
 
-  getpropertyinfo() async {
+  getPropertyInfo() async {
     propertyList!.clear();
-    var response = await BudingInpectionRepository().getpropetyinfoapi();
-    await response.fold((l) {
+    var response = await buildingInspectionRepository.getPropertyInfoApi();
+    response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (PropertyModel r) {
       propertyList = r.properties;
+      searchProperty(searchText: "");
     });
     update();
   }
 
-  getcertificates() async {
-    var response = await BudingInpectionRepository().getcertificates();
+  getCertificates() async {
+    var response = await buildingInspectionRepository.getCertificates();
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (CertificateModel r) {
@@ -301,16 +305,14 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
-  getbuildingapi(value) async {
+  getBuildingApi(value) async {
     buildingList.clear();
-    var response = await BudingInpectionRepository().getbuilding(value.id);
+    var response = await buildingInspectionRepository.getBuilding(value.id);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
       buildingList = r.buildings;
-      // searchBuildingList.value = buildingList;
-      searchBuilding(searchText: value.name);
-      update();
+      searchBuilding(searchText: "");
     });
     update();
   }

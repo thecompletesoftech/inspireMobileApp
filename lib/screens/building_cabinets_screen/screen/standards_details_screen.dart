@@ -271,6 +271,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                             "successListOfDeficiencies": controller
                                                     .successListOfDeficiencies[
                                                 index],
+                                            "listIndex": index,
                                           })?.then(
                                         (value) {
                                           if (value != null) {
@@ -278,8 +279,8 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                                     .find<
                                                         DeficienciesInsideController>()
                                                 .deficiencyInspectionsReqModel);
-                                            controller.update();
                                           }
+                                          controller.update();
                                         },
                                       );
                                     },

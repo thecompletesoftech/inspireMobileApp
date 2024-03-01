@@ -207,9 +207,9 @@ class UnitInspectionsummaryController extends BaseController {
       update();
     }, (r) async {
       _buildingStandardsController.cleardata ();
-      _buildingInspectionController.clearalldata();
+      _buildingInspectionController.clearAllData();
       _buildingInspectionSummaryController.cleardata();
-      await _buildingInspectionController.getcertificates();
+      await _buildingInspectionController.getCertificates();
       await Get.toNamed(BuildingInspectionScreen.routes);
       islaoding.value = false;
       update();

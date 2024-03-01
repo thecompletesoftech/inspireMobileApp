@@ -1,4 +1,3 @@
-import 'package:get_storage/get_storage.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
@@ -15,9 +14,10 @@ class StandardsDetailsController extends BaseController {
   void onInit() {
     super.onInit();
     if (Get.arguments != null) {
-      buildingName = Get.arguments['buildingName'];
+      buildingName = Get.arguments['buildingName'] ?? "";
       buildingDataModel = Get.arguments['deficiencyArea'];
       getSuccessList();
+      deficiencyInspectionsReqModel = [];
       Get.arguments['successListOfStandards'];
 
       Get.arguments['successListOfStandards'].forEach((e) {
