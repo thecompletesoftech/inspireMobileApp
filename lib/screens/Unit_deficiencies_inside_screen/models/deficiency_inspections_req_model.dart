@@ -14,6 +14,7 @@ String deficiencyInspectionsReqModelToJson(
 
 class DeficiencyInspectionsReqModel {
   String? housingDeficiencyId;
+  String? definition;
   List<String>? deficiencyProofPictures;
   String? comment;
   bool? isSuccess;
@@ -22,6 +23,7 @@ class DeficiencyInspectionsReqModel {
   DeficiencyInspectionsReqModel({
     this.housingDeficiencyId,
     this.deficiencyProofPictures,
+    this.definition,
     this.comment,
     this.date,
     this.isSuccess,
@@ -30,6 +32,7 @@ class DeficiencyInspectionsReqModel {
   factory DeficiencyInspectionsReqModel.fromJson(Map<String, dynamic> json) =>
       DeficiencyInspectionsReqModel(
         housingDeficiencyId: json["housing_deficiency_id"],
+        definition: json["definition"],
         deficiencyProofPictures: json["deficiency_proof_pictures"] == null
             ? []
             : List<String>.from(
@@ -40,6 +43,7 @@ class DeficiencyInspectionsReqModel {
 
   Map<String, dynamic> toJson() => {
         "housing_deficiency_id": housingDeficiencyId,
+        "definition": definition,
         "deficiency_proof_pictures": deficiencyProofPictures == null
             ? []
             : List<dynamic>.from(deficiencyProofPictures!.map((x) => x)),

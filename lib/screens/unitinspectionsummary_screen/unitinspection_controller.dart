@@ -206,11 +206,16 @@ class UnitInspectionsummaryController extends BaseController {
       islaoding.value = false;
       update();
     }, (r) async {
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Unit inspection Submitted Successfully!!",
+          isOk: true);
       _buildingStandardsController.cleardata ();
       _buildingInspectionController.clearAllData();
       _buildingInspectionSummaryController.cleardata();
       await _buildingInspectionController.getCertificates();
       await Get.toNamed(BuildingInspectionScreen.routes);
+       
       islaoding.value = false;
       update();
     });

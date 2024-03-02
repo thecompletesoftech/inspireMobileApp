@@ -601,7 +601,8 @@ class BuildingInspectionSummaryScreen
                             final item = controller.deficiencyArea[index];
                             return ListView.separated(
                               itemCount:
-                                  item.deficiencyInspectionsReqModel!.length,
+                                  item.deficiencyInspectionsReqModel!=null?
+                                  item.deficiencyInspectionsReqModel!.length:0,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, i) {

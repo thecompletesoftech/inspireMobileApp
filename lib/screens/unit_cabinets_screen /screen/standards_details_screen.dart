@@ -239,6 +239,16 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                             children: [
                               Row(
                                 children: [
+                                   MyTextView(
+                                      "Unit",isMaxLineWrap: true,
+                                      textStyleNew: MyTextStyle(
+                                        textColor: controller.appColors.textGreen,
+                                        textWeight: FontWeight.w500,
+                                        textFamily: fontFamilyBold,
+                                        textSize: 14.px,
+                                      ),
+                                    ),
+                                    SizedBox(width: 20,),
                                   Expanded(
                                     child: MyTextView(
                                       '${data?.description ?? ""}',
