@@ -37,6 +37,7 @@ class DeficienciesInsideController extends BaseController {
   SpeechToText speechToText = SpeechToText();
   StandardsDetailsController standardsDetailsController =
       Get.put(StandardsDetailsController());
+  bool isDeleted = false;
 
   @override
   void onInit() {
@@ -50,16 +51,18 @@ class DeficienciesInsideController extends BaseController {
         deficiencyAreaItem = Get.arguments['deficiencyAreaList'][0];
         deficiencyInspectionsReqModel = [
           DeficiencyInspectionsReqModel(
-              housingDeficiencyId: Get
-                  .arguments['deficiencyInspectionsReqModel']
-                  .housingDeficiencyId
-                  .toString(),
-              deficiencyProofPictures: Get
-                  .arguments['deficiencyInspectionsReqModel']
-                  .deficiencyProofPictures as List<String>,
-              date: Get.arguments['deficiencyInspectionsReqModel'].date ?? "",
-              comment:
-                  Get.arguments['deficiencyInspectionsReqModel'].comment ?? "")
+            housingDeficiencyId: Get
+                .arguments['deficiencyInspectionsReqModel'].housingDeficiencyId
+                .toString(),
+            deficiencyProofPictures: Get
+                .arguments['deficiencyInspectionsReqModel']
+                .deficiencyProofPictures as List<String>,
+            date: Get.arguments['deficiencyInspectionsReqModel'].date ?? "",
+            comment:
+                Get.arguments['deficiencyInspectionsReqModel'].comment ?? "",
+            definition:
+                Get.arguments['deficiencyInspectionsReqModel'].definition ?? "",
+          )
         ];
       } else {
         List<String> deficiencyProofPictures = [];
@@ -73,15 +76,18 @@ class DeficienciesInsideController extends BaseController {
 
         deficiencyInspectionsReqModel = [
           DeficiencyInspectionsReqModel(
-              housingDeficiencyId: Get.arguments['successListOfDeficiencies']
-                      ['housingDeficiencyId']
-                  .toString(),
-              deficiencyProofPictures: deficiencyProofPictures,
-              date: Get.arguments['successListOfDeficiencies']['date'] == ""
-                  ? DateFormat("MM/dd/yyyy").format(DateTime.now())
-                  : Get.arguments['successListOfDeficiencies']['date'],
-              comment:
-                  Get.arguments['successListOfDeficiencies']['comment'] ?? "")
+            housingDeficiencyId: Get.arguments['successListOfDeficiencies']
+                    ['housingDeficiencyId']
+                .toString(),
+            deficiencyProofPictures: deficiencyProofPictures,
+            date: Get.arguments['successListOfDeficiencies']['date'] == ""
+                ? DateFormat("MM/dd/yyyy").format(DateTime.now())
+                : Get.arguments['successListOfDeficiencies']['date'],
+            comment:
+                Get.arguments['successListOfDeficiencies']['comment'] ?? "",
+            definition:
+                Get.arguments['successListOfDeficiencies']['definition'] ?? "",
+          )
         ];
       }
       dataFill();
@@ -299,6 +305,7 @@ class DeficienciesInsideController extends BaseController {
                                 ['date'] = "";
                             commentController.clear();
                             dateController.clear();
+                            isDeleted = true;
                             imageUploadStatus = ImageUploadStatus.initial;
                             update();
                             Get.back();
@@ -727,6 +734,7 @@ class DeficienciesInsideController extends BaseController {
         date: dateController.text,
         deficiencyProofPictures: imageList,
         housingDeficiencyId: deficiencyAreaItem.id.toString(),
+        definition: deficiencyAreaItem.description.toString(),
       )
     ];
     update();

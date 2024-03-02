@@ -26,6 +26,7 @@ class StandardsDetailsController extends BaseController {
           comment: e.comment,
           date: e.date,
           deficiencyProofPictures: e.deficiencyProofPictures,
+          definition: e.definition.toString(),
           housingDeficiencyId: e.housingDeficiencyId.toString(),
         ));
       });
@@ -51,6 +52,8 @@ class StandardsDetailsController extends BaseController {
                   deficiencyInspectionsReqModel[j].comment;
               successListOfDeficiencies[itemIndex]['date'] =
                   deficiencyInspectionsReqModel[j].date;
+              successListOfDeficiencies[itemIndex]['definition'] =
+                  deficiencyInspectionsReqModel[j].definition;
             }
           }
         }
@@ -66,6 +69,7 @@ class StandardsDetailsController extends BaseController {
       successListOfDeficiencies.add({
         "housingDeficiencyId": buildingDataModel.deficiencyAreaItems![i].id,
         "success": false,
+        "definition": '',
         "deficiencyProofPictures": <String>[],
         "comment": '',
         'date': '',
@@ -87,6 +91,8 @@ class StandardsDetailsController extends BaseController {
               ['comment'] = element1.comment;
           successListOfDeficiencies[successListOfDeficiencies.indexOf(element)]
               ['date'] = element1.date;
+          successListOfDeficiencies[successListOfDeficiencies.indexOf(element)]
+              ['definition'] = element1.definition;
         }
       });
     });

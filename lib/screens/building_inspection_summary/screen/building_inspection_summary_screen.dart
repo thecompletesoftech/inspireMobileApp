@@ -42,8 +42,8 @@ class BuildingInspectionSummaryScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
                     controller.deficiencyArea.clear();
+                    Get.back();
                   },
                 ),
                 MyTextView(
@@ -698,7 +698,7 @@ class BuildingInspectionSummaryScreen
                                         ),
                                       ),
                                       MyTextView(
-                                        item.definition,
+                                        data?.definition ?? "",
                                         isMaxLineWrap: true,
                                         textStyleNew: MyTextStyle(
                                           textSize: 20.px,
@@ -760,13 +760,17 @@ class BuildingInspectionSummaryScreen
                                                         "successListOfStandards":
                                                             item.deficiencyInspectionsReqModel
                                                       })?.then((value) async {
-                                                    if (value != null) {
+                                                    if (value[
+                                                            'deficiencyInspectionsReqModel'] !=
+                                                        null) {
                                                       await controller.isDataUpdate(
                                                           mainIndex,
                                                           subIndex,
                                                           value[
                                                               'deficiencyInspectionsReqModel']);
-                                                    } else {
+                                                    } else if (value[
+                                                            'isEdit'] ==
+                                                        true) {
                                                       controller
                                                           .isDataUpdateSuccess(
                                                               mainIndex,

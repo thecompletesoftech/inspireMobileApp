@@ -180,7 +180,6 @@ class BuildingInspectionSummaryController extends BaseController {
   }
 
   isDataUpdateSuccess(mainIndex, subIndex) {
-    deficiencyArea[mainIndex].isArea = false;
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?.removeAt(subIndex);
     update();
   }
@@ -235,12 +234,12 @@ class BuildingInspectionSummaryController extends BaseController {
       certificates: certificates,
       deficiencyInspections: deficiencyInspections,
       inspection: Inspection(
-          date: DateTime.now(),
-          comment: '',
-          inspectionStateId: '1',
-          inspectionTypeId: '1',
-          inspectorId: inspectorInfo['id'].toString(),
-         ),
+        date: DateTime.now(),
+        comment: '',
+        inspectionStateId: '1',
+        inspectionTypeId: '1',
+        inspectorId: inspectorInfo['id'].toString(),
+      ),
       property: Property(
         name: propertyInfo['name'],
         id: propertyInfo['id'],

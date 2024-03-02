@@ -29,7 +29,9 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
+                    Get.back(result: {
+                      "isEdit": controller.isDeleted,
+                    });
                   },
                 ),
                 Expanded(

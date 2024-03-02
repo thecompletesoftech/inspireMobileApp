@@ -233,93 +233,74 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                           DeficiencyAreaItem? data = controller
                               .buildingDataModel.deficiencyAreaItems?[index];
                           return Column(
-                              children: List.generate(
-                                  data?.deficiencyItemHousingDeficiency
-                                          ?.length ??
-                                      0, (index) {
-                            return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: MyTextView(
-                                        '${data?.deficiencyItemHousingDeficiency![index].housingItem?.item ?? ""}',
-                                        isMaxLineWrap: true,
-                                        textStyleNew: MyTextStyle(
-                                          textColor: controller.appColors.textGreen,
-                                          textWeight: FontWeight.w400,
-                                          textFamily: fontFamilyBold,
-                                          textSize: 14.px,
-                                        ),
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: MyTextView(
+                                      '${data?.description ?? ""}',
+                                      isMaxLineWrap: true,
+                                      textStyleNew: MyTextStyle(
+                                        textColor: controller.appColors.black,
+                                        textWeight: FontWeight.w400,
+                                        textFamily: fontFamilyBold,
+                                        textSize: 20.px,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: MyTextView(
-                                        '${data?.description ?? ""}',
-                                        isMaxLineWrap: true,
-                                        textStyleNew: MyTextStyle(
-                                          textColor: controller.appColors.black,
-                                          textWeight: FontWeight.w400,
-                                          textFamily: fontFamilyBold,
-                                          textSize: 20.px,
-                                        ),
-                                      ),
-                                    ),
-                                    if (controller.successListOfDeficiencies[
-                                            index]['success'] ==
-                                        true)
-                                      ClipOval(
-                                          child: SvgPicture.string(
-                                        icComplete,
-                                      )),
-                                    CommonButton(
-                                      radius: 100.px,
-                                      title: Strings.seeMore,
-                                      onTap: () async {
-                                        var result = await Get.toNamed(
-                                            DeficienciesInsideScreen.routes,
-                                            arguments: {
-                                              "buildingName":
-                                                  "${controller.buildingName}",
-                                              "deficiencies":
-                                                  "${Strings.storageComponent}",
-                                              "deficiencyAreaItem": data,
-                                              "successListOfDeficiencies":
-                                                  controller
-                                                          .successListOfDeficiencies[
-                                                      index],
-                                              "listIndex": index,
-                                            })?.then(
-                                          (value) {
-                                            if (value != null) {
-                                              controller.setSuccessDeficiencies(Get
-                                                      .find<
-                                                          DeficienciesInsideController>()
-                                                  .deficiencyInspectionsReqModel);
-                                            }
+                                  ),
+                                  if (controller
+                                              .successListOfDeficiencies[index]
+                                          ['success'] ==
+                                      true)
+                                    ClipOval(
+                                        child: SvgPicture.string(
+                                      icComplete,
+                                    )),
+                                  CommonButton(
+                                    radius: 100.px,
+                                    title: Strings.seeMore,
+                                    onTap: () async {
+                                      var result = await Get.toNamed(
+                                          DeficienciesInsideScreen.routes,
+                                          arguments: {
+                                            "buildingName":
+                                                "${controller.buildingName}",
+                                            "deficiencies":
+                                                "${Strings.storageComponent}",
+                                            "deficiencyAreaItem": data,
+                                            "successListOfDeficiencies": controller
+                                                    .successListOfDeficiencies[
+                                                index],
+                                            "listIndex": index,
+                                          })?.then(
+                                        (value) {
+                                          if (value != null) {
+                                            controller.setSuccessDeficiencies(Get
+                                                    .find<
+                                                        DeficienciesInsideController>()
+                                                .deficiencyInspectionsReqModel);
                                             controller.update();
-                                          },
-                                        );
-                                      },
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.px,
-                                        vertical: 10.px,
-                                      ),
-                                      textWeight: FontWeight.w500,
-                                      textSize: 16.px,
-                                      color: controller.appColors.buttonColor,
-                                      textColor: controller.appColors.black,
-                                    ).paddingOnly(left: 24.px),
-                                  ],
-                                ).paddingSymmetric(vertical: 16.px),
-                                Container(
-                                  height: 2.px,
-                                  color: controller.appColors.divider,
-                                ),
-                              ],
-                            );
-                          }));
+                                          }
+                                        },
+                                      );
+                                    },
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 24.px,
+                                      vertical: 10.px,
+                                    ),
+                                    textWeight: FontWeight.w500,
+                                    textSize: 16.px,
+                                    color: controller.appColors.buttonColor,
+                                    textColor: controller.appColors.black,
+                                  ).paddingOnly(left: 24.px),
+                                ],
+                              ).paddingSymmetric(vertical: 16.px),
+                              Container(
+                                height: 2.px,
+                                color: controller.appColors.divider,
+                              ),
+                            ],
+                          );
                         }),
                       ],
                     ).paddingSymmetric(horizontal: 32.px),
