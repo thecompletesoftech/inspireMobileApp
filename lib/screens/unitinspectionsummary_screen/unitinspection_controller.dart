@@ -225,5 +225,6 @@ class UnitInspectionsummaryController extends BaseController {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
         UnitdeficiencyInspectionsReqModel[0];
     update();
+    
   }
 }
