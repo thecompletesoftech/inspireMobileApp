@@ -76,24 +76,22 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               });
                             });
 
-                            if (deficiencyArea.isNotEmpty) {
-                              Get.toNamed(
-                                  BuildingInspectionSummaryScreen.routes,
-                                  arguments: {
-                                    "buildingName": controller.buildingName,
-                                    "buildingtype": controller.buildingtype,
-                                    "deficiencyArea": deficiencyArea,
-                                    "inspectionName": controller.inspectionName,
-                                    "buildingInfo": controller.buildingInfo,
-                                    "propertyInfo": controller.propertyInfo,
-                                    "certificatesInfo":
-                                        controller.certificatesInfo,
-                                    "inspectorName": controller.inspectorName,
-                                    "inspectorDate": controller.inspectorDate,
-                                  })?.then((value) {
-                                controller.update();
-                              });
-                            }
+                            Get.toNamed(
+                                BuildingInspectionSummaryScreen.routes,
+                                arguments: {
+                                  "buildingName": controller.buildingName,
+                                  "buildingtype": controller.buildingtype,
+                                  "deficiencyArea": deficiencyArea,
+                                  "inspectionName": controller.inspectionName,
+                                  "buildingInfo": controller.buildingInfo,
+                                  "propertyInfo": controller.propertyInfo,
+                                  "certificatesInfo":
+                                  controller.certificatesInfo,
+                                  "inspectorName": controller.inspectorName,
+                                  "inspectorDate": controller.inspectorDate,
+                                })?.then((value) {
+                              controller.update();
+                            });
                           },
                         )
                       ],
