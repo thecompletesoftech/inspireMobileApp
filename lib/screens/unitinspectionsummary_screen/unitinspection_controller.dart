@@ -285,4 +285,5 @@ class UnitInspectionsummaryController extends BaseController {
     }
     update();
   }
+  
 }
