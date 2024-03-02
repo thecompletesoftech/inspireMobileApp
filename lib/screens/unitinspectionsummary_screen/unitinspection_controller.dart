@@ -133,8 +133,8 @@ class UnitInspectionsummaryController extends BaseController {
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
     switchbtn.value = Get.arguments['switchvalue'];
-    buildingname = Get.arguments['buildinginfo']['name'];
-    propertyname = Get.arguments['propertyinfo']['name'];
+    buildingname = Get.arguments['buildingInfo']['name'];
+    propertyname = Get.arguments['propertyInfo']['name'];
   }
 
   getdeficienyjson() async {
@@ -187,19 +187,19 @@ class UnitInspectionsummaryController extends BaseController {
   createinspection() async {
     islaoding.value = true;
 
-    print("unit" + Get.arguments['unitinfo'].toString());
-    print("buildinginfo" + Get.arguments['buildinginfo'].toString());
-    print("property info" + Get.arguments['propertyinfo'].toString());
-    print("building type info" + Get.arguments['buildingtype'].toString());
-    print("certificate info" + Get.arguments['cerificateList'].toString());
-    print("certificate info" + Get.arguments['inspectorDate'].toString());
+    // print("unit" + Get.arguments['unitinfo'].toString());
+    // print("buildinginfo" + Get.arguments['buildinginfo'].toString());
+    // print("property info" + Get.arguments['propertyinfo'].toString());
+    // print("building type info" + Get.arguments['buildingtype'].toString());
+    // print("certificate info" + Get.arguments['cerificateList'].toString());
+    // print("certificate info" + Get.arguments['inspectorDate'].toString());
 
     var response = await UnitsummaryRepository().createinspection(
-        buildingjsons: Get.arguments['buildinginfo'],
+        buildingjsons: Get.arguments['buildingInfo'],
         certificatelists: Get.arguments['cerificateList'],
         deficiencylists: deficiencyinfo,
         insepctionjsons: inspectioninfo,
-        propertyjsons: Get.arguments['propertyinfo'],
+        propertyjsons: Get.arguments['propertyInfo'],
         unitjsons: Get.arguments['unitinfo']);
 
     await response.fold((l) {
@@ -221,22 +221,23 @@ class UnitInspectionsummaryController extends BaseController {
       update();
     });
   }
+
   saveCreateinspection() async {
     islaoding.value = true;
 
-    print("unit " + Get.arguments['unitinfo'].toString());
-    print("buildinginfo " + Get.arguments['buildinginfo'].toString());
-    print("property info " + Get.arguments['propertyinfo'].toString());
-    print("building type info " + Get.arguments['buildingtype'].toString());
-    print("certificate info " + Get.arguments['cerificateList'].toString());
-    print("certificate info " + Get.arguments['inspectorDate'].toString());
+    // print("unit " + Get.arguments['unitinfo'].toString());
+    // print("buildinginfo " + Get.arguments['buildingInfo'].toString());
+    // print("property info " + Get.arguments['propertyInfo'].toString());
+    // print("building type info " + Get.arguments['buildingtype'].toString());
+    // print("certificate info " + Get.arguments['cerificateList'].toString());
+    // print("certificate info " + Get.arguments['inspectorDate'].toString());
 
     var response = await UnitsummaryRepository().createinspection(
-        buildingjsons: Get.arguments['buildinginfo'],
+        buildingjsons: Get.arguments['buildingInfo'],
         certificatelists: Get.arguments['cerificateList'],
         deficiencylists: deficiencyinfo,
         insepctionjsons: inspectioninfo,
-        propertyjsons: Get.arguments['propertyinfo'],
+        propertyjsons: Get.arguments['propertyInfo'],
         unitjsons: Get.arguments['unitinfo']);
 
     await response.fold((l) {
@@ -248,15 +249,16 @@ class UnitInspectionsummaryController extends BaseController {
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-            
+            //  print("property info " + Get.arguments['propertyinfo'].toString());
+   
           Get.back(result: {
-                            "propertyinfo": Get.arguments['buildingInfo'],
-                            "buildinginfo": Get.arguments['buildingInfo'],
-                            "buildingtype": Get.arguments['buildingtype'],
-                            "cerificateList": Get.arguments['certificatesInfo'],
-                            "deficiencyArea": Get.arguments['deficiencyArea'],
-                            "switchvalue": switchbtn.value,
-                            "inspectorDate": Get.arguments['inspectorDate']
+                 "propertyInfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
+                        "buildingInfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
+                        "buildingtype": Get.arguments==null?"":Get.arguments['buildingtype'],
+                        "cerificateList": Get.arguments['certificatesInfo'],
+                        "deficiencyArea": Get.arguments['deficiencyArea'],
+                        "switchvalue": switchbtn.value,
+                        "inspectorDate": Get.arguments['inspectorDate']
                                 });
           Get.back();
           islaoding.value = false;
@@ -267,10 +269,20 @@ class UnitInspectionsummaryController extends BaseController {
   }
 
 
-  isDataUpdate(mainIndex, subIndex, UnitdeficiencyInspectionsReqModel) {
+    isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
-        UnitdeficiencyInspectionsReqModel[0];
+        deficiencyInspectionsReqModel[0];
+    deficiencyArea[mainIndex]
+        .deficiencyInspectionsReqModel?[subIndex]
+        .isSuccess = true;
     update();
-    
+  }
+
+  isDataUpdateSuccess(mainIndex, subIndex) {
+    deficiencyArea[mainIndex].deficiencyInspectionsReqModel?.removeAt(subIndex);
+    if (deficiencyArea[mainIndex].deficiencyInspectionsReqModel!.isEmpty) {
+      deficiencyArea[mainIndex].isArea = false;
+    }
+    update();
   }
 }

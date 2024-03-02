@@ -291,56 +291,64 @@ class UnitBuildingStandardsController extends BaseController {
   //   }
   //   update();
   // }
-
-    isSuccessStandards1(successList, standardsId) {
+  
+  isSuccessStandards1(successList, standardsId) {
     for (int i = 0; i < searchList.length; i++) {
       for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
         if (searchList[i].buildingDataModel![j].id == standardsId) {
-          // var data = successList.where((e) => e['success'] == true);
-          // if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length ==
-          //     data.length) {
-          // }
-          searchList[i].buildingDataModel![j].isArea = true;
+          var data = successList.where((e) => e.isSuccess == true);
+
+          if (data.length > 0) {
+            searchList[i].buildingDataModel![j].isArea = true;
+          } else {
+            searchList[i].buildingDataModel![j].isArea = false;
+          }
+          searchList[i].buildingDataModel![j].deficiencyInspectionsReqModel =
+              [];
           successList.forEach((dataElement) {
-            if (dataElement['success'] == true) {
+            if (dataElement.isSuccess == true) {
               if (searchList[i]
                       .buildingDataModel![j]
                       .deficiencyInspectionsReqModel !=
                   null) {
                 List<String> deficiencyProofPictures = [];
-                if (dataElement['deficiencyProofPictures'].isNotEmpty) {
-                  deficiencyProofPictures =
-                      dataElement['deficiencyProofPictures'] as List<String>;
+                if (dataElement.deficiencyProofPictures.isNotEmpty) {
+                  deficiencyProofPictures = dataElement.deficiencyProofPictures;
                 }
                 searchList[i]
                     .buildingDataModel![j]
                     .deficiencyInspectionsReqModel
                     ?.add(DeficiencyInspectionsReqModel(
-                      isSuccess: dataElement['success'],
+                      isSuccess: dataElement.isSuccess,
                       housingDeficiencyId:
-                          dataElement['housingDeficiencyId'].toString(),
-                      date: dataElement['date'],
+                          dataElement.housingDeficiencyId.toString(),
+                      date: dataElement.date,
                       deficiencyProofPictures: deficiencyProofPictures,
-                      comment: dataElement['comment'],
-                      definition: dataElement['definition'],
+                      comment: dataElement.comment,
+                      definition: dataElement.definition,
+                      criteria: dataElement.criteria,
+                      deficiencyItemHousingDeficiency:
+                          dataElement.deficiencyItemHousingDeficiency,
                     ));
               } else {
                 List<String> deficiencyProofPictures = [];
-                if (dataElement['deficiencyProofPictures'].isNotEmpty) {
-                  deficiencyProofPictures =
-                      dataElement['deficiencyProofPictures'] as List<String>;
+                if (dataElement.deficiencyProofPictures.isNotEmpty) {
+                  deficiencyProofPictures = dataElement.deficiencyProofPictures;
                 }
                 searchList[i]
                     .buildingDataModel![j]
                     .deficiencyInspectionsReqModel = [
                   DeficiencyInspectionsReqModel(
-                    isSuccess: dataElement['success'],
+                    isSuccess: dataElement.isSuccess,
                     housingDeficiencyId:
-                        dataElement['housingDeficiencyId'].toString(),
-                    date: dataElement['date'],
+                        dataElement.housingDeficiencyId.toString(),
+                    date: dataElement.date,
                     deficiencyProofPictures: deficiencyProofPictures,
-                    comment: dataElement['comment'],
-                    definition: dataElement['definition'],
+                    comment: dataElement.comment,
+                    definition: dataElement.definition,
+                    criteria: dataElement.criteria,
+                    deficiencyItemHousingDeficiency:
+                        dataElement.deficiencyItemHousingDeficiency,
                   )
                 ];
               }

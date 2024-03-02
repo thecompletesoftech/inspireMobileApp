@@ -25,8 +25,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     radius: 0.px,
                     onClickBack: () {
                       Get.back(result: {
-                        "propertyinfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
-                        "buildinginfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
+                        "propertyInfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
+                        "buildingInfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
                         "buildingtype": Get.arguments==null?"":Get.arguments['buildingtype'],
                         "cerificateList": Get.arguments['certificatesInfo'],
                         "deficiencyArea": Get.arguments['deficiencyArea'],
@@ -443,19 +443,19 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyName,
-                              value: Get.arguments==null?"":Get.arguments['propertyinfo']['name']
+                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['name']
                                   .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.city,
-                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['city']
+                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['city']
                                       .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.propertyID,
-                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['id']
+                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['id']
                                       .toString(),
                                 ),
                               ],
@@ -467,19 +467,19 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyAddress,
-                              value: Get.arguments==null?"":Get.arguments['propertyinfo']['address']
+                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['address']
                                   .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.state,
-                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['state']
+                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['state']
                                       .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.zip,
-                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['zip']
+                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['zip']
                                       .toString(),
                                 ),
                               ],
@@ -510,7 +510,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.buildingName,
-                              value: Get.arguments==null?"":Get.arguments['buildinginfo']['name']
+                              value: Get.arguments==null?"":Get.arguments['buildingInfo']['name']
                                   .toString(),
                             ),
                             TitleheadMenu(
@@ -521,7 +521,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                         TitleheadMenu(
                           title: Strings.yearConstructed,
-                          value: Get.arguments==null?"":Get.arguments['buildinginfo']
+                          value: Get.arguments==null?"":Get.arguments['buildingInfo']
                                   ['constructed_year']
                               .toString()
                               .toString(),
@@ -903,7 +903,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                 textWeight: FontWeight.w500,
                                                 textSize: 14.px,
                                                 onTap: () {
-                                                  int mainIndex = index;
+                                                 int mainIndex = index;
                                                   int subIndex = i;
                                                   Get.toNamed(
                                                       UnitDeficienciesInsideScreen
@@ -912,16 +912,30 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                         "deficiencyAreaList": item
                                                             .deficiencyAreaItems,
                                                         "deficiencyInspectionsReqModel":
-                                                            data
-                                                      })?.then((value) {
-                                                    if (value != null) {
-                                                      controller.isDataUpdate(
+                                                            data,
+                                                        "deficiencyArea":
+                                                            controller
+                                                                .deficiencyArea[0],
+                                                        "successListOfStandards":
+                                                            item.deficiencyInspectionsReqModel
+                                                      })?.then((value) async {
+                                                    if (value[
+                                                            'deficiencyInspectionsReqModel'] !=
+                                                        null) {
+                                                      await controller.isDataUpdate(
                                                           mainIndex,
                                                           subIndex,
                                                           value[
                                                               'deficiencyInspectionsReqModel']);
-                                                      controller.update();
+                                                    } else if (value[
+                                                            'isEdit'] ==
+                                                        true) {
+                                                      controller
+                                                          .isDataUpdateSuccess(
+                                                              mainIndex,
+                                                              subIndex);
                                                     }
+                                                    controller.update();
                                                   });
                                                 },
                                               ),

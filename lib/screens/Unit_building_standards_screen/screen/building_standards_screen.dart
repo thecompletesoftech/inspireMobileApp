@@ -87,8 +87,8 @@ class UnitBuildingStandardsScreen
                                   "buildingtype": controller.buildingtype,
                                   "deficiencyArea": deficiencyArea,
                                   "inspectionName": controller.inspectionName,
-                                  "buildinginfo": controller.buildingInfo,
-                                  "propertyinfo": controller.propertyInfo,
+                                  "buildingInfo": controller.buildingInfo,
+                                  "propertyInfo": controller.propertyInfo,
                                   "cerificateList": controller.certificatesInfo,
                                   "inspectorName": controller.inspectorName,
                                   "inspectorDate": controller.inspectorDate,
@@ -358,7 +358,7 @@ class UnitBuildingStandardsScreen
                                                           .buildingDataModel?[i];
                                                   return GestureDetector(
                                                     onTap: () async {
-                                                      var result =
+                                                     var result =
                                                           await Get.toNamed(
                                                               UnitStandardsDetailsScreen
                                                                   .routes,
@@ -366,12 +366,6 @@ class UnitBuildingStandardsScreen
                                                             "buildingName":
                                                                 controller
                                                                     .buildingName,
-                                                            "propetyName":
-                                                                controller
-                                                                    .propertyname,
-                                                            "unitName":
-                                                                controller
-                                                                    .unitname,
                                                             "deficiencyArea":
                                                                 buildingDataList,
                                                             "successListOfStandards":
@@ -426,7 +420,7 @@ class UnitBuildingStandardsScreen
                                                                               ClipOval(
                                                                                   child: SvgPicture.string(
                                                                                 icComplete,
-                                                                              )).paddingOnly(left: 2),
+                                                                              )).paddingOnly(left: 10.px),
                                                                           ],
                                                                         ),
                                                                         MyTextView(

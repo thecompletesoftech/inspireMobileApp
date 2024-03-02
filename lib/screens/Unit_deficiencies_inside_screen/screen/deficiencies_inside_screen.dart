@@ -30,7 +30,9 @@ class UnitDeficienciesInsideScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
+                     Get.back(result: {
+                      "isEdit": controller.isDeleted,
+                    });
                   },
                 ),
                 Expanded(
@@ -60,7 +62,7 @@ class UnitDeficienciesInsideScreen
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MyTextView(
-                                  '${controller.deficiencyAreaItem.description}',
+                                  '${controller.successListOfDeficiencies.definition}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.appColor,
@@ -117,8 +119,8 @@ class UnitDeficienciesInsideScreen
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.correctionTimeFrame ?? ""}',
-                                                isMaxLineWrap: true,
+                                               '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
+                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
                                                       .appColors.appColor,
@@ -145,8 +147,8 @@ class UnitDeficienciesInsideScreen
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.healthySafetyDesignation ?? ""}',
-                                                isMaxLineWrap: true,
+                                                 '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
+                                              isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
                                                       .appColors.appColor,
@@ -183,8 +185,8 @@ class UnitDeficienciesInsideScreen
                                   ),
                                 ),
                                 MyTextView(
-                                  '${controller.deficiencyAreaItem.criteria}',
-                                  isMaxLineWrap: true,
+                                 '${controller.successListOfDeficiencies.criteria}',
+                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.textBlack2,
                                     textWeight: FontWeight.w400,
@@ -871,7 +873,8 @@ class UnitDeficienciesInsideScreen
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
-                                                .deficiencyAreaItem.id,
+                                                .successListOfDeficiencies
+                                                .housingDeficiencyId,
                                             "imagesList": controller.imageList,
                                             "deficiencyInspectionsReqModel":
                                                 controller

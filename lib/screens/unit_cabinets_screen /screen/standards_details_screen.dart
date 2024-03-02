@@ -18,6 +18,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
     UnitBuildingStandardsController _unitbuildingStandardsController =
         Get.put(UnitBuildingStandardsController());
 
+   
     return GetBuilder<UnitStandardsDetailsController>(
       init: UnitStandardsDetailsController(),
       autoRemove: false,
@@ -39,6 +40,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                       "buildingName":
                           "${controller.buildingDataModel.name ?? ""}",
                     });
+                   
                   },
                 ),
                 Expanded(
@@ -46,8 +48,8 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                          '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
-                          textStyleNew: MyTextStyle(
+                           '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
+                         textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,
                             textFamily: fontFamilyBold,
@@ -131,14 +133,6 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                /*Center(
-                                  child: Image.asset(
-                                    controller.buildingDataModel?.image ?? "",
-                                    height: 248.px,
-                                    width: 332.px,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),*/
                                 MyTextView(
                                   Strings.location,
                                   isMaxLineWrap: true,
@@ -152,7 +146,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                                 Row(
                                   children: [
                                     MyTextView(
-                                      Strings.unit,
+                                      Strings.buildings,
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,
@@ -160,41 +154,19 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ),
-/*
-                                    MyTextView(
-                                      Strings.laundry,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 20.px,
-                                      ),
-                                    ).paddingOnly(left: 20.px),
-*/
                                   ],
                                 ).paddingSymmetric(vertical: 24.px),
                                 Row(
                                   children: [
                                     MyTextView(
-                                      Strings.inside,
+                                      '${controller.nameList.join(", ")} ',
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,
                                         textFamily: fontFamilyBold,
                                         textSize: 20.px,
                                       ),
-                                    ),
-/*
-                                    MyTextView(
-                                      Strings.laundry,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 20.px,
-                                      ),
-                                    ).paddingOnly(left: 20.px),
-*/
+                                    )
                                   ],
                                 ),
                                 CommonText(
@@ -227,31 +199,26 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                           color: controller.appColors.divider,
                         ),
                         ...List.generate(
-                            controller.buildingDataModel.deficiencyAreaItems
-                                    ?.length ??
-                                0, (index) {
-                          DeficiencyAreaItem? data = controller
-                              .buildingDataModel.deficiencyAreaItems![index];
-
-                          //  controller
-                          //     .buildingDataModel.deficiencyAreaItems!?[index];
+                            controller.successListOfDeficiencies.length,
+                            (index) {
+                          var data =
+                              controller.successListOfDeficiencies[index];
                           return Column(
                             children: [
                               Row(
                                 children: [
-                                   MyTextView(
-                                      "Unit",isMaxLineWrap: true,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.textGreen,
-                                        textWeight: FontWeight.w500,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 14.px,
-                                      ),
+                                  MyTextView(
+                                    '${data.deficiencyItemHousingDeficiency.housingItem.item ?? ""}',
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.textGreen,
+                                      textWeight: FontWeight.w500,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 14.px,
                                     ),
-                                    SizedBox(width: 20,),
+                                  ).paddingOnly(right: 24.px),
                                   Expanded(
                                     child: MyTextView(
-                                      '${data?.description ?? ""}',
+                                      '${data.definition}',
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
@@ -262,8 +229,8 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                                     ),
                                   ),
                                   if (controller
-                                              .successListOfDeficiencies[index]
-                                          ['success'] ==
+                                          .successListOfDeficiencies[index]
+                                          .isSuccess ==
                                       true)
                                     ClipOval(
                                         child: SvgPicture.string(
@@ -284,6 +251,8 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                                             "successListOfDeficiencies": controller
                                                     .successListOfDeficiencies[
                                                 index],
+                                            "listIndex": index,
+                                            "standard": 'standard',
                                           })?.then(
                                         (value) {
                                           if (value != null) {
@@ -291,8 +260,8 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                                                     .find<
                                                         UnitDeficienciesInsideController>()
                                                 .deficiencyInspectionsReqModel);
-                                            controller.update();
                                           }
+                                          controller.update();
                                         },
                                       );
                                     },
