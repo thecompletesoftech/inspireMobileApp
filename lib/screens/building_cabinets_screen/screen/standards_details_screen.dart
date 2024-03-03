@@ -152,7 +152,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                 Row(
                                   children: [
                                     MyTextView(
-                                      Strings.unit,
+                                      Strings.buildings,
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,
@@ -271,6 +271,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                             "successListOfDeficiencies": controller
                                                     .successListOfDeficiencies[
                                                 index],
+                                            "listIndex": index,
                                           })?.then(
                                         (value) {
                                           if (value != null) {

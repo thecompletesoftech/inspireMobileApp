@@ -6,23 +6,23 @@ import 'package:public_housing/screens/building_inspection_screen/models/certifi
 import '../models/building_model.dart';
 import '../models/property_model.dart';
 
-class BudingInpectionRepository {
+class BuildingInspectionRepository {
   final ApiProviders _provider = ApiProviders();
 
-  BudingInpectionRepository();
+  BuildingInspectionRepository();
 
-  Future<Either<Failure, PropertyModel>> getpropetyinfoapi() async {
-    var response = await _provider.getpropetyinfo();
+  Future<Either<Failure, PropertyModel>> getPropertyInfoApi() async {
+    var response = await _provider.getPropertyInfo();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, CertificateModel>> getcertificates() async {
+  Future<Either<Failure, CertificateModel>> getCertificates() async {
     var response = await _provider.getCertificates();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, BuildingModel>> getbuilding(id) async {
-    var response = await _provider.getBuildinginfo(id);
+  Future<Either<Failure, BuildingModel>> getBuilding(id) async {
+    var response = await _provider.getBuildingInfo(id);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

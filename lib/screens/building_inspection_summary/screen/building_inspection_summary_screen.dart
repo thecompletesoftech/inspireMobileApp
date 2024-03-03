@@ -1,24 +1,22 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:public_housing/commons/common_widgets/base_widgets.dart';
-import 'package:public_housing/commons/common_widgets/button_widget.dart';
-import 'package:public_housing/commons/common_widgets/common_appbar_widget.dart';
-import 'package:public_housing/commons/common_widgets/iconbutton_widget.dart';
-import 'package:public_housing/commons/common_widgets/mytext_widgets.dart';
-import 'package:public_housing/commons/common_widgets/shadowcontainer_widgets.dart';
-import 'package:public_housing/commons/common_widgets/textfeild_widgets.dart';
-import 'package:public_housing/commons/constants.dart';
 import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
+import 'package:public_housing/commons/constants.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:public_housing/commons/common_widgets/base_widgets.dart';
+import 'package:public_housing/commons/common_widgets/button_widget.dart';
+import 'package:public_housing/commons/common_widgets/mytext_widgets.dart';
+import 'package:public_housing/commons/common_widgets/iconbutton_widget.dart';
+import 'package:public_housing/commons/common_widgets/textfeild_widgets.dart';
+import 'package:public_housing/commons/common_widgets/common_appbar_widget.dart';
+import 'package:public_housing/commons/common_widgets/shadowcontainer_widgets.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
+import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
 import 'package:public_housing/screens/building_inspection_summary/controller/building_inspection_summary_controller.dart';
-import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-
-import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
-
 
 class BuildingInspectionSummaryScreen
     extends GetView<BuildingInspectionSummaryBinding> {
@@ -44,8 +42,8 @@ class BuildingInspectionSummaryScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
                     controller.deficiencyArea.clear();
+                    Get.back();
                   },
                 ),
                 MyTextView(
@@ -90,7 +88,7 @@ class BuildingInspectionSummaryScreen
                               onTap: () {
                                 controller.createInspection();
                                 // if (controller.isSuccess == true) {
-                                 
+
                                 // }
                                 controller.update();
                               },
@@ -700,7 +698,7 @@ class BuildingInspectionSummaryScreen
                                         ),
                                       ),
                                       MyTextView(
-                                        item.definition,
+                                        data?.definition ?? "",
                                         isMaxLineWrap: true,
                                         textStyleNew: MyTextStyle(
                                           textSize: 20.px,
@@ -755,16 +753,30 @@ class BuildingInspectionSummaryScreen
                                                         "deficiencyAreaList": item
                                                             .deficiencyAreaItems,
                                                         "deficiencyInspectionsReqModel":
-                                                            data
-                                                      })?.then((value) {
-                                                    if (value != null) {
-                                                      controller.isDataUpdate(
+                                                            data,
+                                                        "deficiencyArea":
+                                                            controller
+                                                                .deficiencyArea[0],
+                                                        "successListOfStandards":
+                                                            item.deficiencyInspectionsReqModel
+                                                      })?.then((value) async {
+                                                    if (value[
+                                                            'deficiencyInspectionsReqModel'] !=
+                                                        null) {
+                                                      await controller.isDataUpdate(
                                                           mainIndex,
                                                           subIndex,
                                                           value[
                                                               'deficiencyInspectionsReqModel']);
-                                                      controller.update();
+                                                    } else if (value[
+                                                            'isEdit'] ==
+                                                        true) {
+                                                      controller
+                                                          .isDataUpdateSuccess(
+                                                              mainIndex,
+                                                              subIndex);
                                                     }
+                                                    controller.update();
                                                   });
                                                 },
                                               ),
@@ -817,6 +829,8 @@ class BuildingInspectionSummaryScreen
                                 "certificatesInfo": controller.certificatesInfo,
                                 "inspectorName": controller.inspectorName,
                                 "inspectorDate": controller.inspectorDate
+                              })?.then((value) {
+                                controller.update();
                               });
                             }
                             controller.update();

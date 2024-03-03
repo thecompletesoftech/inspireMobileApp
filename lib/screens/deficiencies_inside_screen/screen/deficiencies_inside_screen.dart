@@ -29,7 +29,9 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
+                    Get.back(result: {
+                      "isEdit": controller.isDeleted,
+                    });
                   },
                 ),
                 Expanded(
@@ -841,14 +843,16 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                 children: [
                                   CommonButton(
                                       title: Strings.saveChanges,
-                                      textColor:
-                                          controller.selectedItem != "null" &&
-                                                  controller.visibleBtn
-                                              ? controller.appColors.white
-                                              : controller.appColors.border1,
+                                      textColor: controller.selectedItem !=
+                                                  "null" &&
+                                              controller.visibleBtn &&
+                                              controller.imageList.isNotEmpty
+                                          ? controller.appColors.white
+                                          : controller.appColors.border1,
                                       color: controller.selectedItem !=
                                                   "null" &&
-                                              controller.visibleBtn
+                                              controller.visibleBtn &&
+                                              controller.imageList.isNotEmpty
                                           ? controller.appColors.appColor
                                           : controller.appColors.black
                                               .withOpacity(0.11999999731779099),
@@ -860,7 +864,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller.visibleBtn) {
+                                        if (controller.visibleBtn &&
+                                            controller.imageList.isNotEmpty) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller

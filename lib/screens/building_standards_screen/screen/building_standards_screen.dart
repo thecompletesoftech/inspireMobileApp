@@ -76,22 +76,22 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               });
                             });
 
-                            if (deficiencyArea.isNotEmpty) {
-                              Get.toNamed(
-                                  BuildingInspectionSummaryScreen.routes,
-                                  arguments: {
-                                    "buildingName": controller.buildingName,
-                                    "buildingtype": controller.buildingtype,
-                                    "deficiencyArea": deficiencyArea,
-                                    "inspectionName": controller.inspectionName,
-                                    "buildingInfo": controller.buildingInfo,
-                                    "propertyInfo": controller.propertyInfo,
-                                    "certificatesInfo":
-                                        controller.certificatesInfo,
-                                    "inspectorName": controller.inspectorName,
-                                    "inspectorDate": controller.inspectorDate,
-                                  });
-                            }
+                            Get.toNamed(
+                                BuildingInspectionSummaryScreen.routes,
+                                arguments: {
+                                  "buildingName": controller.buildingName,
+                                  "buildingtype": controller.buildingtype,
+                                  "deficiencyArea": deficiencyArea,
+                                  "inspectionName": controller.inspectionName,
+                                  "buildingInfo": controller.buildingInfo,
+                                  "propertyInfo": controller.propertyInfo,
+                                  "certificatesInfo":
+                                  controller.certificatesInfo,
+                                  "inspectorName": controller.inspectorName,
+                                  "inspectorDate": controller.inspectorDate,
+                                })?.then((value) {
+                              controller.update();
+                            });
                           },
                         )
                       ],
@@ -156,7 +156,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             ),
                           ),
                         ),
-                     SizedBox(width: 16.px),
+                        SizedBox(width: 16.px),
                         /*Expanded(
                           flex: 5,
                           child: SizedBox(
