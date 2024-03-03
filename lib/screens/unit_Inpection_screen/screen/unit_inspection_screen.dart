@@ -97,7 +97,7 @@ class UnitInspection extends GetView<UnitController> {
                                 Expanded(
                                   child: CommonTextField(
                                     isLable: true,
-                                    readOnly: false,
+                                    readOnly: true,
                                     onChange: ((value) {
                                       controller.update();
                                     }),
@@ -323,14 +323,14 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value:
+                          value:Get.arguments==null?"":
                               Get.arguments['propertyInfo']['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: Get.arguments['propertyInfo']['city']
+                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['city']
                                   .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(

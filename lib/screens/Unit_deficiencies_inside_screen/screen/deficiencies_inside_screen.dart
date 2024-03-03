@@ -865,7 +865,9 @@ class UnitDeficienciesInsideScreen
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller.visibleBtn) {
+                                      
+                                        if (controller.visibleBtn &&
+                                            controller.imageList.isNotEmpty) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
@@ -876,6 +878,7 @@ class UnitDeficienciesInsideScreen
                                                     .deficiencyInspectionsReqModel
                                           });
                                         }
+                                      
                                       }),
                                 ],
                               ).paddingSymmetric(vertical: 48.px),

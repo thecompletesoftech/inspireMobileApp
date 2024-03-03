@@ -236,6 +236,18 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             children: [
                               Row(
                                 children: [
+                                  MyTextView(
+                                      data!.deficiencyItemHousingDeficiency!.length>1?data!.deficiencyItemHousingDeficiency![0].housingItem!.item.toString()+","+data!.deficiencyItemHousingDeficiency![1].housingItem!.item.toString():data!.deficiencyItemHousingDeficiency![0].housingItem!.item.toString(),
+                                      isMaxLineWrap: true,
+                                      textStyleNew: MyTextStyle(
+                                        textColor: controller.appColors.textGreen,
+                                        textWeight: FontWeight.w500,
+                                        textFamily: fontFamilyBold,
+                                        textSize: 14.px,
+                                      ),
+                                    ),
+                                    SizedBox(width: 20,),
+
                                   Expanded(
                                     child: MyTextView(
                                       '${data?.description ?? ""}',

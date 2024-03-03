@@ -80,27 +80,86 @@ class UnitBuildingStandardsScreen
                               });
                             });
                             print("asdadds" + deficiencyArea.toString());
-                            if (deficiencyArea.isNotEmpty) {
-                              Get.toNamed(UnitInspectionSummary.routes,
-                                  arguments: {
-                                    "buildingName": controller.buildingName,
-                                    "buildingtype": controller.buildingtype,
-                                    "deficiencyArea": deficiencyArea,
-                                    "inspectionName": controller.inspectionName,
-                                    "buildinginfo": controller.buildingInfo,
-                                    "propertyinfo": controller.propertyInfo,
-                                    "cerificateList":
-                                        controller.certificatesInfo,
-                                    "inspectorName": controller.inspectorName,
-                                    "inspectorDate": controller.inspectorDate,
-                                    "unitinfo": controller.unitinfo,
-                                    "switchvalue": controller.switchbtn.value
-                                  });
-                            }
+                            // if (deficiencyArea.isNotEmpty) {
+                            Get.toNamed(UnitInspectionSummary.routes,
+                                arguments: {
+                                  "buildingName": controller.buildingName,
+                                  "buildingtype": controller.buildingtype,
+                                  "deficiencyArea": deficiencyArea,
+                                  "inspectionName": controller.inspectionName,
+                                  "buildinginfo": controller.buildingInfo,
+                                  "propertyinfo": controller.propertyInfo,
+                                  "cerificateList": controller.certificatesInfo,
+                                  "inspectorName": controller.inspectorName,
+                                  "inspectorDate": controller.inspectorDate,
+                                  "unitinfo": controller.unitinfo,
+                                  "switchvalue": controller.switchbtn.value
+                                });
+                            // }
                           },
                         )
                       ],
                     ).paddingOnly(bottom: 40.px),
+                    Row(children: [
+                      Expanded(
+                        flex: 10,
+                        child: CommonTextField(
+                          isLable: true,
+                          onChange: (value) =>
+                              controller.searchStandards(searchText: value),
+                          controller: controller.searchStandardsController,
+                          color: controller.appColors.transparent,
+                          padding: EdgeInsets.zero,
+                          prefixIcon: SvgPicture.string(
+                            icSearch,
+                            color: controller.appColors.grey,
+                          ).paddingOnly(left: 15.px),
+                          contentPadding: EdgeInsets.only(
+                              left: 15.px, top: 16.px, bottom: 16.px),
+                          shadowColor: controller.appColors.transparent,
+                          labelText: Strings.searchStandards,
+                        ),
+                      ),
+                      SizedBox(width: 16.px),
+                      Expanded(
+                        flex: 4,
+                        // flex: 6,
+                        child: GestureDetector(
+                          onTap: controller.isExpanded,
+                          child: Container(
+                              height: 44.px,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100.px),
+                                  border: Border.all(
+                                      color: controller.appColors.appColor)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  controller.isCollapseStandards
+                                      ? SvgPicture.string(
+                                          icDownArrow,
+                                          color: controller.appColors.appColor,
+                                        )
+                                      : SvgPicture.string(
+                                          icUpArrow,
+                                          color: controller.appColors.appColor,
+                                        ),
+                                  MyTextView(
+                                    Strings.collapseStandards,
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.appColor,
+                                      textWeight: FontWeight.w500,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 16.px,
+                                    ),
+                                  ).paddingOnly(left: 8.px)
+                                ],
+                              )),
+                        ),
+                      ),
+                    ]),
+                    SizedBox(width: 16.px),
                     /*Row(
                       children: [
                         Expanded(
