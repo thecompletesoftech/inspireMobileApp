@@ -36,7 +36,7 @@ class UnitDeficienciesInsideController extends BaseController {
   var speechText = "".obs;
   SpeechToText speechToText = SpeechToText();
   UnitStandardsDetailsController standardsDetailsController =
-      Get.find<UnitStandardsDetailsController>();
+      Get.put(UnitStandardsDetailsController());
   bool isDeleted = false;
 
   @override

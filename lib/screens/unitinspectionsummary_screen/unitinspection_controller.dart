@@ -5,6 +5,7 @@ import '../building_inspection_screen/controller/building_inspection_controller.
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
 import '../building_standards_screen/controller/building_standards_controller.dart';
+import '../unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -220,10 +221,56 @@ class UnitInspectionsummaryController extends BaseController {
       update();
     });
   }
+  saveCreateinspection() async {
+    islaoding.value = true;
+
+    print("unit " + Get.arguments['unitinfo'].toString());
+    print("buildinginfo " + Get.arguments['buildinginfo'].toString());
+    print("property info " + Get.arguments['propertyinfo'].toString());
+    print("building type info " + Get.arguments['buildingtype'].toString());
+    print("certificate info " + Get.arguments['cerificateList'].toString());
+    print("certificate info " + Get.arguments['inspectorDate'].toString());
+
+    var response = await UnitsummaryRepository().createinspection(
+        buildingjsons: Get.arguments['buildinginfo'],
+        certificatelists: Get.arguments['cerificateList'],
+        deficiencylists: deficiencyinfo,
+        insepctionjsons: inspectioninfo,
+        propertyjsons: Get.arguments['propertyinfo'],
+        unitjsons: Get.arguments['unitinfo']);
+
+    await response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      islaoding.value = false;
+      update();
+    }, (r) async {
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Unit inspection Submitted Successfully!!",
+          isOk: true);
+            
+          Get.back(result: {
+                            "propertyinfo": Get.arguments['buildingInfo'],
+                            "buildinginfo": Get.arguments['buildingInfo'],
+                            "buildingtype": Get.arguments['buildingtype'],
+                            "cerificateList": Get.arguments['certificatesInfo'],
+                            "deficiencyArea": Get.arguments['deficiencyArea'],
+                            "switchvalue": switchbtn.value,
+                            "inspectorDate": Get.arguments['inspectorDate']
+                                });
+          Get.back();
+          islaoding.value = false;
+          update();
+       
+    
+    });
+  }
+
 
   isDataUpdate(mainIndex, subIndex, UnitdeficiencyInspectionsReqModel) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
         UnitdeficiencyInspectionsReqModel[0];
     update();
+    
   }
 }

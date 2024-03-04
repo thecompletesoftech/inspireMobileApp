@@ -25,9 +25,9 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     radius: 0.px,
                     onClickBack: () {
                       Get.back(result: {
-                        "propertyinfo": Get.arguments['propertyInfo'],
-                        "buildinginfo": Get.arguments['buildingInfo'],
-                        "buildingtype": Get.arguments['buildingtype'],
+                        "propertyinfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
+                        "buildinginfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
+                        "buildingtype": Get.arguments==null?"":Get.arguments['buildingtype'],
                         "cerificateList": Get.arguments['certificatesInfo'],
                         "deficiencyArea": Get.arguments['deficiencyArea'],
                         "switchvalue": controller.switchbtn.value,
@@ -337,19 +337,9 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: (() {
-                                Get.back(result: {
-                                  "propertyinfo": Get.arguments['propertyInfo'],
-                                  "buildinginfo": Get.arguments['buildingInfo'],
-                                  "buildingtype": Get.arguments['buildingtype'],
-                                  "cerificateList":
-                                      Get.arguments['certificatesInfo'],
-                                  "deficiencyArea":
-                                      Get.arguments['deficiencyArea'],
-                                  "switchvalue": controller.switchbtn.value,
-                                  "inspectorDate":
-                                      Get.arguments['inspectorDate']
-                                });
+                              onTap: (() async {
+                                  await controller.getinspectioninfojson();
+                                  controller.saveCreateinspection();                               
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -453,19 +443,19 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyName,
-                              value: Get.arguments['propertyinfo']['name']
+                              value: Get.arguments==null?"":Get.arguments['propertyinfo']['name']
                                   .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.city,
-                                  value: Get.arguments['propertyinfo']['city']
+                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['city']
                                       .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.propertyID,
-                                  value: Get.arguments['propertyinfo']['id']
+                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['id']
                                       .toString(),
                                 ),
                               ],
@@ -477,19 +467,19 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyAddress,
-                              value: Get.arguments['propertyinfo']['address']
+                              value: Get.arguments==null?"":Get.arguments['propertyinfo']['address']
                                   .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.state,
-                                  value: Get.arguments['propertyinfo']['state']
+                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['state']
                                       .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.zip,
-                                  value: Get.arguments['propertyinfo']['zip']
+                                  value: Get.arguments==null?"":Get.arguments['propertyinfo']['zip']
                                       .toString(),
                                 ),
                               ],
@@ -520,18 +510,18 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.buildingName,
-                              value: Get.arguments['buildinginfo']['name']
+                              value: Get.arguments==null?"":Get.arguments['buildinginfo']['name']
                                   .toString(),
                             ),
                             TitleheadMenu(
                               title: Strings.buildingType,
-                              value: Get.arguments['buildingtype'].toString(),
+                              value: Get.arguments==null?"":Get.arguments['buildingtype'].toString(),
                             ),
                           ],
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                         TitleheadMenu(
                           title: Strings.yearConstructed,
-                          value: Get.arguments['buildinginfo']
+                          value: Get.arguments==null?"":Get.arguments['buildinginfo']
                                   ['constructed_year']
                               .toString()
                               .toString(),
@@ -1115,7 +1105,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: (() {}),
+                              onTap: (() async {
+                                  await controller.getinspectioninfojson();
+                                  controller.saveCreateinspection();
+                              }),
                               child: Container(
                                 alignment: Alignment.center,
                                 height: 44.px,
