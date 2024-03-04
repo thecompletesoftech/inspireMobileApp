@@ -42,7 +42,6 @@ class BuildingInspectionSummaryScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    controller.deficiencyArea.clear();
                     Get.back();
                   },
                 ),
@@ -600,9 +599,10 @@ class BuildingInspectionSummaryScreen
                           itemBuilder: (context, index) {
                             final item = controller.deficiencyArea[index];
                             return ListView.separated(
-                              itemCount:
-                                  item.deficiencyInspectionsReqModel!=null?
-                                  item.deficiencyInspectionsReqModel!.length:0,
+                              itemCount: item.deficiencyInspectionsReqModel !=
+                                      null
+                                  ? item.deficiencyInspectionsReqModel!.length
+                                  : 0,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, i) {
@@ -632,8 +632,12 @@ class BuildingInspectionSummaryScreen
                                           ),
                                           CommonButton(
                                             radius: 100.px,
-                                            title: Strings.inside,
                                             onTap: () {},
+                                            title: data
+                                                    ?.deficiencyItemHousingDeficiency
+                                                    ?.housingItem
+                                                    ?.item ??
+                                                "",
                                             padding: EdgeInsets.symmetric(
                                               horizontal: 24.px,
                                               vertical: 10.px,

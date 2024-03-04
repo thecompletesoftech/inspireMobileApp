@@ -4,7 +4,6 @@ import 'package:public_housing/screens/building_cabinets_screen/binding/standard
 import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
 import 'package:public_housing/screens/building_cabinets_screen/widgets/building_text_common_widget.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
-import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 
@@ -227,30 +226,31 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                           color: controller.appColors.divider,
                         ),
                         ...List.generate(
-                            controller.buildingDataModel.deficiencyAreaItems
-                                    ?.length ??
-                                0, (index) {
-                          DeficiencyAreaItem? data = controller
-                              .buildingDataModel.deficiencyAreaItems?[index];
+                            controller.successListOfDeficiencies.length,
+                            (index) {
+                          var data =
+                              controller.successListOfDeficiencies[index];
                           return Column(
                             children: [
                               Row(
                                 children: [
-                                  MyTextView(
-                                      data!.deficiencyItemHousingDeficiency!.length>1?data!.deficiencyItemHousingDeficiency![0].housingItem!.item.toString()+","+data!.deficiencyItemHousingDeficiency![1].housingItem!.item.toString():data!.deficiencyItemHousingDeficiency![0].housingItem!.item.toString(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: MyTextView(
+                                      '${data.deficiencyItemHousingDeficiency.housingItem.item ?? ""}',
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.textGreen,
-                                        textWeight: FontWeight.w500,
+                                        textColor:
+                                            controller.appColors.textGreen,
+                                        textWeight: FontWeight.w400,
                                         textFamily: fontFamilyBold,
                                         textSize: 14.px,
                                       ),
                                     ),
-                                    SizedBox(width: 20,),
-
+                                  ),
                                   Expanded(
                                     child: MyTextView(
-                                      '${data?.description ?? ""}',
+                                      '${data.definition}',
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
@@ -261,8 +261,8 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                     ),
                                   ),
                                   if (controller
-                                              .successListOfDeficiencies[index]
-                                          ['success'] ==
+                                          .successListOfDeficiencies[index]
+                                          .isSuccess ==
                                       true)
                                     ClipOval(
                                         child: SvgPicture.string(
@@ -284,6 +284,7 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                                     .successListOfDeficiencies[
                                                 index],
                                             "listIndex": index,
+                                            "standard": 'standard',
                                           })?.then(
                                         (value) {
                                           if (value != null) {
@@ -291,8 +292,8 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                                     .find<
                                                         DeficienciesInsideController>()
                                                 .deficiencyInspectionsReqModel);
-                                            controller.update();
                                           }
+                                          controller.update();
                                         },
                                       );
                                     },

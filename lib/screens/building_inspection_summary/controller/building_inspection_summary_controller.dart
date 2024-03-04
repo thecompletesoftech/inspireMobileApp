@@ -176,11 +176,17 @@ class BuildingInspectionSummaryController extends BaseController {
   isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
         deficiencyInspectionsReqModel[0];
+    deficiencyArea[mainIndex]
+        .deficiencyInspectionsReqModel?[subIndex]
+        .isSuccess = true;
     update();
   }
 
   isDataUpdateSuccess(mainIndex, subIndex) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?.removeAt(subIndex);
+    if (deficiencyArea[mainIndex].deficiencyInspectionsReqModel!.isEmpty) {
+      deficiencyArea[mainIndex].isArea = false;
+    }
     update();
   }
 
