@@ -130,14 +130,6 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                /*Center(
-                                  child: Image.asset(
-                                    controller.buildingDataModel?.image ?? "",
-                                    height: 248.px,
-                                    width: 332.px,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),*/
                                 MyTextView(
                                   Strings.location,
                                   isMaxLineWrap: true,
@@ -159,41 +151,19 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                                         textSize: 20.px,
                                       ),
                                     ),
-/*
-                                    MyTextView(
-                                      Strings.laundry,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 20.px,
-                                      ),
-                                    ).paddingOnly(left: 20.px),
-*/
                                   ],
                                 ).paddingSymmetric(vertical: 24.px),
                                 Row(
                                   children: [
                                     MyTextView(
-                                      Strings.inside,
+                                      '${controller.nameList.join(", ")} ',
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,
                                         textFamily: fontFamilyBold,
                                         textSize: 20.px,
                                       ),
-                                    ),
-/*
-                                    MyTextView(
-                                      Strings.laundry,
-                                      textStyleNew: MyTextStyle(
-                                        textColor: controller.appColors.black,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 20.px,
-                                      ),
-                                    ).paddingOnly(left: 20.px),
-*/
+                                    )
                                   ],
                                 ),
                                 CommonText(
@@ -234,20 +204,15 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             children: [
                               Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MyTextView(
-                                      '${data.deficiencyItemHousingDeficiency.housingItem.item ?? ""}',
-                                      isMaxLineWrap: true,
-                                      textStyleNew: MyTextStyle(
-                                        textColor:
-                                            controller.appColors.textGreen,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyBold,
-                                        textSize: 14.px,
-                                      ),
+                                  MyTextView(
+                                    '${data.deficiencyItemHousingDeficiency.housingItem.item ?? ""}',
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.textGreen,
+                                      textWeight: FontWeight.w500,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 14.px,
                                     ),
-                                  ),
+                                  ).paddingOnly(right: 24.px),
                                   Expanded(
                                     child: MyTextView(
                                       '${data.definition}',
