@@ -76,8 +76,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                               });
                             });
 
-                            Get.toNamed(
-                                BuildingInspectionSummaryScreen.routes,
+                            Get.toNamed(BuildingInspectionSummaryScreen.routes,
                                 arguments: {
                                   "buildingName": controller.buildingName,
                                   "buildingtype": controller.buildingtype,
@@ -86,7 +85,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                   "buildingInfo": controller.buildingInfo,
                                   "propertyInfo": controller.propertyInfo,
                                   "certificatesInfo":
-                                  controller.certificatesInfo,
+                                      controller.certificatesInfo,
                                   "inspectorName": controller.inspectorName,
                                   "inspectorDate": controller.inspectorDate,
                                 })?.then((value) {

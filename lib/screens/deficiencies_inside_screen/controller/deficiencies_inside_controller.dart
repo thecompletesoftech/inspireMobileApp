@@ -19,7 +19,8 @@ enum ImageUploadStatus { initial, uploading, success }
 class DeficienciesInsideController extends BaseController {
   String buildingName = '';
   String deficiencies = '';
-  DeficiencyAreaItem deficiencyAreaItem = DeficiencyAreaItem();
+  DeficiencyInspectionsReqModel successListOfDeficiencies =
+      DeficiencyInspectionsReqModel();
 
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
@@ -38,6 +39,7 @@ class DeficienciesInsideController extends BaseController {
   StandardsDetailsController standardsDetailsController =
       Get.put(StandardsDetailsController());
   bool isDeleted = false;
+  String standard = '';
 
   @override
   void onInit() {
@@ -46,9 +48,11 @@ class DeficienciesInsideController extends BaseController {
       buildingName = Get.arguments['buildingName'] ?? "";
       deficiencies = Get.arguments['deficiencies'] ?? "";
       listIndex = Get.arguments['listIndex'] ?? 0;
+      standard = Get.arguments['standard'] ?? "";
 
-      if (Get.arguments['deficiencyAreaList'] != null) {
-        deficiencyAreaItem = Get.arguments['deficiencyAreaList'][0];
+      if (Get.arguments['deficiencyInspectionsReqModel'] != null) {
+        successListOfDeficiencies =
+            Get.arguments['deficiencyInspectionsReqModel'];
         deficiencyInspectionsReqModel = [
           DeficiencyInspectionsReqModel(
             housingDeficiencyId: Get
@@ -56,37 +60,61 @@ class DeficienciesInsideController extends BaseController {
                 .toString(),
             deficiencyProofPictures: Get
                 .arguments['deficiencyInspectionsReqModel']
-                .deficiencyProofPictures as List<String>,
+                .deficiencyProofPictures,
             date: Get.arguments['deficiencyInspectionsReqModel'].date ?? "",
             comment:
                 Get.arguments['deficiencyInspectionsReqModel'].comment ?? "",
             definition:
                 Get.arguments['deficiencyInspectionsReqModel'].definition ?? "",
+            deficiencyItemHousingDeficiency: Get
+                    .arguments['deficiencyInspectionsReqModel']
+                    .deficiencyItemHousingDeficiency ??
+                DeficiencyItemHousingDeficiency(),
+            criteria:
+                Get.arguments['deficiencyInspectionsReqModel'].criteria ?? "",
           )
         ];
       } else {
         List<String> deficiencyProofPictures = [];
-        if (Get
-            .arguments['successListOfDeficiencies']['deficiencyProofPictures']
+        if (Get.arguments['successListOfDeficiencies'].deficiencyProofPictures
             .isNotEmpty) {
-          deficiencyProofPictures = Get.arguments['successListOfDeficiencies']
-              ['deficiencyProofPictures'] as List<String>;
+          deficiencyProofPictures = Get
+              .arguments['successListOfDeficiencies'].deficiencyProofPictures;
         }
-        deficiencyAreaItem = Get.arguments['deficiencyAreaItem'];
+        successListOfDeficiencies.isSuccess =
+            Get.arguments['deficiencyAreaItem'].isSuccess;
+        successListOfDeficiencies.housingDeficiencyId =
+            Get.arguments['deficiencyAreaItem'].housingDeficiencyId.toString();
+        successListOfDeficiencies.deficiencyItemHousingDeficiency =
+            Get.arguments['deficiencyAreaItem'].deficiencyItemHousingDeficiency;
+        successListOfDeficiencies.definition =
+            Get.arguments['deficiencyAreaItem'].definition;
+        successListOfDeficiencies.criteria =
+            Get.arguments['deficiencyAreaItem'].criteria;
+        successListOfDeficiencies.comment =
+            Get.arguments['deficiencyAreaItem'].comment;
+        successListOfDeficiencies.date =
+            Get.arguments['deficiencyAreaItem'].date;
+        successListOfDeficiencies.deficiencyProofPictures =
+            Get.arguments['deficiencyAreaItem'].deficiencyProofPictures;
 
         deficiencyInspectionsReqModel = [
           DeficiencyInspectionsReqModel(
-            housingDeficiencyId: Get.arguments['successListOfDeficiencies']
-                    ['housingDeficiencyId']
+            housingDeficiencyId: Get
+                .arguments['successListOfDeficiencies'].housingDeficiencyId
                 .toString(),
             deficiencyProofPictures: deficiencyProofPictures,
-            date: Get.arguments['successListOfDeficiencies']['date'] == ""
+            date: Get.arguments['successListOfDeficiencies'].date == ""
                 ? DateFormat("MM/dd/yyyy").format(DateTime.now())
-                : Get.arguments['successListOfDeficiencies']['date'],
-            comment:
-                Get.arguments['successListOfDeficiencies']['comment'] ?? "",
+                : Get.arguments['successListOfDeficiencies'].date,
+            comment: Get.arguments['successListOfDeficiencies'].comment ?? "",
             definition:
-                Get.arguments['successListOfDeficiencies']['definition'] ?? "",
+                Get.arguments['successListOfDeficiencies'].definition ?? "",
+            deficiencyItemHousingDeficiency: Get
+                    .arguments['successListOfDeficiencies']
+                    .deficiencyItemHousingDeficiency ??
+                DeficiencyItemHousingDeficiency(),
+            criteria: Get.arguments['successListOfDeficiencies'].criteria ?? "",
           )
         ];
       }
@@ -291,21 +319,25 @@ class DeficienciesInsideController extends BaseController {
                           onTap: () {
                             selectedItem = "null";
                             visibleBtn = false;
-                            standardsDetailsController
-                                    .successListOfDeficiencies[listIndex ?? 0]
-                                ['deficiencyProofPictures'] = [];
-                            standardsDetailsController
-                                    .successListOfDeficiencies[listIndex ?? 0]
-                                ['success'] = false;
-                            standardsDetailsController
-                                    .successListOfDeficiencies[listIndex ?? 0]
-                                ['comment'] = "";
-                            standardsDetailsController
-                                    .successListOfDeficiencies[listIndex ?? 0]
-                                ['date'] = "";
+                            if (standard == 'standard') {
+                              deficiencyInspectionsReqModel[0]
+                                  .deficiencyProofPictures = <String>[];
+                              deficiencyInspectionsReqModel[0].isSuccess =
+                                  false;
+                              deficiencyInspectionsReqModel[0].comment = "";
+                              deficiencyInspectionsReqModel[0].date = "";
+                            } else {
+                              deficiencyInspectionsReqModel[0]
+                                  .deficiencyProofPictures = <String>[];
+                              deficiencyInspectionsReqModel[0].isSuccess =
+                                  false;
+                              deficiencyInspectionsReqModel[0].comment = "";
+                              deficiencyInspectionsReqModel[0].date = "";
+                              isDeleted = true;
+                            }
                             commentController.clear();
                             dateController.clear();
-                            isDeleted = true;
+                            imageList = [];
                             imageUploadStatus = ImageUploadStatus.initial;
                             update();
                             Get.back();
@@ -733,8 +765,13 @@ class DeficienciesInsideController extends BaseController {
         comment: commentController.text,
         date: dateController.text,
         deficiencyProofPictures: imageList,
-        housingDeficiencyId: deficiencyAreaItem.id.toString(),
-        definition: deficiencyAreaItem.description.toString(),
+        housingDeficiencyId:
+            successListOfDeficiencies.housingDeficiencyId.toString(),
+        definition: successListOfDeficiencies.definition.toString(),
+        deficiencyItemHousingDeficiency:
+            successListOfDeficiencies.deficiencyItemHousingDeficiency,
+        criteria: successListOfDeficiencies.criteria,
+        isSuccess: true,
       )
     ];
     update();

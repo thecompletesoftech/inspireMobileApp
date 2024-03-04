@@ -61,7 +61,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MyTextView(
-                                  '${controller.deficiencyAreaItem.description}',
+                                  '${controller.successListOfDeficiencies.definition}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.appColor,
@@ -118,7 +118,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.correctionTimeFrame ?? ""}',
+                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -146,7 +146,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.deficiencyAreaItem.deficiencyItemHousingDeficiency?[0].severity?.healthySafetyDesignation ?? ""}',
+                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -184,7 +184,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   ),
                                 ),
                                 MyTextView(
-                                  '${controller.deficiencyAreaItem.criteria}',
+                                  '${controller.successListOfDeficiencies.criteria}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.textBlack2,
@@ -869,7 +869,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
-                                                .deficiencyAreaItem.id,
+                                                .successListOfDeficiencies
+                                                .housingDeficiencyId,
                                             "imagesList": controller.imageList,
                                             "deficiencyInspectionsReqModel":
                                                 controller

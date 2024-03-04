@@ -368,7 +368,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   SizedBox(width: 16.px),
                                   Expanded(
                                     child: CommonTextField(
-                                      readOnly: false,
+                                      readOnly: true,
                                       isLable: true,
                                       controller: controller.cityController,
                                       color: controller.appColors.transparent,
