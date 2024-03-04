@@ -29,9 +29,7 @@ class BuildingStandardsController extends BaseController {
 
   void onInit() {
     super.onInit();
-
     () async {
-      print("onit asdadsad");
       deficiencyAreas.clear();
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
@@ -322,14 +320,3 @@ class BuildingModel {
 
   BuildingModel(this.type, this.buildingDataModel, {this.isExpand = false});
 }
-
-// class BuildingDataModel {
-//   String? image;
-//   bool? isSuccess;
-//   String? title;
-//   String? description;
-//   String? status = '';
-//
-//   BuildingDataModel(
-//       this.image, this.title, this.description, this.status, this.isSuccess);
-// }

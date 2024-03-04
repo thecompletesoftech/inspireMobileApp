@@ -9,6 +9,7 @@ class StandardsDetailsController extends BaseController {
   var imagesList;
   var successListOfDeficiencies = [].obs;
   List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
+  List<String> nameList = [];
 
   @override
   void onInit() {
@@ -76,8 +77,7 @@ class StandardsDetailsController extends BaseController {
           }
         }
       }
-
-      print("fkjhbkfdsj ${successListOfDeficiencies}");
+      print("successListOfDeficiencies-------> ${successListOfDeficiencies}");
     }
     update();
   }
@@ -109,6 +109,10 @@ class StandardsDetailsController extends BaseController {
         );
       }
     }
+    successListOfDeficiencies.forEach((element) {
+      nameList.add(element.deficiencyItemHousingDeficiency!.housingItem!.item);
+    });
+    nameList = nameList.toSet().toList();
   }
 
   setSuccessDeficiencies(
@@ -135,8 +139,7 @@ class StandardsDetailsController extends BaseController {
         }
       });
     });
-
     update();
-    print("succeslist" + successListOfDeficiencies.toString());
+    print("successList-------->" + successListOfDeficiencies.toString());
   }
 }
