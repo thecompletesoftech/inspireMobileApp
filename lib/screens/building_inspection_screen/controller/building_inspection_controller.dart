@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/create_building_request_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
 import '../../../Models/accountmodel/account_model.dart';
@@ -42,6 +43,8 @@ class BuildingInspectionController extends BaseController {
   var propertyInfo = {}.obs;
   var buildingInfo = {}.obs;
   var certificatesInfo = [].obs;
+  List<BuildingType> buildingTypes = [];
+  bool isSelected = false;
 
   @override
   void onInit() {
@@ -50,6 +53,7 @@ class BuildingInspectionController extends BaseController {
     // searchBuildingList == buildingList;
     getPropertyInfo();
     getCertificates();
+    getBuildingType();
     getAccount();
     getCurrentDate();
     // checked.addAll([
@@ -98,8 +102,8 @@ class BuildingInspectionController extends BaseController {
   }
 
   getAccount() async {
-    var accountdata = await getStorageData.readString(getStorageData.account);
-    account = Account.fromJson(jsonDecode(accountdata.toString()));
+    var accountData = await getStorageData.readString(getStorageData.account);
+    account = Account.fromJson(jsonDecode(accountData.toString()));
     inspectorController.text = await account!.userName;
     update();
   }
@@ -233,6 +237,7 @@ class BuildingInspectionController extends BaseController {
   }
 
   void actionBuilding(Building value) {
+    isSelected = true;
     buildingNameController.text = value.name;
     buildingidController.text = value.id.toString();
     yearConstructedController.text = value.constructedYear.toString();
@@ -241,8 +246,27 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
+  void actionBuildingType(BuildingType value) {
+    buildingTypeController.text = value.name.toString();
+    buildingTypeidController.text = value.id.toString();
+    update();
+  }
+
   var searchPropertyNameList = [];
   var searchBuildingList = [];
+  var searchBuildingTypeList = [];
+
+  bool isEdited() {
+    bool isData;
+
+    if (isSelected == true) {
+      isData = yearConstructedController.text == "null" ? false : true;
+      return isData;
+    } else {
+      isData = false;
+    }
+    return isData;
+  }
 
   searchProperty({required String searchText}) async {
     searchPropertyNameList.clear();
@@ -264,6 +288,7 @@ class BuildingInspectionController extends BaseController {
   }
 
   searchBuilding({required String searchText}) {
+    isSelected = false;
     searchBuildingList.clear();
     if (buildingNameController.text.length > 0) {
       for (int i = 0; i < buildingList.length; i++) {
@@ -278,6 +303,25 @@ class BuildingInspectionController extends BaseController {
       }
     } else {
       searchBuildingList.addAll(buildingList);
+      update();
+    }
+  }
+
+  searchBuildingType({required String searchText}) {
+    searchBuildingTypeList.clear();
+    if (buildingTypeController.text.length > 0) {
+      for (int i = 0; i < buildingTypes.length; i++) {
+        if (buildingTypes[i]
+            .name
+            .toString()
+            .toLowerCase()
+            .contains(searchText.toString().toLowerCase())) {
+          searchBuildingTypeList.add(buildingTypes[i]);
+          update();
+        }
+      }
+    } else {
+      searchBuildingTypeList.addAll(buildingTypes);
       update();
     }
   }
@@ -305,6 +349,50 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 
+  getBuildingType() async {
+    var response = await buildingInspectionRepository.getBuildingType();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      if (r.buildingTypes!.isNotEmpty) {
+        r.buildingTypes?.forEach((element) {
+          buildingTypes.add(BuildingType(
+              id: element.id ?? 0,
+              name: element.name ?? "",
+              description: element.description));
+        });
+      }
+    });
+    update();
+  }
+
+  createBuilding() async {
+    CreateBuildingRequestModel createBuildingRequestModel =
+        CreateBuildingRequestModel(
+      state: stateController.text,
+      city: cityController.text,
+      name: buildingNameController.text,
+      constructedYear: yearConstructedController.text,
+      buildingTypeId: buildingTypeidController.text,
+      address1: propertyAddressController.text,
+      propertyId: int.tryParse(propertyIDController.text),
+      zip: zipController.text,
+    );
+    var response = await buildingInspectionRepository.createBuildings(
+        createBuildingRequestModel: createBuildingRequestModel);
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      buildingInfo.addAll({
+        "id": r.building?.id,
+        "name": r.building?.name,
+        "constructed_year": r.building?.constructedYear,
+        "building_type_id": r.building?.buildingType?.id,
+      });
+    });
+    update();
+  }
+
   getBuildingApi(value) async {
     buildingList.clear();
     var response = await buildingInspectionRepository.getBuilding(value.id);
@@ -317,9 +405,3 @@ class BuildingInspectionController extends BaseController {
     update();
   }
 }
-
-// class Certificates {
-//   bool? isChecked;
-//   String? name;
-//   Certificates(this.isChecked, this.name);
-// }
