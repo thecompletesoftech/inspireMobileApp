@@ -621,8 +621,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                             )
                                           : CommonTextField(
                                               isLable: true,
-                                              controller:
-                                                  TextEditingController(),
+                                              controller: controller
+                                                  .buildingNameController,
                                               color: controller
                                                   .appColors.transparent,
                                               prefixIcon: SvgPicture.string(
@@ -635,6 +635,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                                 color:
                                                     controller.appColors.grey,
                                               ).paddingAll(10.px),
+                                              onChange: (value) {
+                                                controller.update();
+                                              },
                                               padding: EdgeInsets.zero,
                                               contentPadding:
                                                   EdgeInsets.only(left: 15.px),
@@ -649,12 +652,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   Expanded(
                                     child: CommonTextField(
                                       isLable: true,
-                                      readOnly: controller
-                                                  .yearConstructedController
-                                                  .text ==
-                                              "null"
-                                          ? false
-                                          : true,
+                                      readOnly: controller.isEdited(),
                                       controller:
                                           controller.yearConstructedController,
                                       color: controller.appColors.transparent,
@@ -668,53 +666,118 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       labelText: Strings.yearConstructed,
                                       isLableColor: controller.appColors.black
                                           .withOpacity(controller
-                                                  .yearConstructedController
-                                                  .text
-                                                  .isEmpty
+                                                      .buildingNameController
+                                                      .text
+                                                      .isEmpty &&
+                                                  controller
+                                                      .yearConstructedController
+                                                      .text
+                                                      .isEmpty
                                               ? .12
                                               : 1.0),
                                       borderColor: controller.appColors.black
                                           .withOpacity(controller
-                                                  .yearConstructedController
-                                                  .text
-                                                  .isEmpty
+                                                      .buildingNameController
+                                                      .text
+                                                      .isEmpty &&
+                                                  controller
+                                                      .yearConstructedController
+                                                      .text
+                                                      .isEmpty
                                               ? .12
                                               : 1.0),
                                     ),
                                   ),
                                   SizedBox(width: 16.px),
                                   Expanded(
-                                    child: CommonTextField(
-                                      isLable: true,
-                                      readOnly: true,
+                                    child: TypeAheadField(
                                       controller:
                                           controller.buildingTypeController,
-                                      color: controller.appColors.transparent,
-                                      suffixIcon: SvgPicture.string(
-                                        icDownArrow,
-                                        color: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ).paddingAll(10.px),
-                                      padding: EdgeInsets.zero,
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.px),
-                                      shadowColor:
-                                          controller.appColors.transparent,
-                                      labelText: Strings.buildingType,
-                                      isLableColor: controller.appColors.black
-                                          .withOpacity(controller
-                                                  .buildingTypeController
-                                                  .text
-                                                  .isEmpty
-                                              ? .12
-                                              : 1.0),
-                                      borderColor: controller.appColors.black
-                                          .withOpacity(controller
-                                                  .buildingTypeController
-                                                  .text
-                                                  .isEmpty
-                                              ? .12
-                                              : 1.0),
+                                      suggestionsCallback: controller.isSelected
+                                          ? (search) {}
+                                          : (search) async {
+                                              await controller
+                                                  .searchBuildingType(
+                                                      searchText: search);
+                                              controller.update();
+                                              return controller
+                                                  .searchBuildingTypeList;
+                                            },
+                                      builder: (context, c, focusNode) {
+                                        return CommonTextField(
+                                          focusNode: focusNode,
+                                          isLable: true,
+                                          readOnly:
+                                              controller.isSelected != true
+                                                  ? false
+                                                  : true,
+                                          controller: c,
+                                          color:
+                                              controller.appColors.transparent,
+                                          suffixIcon: SvgPicture.string(
+                                            icDownArrow,
+                                            color: controller.appColors.black
+                                                .withOpacity(controller
+                                                            .buildingNameController
+                                                            .text
+                                                            .isEmpty &&
+                                                        controller
+                                                            .buildingTypeController
+                                                            .text
+                                                            .isEmpty
+                                                    ? .12
+                                                    : 1.0),
+                                          ).paddingAll(10.px),
+                                          padding: EdgeInsets.zero,
+                                          isLableColor: controller
+                                              .appColors.black
+                                              .withOpacity(controller
+                                                          .buildingNameController
+                                                          .text
+                                                          .isEmpty &&
+                                                      controller
+                                                          .buildingTypeController
+                                                          .text
+                                                          .isEmpty
+                                                  ? .12
+                                                  : 1.0),
+                                          borderColor: controller
+                                              .appColors.black
+                                              .withOpacity(controller
+                                                          .buildingNameController
+                                                          .text
+                                                          .isEmpty &&
+                                                      controller
+                                                          .buildingTypeController
+                                                          .text
+                                                          .isEmpty
+                                                  ? .12
+                                                  : 1.0),
+                                          contentPadding:
+                                              EdgeInsets.only(left: 15.px),
+                                          shadowColor:
+                                              controller.appColors.transparent,
+                                          labelText: Strings.buildingName,
+                                        );
+                                      },
+                                      itemBuilder: (context, dynamic i) {
+                                        return ListTile(
+                                          title: MyTextView(
+                                            i.name.toString(),
+                                            textStyleNew: MyTextStyle(
+                                              textColor:
+                                                  controller.appColors.black,
+                                              textWeight: FontWeight.w400,
+                                              textFamily: fontFamilyBold,
+                                              textSize: 16.px,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      onSelected: (value) async {
+                                        controller.actionBuildingType(value);
+                                        controller.update();
+                                      },
                                     ),
                                   ),
                                 ],
@@ -844,14 +907,11 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                         if (controller.getStartInspection()) {
                           // controller.getcertificatesjson();
                           controller.getPropertyJson();
-                          controller.getBuildingJson();
-
-                          // Get.toNamed(UnitInspection.routes, arguments: {
-                          //   "propertyinfo": controller.propertyinfo,
-                          //   "buildinginfo": controller.buildinginfo,
-                          //   "buildingtype": controller.buildingTypeController.text
-                          // });
-                          // print("year" + controller.buildingInfo.toString());
+                          if (controller.isSelected == false) {
+                            controller.createBuilding();
+                          } else {
+                            controller.getBuildingJson();
+                          }
                           Get.toNamed(BuildingStandardsScreen.routes,
                               arguments: {
                                 "buildingName":
@@ -867,18 +927,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     controller.inspectionDateController.text
                               });
                         }
-
-                        // Get.toNamed(BuildingInspectionSummaryScreen.routes,
-                        //     arguments: {
-                        //       "buildingName":
-                        //           controller.buildingNameController.text,
-                        //       "imagesList": "assa",
-                        //       "inspectionName": "sasadsad",
-                        //     });
-
-                        // Get.toNamed(BuildingStandardsScreen.routes, arguments: {
-                        //   "buildingName": controller.buildingNameController.text,
-                        // });
                       }).paddingSymmetric(vertical: 24.px),
                 ],
               ),

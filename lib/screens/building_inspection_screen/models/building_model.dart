@@ -32,15 +32,15 @@ class BuildingModel {
 
 class Building {
   int id;
-  String address1;
+  dynamic address1;
   dynamic address2;
-  String city;
+  dynamic city;
   String state;
   String zip;
   String name;
   dynamic number;
   Property property;
-  String constructedYear;
+  dynamic constructedYear;
   BuildingType buildingType;
 
   Building({
