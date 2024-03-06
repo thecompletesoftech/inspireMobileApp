@@ -137,7 +137,7 @@ class ApiProviders extends BaseController {
           .get(endPoint: Constants.propertyinfo, headers: {
         'Authorization': '${getStorageData.readString(getStorageData.token)}',
       });
-
+      print("asdsad" + response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(PropertyModel.fromJson(response.data));
       } else {

@@ -1,5 +1,4 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unitinspection_controller.dart';
 import '../../../commons/all.dart';
@@ -97,7 +96,7 @@ class UnitInspection extends GetView<UnitController> {
                                 Expanded(
                                   child: CommonTextField(
                                     isLable: true,
-                                    readOnly: true,
+                                    readOnly: false,
                                     onChange: ((value) {
                                       controller.update();
                                     }),
@@ -213,7 +212,10 @@ class UnitInspection extends GetView<UnitController> {
                                 ),
                                 GestureDetector(
                                   onTap: (() {
-                                    controller.unitCannotInspected(context);
+                                    if (controller.getunitinspection()) {
+                                      controller.unitCannotInspected(
+                                          context, Get.arguments);
+                                    }
                                   }),
                                   child: MyTextView(
                                     Strings.unitcannitbeinspected,
@@ -323,20 +325,26 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value:Get.arguments==null?"":
-                              Get.arguments['propertyInfo']['name'].toString(),
+                          value: Get.arguments == null
+                              ? ""
+                              : Get.arguments['propertyInfo']['name']
+                                  .toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['city']
-                                  .toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['propertyInfo']['city']
+                                      .toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: Get.arguments['propertyInfo']['id']
-                                  .toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['propertyInfo']['id']
+                                      .toString(),
                             ),
                           ],
                         ),

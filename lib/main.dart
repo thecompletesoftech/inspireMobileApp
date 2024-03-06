@@ -83,6 +83,7 @@ Future<void> main() async {
   //     printAction("permission allow......");
   //   }
   // }
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -300,5 +301,14 @@ class _MyAppState extends State<MyApp> {
         builder: EasyLoading.init(),
       ),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

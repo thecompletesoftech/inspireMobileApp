@@ -61,11 +61,8 @@ class BuildingInspectionController extends BaseController {
     //   Certificates(false, 'Sprinkler System Certificate'),
     // ]);
     // propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
-
     cityList = ['CITY 1', 'CITY 2', 'CITY 3', 'CITY 4'];
-
     buildingTypeList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-
     // buildingList = [
     //   'BUILDING 1',
     //   'BUILDING 2',

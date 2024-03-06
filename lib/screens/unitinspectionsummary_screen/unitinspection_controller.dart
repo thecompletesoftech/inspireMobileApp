@@ -6,6 +6,7 @@ import '../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
 import '../building_standards_screen/controller/building_standards_controller.dart';
 import '../unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import '../unit_Inpection_screen/unitinspection_controller.dart';
 
 class UnitInspectionsummaryController extends BaseController {
   TextEditingController unitnumberoRname = TextEditingController();
@@ -23,6 +24,8 @@ class UnitInspectionsummaryController extends BaseController {
       Get.put(BuildingInspectionController());
   BuildingInspectionSummaryController _buildingInspectionSummaryController =
       Get.put(BuildingInspectionSummaryController());
+
+  UnitController _unitController = Get.put(UnitController());
   List unithousekeepingList = [];
   List generalphysicalconditionList = [];
   List<String> cityList = [];
@@ -211,12 +214,12 @@ class UnitInspectionsummaryController extends BaseController {
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-      _buildingStandardsController.cleardata ();
+      _buildingStandardsController.cleardata();
       _buildingInspectionController.clearAllData();
       _buildingInspectionSummaryController.cleardata();
       await _buildingInspectionController.getCertificates();
       await Get.toNamed(BuildingInspectionScreen.routes);
-       
+
       islaoding.value = false;
       update();
     });
@@ -231,7 +234,6 @@ class UnitInspectionsummaryController extends BaseController {
     // print("building type info " + Get.arguments['buildingtype'].toString());
     // print("certificate info " + Get.arguments['cerificateList'].toString());
     // print("certificate info " + Get.arguments['inspectorDate'].toString());
-
     var response = await UnitsummaryRepository().createinspection(
         buildingjsons: Get.arguments['buildingInfo'],
         certificatelists: Get.arguments['cerificateList'],
@@ -249,27 +251,28 @@ class UnitInspectionsummaryController extends BaseController {
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-            //  print("property info " + Get.arguments['propertyinfo'].toString());
-   
-          Get.back(result: {
-                 "propertyInfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
-                        "buildingInfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
-                        "buildingtype": Get.arguments==null?"":Get.arguments['buildingtype'],
-                        "cerificateList": Get.arguments['certificatesInfo'],
-                        "deficiencyArea": Get.arguments['deficiencyArea'],
-                        "switchvalue": switchbtn.value,
-                        "inspectorDate": Get.arguments['inspectorDate']
-                                });
-          Get.back();
-          islaoding.value = false;
-          update();
-       
-    
+      //  print("property info " + Get.arguments['propertyinfo'].toString());
+      _unitController.cleardata();
+      _unitController..getunitinspection();
+      Get.back(result: {
+        "propertyInfo":
+            Get.arguments == null ? "" : Get.arguments['propertyInfo'],
+        "buildingInfo":
+            Get.arguments == null ? "" : Get.arguments['buildingInfo'],
+        "buildingtype":
+            Get.arguments == null ? "" : Get.arguments['buildingtype'],
+        "cerificateList": Get.arguments['certificatesInfo'],
+        "deficiencyArea": Get.arguments['deficiencyArea'],
+        "switchvalue": switchbtn.value,
+        "inspectorDate": Get.arguments['inspectorDate']
+      });
+      Get.back();
+      islaoding.value = false;
+      update();
     });
   }
 
-
-    isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
+  isDataUpdate(mainIndex, subIndex, deficiencyInspectionsReqModel) {
     deficiencyArea[mainIndex].deficiencyInspectionsReqModel?[subIndex] =
         deficiencyInspectionsReqModel[0];
     deficiencyArea[mainIndex]
@@ -285,5 +288,4 @@ class UnitInspectionsummaryController extends BaseController {
     }
     update();
   }
-  
 }

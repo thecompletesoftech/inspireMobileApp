@@ -281,6 +281,6 @@ class BuildingInspectionSummaryController extends BaseController {
         "inspectorDate": inspectorDate
       });
     });
-    update();
+    // update();
   }
 }

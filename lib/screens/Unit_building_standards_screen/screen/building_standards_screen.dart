@@ -476,9 +476,11 @@ class UnitBuildingStandardsScreen
                           ),
                         ),
                       )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                    : Expanded(
+                      child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    ),
               ],
             ),
           ),
