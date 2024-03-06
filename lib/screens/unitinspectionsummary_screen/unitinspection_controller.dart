@@ -44,7 +44,6 @@ class UnitInspectionsummaryController extends BaseController {
   void onInit() {
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
-     
     }
     setdataController();
     unithousekeepingList = [
@@ -266,6 +265,7 @@ class UnitInspectionsummaryController extends BaseController {
     deficiencyArea[mainIndex]
         .deficiencyInspectionsReqModel?[subIndex]
         .isSuccess = true;
+    getdeficienyjson();
     update();
   }
 
@@ -274,6 +274,7 @@ class UnitInspectionsummaryController extends BaseController {
     if (deficiencyArea[mainIndex].deficiencyInspectionsReqModel!.isEmpty) {
       deficiencyArea[mainIndex].isArea = false;
     }
+    getdeficienyjson();
     update();
   }
 }
