@@ -317,7 +317,7 @@ class UnitDeficienciesInsideController extends BaseController {
                               horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
-                              selectedItem = "null";
+                            selectedItem = "null";
                             visibleBtn = false;
                             if (standard == 'standard') {
                               deficiencyInspectionsReqModel[0]
@@ -775,5 +775,127 @@ class UnitDeficienciesInsideController extends BaseController {
       )
     ];
     update();
+  }
+
+  isCheck() {
+    return imageList.every((element) => successListOfDeficiencies
+            .deficiencyProofPictures!
+            .contains(element)) &&
+        successListOfDeficiencies.comment == commentController.text &&
+        successListOfDeficiencies.date == dateController.text;
+  }
+
+  confirmDialog() {
+    alertActionDialogApp(
+      context: Get.context!,
+      borderRadius: 28.px,
+      widget: Column(
+        children: [
+          Container(
+            width: 322.px,
+            // height: 184.px,
+            padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                    width: 24.px,
+                    height: 24.px,
+                    child: SvgPicture.string(icOops)),
+                MyTextView(
+                  Strings.fieldsMissing,
+                  textStyleNew: MyTextStyle(
+                    textColor: appColors.textBlack,
+                    textSize: 24.px,
+                    textFamily: fontFamilyRegular,
+                    textWeight: FontWeight.w400,
+                  ),
+                ).paddingSymmetric(vertical: 16.px),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: Strings.changesNotSaved,
+                          style: MyTextStyle(
+                            textColor: appColors.lightText,
+                            textSize: 16.px,
+                            textFamily: fontFamilyRegular,
+                            textWeight: FontWeight.w400,
+                          ),
+                        ),
+                        TextSpan(
+                          text: Strings.notSaved,
+                          style: MyTextStyle(
+                            textColor: appColors.delete,
+                            textSize: 16.px,
+                            textFamily: fontFamilyRegular,
+                            textWeight: FontWeight.w600,
+                            // textHeight: 1.50,
+                            // textLetterSpacing: 0.50,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 322.px,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CommonButton(
+                        title: Strings.cancel,
+                        textColor: appColors.appColor,
+                        color: appColors.transparent,
+                        textSize: 16.px,
+                        textFamily: fontFamilyRegular,
+                        textWeight: FontWeight.w500,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.px, vertical: 10.px),
+                        radius: 100.px,
+                        onTap: () {
+                          Get.back();
+                        }).paddingOnly(right: 8.px),
+                    CommonButton(
+                        title: Strings.dontSave,
+                        textColor: appColors.white,
+                        color: appColors.delete,
+                        textSize: 16.px,
+                        textFamily: fontFamilyRegular,
+                        textWeight: FontWeight.w500,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 24.px, vertical: 10.px),
+                        radius: 100.px,
+                        onTap: () {
+                          Get.back();
+                          Get.back();
+                        }),
+                  ],
+                ).paddingOnly(
+                  top: 24.px,
+                  left: 8.px,
+                  right: 24.px,
+                  bottom: 24.px,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

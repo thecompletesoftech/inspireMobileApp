@@ -384,10 +384,10 @@ class BuildingInspectionController extends BaseController {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (r) {
       buildingInfo.addAll({
-        "id": r.building?.id,
-        "name": r.building?.name,
-        "constructed_year": r.building?.constructedYear,
-        "building_type_id": r.building?.buildingType?.id,
+        "id": r.building?.id.toString(),
+        "name": r.building?.name.toString(),
+        "constructed_year": r.building?.constructedYear.toString(),
+        "building_type_id": r.building?.buildingType?.id.toString(),
       });
     });
     update();

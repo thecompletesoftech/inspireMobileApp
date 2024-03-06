@@ -123,8 +123,9 @@ class BuildingInspectionSummaryController extends BaseController {
     stateController.text = propertyInfo['state'] ?? "";
     zipController.text = propertyInfo['zip'] ?? "";
     propertyAddressController.text = propertyInfo['address'] ?? "";
-    buildingNameController.text = buildingInfo['name'] ?? "";
-    yearConstructedController.text = buildingInfo['constructed_year'] ?? "";
+    buildingNameController.text = buildingInfo['name'].toString() ?? "";
+    yearConstructedController.text =
+        buildingInfo['constructed_year'].toString() ?? "";
     buildingTypeController.text = Get.arguments['buildingtype'] ?? "";
     inspectorController.text = inspectorName ?? "";
     inspectionDateController.text = inspectorDate ?? "";
@@ -211,16 +212,19 @@ class BuildingInspectionSummaryController extends BaseController {
     isSuccess = false;
     deficiencyArea.forEach((element) {
       element.deficiencyInspectionsReqModel?.forEach((e) {
-        List<DeficiencyProofPicture> listPicture = [];
+        List<DeficiencyProofPicture> pictureList = [];
         e.deficiencyProofPictures?.forEach((pictureString) {
-          listPicture.add(DeficiencyProofPicture(picturePath: pictureString));
+          pictureList.add(DeficiencyProofPicture(picturePath: pictureString));
         });
 
         deficiencyInspections?.add(DeficiencyInspection(
-            housingDeficiencyId: e.housingDeficiencyId,
-            comment: e.comment,
-            date: e.date,
-            deficiencyProofPictures: listPicture));
+          housingDeficiencyId: int.tryParse(
+                  e.deficiencyItemHousingDeficiency?.id.toString() ?? "")
+              .toString(),
+          comment: e.comment,
+          date: e.date,
+          deficiencyProofPictures: pictureList,
+        ));
       });
     });
 

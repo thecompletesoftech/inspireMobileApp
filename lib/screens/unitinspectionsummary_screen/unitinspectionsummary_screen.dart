@@ -8,6 +8,7 @@ import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
   const UnitInspectionSummary({Key? key}) : super(key: key);
   static const routes = "/UnitInspectionSummary";
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UnitInspectionsummaryController>(
@@ -25,9 +26,15 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                     radius: 0.px,
                     onClickBack: () {
                       Get.back(result: {
-                        "propertyInfo": Get.arguments==null?"":Get.arguments['propertyInfo'],
-                        "buildingInfo": Get.arguments==null?"":Get.arguments['buildingInfo'],
-                        "buildingtype": Get.arguments==null?"":Get.arguments['buildingtype'],
+                        "propertyInfo": Get.arguments == null
+                            ? ""
+                            : Get.arguments['propertyInfo'],
+                        "buildingInfo": Get.arguments == null
+                            ? ""
+                            : Get.arguments['buildingInfo'],
+                        "buildingtype": Get.arguments == null
+                            ? ""
+                            : Get.arguments['buildingtype'],
                         "cerificateList": Get.arguments['certificatesInfo'],
                         "deficiencyArea": Get.arguments['deficiencyArea'],
                         "switchvalue": controller.switchbtn.value,
@@ -338,8 +345,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                  await controller.getinspectioninfojson();
-                                  controller.saveCreateinspection();                               
+                                await controller.getinspectioninfojson();
+                                controller.saveCreateinspection();
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -443,20 +450,26 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyName,
-                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['name']
-                                  .toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['propertyInfo']['name']
+                                      .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.city,
-                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['city']
-                                      .toString(),
+                                  value: Get.arguments == null
+                                      ? ""
+                                      : Get.arguments['propertyInfo']['city']
+                                          .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.propertyID,
-                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['id']
-                                      .toString(),
+                                  value: Get.arguments == null
+                                      ? ""
+                                      : Get.arguments['propertyInfo']['id']
+                                          .toString(),
                                 ),
                               ],
                             ),
@@ -467,20 +480,26 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.propertyAddress,
-                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['address']
-                                  .toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['propertyInfo']['address']
+                                      .toString(),
                             ),
                             Row(
                               children: [
                                 TitleheadMenu(
                                   title: Strings.state,
-                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['state']
-                                      .toString(),
+                                  value: Get.arguments == null
+                                      ? ""
+                                      : Get.arguments['propertyInfo']['state']
+                                          .toString(),
                                 ).paddingOnly(right: 20.px),
                                 TitleheadMenu(
                                   title: Strings.zip,
-                                  value: Get.arguments==null?"":Get.arguments['propertyInfo']['zip']
-                                      .toString(),
+                                  value: Get.arguments == null
+                                      ? ""
+                                      : Get.arguments['propertyInfo']['zip']
+                                          .toString(),
                                 ),
                               ],
                             ),
@@ -510,21 +529,27 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             TitleheadMenu(
                               title: Strings.buildingName,
-                              value: Get.arguments==null?"":Get.arguments['buildingInfo']['name']
-                                  .toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['buildingInfo']['name']
+                                      .toString(),
                             ),
                             TitleheadMenu(
                               title: Strings.buildingType,
-                              value: Get.arguments==null?"":Get.arguments['buildingtype'].toString(),
+                              value: Get.arguments == null
+                                  ? ""
+                                  : Get.arguments['buildingtype'].toString(),
                             ),
                           ],
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                         TitleheadMenu(
                           title: Strings.yearConstructed,
-                          value: Get.arguments==null?"":Get.arguments['buildingInfo']
-                                  ['constructed_year']
-                              .toString()
-                              .toString(),
+                          value: Get.arguments == null
+                              ? ""
+                              : Get.arguments['buildingInfo']
+                                      ['constructed_year']
+                                  .toString()
+                                  .toString(),
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                         Container(
                           decoration: BoxDecoration(
@@ -758,9 +783,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           itemBuilder: (context, index) {
                             final item = controller.deficiencyArea[index];
                             return ListView.separated(
-                              itemCount:
-                                  item.deficiencyInspectionsReqModel!=null?
-                                  item.deficiencyInspectionsReqModel!.length:0,
+                              itemCount: item.deficiencyInspectionsReqModel !=
+                                      null
+                                  ? item.deficiencyInspectionsReqModel!.length
+                                  : 0,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, i) {
@@ -903,7 +929,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                 textWeight: FontWeight.w500,
                                                 textSize: 14.px,
                                                 onTap: () {
-                                                 int mainIndex = index;
+                                                  int mainIndex = index;
                                                   int subIndex = i;
                                                   Get.toNamed(
                                                       UnitDeficienciesInsideScreen
@@ -919,23 +945,26 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                         "successListOfStandards":
                                                             item.deficiencyInspectionsReqModel
                                                       })?.then((value) async {
-                                                    if (value[
-                                                            'deficiencyInspectionsReqModel'] !=
-                                                        null) {
-                                                      await controller.isDataUpdate(
-                                                          mainIndex,
-                                                          subIndex,
-                                                          value[
-                                                              'deficiencyInspectionsReqModel']);
-                                                    } else if (value[
-                                                            'isEdit'] ==
-                                                        true) {
-                                                      controller
-                                                          .isDataUpdateSuccess(
-                                                              mainIndex,
-                                                              subIndex);
+                                                    if (value != null) {
+                                                      if (value[
+                                                              'deficiencyInspectionsReqModel'] !=
+                                                          null) {
+                                                        await controller
+                                                            .isDataUpdate(
+                                                                mainIndex,
+                                                                subIndex,
+                                                                value[
+                                                                    'deficiencyInspectionsReqModel']);
+                                                      } else if (value[
+                                                              'isEdit'] ==
+                                                          true) {
+                                                        controller
+                                                            .isDataUpdateSuccess(
+                                                                mainIndex,
+                                                                subIndex);
+                                                      }
+                                                      controller.update();
                                                     }
-                                                    controller.update();
                                                   });
                                                 },
                                               ),
@@ -1120,8 +1149,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                  await controller.getinspectioninfojson();
-                                  controller.saveCreateinspection();
+                                await controller.getinspectioninfojson();
+                                controller.saveCreateinspection();
                               }),
                               child: Container(
                                 alignment: Alignment.center,
