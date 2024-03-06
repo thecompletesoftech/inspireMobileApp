@@ -223,7 +223,7 @@ class BuildingInspectionSummaryController extends BaseController {
             deficiencyProofPictures: listPicture));
       });
     });
-
+    print("defieciency" + deficiencyInspections.toString());
     List<Certificate>? certificates = [];
     certificatesInfo.forEach((element) {
       certificates.add(Certificate(id: element['id']));
