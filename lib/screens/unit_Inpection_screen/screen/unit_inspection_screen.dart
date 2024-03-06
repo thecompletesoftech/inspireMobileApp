@@ -262,11 +262,6 @@ class UnitInspection extends GetView<UnitController> {
                         onTap: () async {
                           if (controller.getunitinspection()) {
                             controller.getunitjson();
-
-                            // Get.to(
-                            //   BuildingStandardsScreen(),
-                            //   arguments: {"unitinfo": controller.unitjson},
-                            // );
                             Get.toNamed(
                               UnitBuildingStandardsScreen.routes,
                               preventDuplicates: false,
@@ -282,21 +277,6 @@ class UnitInspection extends GetView<UnitController> {
                                 "inspectorDate": Get.arguments['inspectorDate'],
                               },
                             );
-                            // var result = await Get.toNamed(
-                            //     UnitInspectionSummary.routes,
-                            //     arguments: {
-                            //       "unitinfo": controller.unitjson,
-                            //       "propertyinfo": Get.arguments['propertyInfo'],
-                            //       "buildinginfo": Get.arguments['buildingInfo'],
-                            //       "buildingtype": Get.arguments['buildingtype'],
-                            //       "cerificateList":
-                            //           Get.arguments['certificatesInfo'],
-                            //       "deficiencyArea":
-                            //           Get.arguments['deficiencyArea'],
-                            //       "switchvalue": controller.switchbtn.value,
-                            //       "inspectorDate":
-                            //           Get.arguments['inspectorDate']
-                            //     });
                           }
                         },
                       ).paddingSymmetric(vertical: 24.px),
