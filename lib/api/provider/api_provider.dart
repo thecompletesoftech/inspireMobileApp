@@ -4,6 +4,9 @@ import 'package:public_housing/api/api_helper/api_base_helper_implementation.dar
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/create_building_request_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/create_building_response_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/get_buildingtype_response_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
@@ -159,6 +162,46 @@ class ApiProviders extends BaseController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(CertificateModel.fromJson(response.data));
       } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, GetBuildingTypeResponseModel>>
+      getBuildingTypeRequest() async {
+    try {
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.getBuildingType,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(GetBuildingTypeResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, CreateBuildingResponseModel>> createBuildingsRequest(
+      {required CreateBuildingRequestModel createBuildingRequestModel}) async {
+    try {
+      Response response = await apiBaseHelperImplementation.post(
+        endPoint: Constants.createBuildings,
+        body: createBuildingRequestModel.toJson(),
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(CreateBuildingResponseModel.fromJson(response.data));
+      } else {
+        print("asdsadas" + response.statusCode.toString());
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {

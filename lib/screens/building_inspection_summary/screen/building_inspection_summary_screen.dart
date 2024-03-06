@@ -765,23 +765,26 @@ class BuildingInspectionSummaryScreen
                                                         "successListOfStandards":
                                                             item.deficiencyInspectionsReqModel
                                                       })?.then((value) async {
-                                                    if (value[
-                                                            'deficiencyInspectionsReqModel'] !=
-                                                        null) {
-                                                      await controller.isDataUpdate(
-                                                          mainIndex,
-                                                          subIndex,
-                                                          value[
-                                                              'deficiencyInspectionsReqModel']);
-                                                    } else if (value[
-                                                            'isEdit'] ==
-                                                        true) {
-                                                      controller
-                                                          .isDataUpdateSuccess(
-                                                              mainIndex,
-                                                              subIndex);
+                                                    if (value != null) {
+                                                      if (value[
+                                                              'deficiencyInspectionsReqModel'] !=
+                                                          null) {
+                                                        await controller
+                                                            .isDataUpdate(
+                                                                mainIndex,
+                                                                subIndex,
+                                                                value[
+                                                                    'deficiencyInspectionsReqModel']);
+                                                      } else if (value[
+                                                              'isEdit'] ==
+                                                          true) {
+                                                        controller
+                                                            .isDataUpdateSuccess(
+                                                                mainIndex,
+                                                                subIndex);
+                                                      }
+                                                      controller.update();
                                                     }
-                                                    controller.update();
                                                   });
                                                 },
                                               ),

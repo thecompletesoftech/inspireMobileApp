@@ -49,16 +49,19 @@ Failure createFailure(DioError error) {
       }
     case DioErrorType.unknown:
 
-    
-      // if (error.message!.contains("SocketException")) {
-      //   return Failure(
-      //       errorMessage:
-      //           "Your internet is not available, please try again later");
-      // } else if (error.message!.contains("Software caused connection abort")) {
-      //   return Failure(
-      //       errorMessage:
-      //           "Your internet is not available, please try again later");
-      // }
+      if (error.message != null) {
+        if (error.message!.contains("SocketException")) {
+          return Failure(
+              errorMessage:
+                  "Your internet is not available, please try again later");
+        } else if (error.message!
+            .contains("Software caused connection abort")) {
+          return Failure(
+              errorMessage:
+                  "Your internet is not available, please try again later");
+        }
+      }
+
       return Failure(errorMessage: "Oops something went wrong");
     default:
       return Failure(errorMessage: "Oops something went wrong");

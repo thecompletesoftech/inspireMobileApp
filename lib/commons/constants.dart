@@ -72,7 +72,9 @@ class Constants {
   static const String propertyinfo = "inspection/api/properties/";
   static const String certificates = "inspection/api/certificates";
   static const String buildings = "/inspection/api/buildings";
+  static const String createBuildings = "/inspection/api/buildings/create/";
   static const String getdeficieny = "inspection/api/deficiency_areas";
+  static const String getBuildingType = "inspection/api/building_types";
   static const String createinspection = "inspection/api/create/";
   static const String createinspector = "inspection/api/inspector/create/";
   // static const String getdeficieny = "inspection/api/deficiency_areas/";
