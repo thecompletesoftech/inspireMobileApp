@@ -1,4 +1,5 @@
 import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
 import '../building_inspection_screen/controller/building_inspection_controller.dart';
@@ -33,30 +34,17 @@ class UnitInspectionsummaryController extends BaseController {
   String inspectionName = '';
   String buildingname = '';
   String propertyname = '';
-  var dataList = [
-    RxCommonModel(
-      title: "D1. Cabinets are missing",
-      status: "false",
-      image: ImagePath.kitchen,
-      imgId: ImagePath.cabinets,
-    ),
-    RxCommonModel(
-      title: "D3. Refrigerator is missing",
-      image: ImagePath.cooking,
-      imgId: ImagePath.bedroom,
-      status: "false",
-    ),
-  ];
+
   var switchbtn = false.obs;
-
   List<DeficiencyArea> deficiencyArea = [];
-  var inspectioninfo = {};
 
+  var inspectioninfo = {};
   var deficiencyinfo = [].obs;
   @override
   void onInit() {
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
+     
     }
     setdataController();
     unithousekeepingList = [
@@ -190,7 +178,7 @@ class UnitInspectionsummaryController extends BaseController {
 
   createinspection() async {
     islaoding.value = true;
-    
+
     print("unit" + Get.arguments['unitinfo'].toString());
     print("buildinginfo" + Get.arguments['buildingInfo'].toString());
     print("property info" + Get.arguments['propertyInfo'].toString());

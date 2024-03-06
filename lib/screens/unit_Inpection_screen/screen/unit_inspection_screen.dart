@@ -305,26 +305,17 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value: Get.arguments == null
-                              ? ""
-                              : Get.arguments['propertyInfo']['name']
-                                  .toString(),
+                          value: controller.propertyinfo['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: Get.arguments == null
-                                  ? ""
-                                  : Get.arguments['propertyInfo']['city']
-                                      .toString(),
+                              value: controller.propertyinfo['city'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: Get.arguments == null
-                                  ? ""
-                                  : Get.arguments['propertyInfo']['id']
-                                      .toString(),
+                              value: controller.propertyinfo['id'].toString(),
                             ),
                           ],
                         ),
@@ -335,20 +326,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: Get.arguments['propertyInfo']['address']
-                              .toString(),
+                          value: controller.propertyinfo['address'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
-                              value: Get.arguments['propertyInfo']['state']
-                                  .toString(),
+                              value:
+                                  controller.propertyinfo['state'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: Get.arguments['propertyInfo']['zip']
-                                  .toString(),
+                              value: controller.propertyinfo['zip'].toString(),
                             ),
                           ],
                         ),
@@ -378,19 +367,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value:
-                              Get.arguments['buildingInfo']['name'].toString(),
+                          value: controller.budilnginfo['name'].toString(),
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: Get.arguments['buildingtype'].toString(),
+                          value: controller.budilngtype.value.toString(),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: Get.arguments['buildingInfo']['constructed_year']
-                          .toString(),
+                      value:
+                          controller.budilnginfo['constructed_year'].toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

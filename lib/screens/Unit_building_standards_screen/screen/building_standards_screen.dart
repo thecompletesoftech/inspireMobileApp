@@ -79,7 +79,7 @@ class UnitBuildingStandardsScreen
                                 }
                               });
                             });
-                            print("asdadds" + deficiencyArea.toString());
+
                             // if (deficiencyArea.isNotEmpty) {
                             Get.toNamed(UnitInspectionSummary.routes,
                                 arguments: {
@@ -127,7 +127,8 @@ class UnitBuildingStandardsScreen
                         child: GestureDetector(
                           onTap: controller.isExpanded,
                           child: Container(
-                              height: 44.px,
+                              padding: EdgeInsets.only(left: 10),
+                              height: 55.px,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100.px),
                                   border: Border.all(
@@ -153,7 +154,9 @@ class UnitBuildingStandardsScreen
                                       textFamily: fontFamilyBold,
                                       textSize: 16.px,
                                     ),
-                                  ).paddingOnly(left: 8.px)
+                                  ).paddingOnly(
+                                    left: 8.px,
+                                  )
                                 ],
                               )),
                         ),
@@ -275,7 +278,7 @@ class UnitBuildingStandardsScreen
                       ],
                     ).paddingSymmetric(vertical: 32.px),*/
                   ],
-                ).paddingSymmetric(horizontal: 32.px),
+                ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 controller.deficiencyAreas.isNotEmpty
                     ? Expanded(
                         child: SingleChildScrollView(
@@ -358,7 +361,7 @@ class UnitBuildingStandardsScreen
                                                           .buildingDataModel?[i];
                                                   return GestureDetector(
                                                     onTap: () async {
-                                                     var result =
+                                                      var result =
                                                           await Get.toNamed(
                                                               UnitStandardsDetailsScreen
                                                                   .routes,
@@ -477,10 +480,10 @@ class UnitBuildingStandardsScreen
                         ),
                       )
                     : Expanded(
-                      child: Center(
+                        child: Center(
                           child: CircularProgressIndicator(),
                         ),
-                    ),
+                      ),
               ],
             ),
           ),

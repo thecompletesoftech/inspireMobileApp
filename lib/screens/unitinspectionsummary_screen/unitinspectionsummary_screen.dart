@@ -344,12 +344,6 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                print("asdsd" +
-                                    controller.generalphysicalcondition.text
-                                        .toString());
-                                print("asdsd" +
-                                    controller.unithousekeeping.text
-                                        .toString());
                                 if (controller.generalphysicalcondition.text
                                         .isNotEmpty &&
                                     controller
@@ -1170,8 +1164,13 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                await controller.getinspectioninfojson();
-                                controller.saveCreateinspection();
+                                if (controller.generalphysicalcondition.text
+                                        .isNotEmpty &&
+                                    controller
+                                        .unithousekeeping.text.isNotEmpty) {
+                                  await controller.getinspectioninfojson();
+                                  controller.saveCreateinspection();
+                                }
                               }),
                               child: Container(
                                 alignment: Alignment.center,
