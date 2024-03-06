@@ -48,6 +48,7 @@ Failure createFailure(DioError error) {
         }
       }
     case DioErrorType.unknown:
+
       if (error.message != null) {
         if (error.message!.contains("SocketException")) {
           return Failure(
@@ -60,6 +61,7 @@ Failure createFailure(DioError error) {
                   "Your internet is not available, please try again later");
         }
       }
+
       return Failure(errorMessage: "Oops something went wrong");
     default:
       return Failure(errorMessage: "Oops something went wrong");
