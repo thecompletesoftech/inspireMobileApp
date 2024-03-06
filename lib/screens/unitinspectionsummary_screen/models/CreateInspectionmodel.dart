@@ -100,7 +100,7 @@ class Inspection {
 }
 
 class Building {
-  int id;
+  String id;
   String address1;
   dynamic address2;
   String city;
@@ -109,7 +109,7 @@ class Building {
   String name;
   dynamic number;
   ExternalBuildingProperty property;
-  int constructedYear;
+  String constructedYear;
   BuildingType buildingType;
 
   Building({
@@ -127,17 +127,21 @@ class Building {
   });
 
   factory Building.fromJson(Map<String, dynamic> json) => Building(
-        id: json["id"],
-        address1: json["address1"],
-        address2: json["address2"],
-        city: json["city"],
-        state: json["state"],
-        zip: json["zip"],
-        name: json["name"],
-        number: json["number"],
-        property: ExternalBuildingProperty.fromJson(json["property"]),
-        constructedYear: json["constructed_year"],
-        buildingType: BuildingType.fromJson(json["building_type"]),
+        id: json["id"].toString(),
+        address1: json["address1"].toString(),
+        address2: json["address2"].toString(),
+        city: json["city"].toString(),
+        state: json["state"].toString(),
+        zip: json["zip"].toString(),
+        name: json["name"].toString(),
+        number: json["number"].toString(),
+        property: json["property"] == null
+            ? ExternalBuildingProperty.fromJson({})
+            : ExternalBuildingProperty.fromJson(json["property"]),
+        constructedYear: json["constructed_year"].toString(),
+        buildingType: json["building_type"] == null
+            ? BuildingType.fromJson({})
+            : BuildingType.fromJson(json["building_type"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,7 +160,7 @@ class Building {
 }
 
 class BuildingType {
-  int id;
+  String id;
   String name;
   dynamic description;
 
@@ -167,20 +171,20 @@ class BuildingType {
   });
 
   factory BuildingType.fromJson(Map<String, dynamic> json) => BuildingType(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
+        id: json["id"].toString(),
+        name: json["name"].toString(),
+        description: json["description"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
+        "id": id.toString(),
+        "name": name.toString(),
+        "description": description.toString(),
       };
 }
 
 class ExternalBuildingProperty {
-  int id;
+  String id;
   String address1;
 
   ExternalBuildingProperty({
@@ -190,8 +194,8 @@ class ExternalBuildingProperty {
 
   factory ExternalBuildingProperty.fromJson(Map<String, dynamic> json) =>
       ExternalBuildingProperty(
-        id: json["id"],
-        address1: json["address1"],
+        id: json["id"].toString(),
+        address1: json["address1"].toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -201,7 +205,7 @@ class ExternalBuildingProperty {
 }
 
 class ExternalPropertyClass {
-  int id;
+  String id;
   String address1;
   dynamic address2;
   String city;
@@ -227,20 +231,19 @@ class ExternalPropertyClass {
 
   factory ExternalPropertyClass.fromJson(Map<String, dynamic> json) =>
       ExternalPropertyClass(
-        id: json["id"],
-        address1: json["address1"],
-        address2: json["address2"],
-        city: json["city"],
-        state: json["state"],
-        zip: json["zip"],
-        name: json["name"],
-        number: json["number"],
-        ampNumber: json["amp_number"],
-        notes: json["notes"],
-      );
+          id: json["id"].toString(),
+          address1: json["address1"].toString(),
+          address2: json["address2"].toString(),
+          city: json["city"].toString(),
+          state: json["state"].toString(),
+          zip: json["zip"].toString(),
+          name: json["name"].toString(),
+          number: json["number"].toString(),
+          ampNumber: json["amp_number"].toString(),
+          notes: json["notes"].toString());
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id.toString(),
         "address1": address1,
         "address2": address2,
         "city": city,
@@ -254,11 +257,11 @@ class ExternalPropertyClass {
 }
 
 class ExternalUnit {
-  int id;
+  String id;
   String name;
   String address;
-  int numberOfBedrooms;
-  int numberOfBathrooms;
+  String numberOfBedrooms;
+  String numberOfBathrooms;
   ExternalPropertyClass property;
   Building building;
 
@@ -273,17 +276,21 @@ class ExternalUnit {
   });
 
   factory ExternalUnit.fromJson(Map<String, dynamic> json) => ExternalUnit(
-        id: json["id"],
+        id: json["id"].toString(),
         name: json["name"],
         address: json["address"],
-        numberOfBedrooms: json["number_of_bedrooms"],
-        numberOfBathrooms: json["number_of_bathrooms"],
-        property: ExternalPropertyClass.fromJson(json["property"]),
-        building: Building.fromJson(json["building"]),
+        numberOfBedrooms: json["number_of_bedrooms"].toString(),
+        numberOfBathrooms: json["number_of_bathrooms"].toString(),
+        property: json["property"] == null
+            ? ExternalPropertyClass.fromJson({})
+            : ExternalPropertyClass.fromJson(json["property"]),
+        building: json["building"] == null
+            ? Building.fromJson({})
+            : Building.fromJson(json["building"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id.toString(),
         "name": name,
         "address": address,
         "number_of_bedrooms": numberOfBedrooms,

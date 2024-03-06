@@ -345,8 +345,15 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                await controller.getinspectioninfojson();
-                                controller.saveCreateinspection();
+
+                                if (controller.generalphysicalcondition.text
+                                        .isNotEmpty &&
+                                    controller
+                                        .unithousekeeping.text.isNotEmpty) {
+                                  await controller.getinspectioninfojson();
+                                  controller.saveCreateinspection();
+                                }
+
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -354,11 +361,25 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100.px),
                                     border: Border.all(
-                                        color: controller.appColors.appColor)),
+                                        color: controller
+                                                    .generalphysicalcondition
+                                                    .text
+                                                    .isNotEmpty &&
+                                                controller.unithousekeeping.text
+                                                    .isNotEmpty
+                                            ? controller.appColors.appColor
+                                            : controller.appColors.grey)),
                                 child: MyTextView(
                                   Strings.saveandunit,
                                   textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.appColor,
+                                    textColor: controller
+                                                .generalphysicalcondition
+                                                .text
+                                                .isNotEmpty &&
+                                            controller.unithousekeeping.text
+                                                .isNotEmpty
+                                        ? controller.appColors.appColor
+                                        : controller.appColors.grey,
                                     textWeight: FontWeight.w500,
                                     textFamily: fontFamilyBold,
                                     textSize: 16.px,
@@ -1149,8 +1170,15 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-                                await controller.getinspectioninfojson();
-                                controller.saveCreateinspection();
+
+                                if (controller.generalphysicalcondition.text
+                                        .isNotEmpty &&
+                                    controller
+                                        .unithousekeeping.text.isNotEmpty) {
+                                  await controller.getinspectioninfojson();
+                                  controller.saveCreateinspection();
+                                }
+
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -1158,11 +1186,24 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100.px),
                                     border: Border.all(
-                                        color: controller.appColors.appColor)),
+                                      color: controller.generalphysicalcondition
+                                                  .text.isNotEmpty &&
+                                              controller.unithousekeeping.text
+                                                  .isNotEmpty
+                                          ? controller.appColors.appColor
+                                          : controller.appColors.grey,
+                                    )),
                                 child: MyTextView(
                                   Strings.saveandunit,
                                   textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.appColor,
+                                    textColor: controller
+                                                .generalphysicalcondition
+                                                .text
+                                                .isNotEmpty &&
+                                            controller.unithousekeeping.text
+                                                .isNotEmpty
+                                        ? controller.appColors.appColor
+                                        : controller.appColors.grey,
                                     textWeight: FontWeight.w500,
                                     textFamily: fontFamilyBold,
                                     textSize: 16.px,

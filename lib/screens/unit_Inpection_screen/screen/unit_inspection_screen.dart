@@ -1,5 +1,4 @@
 import 'package:flutter_svg/svg.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unitinspection_controller.dart';
 import '../../../commons/all.dart';
@@ -97,7 +96,7 @@ class UnitInspection extends GetView<UnitController> {
                                 Expanded(
                                   child: CommonTextField(
                                     isLable: true,
-                                    readOnly: true,
+                                    readOnly: false,
                                     onChange: ((value) {
                                       controller.update();
                                     }),
@@ -213,7 +212,10 @@ class UnitInspection extends GetView<UnitController> {
                                 ),
                                 GestureDetector(
                                   onTap: (() {
-                                    controller.unitCannotInspected(context);
+                                    if (controller.getunitinspection()) {
+                                      controller.unitCannotInspected(
+                                          context, Get.arguments);
+                                    }
                                   }),
                                   child: MyTextView(
                                     Strings.unitcannitbeinspected,
@@ -260,11 +262,6 @@ class UnitInspection extends GetView<UnitController> {
                         onTap: () async {
                           if (controller.getunitinspection()) {
                             controller.getunitjson();
-
-                            // Get.to(
-                            //   BuildingStandardsScreen(),
-                            //   arguments: {"unitinfo": controller.unitjson},
-                            // );
                             Get.toNamed(
                               UnitBuildingStandardsScreen.routes,
                               preventDuplicates: false,
@@ -280,21 +277,6 @@ class UnitInspection extends GetView<UnitController> {
                                 "inspectorDate": Get.arguments['inspectorDate'],
                               },
                             );
-                            // var result = await Get.toNamed(
-                            //     UnitInspectionSummary.routes,
-                            //     arguments: {
-                            //       "unitinfo": controller.unitjson,
-                            //       "propertyinfo": Get.arguments['propertyInfo'],
-                            //       "buildinginfo": Get.arguments['buildingInfo'],
-                            //       "buildingtype": Get.arguments['buildingtype'],
-                            //       "cerificateList":
-                            //           Get.arguments['certificatesInfo'],
-                            //       "deficiencyArea":
-                            //           Get.arguments['deficiencyArea'],
-                            //       "switchvalue": controller.switchbtn.value,
-                            //       "inspectorDate":
-                            //           Get.arguments['inspectorDate']
-                            //     });
                           }
                         },
                       ).paddingSymmetric(vertical: 24.px),
@@ -323,20 +305,17 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value:Get.arguments==null?"":
-                              Get.arguments['propertyInfo']['name'].toString(),
+                          value: controller.propertyinfo['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: Get.arguments==null?"":Get.arguments['propertyInfo']['city']
-                                  .toString(),
+                              value: controller.propertyinfo['city'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: Get.arguments['propertyInfo']['id']
-                                  .toString(),
+                              value: controller.propertyinfo['id'].toString(),
                             ),
                           ],
                         ),
@@ -347,20 +326,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: Get.arguments['propertyInfo']['address']
-                              .toString(),
+                          value: controller.propertyinfo['address'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
-                              value: Get.arguments['propertyInfo']['state']
-                                  .toString(),
+                              value:
+                                  controller.propertyinfo['state'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: Get.arguments['propertyInfo']['zip']
-                                  .toString(),
+                              value: controller.propertyinfo['zip'].toString(),
                             ),
                           ],
                         ),
@@ -390,19 +367,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value:
-                              Get.arguments['buildingInfo']['name'].toString(),
+                          value: controller.budilnginfo['name'].toString(),
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: Get.arguments['buildingtype'].toString(),
+                          value: controller.budilngtype.value.toString(),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value: Get.arguments['buildingInfo']['constructed_year']
-                          .toString(),
+                      value:
+                          controller.budilnginfo['constructed_year'].toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

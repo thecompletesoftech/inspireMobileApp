@@ -227,7 +227,7 @@ class BuildingInspectionSummaryController extends BaseController {
         ));
       });
     });
-
+    print("defieciency" + deficiencyInspections.toString());
     List<Certificate>? certificates = [];
     certificatesInfo.forEach((element) {
       certificates.add(Certificate(id: element['id']));
@@ -285,6 +285,6 @@ class BuildingInspectionSummaryController extends BaseController {
         "inspectorDate": inspectorDate
       });
     });
-    update();
+    // update();
   }
 }
