@@ -8,6 +8,7 @@ import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
   const UnitInspectionSummary({Key? key}) : super(key: key);
   static const routes = "/UnitInspectionSummary";
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UnitInspectionsummaryController>(
@@ -344,6 +345,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
+
                                 if (controller.generalphysicalcondition.text
                                         .isNotEmpty &&
                                     controller
@@ -351,6 +353,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                   await controller.getinspectioninfojson();
                                   controller.saveCreateinspection();
                                 }
+
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -963,23 +966,26 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                         "successListOfStandards":
                                                             item.deficiencyInspectionsReqModel
                                                       })?.then((value) async {
-                                                    if (value[
-                                                            'deficiencyInspectionsReqModel'] !=
-                                                        null) {
-                                                      await controller.isDataUpdate(
-                                                          mainIndex,
-                                                          subIndex,
-                                                          value[
-                                                              'deficiencyInspectionsReqModel']);
-                                                    } else if (value[
-                                                            'isEdit'] ==
-                                                        true) {
-                                                      controller
-                                                          .isDataUpdateSuccess(
-                                                              mainIndex,
-                                                              subIndex);
+                                                    if (value != null) {
+                                                      if (value[
+                                                              'deficiencyInspectionsReqModel'] !=
+                                                          null) {
+                                                        await controller
+                                                            .isDataUpdate(
+                                                                mainIndex,
+                                                                subIndex,
+                                                                value[
+                                                                    'deficiencyInspectionsReqModel']);
+                                                      } else if (value[
+                                                              'isEdit'] ==
+                                                          true) {
+                                                        controller
+                                                            .isDataUpdateSuccess(
+                                                                mainIndex,
+                                                                subIndex);
+                                                      }
+                                                      controller.update();
                                                     }
-                                                    controller.update();
                                                   });
                                                 },
                                               ),
@@ -1164,6 +1170,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
+
                                 if (controller.generalphysicalcondition.text
                                         .isNotEmpty &&
                                     controller
@@ -1171,6 +1178,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                   await controller.getinspectioninfojson();
                                   controller.saveCreateinspection();
                                 }
+
                               }),
                               child: Container(
                                 alignment: Alignment.center,

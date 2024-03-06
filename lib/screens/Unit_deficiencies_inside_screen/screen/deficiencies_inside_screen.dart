@@ -30,9 +30,13 @@ class UnitDeficienciesInsideScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                     Get.back(result: {
-                      "isEdit": controller.isDeleted,
-                    });
+                    if (controller.isCheck()) {
+                      Get.back(result: {
+                        "isEdit": controller.isDeleted,
+                      });
+                    } else {
+                      controller.confirmDialog();
+                    }
                   },
                 ),
                 Expanded(
@@ -119,8 +123,8 @@ class UnitDeficienciesInsideScreen
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                               '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
-                                                 isMaxLineWrap: true,
+                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
+                                                isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
                                                       .appColors.appColor,
@@ -147,8 +151,8 @@ class UnitDeficienciesInsideScreen
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                 '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
-                                              isMaxLineWrap: true,
+                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
+                                                isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
                                                       .appColors.appColor,
@@ -185,8 +189,8 @@ class UnitDeficienciesInsideScreen
                                   ),
                                 ),
                                 MyTextView(
-                                 '${controller.successListOfDeficiencies.criteria}',
-                                   isMaxLineWrap: true,
+                                  '${controller.successListOfDeficiencies.criteria}',
+                                  isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.textBlack2,
                                     textWeight: FontWeight.w400,
@@ -356,8 +360,6 @@ class UnitDeficienciesInsideScreen
                                   ),
                                 ],
                               ).paddingSymmetric(vertical: 32.px),
-                              
-                              
                               ShadowContainer1(
                                 color: controller.appColors.white,
                                 margin: EdgeInsets.zero,
@@ -710,8 +712,6 @@ class UnitDeficienciesInsideScreen
                                             ),
                                 ),
                               ),
-                             
-                             
                               Container(
                                 height: 2.px,
                                 color: controller.selectedItem == "null"
@@ -867,7 +867,6 @@ class UnitDeficienciesInsideScreen
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                      
                                         if (controller.visibleBtn &&
                                             controller.imageList.isNotEmpty) {
                                           await controller.saveChanges();
@@ -881,7 +880,6 @@ class UnitDeficienciesInsideScreen
                                                     .deficiencyInspectionsReqModel
                                           });
                                         }
-                                      
                                       }),
                                 ],
                               ).paddingSymmetric(vertical: 48.px),
