@@ -23,8 +23,161 @@ class UnitController extends BaseController {
     return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
   }
 
-  getreasonunitinspection() {
-    return commentController.text.isNotEmpty;
+
+  getinspectioninfojson() {
+    inspectioninfo.addAll({
+      "inspector_id":
+          getStorageData.readString(getStorageData.inspectorId).toString(),
+      "date": Get.arguments['inspectorDate'],
+      "comment": commentController.text,
+      "inspection_state_id": "2",
+      "inspection_type_id": "1",
+      "unit_house_keeping": "",
+      "general_physical_condition": ""
+    });
+    print("inspection data" + inspectioninfo.toString());
+  }
+
+  getdeficienyjson() async {
+    deficiencyinfo.clear();
+    if (deficiencyArea.length > 0) {
+      for (var i = 0; i < deficiencyArea.length; i++) {
+        for (var j = 0;
+            j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+            j++) {
+          deficiencyinfo.add({
+            "housing_deficiency_id": deficiencyArea[i]
+                .deficiencyInspectionsReqModel![j]
+                .deficiencyItemHousingDeficiency!
+                .id,
+            "deficiency_proof_pictures": await getdeficienyimage(),
+            "comment":
+                deficiencyArea[i].deficiencyInspectionsReqModel![j].comment,
+            "date": deficiencyArea[i].deficiencyInspectionsReqModel![j].date
+          });
+        }
+      }
+      print("deficiency" + deficiencyinfo.toString());
+    }
+  }
+
+  getdeficienyimage() {
+    var result = [];
+    for (var i = 0; i < deficiencyArea.length; i++) {
+      for (var j = 0;
+          j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+          j++) {
+        for (var k = 0;
+            k <
+                deficiencyArea[i]
+                    .deficiencyInspectionsReqModel![j]
+                    .deficiencyProofPictures!
+                    .length;
+            k++) {
+          result.add({
+            "picture_path": deficiencyArea[i]
+                .deficiencyInspectionsReqModel![j]
+                .deficiencyProofPictures![k],
+          });
+        }
+      }
+    }
+    print("result" + result.toString());
+    return result;
+  }
+
+  createinspection(arg) async {
+    print(arg.toString());
+    await getunitjson();
+    await getinspectioninfojson();
+    islaoding.value = true;
+    var response = await UnitsummaryRepository().createinspection(
+        buildingjsons: arg['buildingInfo'],
+        certificatelists: arg['certificatesInfo'],
+        deficiencylists: [],
+        insepctionjsons: inspectioninfo,
+        propertyjsons: arg['propertyInfo'],
+        unitjsons: unitjson);
+
+    await response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      islaoding.value = false;
+      update();
+    }, (r) async {
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Unit inspection Submitted Successfully!!",
+          isOk: true);
+      _buildingStandardsController.cleardata();
+      _buildingInspectionController.clearAllData();
+      _buildingInspectionSummaryController.cleardata();
+      await _buildingInspectionController.getCertificates();
+      await Get.toNamed(BuildingInspectionScreen.routes);
+
+      islaoding.value = false;
+      update();
+    });
+  }
+
+  saveCreateinspection(arg) async {
+    islaoding.value = true;
+    await getunitjson();
+    await getinspectioninfojson();
+    // print("unit " + Get.arguments['unitinfo'].toString());
+    // print("buildinginfo " + Get.arguments['buildingInfo'].toString());
+    // print("property info " + Get.arguments['propertyInfo'].toString());
+    // print("building type info " + Get.arguments['buildingtype'].toString());
+    // print("certificate info " + Get.arguments['cerificateList'].toString());
+    // print("certificate info " + Get.arguments['inspectorDate'].toString());
+    var response = await UnitsummaryRepository().createinspection(
+        buildingjsons: arg['buildingInfo'],
+        certificatelists: arg['certificatesInfo'],
+        deficiencylists: [],
+        insepctionjsons: inspectioninfo,
+        propertyjsons: arg['propertyInfo'],
+        unitjsons: unitjson);
+
+    await response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      islaoding.value = false;
+      update();
+    }, (r) async {
+      utils.showSnackBar(
+          context: Get.context!,
+          message: "Unit inspection Submitted Successfully!!",
+          isOk: true);
+      //  print("property info " + Get.arguments['propertyinfo'].toString());
+      cleardata();
+      // getunitinspection();
+      // Get.back(result: {
+      //   "propertyInfo":
+      //       Get.arguments == null ? "" : Get.arguments['propertyInfo'],
+      //   "buildingInfo":
+      //       Get.arguments == null ? "" : Get.arguments['buildingInfo'],
+      //   "buildingtype":
+      //       Get.arguments == null ? "" : Get.arguments['buildingtype'],
+      //   "cerificateList": Get.arguments['certificatesInfo'],
+      //   "deficiencyArea": Get.arguments['deficiencyArea'],
+      //   "switchvalue": switchbtn.value,
+      //   "inspectorDate": Get.arguments['inspectorDate']
+      // });
+      // Get.back();
+      islaoding.value = false;
+      update();
+    });
+  }
+
+  cleardata() {
+    unitnumberoRname.clear();
+    // unitAddress.clear();
+    bedrooms.clear();
+    bathrooms.clear();
+    commentController.clear();
+    unitjson.value = {};
+    inspectioninfo = {};
+    switchbtn.value = false;
+
+  
   }
 
   getunitjson() {
@@ -53,7 +206,10 @@ class UnitController extends BaseController {
                     "address": unitAddress.text,
                     "occupied": switchbtn.value,
                     "number_of_bathrooms": bathrooms.text,
-                    "number_of_bedrooms": bedrooms.text
+
+                    "number_of_bedrooms": bedrooms.text,
+
+
                   });
     print(unitjson.toString());
   }
@@ -123,8 +279,12 @@ class UnitController extends BaseController {
                               children: [
                                 GestureDetector(
                                   onTap: (() {
-                                    Get.back();
-                                    Get.toNamed(UnitInspection.routes);
+
+                                    if (commentController.text.isNotEmpty) {
+                                      Get.back();
+                                      saveCreateinspection(arg);
+                                    }
+
                                   }),
                                   child: Container(
                                       alignment: Alignment.center,
