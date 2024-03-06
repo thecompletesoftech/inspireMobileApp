@@ -1,6 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 
 import '../../Unit_building_standards_screen/controller/building_standards_controller.dart';
 import '../../Unit_deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
@@ -18,7 +17,6 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
     UnitBuildingStandardsController _unitbuildingStandardsController =
         Get.put(UnitBuildingStandardsController());
 
-   
     return GetBuilder<UnitStandardsDetailsController>(
       init: UnitStandardsDetailsController(),
       autoRemove: false,
@@ -40,7 +38,6 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                       "buildingName":
                           "${controller.buildingDataModel.name ?? ""}",
                     });
-                   
                   },
                 ),
                 Expanded(
@@ -48,8 +45,8 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                           '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
-                         textStyleNew: MyTextStyle(
+                          '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
+                          textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,
                             textFamily: fontFamilyBold,

@@ -202,7 +202,6 @@ class UnitController extends BaseController {
 
   getunitjson() {
     unitjson.addAll({
-      // "id": "1",
       "name": unitnumberoRname.text,
       "address": unitAddress.text,
       "number_of_bedrooms": bedrooms.text,
