@@ -42,8 +42,8 @@ class BuildingInspectionSummaryController extends BaseController {
   List<String> buildingTypeList = [];
   bool? isData;
   String? buildingName = '';
-  String? buildingtype = '';
-  String? propertyname = '';
+  String? buildingType = '';
+  String? propertyName = '';
   String inspectionName = '';
   var imagesList;
   List<DeficiencyArea> deficiencyArea = [];
@@ -62,8 +62,8 @@ class BuildingInspectionSummaryController extends BaseController {
     deficiencyArea = [];
     if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
-      buildingtype = Get.arguments['buildingtype'];
-      propertyname = Get.arguments['propertyInfo']['name'];
+      buildingType = Get.arguments['buildingtype'];
+      propertyName = Get.arguments['propertyInfo']['name'];
       imagesList = Get.arguments['imagesList'];
       inspectionName = Get.arguments['inspectionName'];
       deficiencyArea = Get.arguments['deficiencyArea'];
@@ -90,7 +90,7 @@ class BuildingInspectionSummaryController extends BaseController {
     super.onInit();
   }
 
-  cleardata() {
+  clearData() {
     deficiencyArea.clear();
   }
 
@@ -123,9 +123,9 @@ class BuildingInspectionSummaryController extends BaseController {
     stateController.text = propertyInfo['state'] ?? "";
     zipController.text = propertyInfo['zip'] ?? "";
     propertyAddressController.text = propertyInfo['address'] ?? "";
-    buildingNameController.text = buildingInfo['name'].toString() ?? "";
+    buildingNameController.text = buildingInfo['name'].toString();
     yearConstructedController.text =
-        buildingInfo['constructed_year'].toString() ?? "";
+        buildingInfo['constructed_year'].toString();
     buildingTypeController.text = Get.arguments['buildingtype'] ?? "";
     inspectorController.text = inspectorName ?? "";
     inspectionDateController.text = inspectorDate ?? "";
@@ -192,7 +192,7 @@ class BuildingInspectionSummaryController extends BaseController {
   }
 
   createInspector({required String inspectorName}) async {
-    var response = await loginRepository.createinspectorapi(inspectorName);
+    var response = await loginRepository.createInspector(name: inspectorName);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (InspectorModel r) {
@@ -275,7 +275,7 @@ class BuildingInspectionSummaryController extends BaseController {
       Get.toNamed(UnitInspection.routes, arguments: {
         "deficiencyArea": deficiencyArea,
         "buildingName": buildingName,
-        "buildingtype": buildingtype,
+        "buildingtype": buildingType,
         "imagesList": imagesList,
         "inspectionName": inspectionName,
         "propertyInfo": propertyInfo,

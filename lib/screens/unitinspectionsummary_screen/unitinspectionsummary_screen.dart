@@ -5,14 +5,14 @@ import '../../commons/all.dart';
 import '../Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import '../unit_Inpection_screen/TitleheadmenuWidgte.dart';
 
-class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
+class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
   const UnitInspectionSummary({Key? key}) : super(key: key);
   static const routes = "/UnitInspectionSummary";
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UnitInspectionsummaryController>(
-      init: UnitInspectionsummaryController(),
+    return GetBuilder<UnitInspectionSummaryController>(
+      init: UnitInspectionSummaryController(),
       assignId: true,
       builder: (controller) {
         return BaseScreen(
@@ -37,7 +37,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             : Get.arguments['buildingtype'],
                         "cerificateList": Get.arguments['certificatesInfo'],
                         "deficiencyArea": Get.arguments['deficiencyArea'],
-                        "switchvalue": controller.switchbtn.value,
+                        "switchvalue": controller.switchButton.value,
                         "inspectorDate": Get.arguments['inspectorDate']
                       });
                       // }
@@ -48,7 +48,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                       children: [
                         Center(
                           child: MyTextView(
-                            '${controller.propertyname}-${controller.buildingname ?? ""}-${controller.unitnumberoRname.text ?? ""}',
+                            '${controller.propertyName}-${controller.buildingName} - ${controller.unitNumberName.text}',
                             textStyleNew: MyTextStyle(
                               textColor: controller.appColors.appColor,
                               textWeight: FontWeight.w600,
@@ -74,12 +74,12 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                           children: [
                             Expanded(
                                 child: TypeAheadField(
-                              controller: controller.unithousekeeping,
+                              controller: controller.unitHouseKeeping,
                               suggestionsCallback: (search) {
                                 // controller.searchBuilding(
                                 //     searchText: search);
                                 controller.update();
-                                return controller.unithousekeepingList;
+                                return controller.unitHouseKeepingList;
                               },
                               builder: (context, c, focusNode) {
                                 return CommonTextField(
@@ -121,7 +121,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                       ),
                                     ),
                                     if (i !=
-                                        controller.unithousekeepingList.length -
+                                        controller.unitHouseKeepingList.length -
                                             1)
                                       Divider()
                                   ],
@@ -129,7 +129,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                               },
                               onSelected: (value) async {
                                 controller
-                                    .actionunitHousekeeping(value['title']);
+                                    .actionUnitHousekeeping(value['title']);
                                 controller.update();
                               },
                             )
@@ -205,11 +205,11 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             SizedBox(width: 16.px),
                             Expanded(
                               child: TypeAheadField(
-                                controller: controller.generalphysicalcondition,
+                                controller: controller.generalPhysicalCondition,
                                 suggestionsCallback: (search) {
                                   controller.update();
                                   return controller
-                                      .generalphysicalconditionList;
+                                      .generalPhysicalConditionList;
                                 },
                                 builder: (context, c, focusNode) {
                                   return CommonTextField(
@@ -255,7 +255,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                       ),
                                       if (i !=
                                           controller
-                                                  .unithousekeepingList.length -
+                                                  .unitHouseKeepingList.length -
                                               1)
                                         Divider()
                                     ],
@@ -264,7 +264,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                 },
                                 onSelected: (value) async {
                                   controller
-                                      .actiongeneralphysical(value['title']);
+                                      .actionGeneralPhysical(value['title']);
                                   controller.update();
                                 },
                               ),
@@ -346,12 +346,12 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             GestureDetector(
                               onTap: (() async {
 
-                                if (controller.generalphysicalcondition.text
+                                if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
-                                        .unithousekeeping.text.isNotEmpty) {
-                                  await controller.getinspectioninfojson();
-                                  controller.saveCreateinspection();
+                                        .unitHouseKeeping.text.isNotEmpty) {
+                                  await controller.getInspectionInfoJson();
+                                  controller.saveCreateInspection();
                                 }
 
                               }),
@@ -362,10 +362,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                     borderRadius: BorderRadius.circular(100.px),
                                     border: Border.all(
                                         color: controller
-                                                    .generalphysicalcondition
+                                                    .generalPhysicalCondition
                                                     .text
                                                     .isNotEmpty &&
-                                                controller.unithousekeeping.text
+                                                controller.unitHouseKeeping.text
                                                     .isNotEmpty
                                             ? controller.appColors.appColor
                                             : controller.appColors.grey)),
@@ -373,10 +373,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                   Strings.saveandunit,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller
-                                                .generalphysicalcondition
+                                                .generalPhysicalCondition
                                                 .text
                                                 .isNotEmpty &&
-                                            controller.unithousekeeping.text
+                                            controller.unitHouseKeeping.text
                                                 .isNotEmpty
                                         ? controller.appColors.appColor
                                         : controller.appColors.grey,
@@ -424,24 +424,24 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                               textSize: 16.px,
                               textWeight: FontWeight.w500,
                               textFamily: fontFamilyRegular,
-                              textColor: controller.generalphysicalcondition
+                              textColor: controller.generalPhysicalCondition
                                           .text.isNotEmpty &&
                                       controller
-                                          .unithousekeeping.text.isNotEmpty
+                                          .unitHouseKeeping.text.isNotEmpty
                                   ? controller.appColors.black
                                   : controller.appColors.border1,
                               color: controller
-                                      .generalphysicalcondition.text.isNotEmpty
+                                      .generalPhysicalCondition.text.isNotEmpty
                                   ? controller.appColors.textPink
                                   : controller.appColors.black
                                       .withOpacity(0.11999999731779099),
                               onTap: () async {
-                                if (controller.generalphysicalcondition.text
+                                if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
-                                        .unithousekeeping.text.isNotEmpty) {
-                                  await controller.getinspectioninfojson();
-                                  controller.createinspection();
+                                        .unitHouseKeeping.text.isNotEmpty) {
+                                  await controller.getInspectionInfoJson();
+                                  controller.createInspection();
                                 }
                               },
                             )
@@ -607,7 +607,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                       child: CommonTextField(
                                         isLable: true,
                                         readOnly: false,
-                                        controller: controller.unitnumberoRname,
+                                        controller: controller.unitNumberName,
                                         onChange: ((value) {
                                           controller.getUnitInspectionSummary();
                                         }),
@@ -727,17 +727,17 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                           // SvgPicture.string(icbathroom),
                                           activeColor:
                                               controller.appColors.white,
-                                          value: controller.switchbtn.value,
+                                          value: controller.switchButton.value,
                                           onChanged: (value) {
-                                            controller.switchbtn.value =
-                                                !controller.switchbtn.value;
-                                            print(controller.switchbtn.value
+                                            controller.switchButton.value =
+                                                !controller.switchButton.value;
+                                            print(controller.switchButton.value
                                                 .toString());
                                             controller.update();
                                           },
                                         ),
                                         MyTextView(
-                                          controller.switchbtn.value
+                                          controller.switchButton.value
                                               ? Strings.yes
                                               : Strings.no,
                                           textStyleNew: MyTextStyle(
@@ -1172,12 +1172,12 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                             GestureDetector(
                               onTap: (() async {
 
-                                if (controller.generalphysicalcondition.text
+                                if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
-                                        .unithousekeeping.text.isNotEmpty) {
-                                  await controller.getinspectioninfojson();
-                                  controller.saveCreateinspection();
+                                        .unitHouseKeeping.text.isNotEmpty) {
+                                  await controller.getInspectionInfoJson();
+                                  controller.saveCreateInspection();
                                 }
 
                               }),
@@ -1187,9 +1187,9 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100.px),
                                     border: Border.all(
-                                      color: controller.generalphysicalcondition
+                                      color: controller.generalPhysicalCondition
                                                   .text.isNotEmpty &&
-                                              controller.unithousekeeping.text
+                                              controller.unitHouseKeeping.text
                                                   .isNotEmpty
                                           ? controller.appColors.appColor
                                           : controller.appColors.grey,
@@ -1198,10 +1198,10 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                   Strings.saveandunit,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller
-                                                .generalphysicalcondition
+                                                .generalPhysicalCondition
                                                 .text
                                                 .isNotEmpty &&
-                                            controller.unithousekeeping.text
+                                            controller.unitHouseKeeping.text
                                                 .isNotEmpty
                                         ? controller.appColors.appColor
                                         : controller.appColors.grey,
@@ -1249,24 +1249,24 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                               textSize: 16.px,
                               textWeight: FontWeight.w500,
                               textFamily: fontFamilyRegular,
-                              textColor: controller.generalphysicalcondition
+                              textColor: controller.generalPhysicalCondition
                                           .text.isNotEmpty &&
                                       controller
-                                          .unithousekeeping.text.isNotEmpty
+                                          .unitHouseKeeping.text.isNotEmpty
                                   ? controller.appColors.black
                                   : controller.appColors.border1,
                               color: controller
-                                      .generalphysicalcondition.text.isNotEmpty
+                                      .generalPhysicalCondition.text.isNotEmpty
                                   ? controller.appColors.textPink
                                   : controller.appColors.black
                                       .withOpacity(0.11999999731779099),
                               onTap: () async {
-                                if (controller.generalphysicalcondition.text
+                                if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
-                                        .unithousekeeping.text.isNotEmpty) {
-                                  await controller.getinspectioninfojson();
-                                  controller.createinspection();
+                                        .unitHouseKeeping.text.isNotEmpty) {
+                                  await controller.getInspectionInfoJson();
+                                  controller.createInspection();
                                 }
                               },
                             )
@@ -1278,7 +1278,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                 ],
               ),
               Obx(
-                () => controller.islaoding.value == true
+                () => controller.isLoading.value == true
                     ? Center(child: CircularProgressIndicator())
                     : Container(),
               ),

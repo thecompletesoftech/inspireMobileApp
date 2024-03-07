@@ -75,7 +75,7 @@ class UnitInspection extends GetView<UnitController> {
                                   child: CommonTextField(
                                     isLable: true,
                                     readOnly: false,
-                                    controller: controller.unitnumberoRname,
+                                    controller: controller.unitNumberName,
                                     onChange: ((value) {
                                       controller.update();
                                     }),
@@ -190,15 +190,15 @@ class UnitInspection extends GetView<UnitController> {
                                       ).image,
                                       // SvgPicture.string(icbathroom),
                                       activeColor: controller.appColors.white,
-                                      value: controller.switchbtn.value,
+                                      value: controller.switchButton.value,
                                       onChanged: (value) {
-                                        controller.switchbtn.value =
-                                            !controller.switchbtn.value;
+                                        controller.switchButton.value =
+                                            !controller.switchButton.value;
                                         controller.update();
                                       },
                                     ),
                                     MyTextView(
-                                      controller.switchbtn.value
+                                      controller.switchButton.value
                                           ? Strings.yes
                                           : Strings.no,
                                       textStyleNew: MyTextStyle(
@@ -212,7 +212,7 @@ class UnitInspection extends GetView<UnitController> {
                                 ),
                                 GestureDetector(
                                   onTap: (() {
-                                    if (controller.getunitinspection()) {
+                                    if (controller.getUnitInspection()) {
                                       controller.unitCannotInspected(
                                           context, Get.arguments);
                                     }
@@ -220,7 +220,7 @@ class UnitInspection extends GetView<UnitController> {
                                   child: MyTextView(
                                     Strings.unitcannitbeinspected,
                                     textStyleNew: MyTextStyle(
-                                      textColor: controller.getunitinspection()
+                                      textColor: controller.getUnitInspection()
                                           ? controller.appColors.appColor
                                           : controller.appColors.border1,
                                       textWeight: FontWeight.w500,
@@ -252,25 +252,25 @@ class UnitInspection extends GetView<UnitController> {
                         textSize: 16.px,
                         textWeight: FontWeight.w500,
                         textFamily: fontFamilyRegular,
-                        textColor: controller.getunitinspection()
+                        textColor: controller.getUnitInspection()
                             ? controller.appColors.black
                             : controller.appColors.border1,
-                        color: controller.getunitinspection()
+                        color: controller.getUnitInspection()
                             ? controller.appColors.textPink
                             : controller.appColors.black
                                 .withOpacity(0.11999999731779099),
                         onTap: () async {
-                          if (controller.getunitinspection()) {
-                            controller.getunitjson();
+                          if (controller.getUnitInspection()) {
+                            controller.getUnitJson();
                             Get.toNamed(
                               UnitBuildingStandardsScreen.routes,
                               preventDuplicates: false,
                               arguments: {
-                                "unitinfo": controller.unitjson,
+                                "unitinfo": controller.unitJson,
                                 "propertyInfo": Get.arguments['propertyInfo'],
                                 "buildingInfo": Get.arguments['buildingInfo'],
                                 "buildingtype": Get.arguments['buildingtype'],
-                                "switchvalue": controller.switchbtn.value,
+                                "switchvalue": controller.switchButton.value,
                                 "certificatesInfo":
                                     Get.arguments['certificatesInfo'],
                                 "inspectorName": Get.arguments['inspectorName'],
@@ -305,17 +305,17 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyName,
-                          value: controller.propertyinfo['name'].toString(),
+                          value: controller.propertyInfo['name'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.city,
-                              value: controller.propertyinfo['city'].toString(),
+                              value: controller.propertyInfo['city'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.propertyID,
-                              value: controller.propertyinfo['id'].toString(),
+                              value: controller.propertyInfo['id'].toString(),
                             ),
                           ],
                         ),
@@ -326,18 +326,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.propertyAddress,
-                          value: controller.propertyinfo['address'].toString(),
+                          value: controller.propertyInfo['address'].toString(),
                         ),
                         Row(
                           children: [
                             TitleheadMenu(
                               title: Strings.state,
                               value:
-                                  controller.propertyinfo['state'].toString(),
+                                  controller.propertyInfo['state'].toString(),
                             ).paddingOnly(right: 20.px),
                             TitleheadMenu(
                               title: Strings.zip,
-                              value: controller.propertyinfo['zip'].toString(),
+                              value: controller.propertyInfo['zip'].toString(),
                             ),
                           ],
                         ),
@@ -367,18 +367,18 @@ class UnitInspection extends GetView<UnitController> {
                       children: [
                         TitleheadMenu(
                           title: Strings.buildingName,
-                          value: controller.budilnginfo['name'].toString(),
+                          value: controller.buildingInfo['name'].toString(),
                         ),
                         TitleheadMenu(
                           title: Strings.buildingType,
-                          value: controller.budilngtype.value.toString(),
+                          value: controller.buildingType.value.toString(),
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
                       value:
-                          controller.budilnginfo['constructed_year'].toString(),
+                          controller.buildingInfo['constructed_year'].toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),

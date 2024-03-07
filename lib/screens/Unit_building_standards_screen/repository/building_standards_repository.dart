@@ -11,7 +11,7 @@ class BuildingStandardsRepository {
 
   Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
       getDeficiencyAreas() async {
-    var response = await _provider.getunitDeficiencyAreasRequest();
+    var response = await _provider.getUnitDeficiencyAreasRequest();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

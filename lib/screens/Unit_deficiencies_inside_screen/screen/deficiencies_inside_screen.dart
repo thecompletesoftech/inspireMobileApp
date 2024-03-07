@@ -30,7 +30,7 @@ class UnitDeficienciesInsideScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    if (controller.isCheck()) {
+                    if (controller.isCheck() || controller.isDeleted) {
                       Get.back(result: {
                         "isEdit": controller.isDeleted,
                       });
@@ -295,14 +295,15 @@ class UnitDeficienciesInsideScreen
                                   children: [
                                     CommonIconButton(
                                       textColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.imageList.isNotEmpty
+                                                  "null" /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,
                                       title: Strings.delete,
                                       onTap: () {
-                                        if (controller.selectedItem != "null" &&
-                                            controller.imageList.isNotEmpty) {
+                                        if (controller.selectedItem != "null" /*&&
+                                            controller.imageList.isNotEmpty*/
+                                            ) {
                                           controller.dialogDelete();
                                         }
                                       },
@@ -321,8 +322,8 @@ class UnitDeficienciesInsideScreen
                                               ? 40.px
                                               : 24.px,
                                       iconColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.imageList.isNotEmpty
+                                                  "null" /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,
                                       icon: icDeleteGrey,
@@ -867,8 +868,10 @@ class UnitDeficienciesInsideScreen
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller.visibleBtn &&
-                                            controller.imageList.isNotEmpty) {
+                                        if (controller
+                                                .visibleBtn /*&&
+                                            controller.imageList.isNotEmpty*/
+                                            ) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller

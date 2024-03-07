@@ -29,6 +29,7 @@ class UnitBuildingStandardsController extends BaseController {
   String inspectorDate = '';
   String unitname = '';
   var switchbtn = false.obs;
+
   void onInit() {
     super.onInit();
 
@@ -42,7 +43,6 @@ class UnitBuildingStandardsController extends BaseController {
       buildingtype = Get.arguments['buildingtype'];
       buildingName = Get.arguments['buildingInfo']['name'];
       propertyname = Get.arguments['propertyInfo']['name'];
-   
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
       certificatesInfo.value = Get.arguments['certificatesInfo'];
@@ -291,7 +291,7 @@ class UnitBuildingStandardsController extends BaseController {
   //   }
   //   update();
   // }
-  
+
   isSuccessStandards1(successList, standardsId) {
     for (int i = 0; i < searchList.length; i++) {
       for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
