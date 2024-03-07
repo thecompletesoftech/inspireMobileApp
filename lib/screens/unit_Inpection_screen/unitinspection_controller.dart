@@ -118,7 +118,7 @@ class UnitController extends BaseController {
     var response = await UnitsummaryRepository().createinspection(
         buildingjsons: arg['buildingInfo'],
         certificatelists: arg['certificatesInfo'],
-        deficiencylists: deficiencyinfo,
+        deficiencylists: [],
         insepctionjsons: inspectioninfo,
         propertyjsons: arg['propertyInfo'],
         unitjsons: arg['unitinfo']);
@@ -156,7 +156,7 @@ class UnitController extends BaseController {
     var response = await UnitsummaryRepository().createinspection(
         buildingjsons: Get.arguments['buildingInfo'],
         certificatelists: Get.arguments['cerificateList'],
-        deficiencylists: deficiencyinfo,
+        deficiencylists: [],
         insepctionjsons: inspectioninfo,
         propertyjsons: Get.arguments['propertyInfo'],
         unitjsons: Get.arguments['unitinfo']);
