@@ -114,6 +114,8 @@ class UnitController extends BaseController {
 
   createinspection(arg) async {
     print(arg.toString());
+    await getunitjson();
+    await getinspectioninfojson();
     islaoding.value = true;
     var response = await UnitsummaryRepository().createinspection(
         buildingjsons: arg['buildingInfo'],
@@ -121,7 +123,7 @@ class UnitController extends BaseController {
         deficiencylists: [],
         insepctionjsons: inspectioninfo,
         propertyjsons: arg['propertyInfo'],
-        unitjsons: arg['unitinfo']);
+        unitjsons: unitjson);
 
     await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
@@ -143,23 +145,23 @@ class UnitController extends BaseController {
     });
   }
 
-  saveCreateinspection() async {
+  saveCreateinspection(arg) async {
     islaoding.value = true;
-
+    await getunitjson();
+    await getinspectioninfojson();
     // print("unit " + Get.arguments['unitinfo'].toString());
     // print("buildinginfo " + Get.arguments['buildingInfo'].toString());
     // print("property info " + Get.arguments['propertyInfo'].toString());
     // print("building type info " + Get.arguments['buildingtype'].toString());
     // print("certificate info " + Get.arguments['cerificateList'].toString());
     // print("certificate info " + Get.arguments['inspectorDate'].toString());
-
     var response = await UnitsummaryRepository().createinspection(
-        buildingjsons: Get.arguments['buildingInfo'],
-        certificatelists: Get.arguments['cerificateList'],
+        buildingjsons: arg['buildingInfo'],
+        certificatelists: arg['certificatesInfo'],
         deficiencylists: [],
         insepctionjsons: inspectioninfo,
-        propertyjsons: Get.arguments['propertyInfo'],
-        unitjsons: Get.arguments['unitinfo']);
+        propertyjsons: arg['propertyInfo'],
+        unitjsons: unitjson);
 
     await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
@@ -172,20 +174,20 @@ class UnitController extends BaseController {
           isOk: true);
       //  print("property info " + Get.arguments['propertyinfo'].toString());
       cleardata();
-      getunitinspection();
-      Get.back(result: {
-        "propertyInfo":
-            Get.arguments == null ? "" : Get.arguments['propertyInfo'],
-        "buildingInfo":
-            Get.arguments == null ? "" : Get.arguments['buildingInfo'],
-        "buildingtype":
-            Get.arguments == null ? "" : Get.arguments['buildingtype'],
-        "cerificateList": Get.arguments['certificatesInfo'],
-        "deficiencyArea": Get.arguments['deficiencyArea'],
-        "switchvalue": switchbtn.value,
-        "inspectorDate": Get.arguments['inspectorDate']
-      });
-      Get.back();
+      // getunitinspection();
+      // Get.back(result: {
+      //   "propertyInfo":
+      //       Get.arguments == null ? "" : Get.arguments['propertyInfo'],
+      //   "buildingInfo":
+      //       Get.arguments == null ? "" : Get.arguments['buildingInfo'],
+      //   "buildingtype":
+      //       Get.arguments == null ? "" : Get.arguments['buildingtype'],
+      //   "cerificateList": Get.arguments['certificatesInfo'],
+      //   "deficiencyArea": Get.arguments['deficiencyArea'],
+      //   "switchvalue": switchbtn.value,
+      //   "inspectorDate": Get.arguments['inspectorDate']
+      // });
+      // Get.back();
       islaoding.value = false;
       update();
     });
@@ -197,6 +199,8 @@ class UnitController extends BaseController {
     bedrooms.clear();
     bathrooms.clear();
     commentController.clear();
+    unitjson.value = {};
+    inspectioninfo = {};
     switchbtn.value = false;
   }
 
@@ -420,7 +424,8 @@ class UnitController extends BaseController {
                                 GestureDetector(
                                   onTap: (() {
                                     if (commentController.text.isNotEmpty) {
-                                      saveCreateinspection();
+                                      Get.back();
+                                      saveCreateinspection(arg);
                                     }
                                   }),
                                   child: Container(
