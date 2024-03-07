@@ -1,52 +1,42 @@
 import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
-import '../building_inspection_screen/controller/building_inspection_controller.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
-import '../building_inspection_summary/controller/building_inspection_summary_controller.dart';
-import '../building_standards_screen/controller/building_standards_controller.dart';
-import '../unit_Inpection_screen/screen/unit_inspection_screen.dart';
 import '../unit_Inpection_screen/unitinspection_controller.dart';
 
-class UnitInspectionsummaryController extends BaseController {
-  TextEditingController unitnumberoRname = TextEditingController();
+class UnitInspectionSummaryController extends BaseController {
+  TextEditingController unitNumberName = TextEditingController();
   TextEditingController unitAddress = TextEditingController();
   TextEditingController bathrooms = TextEditingController();
   TextEditingController bedrooms = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  TextEditingController unithousekeeping = TextEditingController();
-  TextEditingController generalphysicalcondition = TextEditingController();
+  TextEditingController unitHouseKeeping = TextEditingController();
+  TextEditingController generalPhysicalCondition = TextEditingController();
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
   final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
-  BuildingStandardsController _buildingStandardsController =
-      Get.put(BuildingStandardsController());
-  BuildingInspectionController _buildingInspectionController =
-      Get.put(BuildingInspectionController());
-  BuildingInspectionSummaryController _buildingInspectionSummaryController =
-      Get.put(BuildingInspectionSummaryController());
 
   UnitController _unitController = Get.put(UnitController());
-  List unithousekeepingList = [];
-  List generalphysicalconditionList = [];
+  List unitHouseKeepingList = [];
+  List generalPhysicalConditionList = [];
   List<String> cityList = [];
-  var islaoding = false.obs;
+  var isLoading = false.obs;
   String inspectionName = '';
-  String buildingname = '';
-  String propertyname = '';
+  String buildingName = '';
+  String propertyName = '';
 
-  var switchbtn = false.obs;
+  var switchButton = false.obs;
   List<DeficiencyArea> deficiencyArea = [];
 
-  var inspectioninfo = {};
-  var deficiencyinfo = [].obs;
+  var inspectionInfo = {};
+  var deficiencyInfo = [].obs;
+
   @override
   void onInit() {
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
     }
-    setdataController();
-    unithousekeepingList = [
+    setDataController();
+    unitHouseKeepingList = [
       {
         "title": 'Poor',
         "value":
@@ -55,7 +45,7 @@ class UnitInspectionsummaryController extends BaseController {
       {"title": 'Standards', "value": "No damage beyond normal wear and tear."},
       {"title": 'clean', "value": "No or minimal defect."}
     ];
-    generalphysicalconditionList = [
+    generalPhysicalConditionList = [
       {
         "title": 'Poor',
         "value":
@@ -64,24 +54,24 @@ class UnitInspectionsummaryController extends BaseController {
       {"title": 'Standards', "value": "Generally clean with no clutter"},
       {"title": 'clean', "value": "Very clean and neat."}
     ];
-    getdeficienyjson();
+    getDeficiencyJson();
     update();
 
     super.onInit();
   }
 
-  getinspectioninfojson() {
-    inspectioninfo.addAll({
+  getInspectionInfoJson() {
+    inspectionInfo.addAll({
       "inspector_id":
           getStorageData.readString(getStorageData.inspectorId).toString(),
       "date": Get.arguments['inspectorDate'],
       "comment": "",
       "inspection_state_id": "1",
       "inspection_type_id": "1",
-      "unit_house_keeping": unithousekeeping.text,
-      "general_physical_condition": generalphysicalcondition.text
+      "unit_house_keeping": unitHouseKeeping.text,
+      "general_physical_condition": generalPhysicalCondition.text
     });
-    print("inspection data" + inspectioninfo.toString());
+    print("inspection data" + inspectionInfo.toString());
   }
 
   void actionPopUpItemSelected(int value) {
@@ -104,53 +94,53 @@ class UnitInspectionsummaryController extends BaseController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
-  void actionunitHousekeeping(value) {
-    unithousekeeping.text = value;
+  void actionUnitHousekeeping(value) {
+    unitHouseKeeping.text = value;
   }
 
-  void actiongeneralphysical(value) {
-    generalphysicalcondition.text = value;
+  void actionGeneralPhysical(value) {
+    generalPhysicalCondition.text = value;
   }
 
   getUnitInspectionSummary() {
     update();
-    return unitnumberoRname.text.isNotEmpty && unitAddress.text.isNotEmpty;
+    return unitNumberName.text.isNotEmpty && unitAddress.text.isNotEmpty;
   }
 
-  setdataController() {
-    unitnumberoRname.text = Get.arguments['unitinfo']['name'] ?? "";
+  setDataController() {
+    unitNumberName.text = Get.arguments['unitinfo']['name'] ?? "";
     unitAddress.text = Get.arguments['unitinfo']['address'];
     bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'] ?? "";
     bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'] ?? "";
-    switchbtn.value = Get.arguments['switchvalue'];
-    buildingname = Get.arguments['buildingInfo']['name'];
-    propertyname = Get.arguments['propertyInfo']['name'];
+    switchButton.value = Get.arguments['switchvalue'];
+    buildingName = Get.arguments['buildingInfo']['name'];
+    propertyName = Get.arguments['propertyInfo']['name'];
   }
 
-  getdeficienyjson() async {
-    deficiencyinfo.clear();
+  getDeficiencyJson() async {
+    deficiencyInfo.clear();
     if (deficiencyArea.length > 0) {
       for (var i = 0; i < deficiencyArea.length; i++) {
         for (var j = 0;
             j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
             j++) {
-          deficiencyinfo.add({
+          deficiencyInfo.add({
             "housing_deficiency_id": deficiencyArea[i]
                 .deficiencyInspectionsReqModel![j]
                 .deficiencyItemHousingDeficiency!
                 .id,
-            "deficiency_proof_pictures": await getdeficienyimage(),
+            "deficiency_proof_pictures": await getDeficiencyImage(),
             "comment":
                 deficiencyArea[i].deficiencyInspectionsReqModel![j].comment,
             "date": deficiencyArea[i].deficiencyInspectionsReqModel![j].date
           });
         }
       }
-      print("deficiency" + deficiencyinfo.toString());
+      print("deficiency" + deficiencyInfo.toString());
     }
   }
 
-  getdeficienyimage() {
+  getDeficiencyImage() {
     var result = [];
     for (var i = 0; i < deficiencyArea.length; i++) {
       for (var j = 0;
@@ -175,72 +165,55 @@ class UnitInspectionsummaryController extends BaseController {
     return result;
   }
 
-  createinspection() async {
-    islaoding.value = true;
+  createInspection() async {
+    isLoading.value = true;
 
-    print("unit" + Get.arguments['unitinfo'].toString());
-    print("buildinginfo" + Get.arguments['buildingInfo'].toString());
-    print("property info" + Get.arguments['propertyInfo'].toString());
-    print("building type info" + Get.arguments['buildingtype'].toString());
-    print("certificate info" + Get.arguments['cerificateList'].toString());
-    print("certificate info" + Get.arguments['inspectorDate'].toString());
-
-    var response = await UnitsummaryRepository().createinspection(
-        buildingjsons: Get.arguments['buildingInfo'],
-        certificatelists: Get.arguments['cerificateList'],
-        deficiencylists: deficiencyinfo,
-        insepctionjsons: inspectioninfo,
-        propertyjsons: Get.arguments['propertyInfo'],
-        unitjsons: Get.arguments['unitinfo']);
+    var response = await UnitSummaryRepository().createInspections(
+        buildingJson: Get.arguments['buildingInfo'],
+        certificateList: Get.arguments['cerificateList'],
+        deficiencyList: deficiencyInfo,
+        inspectionJson: inspectionInfo,
+        propertyJson: Get.arguments['propertyInfo'],
+        unitJson: Get.arguments['unitinfo']);
 
     await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
-      islaoding.value = false;
+      isLoading.value = false;
       update();
     }, (r) async {
       utils.showSnackBar(
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-      _buildingStandardsController.cleardata();
-      _buildingInspectionController.clearAllData();
-      _buildingInspectionSummaryController.cleardata();
-      await _buildingInspectionController.getCertificates();
-      await Get.toNamed(BuildingInspectionScreen.routes);
 
-      islaoding.value = false;
+      await Get.offAllNamed(BuildingInspectionScreen.routes);
+
+      isLoading.value = false;
       update();
     });
   }
 
-  saveCreateinspection() async {
-    islaoding.value = true;
-    // print("unit " + Get.arguments['unitinfo'].toString());
-    // print("buildinginfo " + Get.arguments['buildingInfo'].toString());
-    // print("property info " + Get.arguments['propertyInfo'].toString());
-    // print("building type info " + Get.arguments['buildingtype'].toString());
-    // print("certificate info " + Get.arguments['cerificateList'].toString());
-    // print("certificate info " + Get.arguments['inspectorDate'].toString());
-    var response = await UnitsummaryRepository().createinspection(
-        buildingjsons: Get.arguments['buildingInfo'],
-        certificatelists: Get.arguments['cerificateList'],
-        deficiencylists: deficiencyinfo,
-        insepctionjsons: inspectioninfo,
-        propertyjsons: Get.arguments['propertyInfo'],
-        unitjsons: Get.arguments['unitinfo']);
+  saveCreateInspection() async {
+    isLoading.value = true;
+    var response = await UnitSummaryRepository().createInspections(
+        buildingJson: Get.arguments['buildingInfo'],
+        certificateList: Get.arguments['cerificateList'],
+        deficiencyList: deficiencyInfo,
+        inspectionJson: inspectionInfo,
+        propertyJson: Get.arguments['propertyInfo'],
+        unitJson: Get.arguments['unitinfo']);
 
     await response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
-      islaoding.value = false;
+      isLoading.value = false;
       update();
     }, (r) async {
       utils.showSnackBar(
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-      //  print("property info " + Get.arguments['propertyinfo'].toString());
-      _unitController.cleardata();
-      _unitController..getunitinspection();
+      _unitController.clearData();
+      _unitController..getUnitInspection();
       Get.back(result: {
         "propertyInfo":
             Get.arguments == null ? "" : Get.arguments['propertyInfo'],
@@ -250,11 +223,11 @@ class UnitInspectionsummaryController extends BaseController {
             Get.arguments == null ? "" : Get.arguments['buildingtype'],
         "cerificateList": Get.arguments['certificatesInfo'],
         "deficiencyArea": Get.arguments['deficiencyArea'],
-        "switchvalue": switchbtn.value,
+        "switchvalue": switchButton.value,
         "inspectorDate": Get.arguments['inspectorDate']
       });
       Get.back();
-      islaoding.value = false;
+      isLoading.value = false;
       update();
     });
   }
@@ -265,7 +238,7 @@ class UnitInspectionsummaryController extends BaseController {
     deficiencyArea[mainIndex]
         .deficiencyInspectionsReqModel?[subIndex]
         .isSuccess = true;
-    getdeficienyjson();
+    getDeficiencyJson();
     update();
   }
 
@@ -274,7 +247,7 @@ class UnitInspectionsummaryController extends BaseController {
     if (deficiencyArea[mainIndex].deficiencyInspectionsReqModel!.isEmpty) {
       deficiencyArea[mainIndex].isArea = false;
     }
-    getdeficienyjson();
+    getDeficiencyJson();
     update();
   }
 }

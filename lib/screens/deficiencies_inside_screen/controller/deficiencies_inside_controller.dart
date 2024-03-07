@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_editor_plus/image_editor_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -135,8 +136,10 @@ class DeficienciesInsideController extends BaseController {
       commentController.text = element.comment ?? "";
       dateController.text = element.date ?? "";
     });
-    if (imageList.isNotEmpty) {
-      imageUploadStatus = ImageUploadStatus.success;
+    if (imageList.isNotEmpty || dateController.text.isNotEmpty) {
+      imageUploadStatus = imageList.isNotEmpty
+          ? ImageUploadStatus.success
+          : ImageUploadStatus.initial;
       visibleBtn = true;
       selectedItem = 'present';
     }
@@ -319,22 +322,21 @@ class DeficienciesInsideController extends BaseController {
                           onTap: () {
                             selectedItem = "null";
                             visibleBtn = false;
-                            if (standard == 'standard') {
-                              deficiencyInspectionsReqModel[0]
-                                  .deficiencyProofPictures = <String>[];
-                              deficiencyInspectionsReqModel[0].isSuccess =
-                                  false;
-                              deficiencyInspectionsReqModel[0].comment = "";
-                              deficiencyInspectionsReqModel[0].date = "";
-                            } else {
-                              deficiencyInspectionsReqModel[0]
-                                  .deficiencyProofPictures = <String>[];
-                              deficiencyInspectionsReqModel[0].isSuccess =
-                                  false;
-                              deficiencyInspectionsReqModel[0].comment = "";
-                              deficiencyInspectionsReqModel[0].date = "";
-                              isDeleted = true;
-                            }
+                            // if (standard == 'standard') {
+                            //   deficiencyInspectionsReqModel[0]
+                            //       .deficiencyProofPictures = <String>[];
+                            //   deficiencyInspectionsReqModel[0].isSuccess =
+                            //       false;
+                            //   deficiencyInspectionsReqModel[0].comment = "";
+                            //   deficiencyInspectionsReqModel[0].date = "";
+                            // } else {
+                            deficiencyInspectionsReqModel[0]
+                                .deficiencyProofPictures = <String>[];
+                            deficiencyInspectionsReqModel[0].isSuccess = false;
+                            deficiencyInspectionsReqModel[0].comment = "";
+                            deficiencyInspectionsReqModel[0].date = "";
+                            isDeleted = true;
+                            // }
                             commentController.clear();
                             dateController.clear();
                             imageList = [];
@@ -576,8 +578,9 @@ class DeficienciesInsideController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.camera,
-          maxWidth: 1800,
-          maxHeight: 1800,
+          maxWidth: 500,
+          maxHeight: 500,
+          imageQuality: 50,
         );
 
         if (pickedFile != null) {
@@ -607,12 +610,12 @@ class DeficienciesInsideController extends BaseController {
             }, (r) {
               imageUploadStatus = ImageUploadStatus.success;
               imageList.add(r.images?.image ?? '');
-              if (!utils.isValidationEmpty(commentController.text) &&
-                  !utils.isValidationEmpty(dateController.text)) {
-                visibleBtn = true;
-              } else {
-                visibleBtn = false;
-              }
+              // if (!utils.isValidationEmpty(commentController.text) &&
+              //     !utils.isValidationEmpty(dateController.text)) {
+              //   visibleBtn = true;
+              // } else {
+              //   visibleBtn = false;
+              // }
               update();
             });
 
@@ -814,8 +817,9 @@ class DeficienciesInsideController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.gallery,
-          maxWidth: 1800,
-          maxHeight: 1800,
+          maxWidth: 500,
+          maxHeight: 500,
+          imageQuality: 50,
         );
         if (pickedFile != null) {
           var tempDir;
@@ -854,12 +858,12 @@ class DeficienciesInsideController extends BaseController {
             }, (r) {
               imageUploadStatus = ImageUploadStatus.success;
               imageList.add(r.images?.image ?? '');
-              if (!utils.isValidationEmpty(commentController.text) &&
-                  !utils.isValidationEmpty(dateController.text)) {
-                visibleBtn = true;
-              } else {
-                visibleBtn = false;
-              }
+              // if (!utils.isValidationEmpty(commentController.text) &&
+              //     !utils.isValidationEmpty(dateController.text)) {
+              //   visibleBtn = true;
+              // } else {
+              //   visibleBtn = false;
+              // }
               update();
             });
           }
@@ -891,9 +895,9 @@ class DeficienciesInsideController extends BaseController {
   }
 
   isCheck() {
-    return imageList.every((element) => successListOfDeficiencies
-            .deficiencyProofPictures!
-            .contains(element)) &&
+    Function deepEq = const DeepCollectionEquality().equals;
+    return deepEq(
+            imageList, successListOfDeficiencies.deficiencyProofPictures) &&
         successListOfDeficiencies.comment == commentController.text &&
         successListOfDeficiencies.date == dateController.text;
   }

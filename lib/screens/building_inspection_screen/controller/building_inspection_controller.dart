@@ -24,8 +24,8 @@ class BuildingInspectionController extends BaseController {
   TextEditingController buildingNameController = TextEditingController();
   TextEditingController yearConstructedController = TextEditingController();
   TextEditingController buildingTypeController = TextEditingController();
-  TextEditingController buildingidController = TextEditingController();
-  TextEditingController buildingTypeidController = TextEditingController();
+  TextEditingController buildingIdController = TextEditingController();
+  TextEditingController buildingTypeIdController = TextEditingController();
   List checked = [];
   BuildingInspectionRepository buildingInspectionRepository =
       BuildingInspectionRepository();
@@ -131,13 +131,13 @@ class BuildingInspectionController extends BaseController {
 
   getBuildingJson() {
     buildingInfo.addAll({
-      "id": buildingidController.text,
+      "id": buildingIdController.text,
       "name": buildingNameController.text,
       "constructed_year": yearConstructedController.text == "null" ||
               yearConstructedController.text == ""
           ? "0"
           : yearConstructedController.text,
-      "building_type_id": buildingTypeidController.text
+      "building_type_id": buildingTypeIdController.text
     });
     print(buildingInfo.toString());
     print(propertyInfo.toString());
@@ -206,8 +206,8 @@ class BuildingInspectionController extends BaseController {
     buildingNameController.clear();
     yearConstructedController.clear();
     buildingTypeController.clear();
-    buildingTypeidController.clear();
-    buildingidController.clear();
+    buildingTypeIdController.clear();
+    buildingIdController.clear();
     // await getbuildingapi(value.id.toString());
     propertyNameController.text = value.name!;
     cityController.text = value.city!;
@@ -223,8 +223,8 @@ class BuildingInspectionController extends BaseController {
     buildingNameController.clear();
     yearConstructedController.clear();
     buildingTypeController.clear();
-    buildingTypeidController.clear();
-    buildingidController.clear();
+    buildingTypeIdController.clear();
+    buildingIdController.clear();
     propertyNameController.clear();
     propertyAddressController.clear();
     cityController.clear();
@@ -236,16 +236,16 @@ class BuildingInspectionController extends BaseController {
   void actionBuilding(Building value) {
     isSelected = true;
     buildingNameController.text = value.name;
-    buildingidController.text = value.id.toString();
+    buildingIdController.text = value.id.toString();
     yearConstructedController.text = value.constructedYear.toString();
     buildingTypeController.text = value.buildingType.name.toString();
-    buildingTypeidController.text = value.buildingType.id.toString();
+    buildingTypeIdController.text = value.buildingType.id.toString();
     update();
   }
 
   void actionBuildingType(BuildingType value) {
     buildingTypeController.text = value.name.toString();
-    buildingTypeidController.text = value.id.toString();
+    buildingTypeIdController.text = value.id.toString();
     update();
   }
 
@@ -370,7 +370,7 @@ class BuildingInspectionController extends BaseController {
       city: cityController.text,
       name: buildingNameController.text,
       constructedYear: yearConstructedController.text,
-      buildingTypeId: buildingTypeidController.text,
+      buildingTypeId: buildingTypeIdController.text,
       address1: propertyAddressController.text,
       propertyId: int.tryParse(propertyIDController.text),
       zip: zipController.text,

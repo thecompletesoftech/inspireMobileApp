@@ -79,7 +79,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                             Get.toNamed(BuildingInspectionSummaryScreen.routes,
                                 arguments: {
                                   "buildingName": controller.buildingName,
-                                  "buildingtype": controller.buildingtype,
+                                  "buildingtype": controller.buildingType,
                                   "deficiencyArea": deficiencyArea,
                                   "inspectionName": controller.inspectionName,
                                   "buildingInfo": controller.buildingInfo,

@@ -29,7 +29,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    if (controller.isCheck()) {
+                    if (controller.isCheck() || controller.isDeleted) {
                       Get.back(result: {
                         "isEdit": controller.isDeleted,
                       });
@@ -294,14 +294,16 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                   children: [
                                     CommonIconButton(
                                       textColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.imageList.isNotEmpty
+                                              "null" /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,
                                       title: Strings.delete,
                                       onTap: () {
-                                        if (controller.selectedItem != "null" &&
-                                            controller.imageList.isNotEmpty) {
+                                        if (controller.selectedItem !=
+                                                "null" /*&&
+                                            controller.imageList.isNotEmpty*/
+                                            ) {
                                           controller.dialogDelete();
                                         }
                                       },
@@ -320,8 +322,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                               ? 40.px
                                               : 24.px,
                                       iconColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller.imageList.isNotEmpty
+                                              "null" /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,
                                       icon: icDeleteGrey,
@@ -849,14 +851,16 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                       title: Strings.saveChanges,
                                       textColor: controller.selectedItem !=
                                                   "null" &&
-                                              controller.visibleBtn &&
-                                              controller.imageList.isNotEmpty
+                                              controller
+                                                  .visibleBtn /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.white
                                           : controller.appColors.border1,
                                       color: controller.selectedItem !=
                                                   "null" &&
-                                              controller.visibleBtn &&
-                                              controller.imageList.isNotEmpty
+                                              controller
+                                                  .visibleBtn /*&&
+                                              controller.imageList.isNotEmpty*/
                                           ? controller.appColors.appColor
                                           : controller.appColors.black
                                               .withOpacity(0.11999999731779099),
@@ -868,8 +872,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller.visibleBtn &&
-                                            controller.imageList.isNotEmpty) {
+                                        if (controller
+                                                .visibleBtn /*&&
+                                            controller.imageList.isNotEmpty*/
+                                            ) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller

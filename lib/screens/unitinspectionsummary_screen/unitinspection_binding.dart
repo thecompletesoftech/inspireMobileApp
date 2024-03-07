@@ -4,6 +4,6 @@ import 'unitinspection_controller.dart';
 class UnitInspectionSummaryBinding implements Bindings {
   @override
   void dependencies() {
-    Get.put<UnitInspectionsummaryController>(UnitInspectionsummaryController());
+    Get.put<UnitInspectionSummaryController>(UnitInspectionSummaryController());
   }
 }

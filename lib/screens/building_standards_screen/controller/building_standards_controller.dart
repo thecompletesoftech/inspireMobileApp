@@ -13,8 +13,8 @@ class BuildingStandardsController extends BaseController {
   // BuildingStandardsStatus status = BuildingStandardsStatus.all;
   bool isCollapseStandards = false;
   String buildingName = '';
-  String buildingtype = '';
-  String propertyname = '';
+  String buildingType = '';
+  String propertyName = '';
   bool isSuccess = false;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
@@ -36,9 +36,9 @@ class BuildingStandardsController extends BaseController {
     }();
 
     if (Get.arguments != null) {
-      buildingtype = Get.arguments['buildingtype'];
+      buildingType = Get.arguments['buildingtype'];
       buildingName = Get.arguments['buildingName'];
-      propertyname = Get.arguments['propertyInfo']['name'];
+      propertyName = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
       certificatesInfo = Get.arguments['certificatesInfo'];
@@ -48,7 +48,7 @@ class BuildingStandardsController extends BaseController {
     update();
   }
 
-  cleardata() {
+  clearData() {
     deficiencyAreas.clear();
     searchList.clear();
     dataList.clear();

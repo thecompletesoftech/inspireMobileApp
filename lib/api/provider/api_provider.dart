@@ -54,7 +54,7 @@ class ApiProviders extends BaseController {
   }
 
   Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
-      getunitDeficiencyAreasRequest() async {
+      getUnitDeficiencyAreasRequest() async {
     try {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.getdeficieny + "/?housing_item_id=3",
@@ -72,10 +72,10 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, Loginmodel>> login(mapjson) async {
+  Future<Either<Failure, Loginmodel>> login(mapJson) async {
     try {
       Response response = await apiBaseHelperImplementation.post(
-          endPoint: Constants.login, body: mapjson);
+          endPoint: Constants.login, body: mapJson);
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(Loginmodel.fromJson(response.data));
       } else {
@@ -87,13 +87,13 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, InspectorModel>> createInspector(name) async {
+  Future<Either<Failure, InspectorModel>> createInspector({required String name}) async {
     try {
-      var mapjson = {"name": name};
+      var mapJson = {"name": name};
 
       Response response = await apiBaseHelperImplementation.post(
         endPoint: Constants.createinspector,
-        body: mapjson,
+        body: mapJson,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
@@ -230,21 +230,21 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, CreateinspectionModel>> createinspection(
-      {required insepctionjson,
-      required propertyjson,
-      required buildingjson,
-      required unitjson,
-      required certificatelist,
-      required deficiencylist}) async {
+  Future<Either<Failure, CreateinspectionModel>> createUnitInspectionRequest(
+      {required inspectionJson,
+      required propertyJson,
+      required buildingJson,
+      required unitJson,
+      required certificateList,
+      required deficiencyList}) async {
     try {
       var formData = {
-        "inspection": insepctionjson,
-        "property": propertyjson,
-        "building": buildingjson,
-        "unit": unitjson,
-        "certificates": certificatelist,
-        "deficiency_inspections": deficiencylist
+        "inspection": inspectionJson,
+        "property": propertyJson,
+        "building": buildingJson,
+        "unit": unitJson,
+        "certificates": certificateList,
+        "deficiency_inspections": deficiencyList
       };
       print("formdata" + jsonEncode(formData).toString());
       Response response = await apiBaseHelperImplementation.post(

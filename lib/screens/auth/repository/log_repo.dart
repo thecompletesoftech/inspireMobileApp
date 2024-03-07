@@ -10,13 +10,13 @@ class LoginRepository {
 
   LoginRepository();
 
-  Future<Either<Failure, Loginmodel>> login(mapjson) async {
-    var response = await _provider.login(mapjson);
+  Future<Either<Failure, Loginmodel>> login(mapJson) async {
+    var response = await _provider.login(mapJson);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, InspectorModel>> createinspectorapi(name) async {
-    var response = await _provider.createInspector(name);
+  Future<Either<Failure, InspectorModel>> createInspector({required String name}) async {
+    var response = await _provider.createInspector(name: name);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

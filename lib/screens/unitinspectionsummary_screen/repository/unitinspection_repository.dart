@@ -3,25 +3,25 @@ import 'package:public_housing/api/provider/api_provider.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
 import '../models/CreateInspectionmodel.dart';
 
-class UnitsummaryRepository {
+class UnitSummaryRepository {
   final ApiProviders _provider = ApiProviders();
 
-  UnitsummaryRepository();
+  UnitSummaryRepository();
 
-  Future<Either<Failure, CreateinspectionModel>> createinspection(
-      {required insepctionjsons,
-      required propertyjsons,
-      required buildingjsons,
-      required unitjsons,
-      required certificatelists,
-      required deficiencylists}) async {
-    var response = await _provider.createinspection(
-        buildingjson: buildingjsons,
-        certificatelist: certificatelists,
-        deficiencylist: deficiencylists,
-        insepctionjson: insepctionjsons,
-        propertyjson: propertyjsons,
-        unitjson: unitjsons);
+  Future<Either<Failure, CreateinspectionModel>> createInspections(
+      {required inspectionJson,
+      required propertyJson,
+      required buildingJson,
+      required unitJson,
+      required certificateList,
+      required deficiencyList}) async {
+    var response = await _provider.createUnitInspectionRequest(
+        buildingJson: buildingJson,
+        certificateList: certificateList,
+        deficiencyList: deficiencyList,
+        inspectionJson: inspectionJson,
+        propertyJson: propertyJson,
+        unitJson: unitJson);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

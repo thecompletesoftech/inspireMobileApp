@@ -142,7 +142,7 @@ class SigningController extends BaseController {
   // }
 
   createinspector(name) async {
-    var response = await loginrepo.createinspectorapi(name);
+    var response = await loginrepo.createInspector(name: name );
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (InspectorModel r) {

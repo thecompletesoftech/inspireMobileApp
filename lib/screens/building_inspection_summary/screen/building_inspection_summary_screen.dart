@@ -829,7 +829,7 @@ class BuildingInspectionSummaryScreen
                               Get.toNamed(UnitInspection.routes, arguments: {
                                 "deficiencyArea": controller.deficiencyArea,
                                 "buildingName": controller.buildingName,
-                                "buildingtype": controller.buildingtype,
+                                "buildingtype": controller.buildingType,
                                 "imagesList": controller.imagesList,
                                 "inspectionName": controller.inspectionName,
                                 "propertyInfo": controller.propertyInfo,
