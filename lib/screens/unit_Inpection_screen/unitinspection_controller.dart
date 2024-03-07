@@ -201,13 +201,33 @@ class UnitController extends BaseController {
   }
 
   getunitjson() {
-    unitjson.addAll({
-      "name": unitnumberoRname.text,
-      "address": unitAddress.text,
-      "number_of_bedrooms": bedrooms.text,
-      "number_of_bathrooms": bathrooms.text,
-      "occupied": switchbtn.value
-    });
+    unitjson.addAll(bedrooms.text.isEmpty && bathrooms.text.isEmpty
+        ? {
+            "name": unitnumberoRname.text,
+            "address": unitAddress.text,
+            "occupied": switchbtn.value
+          }
+        : bedrooms.text.isEmpty
+            ? {
+                "name": unitnumberoRname.text,
+                "address": unitAddress.text,
+                "number_of_bathrooms": bathrooms.text,
+                "occupied": switchbtn.value
+              }
+            : bathrooms.text.isEmpty
+                ? {
+                    "name": unitnumberoRname.text,
+                    "address": unitAddress.text,
+                    "occupied": switchbtn.value,
+                    "number_of_bedrooms": bedrooms.text,
+                  }
+                : {
+                    "name": unitnumberoRname.text,
+                    "address": unitAddress.text,
+                    "occupied": switchbtn.value,
+                    "number_of_bathrooms": bathrooms.text,
+                    "number_of_bedrooms": bedrooms.text,
+                  });
     print(unitjson.toString());
   }
 

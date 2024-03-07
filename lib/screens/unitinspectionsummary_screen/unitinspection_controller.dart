@@ -120,8 +120,8 @@ class UnitInspectionsummaryController extends BaseController {
   setdataController() {
     unitnumberoRname.text = Get.arguments['unitinfo']['name'] ?? "";
     unitAddress.text = Get.arguments['unitinfo']['address'];
-    bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'];
-    bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'];
+    bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'] ?? "";
+    bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'] ?? "";
     switchbtn.value = Get.arguments['switchvalue'];
     buildingname = Get.arguments['buildingInfo']['name'];
     propertyname = Get.arguments['propertyInfo']['name'];
