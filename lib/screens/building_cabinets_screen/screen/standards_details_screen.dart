@@ -280,6 +280,8 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             ],
                           );
                         }),
+                    
+                    
                       ],
                     ).paddingSymmetric(horizontal: 32.px),
                   ),
