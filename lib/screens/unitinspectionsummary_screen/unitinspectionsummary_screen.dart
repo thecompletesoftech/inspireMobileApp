@@ -875,6 +875,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                                   itemBuilder: (context, iz) {
                                                     var subData = data!
                                                         .deficiencyProofPictures?[iz];
+                                                    
                                                     return Container(
                                                       height: 184.px,
                                                       width: 184.px,
@@ -904,7 +905,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionsummaryController> {
                                         ),
                                       ),
                                       MyTextView(
-                                        item.definition,
+                                        item.deficiencyAreaItems![i].description,
                                         isMaxLineWrap: true,
                                         textStyleNew: MyTextStyle(
                                           textSize: 20.px,
