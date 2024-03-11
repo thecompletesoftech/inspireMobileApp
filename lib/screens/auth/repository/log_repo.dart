@@ -11,7 +11,7 @@ class LoginRepository {
   LoginRepository();
 
   Future<Either<Failure, Loginmodel>> login(mapJson) async {
-    var response = await _provider.login(mapJson);
+    var response = await _provider.loginRequest(mapJson);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 

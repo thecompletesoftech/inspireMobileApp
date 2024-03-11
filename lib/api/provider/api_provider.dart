@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/api_helper/api_base_helper_implementation.dart';
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
@@ -72,14 +71,13 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, Loginmodel>> login(mapJson) async {
+  Future<Either<Failure, Loginmodel>> loginRequest(mapJson) async {
     try {
       Response response = await apiBaseHelperImplementation.post(
           endPoint: Constants.login, body: mapJson);
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(Loginmodel.fromJson(response.data));
       } else {
-        print("asdsadas" + response.statusCode.toString());
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
@@ -87,7 +85,8 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, InspectorModel>> createInspector({required String name}) async {
+  Future<Either<Failure, InspectorModel>> createInspector(
+      {required String name}) async {
     try {
       var mapJson = {"name": name};
 
@@ -101,7 +100,6 @@ class ApiProviders extends BaseController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(InspectorModel.fromJson(response.data));
       } else {
-        print("asdsadas" + response.statusCode.toString());
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
@@ -140,7 +138,6 @@ class ApiProviders extends BaseController {
           .get(endPoint: Constants.propertyinfo, headers: {
         'Authorization': '${getStorageData.readString(getStorageData.token)}',
       });
-      print("asdsad" + response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(PropertyModel.fromJson(response.data));
       } else {
@@ -201,7 +198,6 @@ class ApiProviders extends BaseController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(CreateBuildingResponseModel.fromJson(response.data));
       } else {
-        print("asdsadas" + response.statusCode.toString());
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
     } on DioException catch (e) {
@@ -218,8 +214,6 @@ class ApiProviders extends BaseController {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
       );
-      print("asdxsdsa" + id.toString());
-      print("asddsd" + response.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(BuildingModel.fromJson(response.data));
       } else {
@@ -246,7 +240,6 @@ class ApiProviders extends BaseController {
         "certificates": certificateList,
         "deficiency_inspections": deficiencyList
       };
-      print("formdata" + jsonEncode(formData).toString());
       Response response = await apiBaseHelperImplementation.post(
         endPoint: Constants.createinspection,
         body: formData,

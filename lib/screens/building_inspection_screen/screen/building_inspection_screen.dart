@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
@@ -884,50 +885,118 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                       ),
                     ).paddingOnly(left: 32.px, right: 32.px),
                   ),
-                  CommonButton(
-                      title: Strings.startInspection,
-                      radius: 100.px,
-                      width: 171.px,
-                      height: 44.px,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15.px,
-                        horizontal: 24.px,
-                      ),
-                      textSize: 16.px,
-                      textWeight: FontWeight.w500,
-                      textFamily: fontFamilyRegular,
-                      textColor: controller.getStartInspection()
-                          ? controller.appColors.black
-                          : controller.appColors.border1,
-                      color: controller.getStartInspection()
-                          ? controller.appColors.textPink
-                          : controller.appColors.black
-                              .withOpacity(0.11999999731779099),
-                      onTap: () {
-                        if (controller.getStartInspection()) {
-                          // controller.getcertificatesjson();
-                          controller.getPropertyJson();
-                          if (controller.isSelected == false) {
-                            controller.createBuilding();
-                          } else {
-                            controller.getBuildingJson();
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CommonIconButton(
+                        title: Strings.inspectUnit,
+                        icon: icHome,
+                        iconheigth: null,
+                        iconColor: controller.getStartInspection()
+                            ? controller.appColors.appColor
+                            : controller.appColors.black
+                                .withOpacity(0.11999999731779099),
+                        radius: 100.px,
+                        width: 171.px,
+                        height: 44.px,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.px,
+                        ),
+                        textSize: 16.px,
+                        textWeight: FontWeight.w500,
+                        textFamily: fontFamilyRegular,
+                        textColor: controller.getStartInspection()
+                            ? controller.appColors.appColor
+                            : controller.appColors.border1,
+                        color: controller.appColors.transparent,
+                        border: Border.all(
+                            color: controller.getStartInspection()
+                                ? controller.appColors.black
+                                : controller.appColors.black
+                                    .withOpacity(0.11999999731779099)),
+                        onTap: () async {
+                          if (controller.getStartInspection()) {
+                            controller.getPropertyJson();
+                            if (controller.isSelected == false) {
+                              controller.createBuilding();
+                            } else {
+                              controller.getBuildingJson();
+                            }
+                            Get.toNamed(UnitInspection.routes, arguments: {
+                              "deficiencyArea": [],
+                              "buildingName":
+                                  controller.buildingNameController.text,
+                              "buildingtype":
+                                  controller.buildingTypeController.text,
+                              "imagesList": [],
+                              "inspectionName":
+                                  controller.inspectorController.text,
+                              "propertyInfo": controller.propertyInfo,
+                              "buildingInfo": controller.buildingInfo,
+                              "certificatesInfo": controller.certificatesInfo,
+                              "inspectorName":
+                                  controller.inspectorController.text,
+                              "inspectorDate":
+                                  controller.inspectionDateController.text
+                            });
                           }
-                          Get.toNamed(BuildingStandardsScreen.routes,
-                              arguments: {
-                                "buildingName":
-                                    controller.buildingNameController.text,
-                                "propertyInfo": controller.propertyInfo,
-                                "buildingInfo": controller.buildingInfo,
-                                "buildingtype":
-                                    controller.buildingTypeController.text,
-                                "certificatesInfo": controller.certificatesInfo,
-                                "inspectorName":
-                                    controller.inspectorController.text,
-                                "inspectorDate":
-                                    controller.inspectionDateController.text
-                              });
-                        }
-                      }).paddingSymmetric(vertical: 24.px),
+                          controller.update();
+                        },
+                      ).paddingSymmetric(vertical: 24.px),
+                      SizedBox(width: 32.px),
+                      CommonIconButton(
+                        title: Strings.inspectBuilding,
+                        radius: 100.px,
+                        width: 171.px,
+                        height: 44.px,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 24.px,
+                        ),
+                        textSize: 16.px,
+                        textWeight: FontWeight.w500,
+                        textFamily: fontFamilyRegular,
+                        textColor: controller.getStartInspection()
+                            ? controller.appColors.black
+                            : controller.appColors.border1,
+                        color: controller.getStartInspection()
+                            ? controller.appColors.textPink
+                            : controller.appColors.black
+                                .withOpacity(0.11999999731779099),
+                        onTap: () {
+                          if (controller.getStartInspection()) {
+                            // controller.getcertificatesjson();
+                            controller.getPropertyJson();
+                            if (controller.isSelected == false) {
+                              controller.createBuilding();
+                            } else {
+                              controller.getBuildingJson();
+                            }
+                            Get.toNamed(BuildingStandardsScreen.routes,
+                                arguments: {
+                                  "buildingName":
+                                      controller.buildingNameController.text,
+                                  "propertyInfo": controller.propertyInfo,
+                                  "buildingInfo": controller.buildingInfo,
+                                  "buildingtype":
+                                      controller.buildingTypeController.text,
+                                  "certificatesInfo":
+                                      controller.certificatesInfo,
+                                  "inspectorName":
+                                      controller.inspectorController.text,
+                                  "inspectorDate":
+                                      controller.inspectionDateController.text
+                                });
+                          }
+                        },
+                        icon: icBuildings,
+                        iconColor: controller.getStartInspection()
+                            ? controller.appColors.appColor
+                            : controller.appColors.black
+                                .withOpacity(0.11999999731779099),
+                        iconheigth: null,
+                      ).paddingSymmetric(vertical: 24.px),
+                    ],
+                  ),
                 ],
               ),
             ),

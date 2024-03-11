@@ -122,7 +122,8 @@ class UnitController extends BaseController {
           context: Get.context!,
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
-      await Get.toNamed(BuildingInspectionScreen.routes);
+
+      await Get.offAllNamed(BuildingInspectionScreen.routes);
 
       isLoading.value = false;
       update();
