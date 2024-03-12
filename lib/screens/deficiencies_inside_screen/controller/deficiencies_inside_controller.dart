@@ -105,7 +105,9 @@ class DeficienciesInsideController extends BaseController {
                   .arguments['successListOfDeficiencies'].housingDeficiencyId
                   .toString(),
               deficiencyProofPictures: deficiencyProofPictures,
-              date: Get.arguments['successListOfDeficiencies'].date ?? "",
+              date: Get.arguments['successListOfDeficiencies'].date == ""
+                  ? DateFormat("MM/dd/yyyy").format(DateTime.now())
+                  : Get.arguments['successListOfDeficiencies'].date,
               comment: Get.arguments['successListOfDeficiencies'].comment ?? "",
               definition:
                   Get.arguments['successListOfDeficiencies'].definition ?? "",

@@ -166,7 +166,10 @@ class BuildingInspectionController extends BaseController {
             stateController.text.isNotEmpty &&
             zipController.text.isNotEmpty &&
             propertyAddressController.text.isNotEmpty &&
-            buildingNameController
+            buildingNameController.text.isNotEmpty &&
+            buildingNameController.text.isNotEmpty &&
+            yearConstructedController.text.isNotEmpty &&
+            buildingTypeController
                 .text.isNotEmpty /*&&
             certificatesInfo.length > 0*/
         ? true

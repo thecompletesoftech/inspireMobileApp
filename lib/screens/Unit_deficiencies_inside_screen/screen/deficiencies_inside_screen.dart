@@ -295,13 +295,14 @@ class UnitDeficienciesInsideScreen
                                   children: [
                                     CommonIconButton(
                                       textColor: controller.selectedItem !=
-                                                  "null" /*&&
+                                              "null" /*&&
                                               controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,
                                       title: Strings.delete,
                                       onTap: () {
-                                        if (controller.selectedItem != "null" /*&&
+                                        if (controller.selectedItem !=
+                                                "null" /*&&
                                             controller.imageList.isNotEmpty*/
                                             ) {
                                           controller.dialogDelete();
@@ -322,7 +323,7 @@ class UnitDeficienciesInsideScreen
                                               ? 40.px
                                               : 24.px,
                                       iconColor: controller.selectedItem !=
-                                                  "null" /*&&
+                                              "null" /*&&
                                               controller.imageList.isNotEmpty*/
                                           ? controller.appColors.delete
                                           : controller.appColors.border1,

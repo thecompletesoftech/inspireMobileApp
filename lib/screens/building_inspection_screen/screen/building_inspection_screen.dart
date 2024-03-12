@@ -758,7 +758,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                               EdgeInsets.only(left: 15.px),
                                           shadowColor:
                                               controller.appColors.transparent,
-                                          labelText: Strings.buildingName,
+                                          labelText: Strings.buildingType,
                                         );
                                       },
                                       itemBuilder: (context, dynamic i) {
