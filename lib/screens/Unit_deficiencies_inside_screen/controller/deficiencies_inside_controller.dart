@@ -580,8 +580,6 @@ class UnitDeficienciesInsideController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.camera,
-          maxWidth: 500,
-          maxHeight: 500,
           imageQuality: 50,
         );
 
@@ -819,8 +817,6 @@ class UnitDeficienciesInsideController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.gallery,
-          maxWidth: 500,
-          maxHeight: 500,
           imageQuality: 50,
         );
         if (pickedFile != null) {
