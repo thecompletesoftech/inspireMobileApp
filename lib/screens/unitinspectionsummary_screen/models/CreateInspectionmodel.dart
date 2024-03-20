@@ -1,146 +1,174 @@
 // To parse this JSON data, do
 //
-//     final createinspectionModel = createinspectionModelFromJson(jsonString);
+//     final createInspectionModel = createInspectionModelFromJson(jsonString);
 
 import 'dart:convert';
 
-CreateinspectionModel createinspectionModelFromJson(String str) =>
-    CreateinspectionModel.fromJson(json.decode(str));
+CreateInspectionModel createInspectionModelFromJson(String str) =>
+    CreateInspectionModel.fromJson(json.decode(str));
 
-String createinspectionModelToJson(CreateinspectionModel data) =>
+String createInspectionModelToJson(CreateInspectionModel data) =>
     json.encode(data.toJson());
 
-class CreateinspectionModel {
-  String type;
-  Inspection inspection;
+class CreateInspectionModel {
+  String? type;
+  Inspection? inspection;
 
-  CreateinspectionModel({
-    required this.type,
-    required this.inspection,
-  });
+  CreateInspectionModel({this.type, this.inspection});
 
-  factory CreateinspectionModel.fromJson(Map<String, dynamic> json) =>
-      CreateinspectionModel(
+  factory CreateInspectionModel.fromJson(Map<String, dynamic> json) =>
+      CreateInspectionModel(
         type: json["type"],
-        inspection: Inspection.fromJson(json["inspection"]),
+        inspection: json["inspection"] == null
+            ? null
+            : Inspection.fromJson(json["inspection"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "inspection": inspection.toJson(),
-      };
+  Map<String, dynamic> toJson() =>
+      {"type": type, "inspection": inspection?.toJson()};
 }
 
 class Inspection {
-  int id;
-  String comment;
-  DateTime date;
-  bool occupied;
-  Inspector inspector;
-  InspectionType inspectionType;
-  InspectionState inspectionState;
-  ExternalPropertyClass externalProperty;
-  Building externalBuilding;
-  ExternalUnit externalUnit;
-  List<InspectionDeficiencyInspection> inspectionDeficiencyInspection;
-  List<InspectionBuildingCertificate> inspectionBuildingCertificate;
+  int? id;
+  String? comment;
+  String? date;
+  bool? occupied;
+  Inspector? inspector;
+  InspectionType? inspectionType;
+  InspectionState? inspectionState;
+  ExternalPropertyClass? externalProperty;
+  Building? externalBuilding;
+  ExternalUnit? externalUnit;
+  List<InspectionDeficiencyInspection>? inspectionDeficiencyInspection;
+  List<dynamic>? inspectionBuildingCertificate;
+  String? generalPhysicalCondition;
+  String? unitHouseKeeping;
+  dynamic memo;
 
   Inspection({
-    required this.id,
-    required this.comment,
-    required this.date,
-    required this.occupied,
-    required this.inspector,
-    required this.inspectionType,
-    required this.inspectionState,
-    required this.externalProperty,
-    required this.externalBuilding,
-    required this.externalUnit,
-    required this.inspectionDeficiencyInspection,
-    required this.inspectionBuildingCertificate,
+    this.id,
+    this.comment,
+    this.date,
+    this.occupied,
+    this.inspector,
+    this.inspectionType,
+    this.inspectionState,
+    this.externalProperty,
+    this.externalBuilding,
+    this.externalUnit,
+    this.inspectionDeficiencyInspection,
+    this.inspectionBuildingCertificate,
+    this.generalPhysicalCondition,
+    this.unitHouseKeeping,
+    this.memo,
   });
 
   factory Inspection.fromJson(Map<String, dynamic> json) => Inspection(
         id: json["id"],
         comment: json["comment"],
-        date: DateTime.parse(json["date"]),
+        date: json["date"],
         occupied: json["occupied"],
-        inspector: Inspector.fromJson(json["inspector"]),
-        inspectionType: InspectionType.fromJson(json["inspection_type"]),
-        inspectionState: InspectionState.fromJson(json["inspection_state"]),
-        externalProperty:
-            ExternalPropertyClass.fromJson(json["external_property"]),
-        externalBuilding: Building.fromJson(json["external_building"]),
-        externalUnit: ExternalUnit.fromJson(json["external_unit"]),
+        inspector: json["inspector"] == null
+            ? null
+            : Inspector.fromJson(json["inspector"]),
+        inspectionType: json["inspection_type"] == null
+            ? null
+            : InspectionType.fromJson(json["inspection_type"]),
+        inspectionState: json["inspection_state"] == null
+            ? null
+            : InspectionState.fromJson(json["inspection_state"]),
+        externalProperty: json["external_property"] == null
+            ? null
+            : ExternalPropertyClass.fromJson(json["external_property"]),
+        externalBuilding: json["external_building"] == null
+            ? null
+            : Building.fromJson(json["external_building"]),
+        externalUnit: json["external_unit"] == null
+            ? null
+            : ExternalUnit.fromJson(json["external_unit"]),
         inspectionDeficiencyInspection:
-            List<InspectionDeficiencyInspection>.from(
-                json["inspection_deficiency_inspection"]
-                    .map((x) => InspectionDeficiencyInspection.fromJson(x))),
-        inspectionBuildingCertificate: List<InspectionBuildingCertificate>.from(
-            json["inspection_building_certificate"]
-                .map((x) => InspectionBuildingCertificate.fromJson(x))),
+            json["inspection_deficiency_inspection"] == null
+                ? []
+                : List<InspectionDeficiencyInspection>.from(
+                    json["inspection_deficiency_inspection"]!.map(
+                        (x) => InspectionDeficiencyInspection.fromJson(x))),
+        inspectionBuildingCertificate:
+            json["inspection_building_certificate"] == null
+                ? []
+                : List<dynamic>.from(
+                    json["inspection_building_certificate"]!.map((x) => x)),
+        generalPhysicalCondition: json["general_physical_condition"],
+        unitHouseKeeping: json["unit_house_keeping"],
+        memo: json["memo"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "comment": comment,
-        "date": date.toIso8601String(),
+        "date": date,
         "occupied": occupied,
-        "inspector": inspector.toJson(),
-        "inspection_type": inspectionType.toJson(),
-        "inspection_state": inspectionState.toJson(),
-        "external_property": externalProperty.toJson(),
-        "external_building": externalBuilding.toJson(),
-        "external_unit": externalUnit.toJson(),
-        "inspection_deficiency_inspection": List<dynamic>.from(
-            inspectionDeficiencyInspection.map((x) => x.toJson())),
-        "inspection_building_certificate": List<dynamic>.from(
-            inspectionBuildingCertificate.map((x) => x.toJson())),
+        "inspector": inspector?.toJson(),
+        "inspection_type": inspectionType?.toJson(),
+        "inspection_state": inspectionState?.toJson(),
+        "external_property": externalProperty?.toJson(),
+        "external_building": externalBuilding?.toJson(),
+        "external_unit": externalUnit?.toJson(),
+        "inspection_deficiency_inspection":
+            inspectionDeficiencyInspection == null
+                ? []
+                : List<dynamic>.from(
+                    inspectionDeficiencyInspection!.map((x) => x.toJson())),
+        "inspection_building_certificate": inspectionBuildingCertificate == null
+            ? []
+            : List<dynamic>.from(inspectionBuildingCertificate!.map((x) => x)),
+        "general_physical_condition": generalPhysicalCondition,
+        "unit_house_keeping": unitHouseKeeping,
+        "memo": memo,
       };
 }
 
 class Building {
-  String id;
-  String address1;
+  int? id;
+  String? address1;
   dynamic address2;
-  String city;
-  String state;
-  String zip;
-  String name;
-  dynamic number;
-  ExternalBuildingProperty property;
-  String constructedYear;
-  BuildingType buildingType;
+  String? city;
+  String? state;
+  String? zip;
+  String? name;
+  String? number;
+  ExternalBuildingProperty? property;
+  int? constructedYear;
+  BuildingType? buildingType;
 
   Building({
-    required this.id,
-    required this.address1,
-    required this.address2,
-    required this.city,
-    required this.state,
-    required this.zip,
-    required this.name,
-    required this.number,
-    required this.property,
-    required this.constructedYear,
-    required this.buildingType,
+    this.id,
+    this.address1,
+    this.address2,
+    this.city,
+    this.state,
+    this.zip,
+    this.name,
+    this.number,
+    this.property,
+    this.constructedYear,
+    this.buildingType,
   });
 
   factory Building.fromJson(Map<String, dynamic> json) => Building(
-        id: json["id"].toString(),
-        address1: json["address1"].toString(),
-        address2: json["address2"].toString(),
-        city: json["city"].toString(),
-        state: json["state"].toString(),
-        zip: json["zip"].toString(),
-        name: json["name"].toString(),
-        number: json["number"].toString(),
+        id: json["id"],
+        address1: json["address1"],
+        address2: json["address2"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
+        name: json["name"],
+        number: json["number"],
         property: json["property"] == null
-            ? ExternalBuildingProperty.fromJson({})
+            ? null
             : ExternalBuildingProperty.fromJson(json["property"]),
-        constructedYear: json["constructed_year"].toString(),
+        constructedYear: json["constructed_year"],
         buildingType: json["building_type"] == null
-            ? BuildingType.fromJson({})
+            ? null
             : BuildingType.fromJson(json["building_type"]),
       );
 
@@ -153,97 +181,79 @@ class Building {
         "zip": zip,
         "name": name,
         "number": number,
-        "property": property.toJson(),
+        "property": property?.toJson(),
         "constructed_year": constructedYear,
-        "building_type": buildingType.toJson(),
+        "building_type": buildingType?.toJson(),
       };
 }
 
 class BuildingType {
-  String id;
-  String name;
+  int? id;
+  String? name;
   dynamic description;
 
-  BuildingType({
-    required this.id,
-    required this.name,
-    required this.description,
-  });
+  BuildingType({this.id, this.name, this.description});
 
   factory BuildingType.fromJson(Map<String, dynamic> json) => BuildingType(
-        id: json["id"].toString(),
-        name: json["name"].toString(),
-        description: json["description"].toString(),
-      );
+      id: json["id"], name: json["name"], description: json["description"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id.toString(),
-        "name": name.toString(),
-        "description": description.toString(),
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "name": name, "description": description};
 }
 
 class ExternalBuildingProperty {
-  String id;
-  String address1;
+  int? id;
+  String? address1;
 
-  ExternalBuildingProperty({
-    required this.id,
-    required this.address1,
-  });
+  ExternalBuildingProperty({this.id, this.address1});
 
   factory ExternalBuildingProperty.fromJson(Map<String, dynamic> json) =>
-      ExternalBuildingProperty(
-        id: json["id"].toString(),
-        address1: json["address1"].toString(),
-      );
+      ExternalBuildingProperty(id: json["id"], address1: json["address1"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "address1": address1,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "address1": address1};
 }
 
 class ExternalPropertyClass {
-  String id;
-  String address1;
+  int? id;
+  String? address1;
   dynamic address2;
-  String city;
-  String state;
-  String zip;
-  String name;
-  dynamic number;
+  String? city;
+  String? state;
+  String? zip;
+  String? name;
+  String? number;
   dynamic ampNumber;
-  dynamic notes;
+  String? notes;
 
   ExternalPropertyClass({
-    required this.id,
-    required this.address1,
-    required this.address2,
-    required this.city,
-    required this.state,
-    required this.zip,
-    required this.name,
-    required this.number,
-    required this.ampNumber,
-    required this.notes,
+    this.id,
+    this.address1,
+    this.address2,
+    this.city,
+    this.state,
+    this.zip,
+    this.name,
+    this.number,
+    this.ampNumber,
+    this.notes,
   });
 
   factory ExternalPropertyClass.fromJson(Map<String, dynamic> json) =>
       ExternalPropertyClass(
-          id: json["id"].toString(),
-          address1: json["address1"].toString(),
-          address2: json["address2"].toString(),
-          city: json["city"].toString(),
-          state: json["state"].toString(),
-          zip: json["zip"].toString(),
-          name: json["name"].toString(),
-          number: json["number"].toString(),
-          ampNumber: json["amp_number"].toString(),
-          notes: json["notes"].toString());
+        id: json["id"],
+        address1: json["address1"],
+        address2: json["address2"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
+        name: json["name"],
+        number: json["number"],
+        ampNumber: json["amp_number"],
+        notes: json["notes"],
+      );
 
   Map<String, dynamic> toJson() => {
-        "id": id.toString(),
+        "id": id,
         "address1": address1,
         "address2": address2,
         "city": city,
@@ -257,223 +267,171 @@ class ExternalPropertyClass {
 }
 
 class ExternalUnit {
-  String id;
-  String name;
-  String address;
-  String numberOfBedrooms;
-  String numberOfBathrooms;
-  ExternalPropertyClass property;
-  Building building;
+  int? id;
+  String? name;
+  String? address;
+  int? numberOfBedrooms;
+  int? numberOfBathrooms;
+  bool? occupied;
+  ExternalPropertyClass? property;
+  Building? building;
 
   ExternalUnit({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.numberOfBedrooms,
-    required this.numberOfBathrooms,
-    required this.property,
-    required this.building,
+    this.id,
+    this.name,
+    this.address,
+    this.numberOfBedrooms,
+    this.numberOfBathrooms,
+    this.occupied,
+    this.property,
+    this.building,
   });
 
   factory ExternalUnit.fromJson(Map<String, dynamic> json) => ExternalUnit(
-        id: json["id"].toString(),
+        id: json["id"],
         name: json["name"],
         address: json["address"],
-        numberOfBedrooms: json["number_of_bedrooms"].toString(),
-        numberOfBathrooms: json["number_of_bathrooms"].toString(),
+        numberOfBedrooms: json["number_of_bedrooms"],
+        numberOfBathrooms: json["number_of_bathrooms"],
+        occupied: json["occupied"],
         property: json["property"] == null
-            ? ExternalPropertyClass.fromJson({})
+            ? null
             : ExternalPropertyClass.fromJson(json["property"]),
         building: json["building"] == null
-            ? Building.fromJson({})
+            ? null
             : Building.fromJson(json["building"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id.toString(),
+        "id": id,
         "name": name,
         "address": address,
         "number_of_bedrooms": numberOfBedrooms,
         "number_of_bathrooms": numberOfBathrooms,
-        "property": property.toJson(),
-        "building": building.toJson(),
-      };
-}
-
-class InspectionBuildingCertificate {
-  Certificate certificate;
-
-  InspectionBuildingCertificate({
-    required this.certificate,
-  });
-
-  factory InspectionBuildingCertificate.fromJson(Map<String, dynamic> json) =>
-      InspectionBuildingCertificate(
-        certificate: Certificate.fromJson(json["certificate"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "certificate": certificate.toJson(),
-      };
-}
-
-class Certificate {
-  int id;
-  String certificate;
-
-  Certificate({
-    required this.id,
-    required this.certificate,
-  });
-
-  factory Certificate.fromJson(Map<String, dynamic> json) => Certificate(
-        id: json["id"],
-        certificate: json["certificate"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "certificate": certificate,
+        "occupied": occupied,
+        "property": property?.toJson(),
+        "building": building?.toJson(),
       };
 }
 
 class InspectionDeficiencyInspection {
-  String comment;
-  HousingDeficiency housingDeficiency;
-  List<DeficiencyInspectionDeficiencyProofPicture>
+  String? comment;
+  HousingDeficiency? housingDeficiency;
+  List<DeficiencyInspectionDeficiencyProofPicture>?
       deficiencyInspectionDeficiencyProofPicture;
 
   InspectionDeficiencyInspection({
-    required this.comment,
-    required this.housingDeficiency,
-    required this.deficiencyInspectionDeficiencyProofPicture,
+    this.comment,
+    this.housingDeficiency,
+    this.deficiencyInspectionDeficiencyProofPicture,
   });
 
   factory InspectionDeficiencyInspection.fromJson(Map<String, dynamic> json) =>
       InspectionDeficiencyInspection(
         comment: json["comment"],
-        housingDeficiency:
-            HousingDeficiency.fromJson(json["housing_deficiency"]),
+        housingDeficiency: json["housing_deficiency"] == null
+            ? null
+            : HousingDeficiency.fromJson(json["housing_deficiency"]),
         deficiencyInspectionDeficiencyProofPicture:
-            List<DeficiencyInspectionDeficiencyProofPicture>.from(json[
-                    "deficiency_inspection_deficiency_proof_picture"]
-                .map((x) =>
-                    DeficiencyInspectionDeficiencyProofPicture.fromJson(x))),
+            json["deficiency_inspection_deficiency_proof_picture"] == null
+                ? []
+                : List<DeficiencyInspectionDeficiencyProofPicture>.from(
+                    json["deficiency_inspection_deficiency_proof_picture"]!.map(
+                        (x) =>
+                            DeficiencyInspectionDeficiencyProofPicture.fromJson(
+                                x))),
       );
 
   Map<String, dynamic> toJson() => {
         "comment": comment,
-        "housing_deficiency": housingDeficiency.toJson(),
-        "deficiency_inspection_deficiency_proof_picture": List<dynamic>.from(
-            deficiencyInspectionDeficiencyProofPicture.map((x) => x.toJson())),
+        "housing_deficiency": housingDeficiency?.toJson(),
+        "deficiency_inspection_deficiency_proof_picture":
+            deficiencyInspectionDeficiencyProofPicture == null
+                ? []
+                : List<dynamic>.from(deficiencyInspectionDeficiencyProofPicture!
+                    .map((x) => x.toJson())),
       };
 }
 
 class DeficiencyInspectionDeficiencyProofPicture {
-  String picture;
+  String? picture;
   dynamic description;
 
-  DeficiencyInspectionDeficiencyProofPicture({
-    required this.picture,
-    required this.description,
-  });
+  DeficiencyInspectionDeficiencyProofPicture({this.picture, this.description});
 
   factory DeficiencyInspectionDeficiencyProofPicture.fromJson(
           Map<String, dynamic> json) =>
       DeficiencyInspectionDeficiencyProofPicture(
-        picture: json["picture"],
-        description: json["description"],
-      );
+          picture: json["picture"], description: json["description"]);
 
-  Map<String, dynamic> toJson() => {
-        "picture": picture,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() =>
+      {"picture": picture, "description": description};
 }
 
 class HousingDeficiency {
-  int id;
-  Severity severity;
-  HousingItem housingItem;
+  int? id;
+  Severity? severity;
+  HousingItem? housingItem;
+  dynamic correctionTimeFrame;
 
-  HousingDeficiency({
-    required this.id,
-    required this.severity,
-    required this.housingItem,
-  });
+  HousingDeficiency(
+      {this.id, this.severity, this.housingItem, this.correctionTimeFrame});
 
   factory HousingDeficiency.fromJson(Map<String, dynamic> json) =>
       HousingDeficiency(
         id: json["id"],
-        severity: Severity.fromJson(json["severity"]),
-        housingItem: HousingItem.fromJson(json["housing_item"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "severity": severity.toJson(),
-        "housing_item": housingItem.toJson(),
-      };
-}
-
-class HousingItem {
-  int id;
-  String item;
-  dynamic description;
-
-  HousingItem({
-    required this.id,
-    required this.item,
-    required this.description,
-  });
-
-  factory HousingItem.fromJson(Map<String, dynamic> json) => HousingItem(
-        id: json["id"],
-        item: json["item"],
-        description: json["description"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "item": item,
-        "description": description,
-      };
-}
-
-class Severity {
-  int id;
-  String healthySafetyDesignation;
-  String correctionTimeFrame;
-
-  Severity({
-    required this.id,
-    required this.healthySafetyDesignation,
-    required this.correctionTimeFrame,
-  });
-
-  factory Severity.fromJson(Map<String, dynamic> json) => Severity(
-        id: json["id"],
-        healthySafetyDesignation: json["healthy_safety_designation"],
+        severity: json["severity"] == null
+            ? null
+            : Severity.fromJson(json["severity"]),
+        housingItem: json["housing_item"] == null
+            ? null
+            : HousingItem.fromJson(json["housing_item"]),
         correctionTimeFrame: json["correction_time_frame"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "healthy_safety_designation": healthySafetyDesignation,
+        "severity": severity?.toJson(),
+        "housing_item": housingItem?.toJson(),
         "correction_time_frame": correctionTimeFrame,
       };
 }
 
-class InspectionState {
-  int id;
-  String state;
+class HousingItem {
+  int? id;
+  String? item;
   dynamic description;
 
-  InspectionState({
-    required this.id,
-    required this.state,
-    required this.description,
-  });
+  HousingItem({this.id, this.item, this.description});
+
+  factory HousingItem.fromJson(Map<String, dynamic> json) => HousingItem(
+      id: json["id"], item: json["item"], description: json["description"]);
+
+  Map<String, dynamic> toJson() =>
+      {"id": id, "item": item, "description": description};
+}
+
+class Severity {
+  int? id;
+  String? healthySafetyDesignation;
+
+  Severity({this.id, this.healthySafetyDesignation});
+
+  factory Severity.fromJson(Map<String, dynamic> json) => Severity(
+        id: json["id"],
+        healthySafetyDesignation: json["healthy_safety_designation"],
+      );
+
+  Map<String, dynamic> toJson() =>
+      {"id": id, "healthy_safety_designation": healthySafetyDesignation};
+}
+
+class InspectionState {
+  int? id;
+  String? state;
+  dynamic description;
+
+  InspectionState({this.id, this.state, this.description});
 
   factory InspectionState.fromJson(Map<String, dynamic> json) =>
       InspectionState(
@@ -482,57 +440,44 @@ class InspectionState {
         description: json["description"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "state": state,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "state": state, "description": description};
 }
 
 class InspectionType {
-  int id;
-  String type;
+  int? id;
+  String? type;
   dynamic description;
 
-  InspectionType({
-    required this.id,
-    required this.type,
-    required this.description,
-  });
+  InspectionType({this.id, this.type, this.description});
 
   factory InspectionType.fromJson(Map<String, dynamic> json) => InspectionType(
-        id: json["id"],
-        type: json["type"],
-        description: json["description"],
-      );
+      id: json["id"], type: json["type"], description: json["description"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "type": type,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "type": type, "description": description};
 }
 
 class Inspector {
-  int id;
-  String externalAccountId;
-  String externalPersonalId;
+  int? id;
+  int? externalAccountId;
+  dynamic externalPersonalId;
+  String? name;
 
-  Inspector({
-    required this.id,
-    required this.externalAccountId,
-    required this.externalPersonalId,
-  });
+  Inspector(
+      {this.id, this.externalAccountId, this.externalPersonalId, this.name});
 
   factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
         id: json["id"],
-        externalAccountId: json["external_account_id"].toString(),
-        externalPersonalId: json["external_personal_id"].toString(),
+        externalAccountId: json["external_account_id"],
+        externalPersonalId: json["external_personal_id"],
+        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "external_account_id": externalAccountId.toString(),
-        "external_personal_id": externalPersonalId.toString(),
+        "external_account_id": externalAccountId,
+        "external_personal_id": externalPersonalId,
+        "name": name,
       };
 }

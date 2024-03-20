@@ -224,7 +224,7 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, CreateinspectionModel>> createUnitInspectionRequest(
+  Future<Either<Failure, CreateInspectionModel>> createUnitInspectionRequest(
       {required inspectionJson,
       required propertyJson,
       required buildingJson,
@@ -248,7 +248,7 @@ class ApiProviders extends BaseController {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(CreateinspectionModel.fromJson(response.data));
+        return Right(CreateInspectionModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

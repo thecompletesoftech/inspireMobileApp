@@ -8,7 +8,7 @@ class UnitSummaryRepository {
 
   UnitSummaryRepository();
 
-  Future<Either<Failure, CreateinspectionModel>> createInspections(
+  Future<Either<Failure, CreateInspectionModel>> createInspections(
       {required inspectionJson,
       required propertyJson,
       required buildingJson,
