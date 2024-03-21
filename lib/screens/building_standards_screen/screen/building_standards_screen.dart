@@ -149,7 +149,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                       textFamily: fontFamilyBold,
                                       textSize: 16.px,
                                     ),
-                                  ).paddingOnly(left: 8.px)
+                                  ).paddingOnly(left: 6.px)
                                 ],
                               ).paddingSymmetric(horizontal: 16.px),
                             ),

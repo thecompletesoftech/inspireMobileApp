@@ -30,10 +30,10 @@ class UnitDeficienciesInsideScreen
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    if (controller.isCheck() || controller.isDeleted) {
-                      Get.back(result: {
-                        "isEdit": controller.isDeleted,
-                      });
+                    if (controller.isCheck() ||
+                        controller.isDeleted ||
+                        controller.commentController.text.isEmpty) {
+                      Get.back(result: {"isEdit": controller.isDeleted});
                     } else {
                       controller.confirmDialog();
                     }
@@ -453,7 +453,8 @@ class UnitDeficienciesInsideScreen
                                                                 .withOpacity(
                                                                     0.07999999821186066)
                                                             : null,
-                                                      ) /*Image.file(
+                                                      ),
+                                                      /*Image.file(
                                                         File(controller
                                                                 .sendImagesList[
                                                             index]),
@@ -467,7 +468,6 @@ class UnitDeficienciesInsideScreen
                                                                     0.07999999821186066)
                                                             : null,
                                                       )*/
-                                                      ,
                                                     ),
                                                   ),
                                                   Positioned(
@@ -852,12 +852,16 @@ class UnitDeficienciesInsideScreen
                                       title: Strings.saveChanges,
                                       textColor:
                                           controller.selectedItem != "null" &&
-                                                  controller.visibleBtn
+                                                  controller.visibleBtn &&
+                                                  controller.commentController
+                                                      .text.isNotEmpty
                                               ? controller.appColors.white
                                               : controller.appColors.border1,
                                       color: controller.selectedItem !=
                                                   "null" &&
-                                              controller.visibleBtn
+                                              controller.visibleBtn &&
+                                              controller.commentController.text
+                                                  .isNotEmpty
                                           ? controller.appColors.appColor
                                           : controller.appColors.black
                                               .withOpacity(0.11999999731779099),
@@ -869,10 +873,9 @@ class UnitDeficienciesInsideScreen
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller
-                                                .visibleBtn /*&&
-                                            controller.imageList.isNotEmpty*/
-                                            ) {
+                                        if (controller.visibleBtn &&
+                                            controller.commentController.text
+                                                .isNotEmpty) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller

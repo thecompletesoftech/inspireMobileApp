@@ -35,7 +35,7 @@ class UnitBuildingStandardsScreen
                 Column(
                   children: [
                     MyTextView(
-                      '${controller.propertyname}-${controller.buildingName ?? ""}-${controller.unitname ?? ""}',
+                      '${controller.propertyname}-${controller.buildingName} - ${controller.unitname}',
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -154,9 +154,7 @@ class UnitBuildingStandardsScreen
                                       textFamily: fontFamilyBold,
                                       textSize: 16.px,
                                     ),
-                                  ).paddingOnly(
-                                    left: 8.px,
-                                  )
+                                  ).paddingOnly(left: 6.px)
                                 ],
                               )),
                         ),
@@ -427,7 +425,7 @@ class UnitBuildingStandardsScreen
                                                                           ],
                                                                         ),
                                                                         MyTextView(
-                                                                          buildingDataList?.definition ??
+                                                                          buildingDataList.definition ??
                                                                               "",
                                                                           isMaxLineWrap:
                                                                               true,
