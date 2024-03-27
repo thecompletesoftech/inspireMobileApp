@@ -49,6 +49,7 @@ String protectedCtxAuthentication =
 
 class Constants {
   static const bool isTestingMode = kDebugMode;
+
   // if(userOrOwner == false){ user flow } else { Business Owner Flow }
   // static bool userOrOwner = false;
   // static const String owner = "Business";
@@ -65,19 +66,17 @@ class Constants {
   static const String languageCodeAr = 'ar';
 
   //API calling....
-  static const String baseUrl =
-      "https://inspections.dev.gccs.gilsonsoftware.com/";
+  static const String baseUrl = "https://";
 
   static const String login = "pha-api/accounts/login/";
-  static const String propertyinfo = "inspection/api/properties/";
-  static const String certificates = "inspection/api/certificates";
+  static const String propertyInfo = "/inspection/api/properties/";
+  static const String certificates = "/inspection/api/certificates";
   static const String buildings = "/inspection/api/buildings";
   static const String createBuildings = "/inspection/api/buildings/create/";
-  static const String getdeficieny = "inspection/api/deficiency_areas";
-  static const String getBuildingType = "inspection/api/building_types";
-  static const String createinspection = "inspection/api/create/";
-  static const String createinspector = "inspection/api/inspector/create/";
-  // static const String getdeficieny = "inspection/api/deficiency_areas/";
+  static const String getDeficiency = "/inspection/api/deficiency_areas";
+  static const String getBuildingType = "/inspection/api/building_types";
+  static const String createInspection = "/inspection/api/create/";
+  static const String createInspector = "/inspection/api/inspector/create/";
 
   static const String signUp = "user/signUp";
 

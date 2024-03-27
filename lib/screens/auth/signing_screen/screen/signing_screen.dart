@@ -1,5 +1,8 @@
-import 'signing_controller.dart';
-import '../../../languages/language.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
+import '../controller/signing_controller.dart';
+import '../../../../languages/language.dart';
 import 'package:public_housing/commons/all.dart';
 
 class SigningScreen extends GetView<SigningController> {
@@ -117,7 +120,7 @@ class SigningScreen extends GetView<SigningController> {
                                             textWeight: FontWeight.w500),
                                       ).paddingSymmetric(vertical: 48.px),
                                       CommonTextField(
-                                        controller: controller.email,
+                                        controller: controller.emailController,
                                         labelText: Languages.of(context)!.email,
                                         hintText: Languages.of(context)!
                                             .enterYourEmail,
@@ -130,14 +133,14 @@ class SigningScreen extends GetView<SigningController> {
                                         onChange: (value) {
                                           if (controller.utils
                                               .isValidationEmpty(controller
-                                                  .email.text
+                                                  .emailController.text
                                                   .trim())) {
                                             controller.isEmail = false;
                                             controller.checked = false;
                                             controller.update();
                                           } else if (!controller.utils
                                               .emailValidator(controller
-                                                  .email.text
+                                                  .emailController.text
                                                   .trim())) {
                                             controller.isEmail = false;
                                             controller.checked = false;
@@ -156,7 +159,7 @@ class SigningScreen extends GetView<SigningController> {
                                       ),
                                       SizedBox(height: 24.px),
                                       CommonTextField(
-                                        controller: controller.pass,
+                                        controller: controller.passController,
                                         labelText:
                                             Languages.of(context)!.password,
                                         isLable: true,
@@ -180,7 +183,7 @@ class SigningScreen extends GetView<SigningController> {
                                         onChange: (value) {
                                           if (controller.utils
                                               .isValidationEmpty(controller
-                                                  .pass.text
+                                                  .passController.text
                                                   .trim())) {
                                             controller.isPass = false;
                                             controller.checked = false;
@@ -286,8 +289,73 @@ class SigningScreen extends GetView<SigningController> {
                                                   controller.appColors.black,
                                               textWeight: FontWeight.w500),
                                         ).paddingSymmetric(vertical: 48.px),
+                                        TypeAheadField(
+                                          controller:
+                                              controller.clientController,
+                                          suggestionsCallback: (search) {
+                                            controller.update();
+                                            return controller.clientList;
+                                          },
+                                          builder: (context, c, focusNode) {
+                                            return CommonTextField(
+                                              focusNode: focusNode,
+                                              isLable: true,
+                                              readOnly: true,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icBuildingss,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              suffixIcon: SvgPicture.string(
+                                                icDownArrow,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingAll(10.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.client,
+                                              hintText:
+                                                  Strings.selectYourClient,
+                                              controller: c,
+                                              onChange: (value) {
+                                                if (controller.clientController
+                                                    .text.isNotEmpty) {
+                                                  controller.checked = true;
+                                                } else {
+                                                  controller.checked = false;
+                                                }
+                                                controller.update();
+                                              },
+                                            );
+                                          },
+                                          itemBuilder: (context, i) {
+                                            return ListTile(
+                                              title: MyTextView(
+                                                i['title'].toString(),
+                                                textStyleNew: MyTextStyle(
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                  textWeight: FontWeight.w400,
+                                                  textFamily: fontFamilyBold,
+                                                  textSize: 16.px,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          onSelected: (value) async {
+                                            controller
+                                                .clientSelectedValue(value);
+                                            controller.update();
+                                          },
+                                        ).paddingSymmetric(vertical: 24.px),
                                         CommonTextField(
-                                          controller: controller.email,
+                                          controller:
+                                              controller.emailController,
                                           labelText:
                                               Languages.of(context)!.email,
                                           hintText: Languages.of(context)!
@@ -301,7 +369,7 @@ class SigningScreen extends GetView<SigningController> {
                                           onChange: (value) {
                                             if (controller.utils
                                                 .isValidationEmpty(controller
-                                                    .email.text
+                                                    .emailController.text
                                                     .trim())) {
                                               controller.isEmail = false;
                                               controller.checked = false;
@@ -329,7 +397,7 @@ class SigningScreen extends GetView<SigningController> {
                                         ),
                                         SizedBox(height: 24.px),
                                         CommonTextField(
-                                          controller: controller.pass,
+                                          controller: controller.passController,
                                           labelText:
                                               Languages.of(context)!.password,
                                           isLable: true,
@@ -355,7 +423,7 @@ class SigningScreen extends GetView<SigningController> {
                                           onChange: (value) {
                                             if (controller.utils
                                                 .isValidationEmpty(controller
-                                                    .pass.text
+                                                    .passController.text
                                                     .trim())) {
                                               controller.isPass = false;
                                               controller.checked = false;
@@ -389,16 +457,22 @@ class SigningScreen extends GetView<SigningController> {
                                             textSize: 16.px,
                                             textWeight: FontWeight.w500,
                                             textFamily: fontFamilyRegular,
-                                            textColor: controller.checked
+                                            textColor: controller.checked &&
+                                                    controller.clientController
+                                                        .text.isNotEmpty
                                                 ? controller.appColors.black
                                                 : controller.appColors.border1,
-                                            color: controller.checked
+                                            color: controller.checked &&
+                                                    controller.clientController
+                                                        .text.isNotEmpty
                                                 ? controller.appColors.textPink
                                                 : controller.appColors.black
                                                     .withOpacity(
                                                         0.11999999731779099),
                                             onTap: () {
-                                              if (controller.checked)
+                                              if (controller.checked &&
+                                                  controller.clientController
+                                                      .text.isNotEmpty)
                                                 controller.validation();
                                             }).paddingSymmetric(vertical: 24.px),
                                         GestureDetector(

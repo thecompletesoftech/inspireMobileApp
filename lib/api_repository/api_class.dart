@@ -15,7 +15,8 @@ class HttpUtil {
   CancelToken cancelToken = CancelToken();
   GetStorageData getStorageData = GetStorageData();
 
-  String apiUrl = Constants.baseUrl;
+  String apiUrl = '${Constants.baseUrl}'
+      '${GetStorageData().readString(GetStorageData().baseURL)}';
   Utils utils = Utils();
   BuildContext? context;
 

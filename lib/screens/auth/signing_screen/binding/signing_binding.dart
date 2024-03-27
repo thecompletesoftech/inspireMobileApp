@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:public_housing/screens/auth/signing_screen/signing_controller.dart';
+import 'package:public_housing/screens/auth/signing_screen/controller/signing_controller.dart';
 
 class SigningBinding implements Bindings {
   @override

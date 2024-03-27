@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
-
-import '../all.dart';
 
 class CommonAppBar extends StatelessWidget {
   final String? image;

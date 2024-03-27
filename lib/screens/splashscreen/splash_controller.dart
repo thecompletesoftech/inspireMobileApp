@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 
 import '../../commons/all.dart';

@@ -8,11 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../auth/signing_screen/signing_screen.dart';
+import '../auth/signing_screen/screen/signing_screen.dart';
 import '../buildings_screen/buildings_controller.dart';
 
 enum InspectionStatus { all, completed, inCompleted, scheduled }
@@ -24,7 +21,7 @@ class HomeController extends BaseController {
   bool change = false;
   bool visibleBtn = false;
   int currentIndex = 1;
- 
+
   RxList<RxCommonModel> dataList = [
     RxCommonModel(
         id: 1,
@@ -186,6 +183,7 @@ class HomeController extends BaseController {
   }
 
   bool? inComplete;
+
   @override
   onInit() {
     if (Get.arguments != null) {
@@ -204,7 +202,7 @@ class HomeController extends BaseController {
     update();
     checkPermission();
     searchItem("");
-    
+
     super.onInit();
   }
 
@@ -566,7 +564,7 @@ class HomeController extends BaseController {
                           width: 10.px,
                         ),
                         SvgPicture.string(
-                          icTimeColor ?? "",
+                          icTimeColor,
                           width: 24.px,
                           height: 24.px,
                         ),
@@ -711,7 +709,6 @@ class HomeController extends BaseController {
         ));
   }
 
-  
   @override
   void dispose() {
     popupKey.currentState!.deactivate();

@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../auth/signing_screen/signing_screen.dart';
+import '../auth/signing_screen/screen/signing_screen.dart';
 
 enum PropertyStatus { all, completed, inCompleted, scheduled }
 

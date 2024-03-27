@@ -1,18 +1,16 @@
 import 'dart:convert';
+import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import '../../../Models/accountmodel/account_model.dart';
+import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/create_building_request_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
-import '../../../Models/accountmodel/account_model.dart';
-import '../models/certificate_model.dart';
 
 class BuildingInspectionController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
-  final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
-  final GlobalKey<PopupMenuButtonState<int>> popupKey2 = GlobalKey();
-  final GlobalKey<PopupMenuButtonState<int>> popupKey3 = GlobalKey();
+
   TextEditingController inspectorController = TextEditingController();
   TextEditingController inspectionDateController = TextEditingController();
   TextEditingController propertyNameController = TextEditingController();
@@ -56,25 +54,6 @@ class BuildingInspectionController extends BaseController {
     getBuildingType();
     getAccount();
     getCurrentDate();
-    // checked.addAll([
-    //   Certificates(true, 'Boiler Certificate'),
-    //   Certificates(false, 'Elevator Certificate'),
-    //   Certificates(true, 'Fire Alarm Inspection Report'),
-    //   Certificates(false, 'Lead-Based Paint Disclosure Form'),
-    //   Certificates(true, 'Lead-Based Paint Inspection Report'),
-    //   Certificates(false, 'Sprinkler System Certificate'),
-    // ]);
-    // propertyList = ['DATA 1', 'DATA 2', 'DATA 3', 'DATA 4'];
-    cityList = ['CITY 1', 'CITY 2', 'CITY 3', 'CITY 4'];
-    buildingTypeList = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
-    // buildingList = [
-    //   'BUILDING 1',
-    //   'BUILDING 2',
-    //   'BUILDING 3',
-    //   'BUILDING 4',
-    //   'BUILDING 5'
-    // ];
-
     super.onInit();
   }
 
@@ -91,6 +70,7 @@ class BuildingInspectionController extends BaseController {
       message = 'You selected ${Strings.logOut}';
       Get.offAllNamed(SigningScreen.routes);
       getStorageData.removeData(getStorageData.isLogin);
+      getStorageData.removeData(getStorageData.baseURL);
     } else {
       message = 'Not implemented';
     }
@@ -187,22 +167,6 @@ class BuildingInspectionController extends BaseController {
     }
     isData = value;
     update();
-  }
-
-  void actionPropertyNameSelected(value) {
-    propertyNameController.text = propertyList![value].name!;
-  }
-
-  void actionCitySelected(value) {
-    cityController.text = cityList[value];
-  }
-
-  void buildingSelected(value) {
-    buildingNameController.text = buildingList[value].name;
-  }
-
-  void buildingTypeSelected(value) {
-    buildingTypeController.text = buildingTypeList[value];
   }
 
   actionProperty(Properties value) async {

@@ -440,7 +440,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                         },
                                                         headers: {
                                                           "Host":
-                                                              "inspections.dev.gccs.gilsonsoftware.com"
+                                                              "${controller.getStorageData.readString(controller.getStorageData.baseURL)}"
                                                         },
                                                         fit: BoxFit.cover,
                                                         scale: 1.0,
