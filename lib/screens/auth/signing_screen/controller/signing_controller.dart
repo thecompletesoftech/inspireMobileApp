@@ -36,6 +36,7 @@ class SigningController extends BaseController {
   void clientSelectedValue(value) {
     clientController.text = value['title'];
     getStorageData.saveString(getStorageData.baseURL, value['baseURL']);
+    getStorageData.saveString(getStorageData.clientName, value['title']);
   }
 
   loginApiCallCareCart() async {

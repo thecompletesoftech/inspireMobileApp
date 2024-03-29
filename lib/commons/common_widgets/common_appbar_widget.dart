@@ -20,8 +20,6 @@ class CommonAppBar extends StatelessWidget {
     this.onClickBack,
   }) : super(key: key);
 
-  final GlobalKey<PopupMenuButtonState<int>> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     BuildingInspectionController buildingInspectionController =
@@ -59,6 +57,7 @@ class CommonAppBar extends StatelessWidget {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyTextView(
                     buildingInspectionController.account?.userName ?? "",
@@ -70,7 +69,7 @@ class CommonAppBar extends StatelessWidget {
                     ),
                   ),
                   MyTextView(
-                    Strings.userType,
+                    "${GetStorageData().readString(GetStorageData().clientName)}",
                     isMaxLineWrap: true,
                     textStyleNew: MyTextStyle(
                       textColor: AppColors().lightText,

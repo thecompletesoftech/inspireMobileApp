@@ -75,7 +75,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ],
                                     ).paddingOnly(bottom: 4.px),
                                     MyTextView(
-                                      Strings.userType,
+                                      "${controller.getStorageData.readString(controller.getStorageData.clientName)}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textColor:
