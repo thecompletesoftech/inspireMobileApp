@@ -58,6 +58,10 @@ class SigningController extends BaseController {
         title = "Account not found";
         errorMessage = "Email or password incorrect";
       }
+      if (e.toString().contains("LA1001")) {
+        title = "Account not found";
+        errorMessage = "User name or password incorrect";
+      }
       if (e.toString().contains("LA1002")) {
         // print(e);
         errorMessage =
