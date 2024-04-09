@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:public_housing/internet_services/internet_service.dart';
 
 import '../controller/signing_controller.dart';
 import '../../../../languages/language.dart';
@@ -12,7 +13,7 @@ class SigningScreen extends GetView<SigningController> {
 
   @override
   Widget build(BuildContext context) {
-    Utils.screenPortrait(context);
+    // Utils.screenPortrait(context);
     return GetBuilder<SigningController>(
       builder: (_) {
         return BaseScreen(
@@ -259,6 +260,14 @@ class SigningScreen extends GetView<SigningController> {
                                     : 10.h,
                               ),
                             ).paddingOnly(top: 24.px),
+                            GestureDetector(
+                                onTap: controller.isCheck,
+                                child: SvgPicture.string(
+                                    isInternet == IsInternet.initial
+                                        ? syncCompleteIcon
+                                        : isInternet == IsInternet.connect
+                                            ? syncIcon
+                                            : offlineIcon)),
                             ShadowContainer(
                                     elevation: 2,
                                     radius: 16.px,

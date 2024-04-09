@@ -5,11 +5,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:public_housing/background_services/background_service.dart';
+import 'package:public_housing/internet_services/internet_service.dart';
+import 'package:public_housing/offline_database_services/offline_database_service.dart';
 import 'api_repository/loading.dart';
 import 'commons/all.dart';
 import 'languages/app_localizations_delegate.dart';
@@ -37,6 +41,7 @@ Future<void> main() async {
   //-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=
   await GetStorage.init();
   // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  InternetConnectivity().isInternetCheck();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -84,6 +89,7 @@ Future<void> main() async {
   //   }
   // }
   HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
