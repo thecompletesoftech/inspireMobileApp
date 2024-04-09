@@ -1,14 +1,13 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
-import 'package:public_housing/screens/auth/repository/log_repo.dart';
+import 'package:public_housing/screens/auth/repository/login_repository.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repo.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
-
-import '../../unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();

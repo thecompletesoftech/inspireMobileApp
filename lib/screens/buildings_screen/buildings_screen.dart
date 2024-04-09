@@ -2,8 +2,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/buildings_screen/grid_itemcard_widget.dart';
 import 'package:public_housing/screens/buildings_screen/list_itemcard_widget.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
-
 import '../../responsive/scaling_query.dart';
 import '../hs_ack_screen/hs_ack_screen.dart';
 import 'buildings_controller.dart';
@@ -109,7 +107,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                 PopupMenuButton<int>(
                                   key: controller.popupKey,
                                   icon: SvgPicture.string(
-                                    icDownArrow ?? "",
+                                    icDownArrow,
                                     height: 24.px,
                                   ),
                                   onSelected: (int value) =>
@@ -120,7 +118,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                           value: 0,
                                           child: ListTile(
                                               leading: SvgPicture.string(
-                                                icEdit ?? "",
+                                                icEdit,
                                               ),
                                               title: MyTextView(
                                                 Strings.editProfile,
@@ -135,7 +133,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                           value: 1,
                                           child: ListTile(
                                               leading: SvgPicture.string(
-                                                icCopy ?? "",
+                                                icCopy,
                                               ),
                                               title: MyTextView(
                                                 Strings.inspectionHistory,
@@ -150,7 +148,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                           value: 2,
                                           child: ListTile(
                                               leading: SvgPicture.string(
-                                                icBook ?? "",
+                                                icBook,
                                               ),
                                               title: MyTextView(
                                                 Strings.nSPIREStandards,
@@ -165,7 +163,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                                           value: 3,
                                           child: ListTile(
                                               leading: SvgPicture.string(
-                                                icLogout ?? "",
+                                                icLogout,
                                               ),
                                               title: MyTextView(
                                                 Strings.logOut,
@@ -331,9 +329,7 @@ class BuildingsScreen extends GetView<BuildingsController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: (() {
-                     
-                      }),
+                      onTap: (() {}),
                       child: Text.rich(
                         TextSpan(
                           children: [

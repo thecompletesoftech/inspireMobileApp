@@ -20,7 +20,7 @@ class BuildingInspectionRepository {
   }
 
   Future<Either<Failure, CertificateModel>> getCertificates() async {
-    var response = await _provider.getCertificates();
+    var response = await _provider.getCertificatesRequest();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 

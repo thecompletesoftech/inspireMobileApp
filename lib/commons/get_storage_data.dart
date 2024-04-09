@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 class GetStorageData {
   String loginData = "LoginData";
   String isLogin = "isLogin";
+  String baseURL = "baseURL";
+  String clientName = "clientName";
   String userId = "userId";
   String token = "token";
   String account = "accountdata";

@@ -165,6 +165,8 @@ class Strings {
   static String propertyInformation = "Property Information";
   static String inspectionDate = "Inspection Date";
   static String propertyName = "Property Name";
+  static String client = "Client";
+  static String selectYourClient = "Select your client";
 
   static String city = "City";
   static String propertyID = "Property ID";

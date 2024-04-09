@@ -2,29 +2,51 @@ import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
-import '../../../api_authentication/get_token_account.dart';
-import '../../../api_authentication/login_account_direct_request.dart';
-import '../../building_inspection_screen/screen/building_inspection_screen.dart';
-import '../repository/log_repo.dart';
+import '../../../../api_authentication/get_token_account.dart';
+import '../../../../api_authentication/login_account_direct_request.dart';
+import '../../../building_inspection_screen/screen/building_inspection_screen.dart';
+import '../../repository/login_repository.dart';
 
 class SigningController extends BaseController {
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController clientController = TextEditingController();
+
+  List clientList = [];
+
   bool checked = false;
   bool isEmail = false;
   bool isPass = false;
   TokenAccount? tokenAccount;
   var hide = true;
-  LoginRepository loginrepo = LoginRepository();
+  LoginRepository loginRepository = LoginRepository();
   var islogin = false.obs;
 
-  loginApiCallcarecart() async {
-    String user = email.text;
-    String password = pass.text;
+  @override
+  void onInit() {
+    clientList = [
+      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'HACLA', "baseURL": "hacla.live.gccs.gilsonsoftware.com"},
+      // {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
+      {"title": 'KWHA', "baseURL": "kwha.live.gccs.gilsonsoftware.com"},
+    ];
+    update();
+    super.onInit();
+  }
+
+  void clientSelectedValue(value) {
+    clientController.text = value['title'];
+    getStorageData.saveString(getStorageData.baseURL, value['baseURL']);
+    getStorageData.saveString(getStorageData.clientName, value['title']);
+  }
+
+  loginApiCallCareCart() async {
+    String user = emailController.text;
+    String password = passController.text;
     try {
       TokenAccount tokenAccount = await loginAccount(user, password);
       print("account token" + tokenAccount.toString());
-      saveAccountcarecart(tokenAccount);
+      saveAccountCareCart(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
       Get.offAllNamed(BuildingInspectionScreen.routes);
       return tokenAccount;
@@ -35,6 +57,10 @@ class SigningController extends BaseController {
       if (e.toString().contains("LA1000")) {
         title = "Account not found";
         errorMessage = "Email or password incorrect";
+      }
+      if (e.toString().contains("LA1001")) {
+        title = "Account not found";
+        errorMessage = "User name or password incorrect";
       }
       if (e.toString().contains("LA1002")) {
         // print(e);
@@ -86,7 +112,7 @@ class SigningController extends BaseController {
   }
 
   validation() {
-    if (utils.isValidationEmpty(email.text.trim())) {
+    if (utils.isValidationEmpty(emailController.text.trim())) {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterEmail);
@@ -97,7 +123,7 @@ class SigningController extends BaseController {
     //       message: Languages.of(Get.context!)!.pleaseEnterValidEmail);
     // }
 
-    else if (utils.isValidationEmpty(pass.text.trim())) {
+    else if (utils.isValidationEmpty(passController.text.trim())) {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterPassword);
@@ -109,15 +135,15 @@ class SigningController extends BaseController {
     // }
     else {
       // checked = true;
-      loginApiCallcarecart();
+      loginApiCallCareCart();
     }
   }
 
-  saveAccountcarecart(TokenAccount tokenac) async {
-    getStorageData.saveString(getStorageData.token, tokenac.token);
+  saveAccountCareCart(TokenAccount tokenAc) async {
+    getStorageData.saveString(getStorageData.token, tokenAc.token);
     getStorageData.saveString(
-        getStorageData.account, jsonEncode(tokenac.account.toJson()));
-    await createinspector(tokenac.account.userName);
+        getStorageData.account, jsonEncode(tokenAc.account.toJson()));
+    await createInspector(name: tokenAc.account.userName);
     // tokenAccount = tokenac;
   }
 
@@ -141,8 +167,8 @@ class SigningController extends BaseController {
   //   update();
   // }
 
-  createinspector(name) async {
-    var response = await loginrepo.createInspector(name: name );
+  createInspector({required String name}) async {
+    var response = await loginRepository.createInspector(name: name);
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (InspectorModel r) {

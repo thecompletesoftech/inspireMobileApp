@@ -10,7 +10,6 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
-
 import '../../screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 import '../../screens/auth/model/Inspectormodel.dart';
 import '../../screens/auth/model/LoginModel.dart';
@@ -25,19 +24,11 @@ class ApiProviders extends BaseController {
   ApiProviders();
 
   Future<Either<Failure, DeficiencyAreasResponseModel>>
-      getDeficiencyAreasRequest({required bool isType}) async {
+      getDeficiencyAreasRequest() async {
     try {
-      String endPoint;
-
-      if (isType) {
-        endPoint =
-            'inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2';
-      } else {
-        endPoint = 'inspection/api/deficiency_areas?housing_item_id=3';
-      }
-
       Response response = await apiBaseHelperImplementation.get(
-        endPoint: endPoint,
+        endPoint:
+            '/inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2',
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
@@ -56,7 +47,7 @@ class ApiProviders extends BaseController {
       getUnitDeficiencyAreasRequest() async {
     try {
       Response response = await apiBaseHelperImplementation.get(
-        endPoint: Constants.getdeficieny + "/?housing_item_id=3",
+        endPoint: Constants.getDeficiency + "/?housing_item_id=3",
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
@@ -85,13 +76,13 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, InspectorModel>> createInspector(
+  Future<Either<Failure, InspectorModel>> createInspectorRequest(
       {required String name}) async {
     try {
       var mapJson = {"name": name};
 
-      Response response = await apiBaseHelperImplementation.post(
-        endPoint: Constants.createinspector,
+      Response response = await ApiBaseHelperImplementation().post(
+        endPoint: Constants.createInspector,
         body: mapJson,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
@@ -115,11 +106,12 @@ class ApiProviders extends BaseController {
       });
 
       Response response = await apiBaseHelperImplementation.post(
-        endPoint: "inspection/api/images/upload/",
+        endPoint: "/inspection/api/images/upload/",
         body: formData,
         headers: {
           'Authorization': GetStorageData().readString('token'),
-          'Origin': 'https://inspections.dev.gccs.gilsonsoftware.com',
+          'Origin':
+              'https://${getStorageData.readString(getStorageData.baseURL)}/',
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -135,7 +127,7 @@ class ApiProviders extends BaseController {
   Future<Either<Failure, PropertyModel>> getPropertyInfo() async {
     try {
       Response response = await apiBaseHelperImplementation
-          .get(endPoint: Constants.propertyinfo, headers: {
+          .get(endPoint: Constants.propertyInfo, headers: {
         'Authorization': '${getStorageData.readString(getStorageData.token)}',
       });
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -148,7 +140,7 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, CertificateModel>> getCertificates() async {
+  Future<Either<Failure, CertificateModel>> getCertificatesRequest() async {
     try {
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.certificates,
@@ -241,7 +233,7 @@ class ApiProviders extends BaseController {
         "deficiency_inspections": deficiencyList
       };
       Response response = await apiBaseHelperImplementation.post(
-        endPoint: Constants.createinspection,
+        endPoint: Constants.createInspection,
         body: formData,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}'
@@ -262,7 +254,7 @@ class ApiProviders extends BaseController {
           createInspectionRequestModel}) async {
     try {
       Response response = await apiBaseHelperImplementation.post(
-        endPoint: Constants.createinspection,
+        endPoint: Constants.createInspection,
         body: createInspectionRequestModel.toJson(),
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}'

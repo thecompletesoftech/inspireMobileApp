@@ -29,10 +29,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    if (controller.isCheck() || controller.isDeleted) {
-                      Get.back(result: {
-                        "isEdit": controller.isDeleted,
-                      });
+                    if (controller.isCheck() ||
+                        controller.isDeleted ||
+                        controller.commentController.text.isEmpty) {
+                      Get.back(result: {"isEdit": controller.isDeleted});
                     } else {
                       controller.confirmDialog();
                     }
@@ -440,7 +440,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                         },
                                                         headers: {
                                                           "Host":
-                                                              "inspections.dev.gccs.gilsonsoftware.com"
+                                                              "${controller.getStorageData.readString(controller.getStorageData.baseURL)}"
                                                         },
                                                         fit: BoxFit.cover,
                                                         scale: 1.0,
@@ -849,18 +849,18 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                 children: [
                                   CommonButton(
                                       title: Strings.saveChanges,
-                                      textColor: controller.selectedItem !=
-                                                  "null" &&
-                                              controller
-                                                  .visibleBtn /*&&
-                                              controller.imageList.isNotEmpty*/
-                                          ? controller.appColors.white
-                                          : controller.appColors.border1,
+                                      textColor:
+                                          controller.selectedItem != "null" &&
+                                                  controller.visibleBtn &&
+                                                  controller.commentController
+                                                      .text.isNotEmpty
+                                              ? controller.appColors.white
+                                              : controller.appColors.border1,
                                       color: controller.selectedItem !=
                                                   "null" &&
-                                              controller
-                                                  .visibleBtn /*&&
-                                              controller.imageList.isNotEmpty*/
+                                              controller.visibleBtn &&
+                                              controller.commentController.text
+                                                  .isNotEmpty
                                           ? controller.appColors.appColor
                                           : controller.appColors.black
                                               .withOpacity(0.11999999731779099),
@@ -872,10 +872,9 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         vertical: 12.px,
                                       ),
                                       onTap: () async {
-                                        if (controller
-                                                .visibleBtn /*&&
-                                            controller.imageList.isNotEmpty*/
-                                            ) {
+                                        if (controller.visibleBtn &&
+                                            controller.commentController.text
+                                                .isNotEmpty) {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller

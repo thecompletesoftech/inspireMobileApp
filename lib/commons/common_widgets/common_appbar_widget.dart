@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:public_housing/screens/auth/signing_screen/signing_screen.dart';
+import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
-
-import '../all.dart';
 
 class CommonAppBar extends StatelessWidget {
   final String? image;
@@ -22,8 +19,6 @@ class CommonAppBar extends StatelessWidget {
     this.child,
     this.onClickBack,
   }) : super(key: key);
-
-  final GlobalKey<PopupMenuButtonState<int>> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +57,7 @@ class CommonAppBar extends StatelessWidget {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyTextView(
                     buildingInspectionController.account?.userName ?? "",
@@ -73,7 +69,7 @@ class CommonAppBar extends StatelessWidget {
                     ),
                   ),
                   MyTextView(
-                    Strings.userType,
+                    "${GetStorageData().readString(GetStorageData().clientName)}",
                     isMaxLineWrap: true,
                     textStyleNew: MyTextStyle(
                       textColor: AppColors().lightText,

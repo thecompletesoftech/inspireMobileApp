@@ -21,7 +21,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
         return BaseScreen(
           backgroundColor: controller.appColors.appBGColor,
           child: WillPopScope(
-            onWillPop: () async => exit(1),
+            onWillPop: () async => await exit(1),
             child: SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +75,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ],
                                     ).paddingOnly(bottom: 4.px),
                                     MyTextView(
-                                      Strings.userType,
+                                      "${controller.getStorageData.readString(controller.getStorageData.clientName)}",
                                       isMaxLineWrap: true,
                                       textStyleNew: MyTextStyle(
                                         textColor:
@@ -339,7 +339,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                                     .getBuildingApi(value);
                                                 // await controller.searchBuilding(
                                                 //     searchText: value.name);
-
                                                 controller.update();
                                               },
                                             )
@@ -695,7 +694,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       controller:
                                           controller.buildingTypeController,
                                       suggestionsCallback: controller.isSelected
-                                          ? (search) {}
+                                          ? (search) {
+                                              return null;
+                                            }
                                           : (search) async {
                                               await controller
                                                   .searchBuildingType(

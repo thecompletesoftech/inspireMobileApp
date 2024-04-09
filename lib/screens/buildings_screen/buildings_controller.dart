@@ -2,7 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/property_screen/property_controller.dart';
 
-import '../auth/signing_screen/signing_screen.dart';
+import '../auth/signing_screen/screen/signing_screen.dart';
 
 enum BuildingStatus { all, completed, inCompleted, scheduled }
 

@@ -84,6 +84,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                               builder: (context, c, focusNode) {
                                 return CommonTextField(
                                   focusNode: focusNode,
+                                  readOnly: true,
                                   isLable: true,
                                   controller: c,
                                   color: controller.appColors.transparent,
@@ -214,6 +215,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 builder: (context, c, focusNode) {
                                   return CommonTextField(
                                     focusNode: focusNode,
+                                    readOnly: true,
                                     isLable: true,
                                     controller: c,
                                     color: controller.appColors.transparent,
@@ -345,7 +347,6 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-
                                 if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
@@ -353,7 +354,6 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                   await controller.getInspectionInfoJson();
                                   controller.saveCreateInspection();
                                 }
-
                               }),
                               child: Container(
                                 alignment: Alignment.center,
@@ -875,7 +875,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                                   itemBuilder: (context, iz) {
                                                     var subData = data!
                                                         .deficiencyProofPictures?[iz];
-                                                    
+
                                                     return Container(
                                                       height: 184.px,
                                                       width: 184.px,
@@ -905,7 +905,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                         ),
                                       ),
                                       MyTextView(
-                                        item.deficiencyAreaItems![i].description,
+                                        item.deficiencyAreaItems![i]
+                                            .description,
                                         isMaxLineWrap: true,
                                         textStyleNew: MyTextStyle(
                                           textSize: 20.px,
@@ -1171,7 +1172,6 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                           children: [
                             GestureDetector(
                               onTap: (() async {
-
                                 if (controller.generalPhysicalCondition.text
                                         .isNotEmpty &&
                                     controller
@@ -1179,7 +1179,6 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                   await controller.getInspectionInfoJson();
                                   controller.saveCreateInspection();
                                 }
-
                               }),
                               child: Container(
                                 alignment: Alignment.center,

@@ -1,10 +1,11 @@
-import 'package:dio/dio.dart';
 import 'package:public_housing/api/api_helper/api_base_helper.dart';
-import 'package:public_housing/commons/constants.dart';
+import 'package:public_housing/commons/all.dart';
 
 class ApiBaseHelperImplementation extends ApiBaseHelper {
-  final Dio _dio =
-      Dio(BaseOptions(baseUrl: Constants.baseUrl, followRedirects: true));
+  final Dio _dio = Dio(BaseOptions(
+      baseUrl: '${Constants.baseUrl}'
+          '${GetStorageData().readString(GetStorageData().baseURL)}',
+      followRedirects: true));
 
   @override
   Future<dynamic> get(

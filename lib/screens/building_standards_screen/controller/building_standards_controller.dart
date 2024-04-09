@@ -18,7 +18,6 @@ class BuildingStandardsController extends BaseController {
   bool isSuccess = false;
   String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
-
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
   RxList<BuildingModel> dataList = <BuildingModel>[].obs;
   RxMap propertyInfo = {}.obs;
@@ -216,8 +215,7 @@ class BuildingStandardsController extends BaseController {
   }
 
   getDeficiencyAreasData() async {
-    var response =
-        await buildingStandardsRepository.getDeficiencyAreas(isType: true);
+    var response = await buildingStandardsRepository.getDeficiencyAreas();
 
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);

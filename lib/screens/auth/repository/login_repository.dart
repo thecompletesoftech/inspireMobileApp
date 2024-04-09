@@ -15,8 +15,9 @@ class LoginRepository {
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, InspectorModel>> createInspector({required String name}) async {
-    var response = await _provider.createInspector(name: name);
+  Future<Either<Failure, InspectorModel>> createInspector(
+      {required String name}) async {
+    var response = await _provider.createInspectorRequest(name: name);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

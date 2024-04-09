@@ -9,14 +9,14 @@ PODS:
   - Firebase/Messaging (10.22.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.22.0)
-  - firebase_core (2.27.1):
+  - firebase_core (2.27.0):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_crashlytics (3.4.19):
+  - firebase_crashlytics (3.4.18):
     - Firebase/Crashlytics (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_messaging (14.7.20):
+  - firebase_messaging (14.7.19):
     - Firebase/Messaging (= 10.22.0)
     - firebase_core
     - Flutter
@@ -270,9 +270,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_settings: 017320c6a680cdc94c799949d95b84cb69389ebc
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_core: d6dfb4cb86a9ebd92464bb8736075fe967211c97
-  firebase_crashlytics: 0be8c89a6b91fd964a7a8fe574109fd528d310bb
-  firebase_messaging: f97062a3a7644703ba4892859183c0a59e08d25f
+  firebase_core: 100945864b4aedce3cfef0c62ab864858bf013cf
+  firebase_crashlytics: 2b9ca6246501a03427eb43280be7615027e32142
+  firebase_messaging: e65050bf9b187511d80ea3a4de7cf5573d2c7543
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreExtension: cb88851781a24e031d1b58e0bd01eb1f46b044b5
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
@@ -286,13 +286,13 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
-  google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
+  google_maps_flutter_ios: d1318b4ff711612cab16862d7a87e31a7403d458
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
-  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
+  image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
@@ -310,7 +310,7 @@ SPEC CHECKSUMS:
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   Toast: ec33c32b8688982cecc6348adeae667c1b9938da
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
-  url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
 
 PODFILE CHECKSUM: 5c492e035f329c7876f3cee1127660214bbb5199
 
