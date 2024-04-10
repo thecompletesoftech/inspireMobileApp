@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
 import '../../../../api_authentication/get_token_account.dart';
@@ -26,9 +25,9 @@ class SigningController extends BaseController {
   @override
   void onInit() {
     clientList = [
-      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
       {"title": 'HACLA', "baseURL": "hacla.live.gccs.gilsonsoftware.com"},
-      {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
+      // {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
       {"title": 'KWHA', "baseURL": "kwha.live.gccs.gilsonsoftware.com"},
     ];
     update();
@@ -39,10 +38,6 @@ class SigningController extends BaseController {
     clientController.text = value['title'];
     getStorageData.saveString(getStorageData.baseURL, value['baseURL']);
     getStorageData.saveString(getStorageData.clientName, value['title']);
-  }
-
-  isCheck() {
-    update();
   }
 
   loginApiCallCareCart() async {

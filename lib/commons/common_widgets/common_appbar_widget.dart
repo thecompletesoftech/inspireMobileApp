@@ -1,4 +1,6 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 
@@ -56,28 +58,37 @@ class CommonAppBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  MyTextView(
-                    buildingInspectionController.account?.userName ?? "",
-                    textStyleNew: MyTextStyle(
-                      textColor: AppColors().lightText,
-                      textWeight: FontWeight.w600,
-                      textFamily: fontFamilyBold,
-                      textSize: 16.px,
-                    ),
+                  SvgPicture.string(isInternet == IsInternet.initial
+                      ? syncCompleteIcon
+                      : isInternet == IsInternet.connect
+                          ? syncIcon
+                          : offlineIcon),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      MyTextView(
+                        buildingInspectionController.account?.userName ?? "",
+                        textStyleNew: MyTextStyle(
+                          textColor: AppColors().lightText,
+                          textWeight: FontWeight.w600,
+                          textFamily: fontFamilyBold,
+                          textSize: 16.px,
+                        ),
+                      ),
+                      MyTextView(
+                        "${GetStorageData().readString(GetStorageData().clientName)}",
+                        isMaxLineWrap: true,
+                        textStyleNew: MyTextStyle(
+                          textColor: AppColors().lightText,
+                          textWeight: FontWeight.w400,
+                          textFamily: fontFamilyMedium,
+                          textSize: 14.px,
+                        ),
+                      )
+                    ],
                   ),
-                  MyTextView(
-                    "${GetStorageData().readString(GetStorageData().clientName)}",
-                    isMaxLineWrap: true,
-                    textStyleNew: MyTextStyle(
-                      textColor: AppColors().lightText,
-                      textWeight: FontWeight.w400,
-                      textFamily: fontFamilyMedium,
-                      textSize: 14.px,
-                    ),
-                  )
                 ],
               ),
               // Utils.isTabletScreen(context)

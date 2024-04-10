@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
@@ -43,50 +44,56 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              // Image.asset(
-                              //   ImagePath.user,
-                              //   width: 48.px,
-                              //   height: 48.px,
-                              // ).paddingOnly(right: 8.px),
-                              Flexible(
-                                flex: 1,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: MyTextView(
-                                            controller.account?.userName ?? "",
-                                            textStyleNew: MyTextStyle(
-                                              textColor: controller
-                                                  .appColors.lightText,
-                                              textWeight: FontWeight.w600,
-                                              textFamily: fontFamilyBold,
-                                              textSize: 16.px,
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap: controller.isCheck,
+                                      child: SvgPicture.string(
+                                          isInternet == IsInternet.initial
+                                              ? syncCompleteIcon
+                                              : isInternet == IsInternet.connect
+                                                  ? syncIcon
+                                                  : offlineIcon)),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Flexible(
+                                            flex: 1,
+                                            child: MyTextView(
+                                              controller.account?.userName ??
+                                                  "",
+                                              textStyleNew: MyTextStyle(
+                                                textColor: controller
+                                                    .appColors.lightText,
+                                                textWeight: FontWeight.w600,
+                                                textFamily: fontFamilyBold,
+                                                textSize: 16.px,
+                                              ),
                                             ),
                                           ),
+                                        ],
+                                      ).paddingOnly(bottom: 4.px),
+                                      MyTextView(
+                                        "${controller.getStorageData.readString(controller.getStorageData.clientName)}",
+                                        isMaxLineWrap: true,
+                                        textStyleNew: MyTextStyle(
+                                          textColor:
+                                              controller.appColors.lightText,
+                                          textWeight: FontWeight.w400,
+                                          textFamily: fontFamilyMedium,
+                                          textSize: 14.px,
                                         ),
-                                      ],
-                                    ).paddingOnly(bottom: 4.px),
-                                    MyTextView(
-                                      "${controller.getStorageData.readString(controller.getStorageData.clientName)}",
-                                      isMaxLineWrap: true,
-                                      textStyleNew: MyTextStyle(
-                                        textColor:
-                                            controller.appColors.lightText,
-                                        textWeight: FontWeight.w400,
-                                        textFamily: fontFamilyMedium,
-                                        textSize: 14.px,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                               Column(
                                 mainAxisAlignment:

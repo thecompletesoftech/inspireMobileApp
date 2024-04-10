@@ -7,7 +7,9 @@ import '../TitleheadmenuWidgte.dart';
 
 class UnitInspection extends GetView<UnitController> {
   const UnitInspection({Key? key}) : super(key: key);
+
   static const routes = "/UnitInspection";
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UnitController>(
@@ -377,8 +379,8 @@ class UnitInspection extends GetView<UnitController> {
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                     TitleheadMenu(
                       title: Strings.yearConstructed,
-                      value:
-                          controller.buildingInfo['constructed_year'].toString(),
+                      value: controller.buildingInfo['constructed_year']
+                          .toString(),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),
