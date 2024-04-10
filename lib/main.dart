@@ -89,7 +89,7 @@ Future<void> main() async {
   //   }
   // }
   HttpOverrides.global = MyHttpOverrides();
-
+  await DatabaseProvider().getDatabaseInstance();
   runApp(const MyApp());
 }
 

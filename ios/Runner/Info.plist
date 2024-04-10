@@ -66,6 +66,7 @@
 		<string>fetch</string>
 		<string>location</string>
 		<string>processing</string>
+		<string>push-to-talk</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
