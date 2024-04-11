@@ -877,7 +877,10 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         if (controller.visibleBtn &&
                                             controller.commentController.text
                                                 .isNotEmpty) {
-                                               if(  isInternet == IsInternet.connect) {
+                                               if(  isInternet != IsInternet.connect) {
+ controller.upalodimagelocal();
+                                               }
+                                               
  await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
@@ -888,10 +891,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                 controller
                                                     .deficiencyInspectionsReqModel
                                           });
-                                               }else{
-                                                 controller.upalodimagelocal();
-
-                                               }
+                                               
                                          
                                         
                                         }
