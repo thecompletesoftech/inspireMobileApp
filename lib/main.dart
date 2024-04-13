@@ -44,6 +44,7 @@ Future<void> main() async {
   await GetStorage.init();
   // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   InternetConnectivity().isInternetCheck();
+  
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 

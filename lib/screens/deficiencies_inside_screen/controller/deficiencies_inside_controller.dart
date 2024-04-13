@@ -18,6 +18,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 import '../../../Database/Crud.dart';
 import '../../../Database/tablenamestring.dart';
+import '../../../internet_services/internet_service.dart';
 
 enum ImageUploadStatus { initial, uploading, success }
 
@@ -26,7 +27,7 @@ class DeficienciesInsideController extends BaseController {
   String deficiencies = '';
   DeficiencyInspectionsReqModel successListOfDeficiencies =
       DeficiencyInspectionsReqModel();
-
+Crud _crud =Get.put(Crud());
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
   var selectedItem = "null";
@@ -36,7 +37,7 @@ class DeficienciesInsideController extends BaseController {
   final dateController = TextEditingController();
   bool change = true;
   List<String> imageList = [];
-  List imageListlocal = [];
+  // List imageListlocal = [];
   List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
   int? listIndex;
   var isListening = false.obs;
@@ -217,7 +218,10 @@ class DeficienciesInsideController extends BaseController {
   }
 
   removeImage(index) {
+       
+
     imageList.removeAt(index);
+        
     imageUploadStatus = ImageUploadStatus.initial;
     update();
   }
@@ -605,14 +609,17 @@ class DeficienciesInsideController extends BaseController {
             File file = await File(
                     '${tempDir!.path}/${DateTime.now().millisecondsSinceEpoch}.png')
                 .create();
-            imageListlocal.add(File(pickedFile.path));
+
             file.writeAsBytesSync(editedImage);
-          
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
+            if(  isInternet != IsInternet.connect) {
+              imageList.add(pickedFile.path);
+                                                //  upalodimagelocal(file);
+                                                    imageUploadStatus = ImageUploadStatus.success;
+                                               }else{
             var response = await deficienciesInsideRepository.getImageUpload(
                 filePath: file.path);
-
             response.fold((l) {
               imageUploadStatus = ImageUploadStatus.initial;
             }, (r) {
@@ -626,6 +633,7 @@ class DeficienciesInsideController extends BaseController {
               // }
               update();
             });
+                                               }
 
             // utils.showToast(message: "Section Completed", context: Get.context!);
           }
@@ -846,7 +854,7 @@ class DeficienciesInsideController extends BaseController {
               ),
             ),
           );
-          imageListlocal.add(File(pickedFile.path));
+      
           if (editedImage != null) {
             File file = await File(
                     '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png')
@@ -854,7 +862,11 @@ class DeficienciesInsideController extends BaseController {
             file.writeAsBytesSync(editedImage);
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
-
+         if(  isInternet != IsInternet.connect) {
+              imageList.add(pickedFile.path);
+                                                //  upalodimagelocal(file);
+                                                   imageUploadStatus = ImageUploadStatus.success;
+                                               }else{
             var response = await deficienciesInsideRepository.getImageUpload(
                 filePath: file.path);
 
@@ -873,6 +885,7 @@ class DeficienciesInsideController extends BaseController {
               // }
               update();
             });
+                                               }
           }
         }
       } catch (e) {
@@ -884,6 +897,7 @@ class DeficienciesInsideController extends BaseController {
   }
 
   saveChanges() {
+    print("image list"+ imageList.toString());
     deficiencyInspectionsReqModel = [
       DeficiencyInspectionsReqModel(
         comment: commentController.text,
@@ -908,28 +922,60 @@ class DeficienciesInsideController extends BaseController {
         successListOfDeficiencies.comment == commentController.text &&
         successListOfDeficiencies.date == dateController.text;
   }
-  upalodimagelocal() async {
-    print("image list" +imageListlocal.toString());
+  upalodimagelocal([filepath]) async {
+  
     final appDir;
      if (Platform.isIOS) {
             appDir = await getApplicationDocumentsDirectory();
           } else {
             appDir = await getExternalStorageDirectory();
           }
-if(imageListlocal.length > 0){
-  for(var  i= 0 ; i < imageListlocal.length;i++){
-
+if(imageList.length >0){
+for (var i = 0; i < imageList.length; i++) {
+  
   File file = await File(
                     '${appDir!.path}/${DateTime.now().millisecondsSinceEpoch.toString()}.png')
                 .create();                          
-                 file.writeAsBytesSync(await imageListlocal[i].readAsBytes());
+                 file.writeAsBytesSync(await File( imageList[i]).readAsBytes());
                    crud.insertdata(TablenameString().ImageList, {"imagename":file.path});
-  }
-  imageListlocal.clear();
-
+}
 }
 
+
   
   
+  }
+  uploadlocalimagetoserver() async {
+    // print("---upload to server------");
+   var imagelocal  = await _crud.fetchtablerecord(TablenameString().ImageList);
+  //  print("store data"+ imagelocal.toString());
+   if(imagelocal.length > 0){
+
+for (var i = 0; i < imagelocal.length; i++) {
+  // print("call data");
+   var response = await deficienciesInsideRepository.getImageUpload(
+                filePath:imagelocal[i]['imagename'] );
+
+            response.fold((l) {
+              imageUploadStatus = ImageUploadStatus.initial;
+
+              return null;
+            }, (r) {
+              print("image"+ r.images!.image .toString());
+              // imageUploadStatus = ImageUploadStatus.success;
+              // imageList.add(r.images?.image ?? '');
+              // if (!utils.isValidationEmpty(commentController.text) &&
+              //     !utils.isValidationEmpty(dateController.text)) {
+              //   visibleBtn = true;
+              // } else {
+              //   visibleBtn = false;
+              // }
+              
+              update();
+            });
+}
+_crud.clearTable(TablenameString().ImageList);
+     
+   }   
   }
 }

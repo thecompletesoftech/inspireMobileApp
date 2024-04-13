@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
@@ -377,7 +379,8 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           ImageUploadStatus.success
                                       ? ListView.separated(
                                           scrollDirection: Axis.horizontal,
-                                          itemCount:
+                                          itemCount: 
+
                                               controller.imageList.length,
                                           shrinkWrap: true,
                                           physics:
@@ -394,7 +397,37 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.px),
-                                                      child: Image.network(
+                                                      child:   
+                                                          isInternet != IsInternet.connect?
+                                                       SizedBox(
+                                                          height: 126.px,
+                                                    width: 126.px,
+                                                         child: ClipRRect(
+                                                             borderRadius:
+                                                            BorderRadius.circular(
+                                                                10.px),
+                                                           child: Image.file(File( controller
+                                                                .imageList[index]), 
+                                                                fit: BoxFit.cover,
+                                                                   frameBuilder: (_,
+                                                                image,
+                                                                loadingBuilder,
+                                                                __) {
+                                                              if (loadingBuilder ==
+                                                                  null) {
+                                                                return const SizedBox(
+                                                                  height: 100,
+                                                                  width: 100,
+                                                                  child: Center(
+                                                                      child:
+                                                                          CircularProgressIndicator()),
+                                                                );
+                                                              }
+                                                              return image;
+                                                            }),
+                                                         ),
+                                                       ):
+                                                       Image.network(
                                                         controller
                                                             .imageList[index],
                                                         frameBuilder: (_,
@@ -877,11 +910,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                         if (controller.visibleBtn &&
                                             controller.commentController.text
                                                 .isNotEmpty) {
-                                               if(  isInternet != IsInternet.connect) {
- controller.upalodimagelocal();
-                                               }
+// controller.uploadlocalimagetoserver();
+                                                if(  isInternet != IsInternet.connect) {
+                                                 controller.upalodimagelocal();
+                                                }
                                                
- await controller.saveChanges();
+                                          await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
                                                 .successListOfDeficiencies
@@ -892,9 +926,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                     .deficiencyInspectionsReqModel
                                           });
                                                
-                                         
-                                        
-                                        }
+                                         }
                                       }),
                                 ],
                               ).paddingSymmetric(vertical: 48.px),

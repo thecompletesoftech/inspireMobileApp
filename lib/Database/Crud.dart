@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:public_housing/Database/tablenamestring.dart';
 import 'package:sqflite/sqflite.dart';
-class Crud extends GetxController {
 
+class Crud extends GetxController {
   createdatabase() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'docs.db');
@@ -21,39 +21,41 @@ class Crud extends GetxController {
 
     await db.execute(
         'CREATE TABLE ${TablenameString().ImageList} (id INTEGER PRIMARY KEY AUTOINCREMENT,imagename TEXT)');
-   
-   }
+    await db.execute(
+        'CREATE TABLE ${TablenameString().property} (uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER ,address1 TEXT,address2 TEXT,city TEXT,state TEXT,zip TEXT,name TEXT,number TEXT,amp_number TEXT,notes TEXT)');
+  
+    await db.execute(
+        'CREATE TABLE ${TablenameString().building} (uid INTEGER PRIMARY KEY AUTOINCREMENT, id INTEGER ,address1 TEXT,address2 TEXT,city TEXT,state TEXT,zip TEXT,name TEXT,number TEXT,amp_number TEXT,notes TEXT)');
+  
+  }
 
-
+  clearTable(tableName) async {
+    var db = await openDatabase('docs.db');
+    return await db.rawDelete("DELETE FROM $tableName");
+  }
 
   truncateTabel() async {
     print("truncate table");
     var db = await openDatabase('docs.db');
     // When creating the db, create the table
     await db.execute('DROP TABLE IF EXISTS ${TablenameString().ImageList}');
+  }
 
-}
-
-  insertdata(tablename,data) async {
+  insertdata(tablename, data) async {
     print("-------Insert into table--------");
-   
     fetchalltablename();
- 
-   
-        var db = await openDatabase('docs.db');
-
- Map<String, dynamic> row = data;
-
+    var db = await openDatabase('docs.db');
+    Map<String, dynamic> row = data;
     // do the insert and get the id of the inserted row
     int id = await db.insert(tablename, row);
-   print("inserted id"+id.toString());
+    print("inserted id" + id.toString());
   }
 
   fetchtablerecord(tablename) async {
     print("Tablename" + tablename.toString());
     var database = await openDatabase('docs.db');
     var data = await database.rawQuery('select * FROM  ${tablename}');
-    
+
     return data;
   }
 

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import '../../../Database/Crud.dart';
+import '../../../Database/tablenamestring.dart';
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
 import '../../../Models/accountmodel/account_model.dart';
@@ -27,7 +29,7 @@ class BuildingInspectionController extends BaseController {
   List checked = [];
   BuildingInspectionRepository buildingInspectionRepository =
       BuildingInspectionRepository();
-
+Crud _crud =Get.put(Crud());
   // List<String> propertyList = [];
   List<String> cityList = [];
 
@@ -295,8 +297,24 @@ class BuildingInspectionController extends BaseController {
     var response = await buildingInspectionRepository.getPropertyInfoApi();
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
-    }, (PropertyModel r) {
+    }, (PropertyModel r) async {
       propertyList = r.properties;
+           for (var i = 0; i < r.properties!.length; i++) {
+        var rowdata = r.properties![i];
+        var data = {
+            "id": rowdata.id,
+            "address1": rowdata.address1,
+            "address2": rowdata.address2,
+            "city": rowdata.city,
+            "state": rowdata.state,
+            "zip": rowdata.zip,
+            "name": rowdata.name,
+            "number": rowdata.number,
+            "amp_number": rowdata.ampNumber,
+            'notes': rowdata.notes};
+      await  _crud.insertdata(TablenameString().property, data);
+      }
+
       searchProperty(searchText: "");
     });
     update();
@@ -368,4 +386,5 @@ class BuildingInspectionController extends BaseController {
     });
     update();
   }
+
 }

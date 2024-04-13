@@ -3,8 +3,12 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
+import 'package:public_housing/screens/building_inspection_screen/repository/BudingInpection_repository.dart';
+import '../../../../Database/Crud.dart';
+import '../../../../Database/tablenamestring.dart';
 import '../../../../api_authentication/get_token_account.dart';
 import '../../../../api_authentication/login_account_direct_request.dart';
+import '../../../building_inspection_screen/models/property_model.dart';
 import '../../../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../../repository/login_repository.dart';
 
@@ -12,7 +16,9 @@ class SigningController extends BaseController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController clientController = TextEditingController();
-
+  BuildingInspectionRepository buildingInspectionRepository =
+      BuildingInspectionRepository();
+  Crud _crud = Get.put(Crud());
   List clientList = [];
 
   bool checked = false;
@@ -28,7 +34,10 @@ class SigningController extends BaseController {
     clientList = [
       // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
       {"title": 'HACLA', "baseURL": "hacla.live.gccs.gilsonsoftware.com"},
-      {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
+      {
+        "title": 'HACLA DEV',
+        "baseURL": "hacla.staging.gccs.gilsonsoftware.com"
+      },
       {"title": 'KWHA', "baseURL": "kwha.live.gccs.gilsonsoftware.com"},
     ];
     update();
@@ -116,7 +125,7 @@ class SigningController extends BaseController {
     // Get.offAllNamed(PropertyScreen.routes);
   }
 
-  validation() {
+  validation() async {
     if (utils.isValidationEmpty(emailController.text.trim())) {
       utils.showSnackBar(
           context: Get.context!,
@@ -141,6 +150,7 @@ class SigningController extends BaseController {
     else {
       // checked = true;
       loginApiCallCareCart();
+    
     }
   }
 
@@ -149,6 +159,7 @@ class SigningController extends BaseController {
     getStorageData.saveString(
         getStorageData.account, jsonEncode(tokenAc.account.toJson()));
     await createInspector(name: tokenAc.account.userName);
+    // storePropertyInfo();
     // tokenAccount = tokenac;
   }
 
@@ -182,4 +193,19 @@ class SigningController extends BaseController {
     });
     update();
   }
+
+  // storePropertyInfo() async {
+  //   print("strore propety" +getStorageData.readString(getStorageData.token).toString());
+  //   // propertyList!.clear();
+  //   var response = await buildingInspectionRepository.getPropertyInfoApi();
+
+  //   response.fold((l) {
+  //     utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+  //       print("proper data"+ "asdsad".toString());
+  //   }, (PropertyModel r) async {
+  //     print("proper data"+ r.properties.toString());
+ 
+  //   });
+  //   // update();
+  // }
 }
