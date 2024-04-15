@@ -7,7 +7,7 @@ class SplashBinding implements Bindings {
   void dependencies() {
     Get.putAsync<HiveMethodsProvider>(() async {
       final HiveMethodsProvider service = HiveMethodsProvider();
-      await service.initialize();
+      await service.setUpHive();
       return service;
     });
     Get.put<SplashController>(SplashController());
