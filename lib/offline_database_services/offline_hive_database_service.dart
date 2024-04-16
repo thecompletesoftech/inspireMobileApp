@@ -1,22 +1,30 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:public_housing/api/provider/status_objects.dart';
+import '../../screens/building_inspection_screen/models/building_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/get_buildingtype_response_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
 class HiveMethodsProvider {
-  late Box<dynamic> getBuildingsData;
-  late Box<dynamic> getPropertiesData;
-  late Box<dynamic> getHousingItemData;
-  late Box<dynamic> getInspectionTypeData;
-  late Box<dynamic> getBuildingTypeData;
-  late Box<dynamic> getCertificateData;
-  late Box<dynamic> getBuildingInfoData;
+  late Box<dynamic> _getPropertiesData;
+  late Box<dynamic> _getHousingItemData;
+  late Box<dynamic> _getInspectionTypeData;
+  late Box<dynamic> _getBuildingTypeData;
+  late Box<dynamic> _getCertificateData;
+  late Box<dynamic> _getBuildingInfoData;
+  late Box<dynamic> _getPropertyInfoData;
 
-  String getBuildingsKey = 'BUILDINGS';
   String getPropertiesKey = 'PROPERTIES';
   String getHousingItemKey = 'HOUSINGITEM';
   String getInspectionTypeKey = 'INSPECTIONTYPE';
   String getBuildingTypeKey = 'BUILDINGTYPE';
   String getCertificateKey = 'CERTIFICATE';
   String getBuildingInfoKey = 'BUILDINGINFO';
+  String getPropertyInfoKey = 'PROPERTYINFO';
 
   Future<void> setUpHive() async {
     try {
@@ -30,28 +38,115 @@ class HiveMethodsProvider {
   }
 
   initialize() async {
-    getBuildingsData = await Hive.openBox('getBuildingsData');
-    getPropertiesData = await Hive.openBox('getPropertiesData');
-    getHousingItemData = await Hive.openBox('getHousingItemData');
-    getInspectionTypeData = await Hive.openBox('getInspectionTypeData');
-    getBuildingTypeData = await Hive.openBox('getBuildingTypeData');
-    getCertificateData = await Hive.openBox('getCertificateData');
-    getBuildingInfoData = await Hive.openBox('getBuildingInfoData');
+    _getPropertiesData = await Hive.openBox('getPropertiesData');
+    _getHousingItemData = await Hive.openBox('getHousingItemData');
+    _getInspectionTypeData = await Hive.openBox('getInspectionTypeData');
+    _getBuildingTypeData = await Hive.openBox('getBuildingTypeData');
+    _getCertificateData = await Hive.openBox('getCertificateData');
+    _getBuildingInfoData = await Hive.openBox('getBuildingInfoData');
+    _getPropertyInfoData = await Hive.openBox('getPropertyInfoData');
   }
 
-  setDataBaseData(boxDataName, keyName, data) async {
-    try {
-      await boxDataName!.put(keyName, data);
-    } catch (e) {
-      debugPrint(e.toString());
+  Future<void> setHousingItemData(
+      Map<String, dynamic> deficiencyAreasResponseModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in deficiencyAreasResponseModel.entries) {
+      setData[p.key] = p.value;
+    }
+    await _getHousingItemData.put(getHousingItemKey, setData);
+  }
+
+  Future<Either<Failure, DeficiencyAreasResponseModel>> getHousingItemData(
+      {required int id}) async {
+    var deficiencyAreasResponseModel =
+        await _getHousingItemData.get(getHousingItemKey);
+
+    if (deficiencyAreasResponseModel != null) {
+      return Right(DeficiencyAreasResponseModel.fromJson(
+          _parser(deficiencyAreasResponseModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
     }
   }
 
-  getDataBaseData(boxDataName, keyName) async {
-    try {
-      await boxDataName!.get(keyName);
-    } catch (e) {
-      debugPrint(e.toString());
+  Future<void> setCertificateData(Map<String, dynamic> certificateModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in certificateModel.entries) {
+      setData[p.key] = p.value;
     }
+    await _getCertificateData.put(getCertificateKey, setData);
+  }
+
+  Future<Either<Failure, CertificateModel>> getCertificateData() async {
+    var certificateModel = await _getCertificateData.get(getCertificateKey);
+
+    if (certificateModel != null) {
+      return Right(CertificateModel.fromJson(_parser(certificateModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
+    }
+  }
+
+  Future<void> setPropertyInfoData(Map<String, dynamic> propertyModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in propertyModel.entries) {
+      setData[p.key] = p.value;
+    }
+    await _getPropertyInfoData.put(getPropertyInfoKey, setData);
+  }
+
+  Future<Either<Failure, PropertyModel>> getPropertyInfoData() async {
+    var propertyModel = await _getPropertyInfoData.get(getPropertyInfoKey);
+
+    if (propertyModel != null) {
+      return Right(PropertyModel.fromJson(_parser(propertyModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
+    }
+  }
+
+  Future<void> setBuildingTypeData(
+      Map<String, dynamic> getBuildingTypeResponseModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in getBuildingTypeResponseModel.entries) {
+      setData[p.key] = p.value;
+    }
+    await _getBuildingTypeData.put(getBuildingTypeKey, setData);
+  }
+
+  Future<Either<Failure, GetBuildingTypeResponseModel>>
+      getBuildingTypeData() async {
+    var getBuildingTypeResponseModel =
+        await _getBuildingTypeData.get(getBuildingTypeKey);
+
+    if (getBuildingTypeResponseModel != null) {
+      return Right(GetBuildingTypeResponseModel.fromJson(
+          _parser(getBuildingTypeResponseModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
+    }
+  }
+
+  Future<void> setBuildingInfoData(Map<String, dynamic> buildingModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in buildingModel.entries) {
+      setData[p.key] = p.value;
+    }
+    await _getBuildingInfoData.put(getBuildingInfoKey, setData);
+  }
+
+  Future<Either<Failure, BuildingModel>> getBuildingInfoData() async {
+    var buildingModel = await _getBuildingInfoData.get(getBuildingInfoKey);
+
+    if (buildingModel != null) {
+      return Right(BuildingModel.fromJson(_parser(buildingModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
+    }
+  }
+
+  Map<String, dynamic> _parser(dynamic hiveMap) {
+    final jsonString = jsonEncode(hiveMap);
+    return jsonDecode(jsonString);
   }
 }
