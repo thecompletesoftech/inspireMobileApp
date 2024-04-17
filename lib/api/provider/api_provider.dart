@@ -14,7 +14,6 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
-import '../../screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
 import '../../screens/auth/model/Inspectormodel.dart';
 import '../../screens/auth/model/LoginModel.dart';
 import '../../screens/building_inspection_screen/models/building_model.dart';
@@ -33,8 +32,7 @@ class ApiProviders extends BaseController {
     if (isInternet == IsInternet.connect) {
       try {
         Response response = await apiBaseHelperImplementation.get(
-          endPoint:
-              '/inspection/api/deficiency_areas?housing_item_id=1&housing_item_id=2',
+          endPoint: '/inspection/api/deficiency_areas',
           headers: {
             'Authorization':
                 '${getStorageData.readString(getStorageData.token)}',
@@ -50,39 +48,32 @@ class ApiProviders extends BaseController {
         return Left(createFailure(e));
       }
     } else {
-      return hiveMethodsProvider.getHousingItemData(id: 2);
+      return hiveMethodsProvider.getHousingItemData(type: 'Building');
     }
   }
 
-  Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
+  Future<Either<Failure, DeficiencyAreasResponseModel>>
       getUnitDeficiencyAreasRequest() async {
-    // if (isInternet == IsInternet.connect) {
-    try {
-      Response response = await apiBaseHelperImplementation.get(
-        endPoint: Constants.getDeficiency + "/?housing_item_id=3",
-        headers: {
-          'Authorization': '${getStorageData.readString(getStorageData.token)}',
-        },
-      );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(UnitDeficiencyAreasResponseModel.fromJson(response.data));
-      } else {
-        return Left(Failure(errorMessage: response.statusMessage.toString()));
+    if (isInternet == IsInternet.connect) {
+      try {
+        Response response = await apiBaseHelperImplementation.get(
+          endPoint: Constants.getDeficiency + "/?housing_item_id=3",
+          headers: {
+            'Authorization':
+                '${getStorageData.readString(getStorageData.token)}',
+          },
+        );
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          return Right(DeficiencyAreasResponseModel.fromJson(response.data));
+        } else {
+          return Left(Failure(errorMessage: response.statusMessage.toString()));
+        }
+      } on DioException catch (e) {
+        return Left(createFailure(e));
       }
-    } on DioException catch (e) {
-      return Left(createFailure(e));
+    } else {
+      return hiveMethodsProvider.getHousingItemData(type: 'Unit');
     }
-    // } else {
-    // var data = hiveMethodsProvider.getDataBaseData(
-    //     hiveMethodsProvider.getHousingItemData,
-    //     hiveMethodsProvider.getHousingItemKey);
-    //
-    // if (data != null) {
-    //   return Right(UnitDeficiencyAreasResponseModel.fromJson(_parser(data)));
-    // } else {
-    //   return Left(Failure(errorMessage: ''));
-    // }
-    // }
   }
 
   Future<Either<Failure, Loginmodel>> loginRequest(mapJson) async {

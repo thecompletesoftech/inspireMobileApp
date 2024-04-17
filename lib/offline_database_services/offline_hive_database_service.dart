@@ -57,15 +57,54 @@ class HiveMethodsProvider {
   }
 
   Future<Either<Failure, DeficiencyAreasResponseModel>> getHousingItemData(
-      {required int id}) async {
+      {required String type}) async {
     var deficiencyAreasResponseModel =
         await _getHousingItemData.get(getHousingItemKey);
 
-    if (deficiencyAreasResponseModel != null) {
-      return Right(DeficiencyAreasResponseModel.fromJson(
-          _parser(deficiencyAreasResponseModel)));
+    if (type == 'Building') {
+      if (deficiencyAreasResponseModel != null) {
+        var data = DeficiencyAreasResponseModel.fromJson(
+            _parser(deficiencyAreasResponseModel));
+
+        data.deficiencyAreas?.forEach((element) {
+          element.deficiencyAreaItems?.forEach((e) {
+            List<DeficiencyItemHousingDeficiency> dataList = [];
+
+            e.deficiencyItemHousingDeficiency?.forEach((d) {
+              if (d.housingItem?.id == 1 || d.housingItem?.id == 2) {
+                dataList.add(d);
+              }
+            });
+            e.deficiencyItemHousingDeficiency = dataList;
+          });
+        });
+
+        return Right(data);
+      } else {
+        return Left(Failure(errorMessage: ''));
+      }
     } else {
-      return Left(Failure(errorMessage: ''));
+      if (deficiencyAreasResponseModel != null) {
+        var data = DeficiencyAreasResponseModel.fromJson(
+            _parser(deficiencyAreasResponseModel));
+
+        data.deficiencyAreas?.forEach((element) {
+          element.deficiencyAreaItems?.forEach((e) {
+            List<DeficiencyItemHousingDeficiency> dataList = [];
+
+            e.deficiencyItemHousingDeficiency?.forEach((d) {
+              if (d.housingItem?.id == 3) {
+                dataList.add(d);
+              }
+            });
+            e.deficiencyItemHousingDeficiency = dataList;
+          });
+        });
+
+        return Right(data);
+      } else {
+        return Left(Failure(errorMessage: ''));
+      }
     }
   }
 

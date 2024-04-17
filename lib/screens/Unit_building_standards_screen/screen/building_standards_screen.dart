@@ -1,7 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/Unit_building_standards_screen/controller/building_standards_controller.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 
 import '../../unit_cabinets_screen /screen/standards_details_screen.dart';
 import '../../unitinspectionsummary_screen/unitinspectionsummary_screen.dart';

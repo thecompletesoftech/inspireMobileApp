@@ -1,4 +1,4 @@
-import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unitinspectionsummary_screen/repository/unitinspection_repository.dart';
 import '../../commons/all.dart';
 import '../building_inspection_screen/screen/building_inspection_screen.dart';
