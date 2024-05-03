@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
+import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
+import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
 import '../../../../api_authentication/get_token_account.dart';
 import '../../../../api_authentication/login_account_direct_request.dart';
 import '../../../building_inspection_screen/screen/building_inspection_screen.dart';
@@ -48,7 +50,8 @@ class SigningController extends BaseController {
       print("account token" + tokenAccount.toString());
       saveAccountCareCart(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
-      Get.offAllNamed(BuildingInspectionScreen.routes);
+      // Get.offAllNamed(BuildingInspectionScreen.routes);
+      Get.offAllNamed(SelectWorkScreen.routes);
       return tokenAccount;
     } catch (e) {
       print(e.toString());

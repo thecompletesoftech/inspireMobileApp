@@ -3,6 +3,8 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
+import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
+import 'package:public_housing/screens/select_work_screen/controller/select_work_controller.dart';
 
 class CommonAppBar extends StatelessWidget {
   final String? image;
@@ -24,8 +26,8 @@ class CommonAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BuildingInspectionController buildingInspectionController =
-        Get.put(BuildingInspectionController());
+    SelectWorkController selectWorkController =
+        Get.put(SelectWorkController());
 
     return ShadowContainer(
       radius: radius,
@@ -58,37 +60,28 @@ class CommonAppBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.string(isInternet == IsInternet.initial
-                      ? syncCompleteIcon
-                      : isInternet == IsInternet.connect
-                          ? syncIcon
-                          : offlineIcon),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyTextView(
-                        buildingInspectionController.account?.userName ?? "",
-                        textStyleNew: MyTextStyle(
-                          textColor: AppColors().lightText,
-                          textWeight: FontWeight.w600,
-                          textFamily: fontFamilyBold,
-                          textSize: 16.px,
-                        ),
-                      ),
-                      MyTextView(
-                        "${GetStorageData().readString(GetStorageData().clientName)}",
-                        isMaxLineWrap: true,
-                        textStyleNew: MyTextStyle(
-                          textColor: AppColors().lightText,
-                          textWeight: FontWeight.w400,
-                          textFamily: fontFamilyMedium,
-                          textSize: 14.px,
-                        ),
-                      )
-                    ],
+                  MyTextView(
+                    selectWorkController.account?.userName ?? "",
+                    textStyleNew: MyTextStyle(
+                      textColor: AppColors().lightText,
+                      textWeight: FontWeight.w600,
+                      textFamily: fontFamilyBold,
+                      textSize: 16.px,
+                    ),
                   ),
+                  MyTextView(
+                    "${GetStorageData().readString(GetStorageData().clientName)}",
+                    isMaxLineWrap: true,
+                    textStyleNew: MyTextStyle(
+                      textColor: AppColors().lightText,
+                      textWeight: FontWeight.w400,
+                      textFamily: fontFamilyMedium,
+                      textSize: 14.px,
+                    ),
+                  )
                 ],
               ),
               // Utils.isTabletScreen(context)

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
+import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
+import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
 
 import '../../commons/all.dart';
 import '../property_screen/property_screen.dart';
@@ -26,7 +28,10 @@ class SplashController extends BaseController {
       // } else {
       //   Get.offAllNamed(ChooseLanguageScreen.routes);
       // }
-      Get.offAllNamed(BuildingInspectionScreen.routes);
+      // Get.offAllNamed(SelectWorkScreen.routes);
+      Get.offAllNamed(PropertiesListScreen.routes);
+
+      // Get.offAllNamed(BuildingInspectionScreen.routes);
     } else {
       Get.offAllNamed(SigningScreen.routes);
     }
