@@ -21,6 +21,7 @@ class CommonPropertiesListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonContainer(
+      radius: 17.px,
       child: Column(
         children: [
           Row(

@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:public_housing/commons/common_widgets/common_row.dart';
 import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
 import 'package:public_housing/commons/constants.dart';
+import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:public_housing/commons/common_widgets/base_widgets.dart';
 import 'package:public_housing/commons/common_widgets/button_widget.dart';
@@ -70,28 +72,45 @@ class BuildingInspectionSummaryScreen
                                 textSize: 32.px,
                               ),
                             ),
-                            CommonButton(
-                              title: Strings.saveAddUnit,
-                              radius: 100.px,
-                              width: 171.px,
-                              height: 44.px,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 15.px,
-                                horizontal: 24.px,
-                              ),
-                              textSize: 16.px,
-                              textWeight: FontWeight.w500,
-                              textFamily: fontFamilyRegular,
-                              textColor: controller.appColors.lightText,
-                              color: controller.appColors.buttonColor,
-                              onTap: () {
-                                controller.createInspection();
-                                // if (controller.isSuccess == true) {
+                            controller.isManually == true
+                                ? CommonButton(
+                                    title: Strings.saveAddUnit,
+                                    radius: 100.px,
+                                    width: 171.px,
+                                    height: 44.px,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 15.px,
+                                      horizontal: 24.px,
+                                    ),
+                                    textSize: 16.px,
+                                    textWeight: FontWeight.w500,
+                                    textFamily: fontFamilyRegular,
+                                    textColor: controller.appColors.lightText,
+                                    color: controller.appColors.buttonColor,
+                                    onTap: () {
+                                      controller.createInspection();
+                                      // if (controller.isSuccess == true) {
 
-                                // }
-                                controller.update();
-                              },
-                            ),
+                                      // }
+                                      controller.update();
+                                    },
+                                  )
+                                : CommonButton(
+                                    title: Strings.completeInspection,
+                                    radius: 100.px,
+                                    width: 171.px,
+                                    height: 44.px,
+                                    textSize: 16.px,
+                                    textWeight: FontWeight.w500,
+                                    textFamily: fontFamilyRegular,
+                                    textColor: controller.appColors.lightText,
+                                    color: controller.appColors.textPink,
+                                    onTap: () {
+                                      Get.offAllNamed(BuildingListScreen.routes,
+                                          arguments: {"isComplete": true});
+                                      controller.update();
+                                    },
+                                  ),
                           ],
                         ).paddingOnly(
                             left: 32.px,
@@ -124,49 +143,73 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.inspectorController,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icPerson,
-                                          color: controller.appColors.grey,
-                                        ).paddingOnly(left: 15.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.userType,
-                                      ),
-                                    ),
-                                    SizedBox(width: 16.px),
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.inspectionDateController,
-                                        color: controller.appColors.transparent,
-                                        suffixIcon: SvgPicture.string(
-                                          icCalender2,
-                                          color: controller.appColors.grey,
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.inspectionDate,
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingOnly(top: 32.px),
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .inspectorController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icPerson,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.userType,
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .inspectionDateController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              suffixIcon: SvgPicture.string(
+                                                icCalender2,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.inspectionDate,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Inspector: ',
+                                              subTitle: '[Inspector]',
+                                              imageString: icPerson,
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Inspection Date: ',
+                                              subTitle: '[Inspection Date]',
+                                              imageString: icCalender2,
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(top: 24.px),
                                 Row(
                                   children: [
                                     MyTextView(
@@ -186,176 +229,239 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ).paddingOnly(top: 32.px, bottom: 32.px),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.propertyNameController,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icBuildingss,
-                                          color: controller.appColors.grey,
-                                        ).paddingOnly(left: 15.px),
-                                        suffixIcon: PopupMenuButton(
-                                          key: controller.popupKey1,
-                                          position: PopupMenuPosition.under,
-                                          tooltip: Strings.propertyName,
-                                          onSelected: (value) {
-                                            controller
-                                                .actionPropertyNameSelected(
-                                                    value);
-                                            controller.update();
-                                          },
-                                          itemBuilder: (context) =>
-                                              List.generate(
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .propertyNameController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icBuildingss,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              suffixIcon: PopupMenuButton(
+                                                key: controller.popupKey1,
+                                                position:
+                                                    PopupMenuPosition.under,
+                                                tooltip: Strings.propertyName,
+                                                onSelected: (value) {
                                                   controller
-                                                      .propertyList.length,
-                                                  (index) => PopupMenuItem(
-                                                        value: index,
-                                                        child: Text(controller
-                                                                .propertyList[
-                                                            index]),
-                                                      )),
-                                          child: SvgPicture.string(
-                                            icDownArrow,
-                                            color: controller.appColors.grey,
-                                          ).paddingAll(10.px),
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.propertyName,
+                                                      .actionPropertyNameSelected(
+                                                          value);
+                                                  controller.update();
+                                                },
+                                                itemBuilder: (context) =>
+                                                    List.generate(
+                                                        controller.propertyList
+                                                            .length,
+                                                        (index) =>
+                                                            PopupMenuItem(
+                                                              value: index,
+                                                              child: Text(controller
+                                                                      .propertyList[
+                                                                  index]),
+                                                            )),
+                                                child: SvgPicture.string(
+                                                  icDownArrow,
+                                                  color:
+                                                      controller.appColors.grey,
+                                                ).paddingAll(10.px),
+                                              ),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.propertyName,
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            child: CommonTextField(
+                                              readOnly: true,
+                                              isLable: true,
+                                              controller:
+                                                  controller.cityController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              suffixIcon: SvgPicture.string(
+                                                icDownArrow,
+                                                color: controller
+                                                    .appColors.black
+                                                    .withOpacity(.12),
+                                              ).paddingAll(10.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              labelText: Strings.city,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Property Name: ',
+                                              subTitle: '[Property Name]',
+                                              imageString: icBuildingss,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(width: 16.px),
-                                    Expanded(
-                                      child: CommonTextField(
-                                        readOnly: true,
-                                        isLable: true,
-                                        controller: controller.cityController,
-                                        color: controller.appColors.transparent,
-                                        suffixIcon: SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.black
-                                              .withOpacity(.12),
-                                        ).paddingAll(10.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        labelText: Strings.city,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 11,
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.propertyIDController,
-                                        color: controller.appColors.transparent,
-                                        padding: EdgeInsets.zero,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.px,
-                                            top: 16.px,
-                                            bottom: 16.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.propertyID,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                    SizedBox(width: 16.px),
-                                    Expanded(
-                                      flex: 5,
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller: controller.stateController,
-                                        color: controller.appColors.transparent,
-                                        padding: EdgeInsets.zero,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.px,
-                                            top: 16.px,
-                                            bottom: 16.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.state,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                    SizedBox(width: 16.px),
-                                    Expanded(
-                                      flex: 5,
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller: controller.zipController,
-                                        color: controller.appColors.transparent,
-                                        padding: EdgeInsets.zero,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.px,
-                                            top: 16.px,
-                                            bottom: 16.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.zip,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingOnly(top: 32.px, bottom: 32.px),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller: controller
-                                            .propertyAddressController,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icLocation,
-                                          color: controller.appColors.black
-                                              .withOpacity(.12),
-                                        ).paddingOnly(left: 15.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.propertyAddress,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 11,
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .propertyIDController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              padding: EdgeInsets.zero,
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15.px,
+                                                  top: 16.px,
+                                                  bottom: 16.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.propertyID,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            flex: 5,
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller:
+                                                  controller.stateController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              padding: EdgeInsets.zero,
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15.px,
+                                                  top: 16.px,
+                                                  bottom: 16.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.state,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            flex: 5,
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller:
+                                                  controller.zipController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              padding: EdgeInsets.zero,
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15.px,
+                                                  top: 16.px,
+                                                  bottom: 16.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.zip,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(top: 32.px, bottom: 32.px)
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Property Address: ',
+                                              subTitle:
+                                                  '[Property Address], [City], [State], [Zip]',
+                                              imageString: icLocation,
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(top: 12.px),
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .propertyAddressController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icLocation,
+                                                color: controller
+                                                    .appColors.black
+                                                    .withOpacity(.12),
+                                              ).paddingOnly(left: 15.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText:
+                                                  Strings.propertyAddress,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Property ID: ',
+                                              subTitle: '[Property ID]',
+                                              imageString: hasTagIcon,
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(top: 12.px),
                                 Row(
                                   children: [
                                     MyTextView(
@@ -375,102 +481,149 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ).paddingOnly(top: 32.px, bottom: 32.px),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.buildingNameController,
-                                        color: controller.appColors.transparent,
-                                        prefixIcon: SvgPicture.string(
-                                          icBuildingss,
-                                          color: controller.appColors.grey,
-                                        ).paddingOnly(left: 15.px),
-                                        suffixIcon: PopupMenuButton(
-                                          key: controller.popupKey3,
-                                          position: PopupMenuPosition.under,
-                                          tooltip: Strings.buildingName,
-                                          onSelected: (value) {
-                                            controller.buildingSelected(value);
-                                            controller.update();
-                                          },
-                                          itemBuilder: (context) =>
-                                              List.generate(
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .buildingNameController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              prefixIcon: SvgPicture.string(
+                                                icBuildingss,
+                                                color:
+                                                    controller.appColors.grey,
+                                              ).paddingOnly(left: 15.px),
+                                              suffixIcon: PopupMenuButton(
+                                                key: controller.popupKey3,
+                                                position:
+                                                    PopupMenuPosition.under,
+                                                tooltip: Strings.buildingName,
+                                                onSelected: (value) {
                                                   controller
-                                                      .buildingList.length,
-                                                  (index) => PopupMenuItem(
-                                                        value: index,
-                                                        child: Text(controller
-                                                                .buildingList[
-                                                            index]),
-                                                      )),
-                                          child: SvgPicture.string(
-                                            icDownArrow,
-                                            color: controller.appColors.grey,
-                                          ).paddingAll(10.px),
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.buildingName,
+                                                      .buildingSelected(value);
+                                                  controller.update();
+                                                },
+                                                itemBuilder: (context) =>
+                                                    List.generate(
+                                                        controller.buildingList
+                                                            .length,
+                                                        (index) =>
+                                                            PopupMenuItem(
+                                                              value: index,
+                                                              child: Text(controller
+                                                                      .buildingList[
+                                                                  index]),
+                                                            )),
+                                                child: SvgPicture.string(
+                                                  icDownArrow,
+                                                  color:
+                                                      controller.appColors.grey,
+                                                ).paddingAll(10.px),
+                                              ),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.buildingName,
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(bottom: 32.px)
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Building Name: ',
+                                              subTitle: '[Building Name]',
+                                              imageString: icBuildings,
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            child: CommonRow(
+                                              isImage: true,
+                                              title: 'Year Constructed: ',
+                                              subTitle: '[Year Constructed]',
+                                              imageString: icCalender2,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ).paddingOnly(bottom: 32.px),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller: controller
-                                            .yearConstructedController,
-                                        color: controller.appColors.transparent,
-                                        padding: EdgeInsets.zero,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.px,
-                                            top: 16.px,
-                                            bottom: 16.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.yearConstructed,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                    SizedBox(width: 16.px),
-                                    Expanded(
-                                      child: CommonTextField(
-                                        isLable: true,
-                                        readOnly: true,
-                                        controller:
-                                            controller.buildingTypeController,
-                                        color: controller.appColors.transparent,
-                                        suffixIcon: SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.black
-                                              .withOpacity(.12),
-                                        ).paddingAll(10.px),
-                                        padding: EdgeInsets.zero,
-                                        contentPadding:
-                                            EdgeInsets.only(left: 15.px),
-                                        shadowColor:
-                                            controller.appColors.transparent,
-                                        labelText: Strings.buildingType,
-                                        isLableColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                        borderColor: controller.appColors.black
-                                            .withOpacity(.12),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                controller.isManually == true
+                                    ? Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .yearConstructedController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              padding: EdgeInsets.zero,
+                                              contentPadding: EdgeInsets.only(
+                                                  left: 15.px,
+                                                  top: 16.px,
+                                                  bottom: 16.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText:
+                                                  Strings.yearConstructed,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                          SizedBox(width: 16.px),
+                                          Expanded(
+                                            child: CommonTextField(
+                                              isLable: true,
+                                              readOnly: true,
+                                              controller: controller
+                                                  .buildingTypeController,
+                                              color: controller
+                                                  .appColors.transparent,
+                                              suffixIcon: SvgPicture.string(
+                                                icDownArrow,
+                                                color: controller
+                                                    .appColors.black
+                                                    .withOpacity(.12),
+                                              ).paddingAll(10.px),
+                                              padding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  EdgeInsets.only(left: 15.px),
+                                              shadowColor: controller
+                                                  .appColors.transparent,
+                                              labelText: Strings.buildingType,
+                                              isLableColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                              borderColor: controller
+                                                  .appColors.black
+                                                  .withOpacity(.12),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: CommonRow(
+                                              title: 'Building Type: ',
+                                              subTitle: '[Building Type]',
+                                              imageString: icBuildings,
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(top: 12.px),
                                 Row(
                                   children: [
                                     Expanded(

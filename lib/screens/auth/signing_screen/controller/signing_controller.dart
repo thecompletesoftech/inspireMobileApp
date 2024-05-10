@@ -51,7 +51,9 @@ class SigningController extends BaseController {
       saveAccountCareCart(tokenAccount);
       getStorageData.saveString(getStorageData.isLogin, true);
       // Get.offAllNamed(BuildingInspectionScreen.routes);
-      Get.offAllNamed(SelectWorkScreen.routes);
+      // Get.offAllNamed(SelectWorkScreen.routes);
+      Get.offAllNamed(PropertiesListScreen.routes);
+
       return tokenAccount;
     } catch (e) {
       print(e.toString());

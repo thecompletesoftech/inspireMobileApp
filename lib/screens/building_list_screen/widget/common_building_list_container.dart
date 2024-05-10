@@ -8,6 +8,7 @@ class CommonBuildingListView extends StatelessWidget {
   final String Subtitle;
   final String Subtitle1;
   final VoidCallback? onTap;
+  final VoidCallback? onTap1;
 
   const CommonBuildingListView({
     super.key,
@@ -16,11 +17,13 @@ class CommonBuildingListView extends StatelessWidget {
     required this.Subtitle,
     required this.Subtitle1,
     this.onTap,
+    this.onTap1,
   });
 
   @override
   Widget build(BuildContext context) {
     return CommonContainer(
+      radius: 17.px,
       child: Column(
         children: [
           Row(
@@ -101,7 +104,7 @@ class CommonBuildingListView extends StatelessWidget {
                 textSize: 16.px,
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
-                onTap: () {},
+                onTap: onTap1,
                 iconColor: AppColors.primerColor,
                 icon: icBuildings,
                 iconheigth: 20.px,

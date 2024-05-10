@@ -1,4 +1,5 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/controller/unit_list_controller.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 
@@ -24,32 +25,40 @@ class UnitListScreen extends GetView<UnitListController> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                 ),
-                Column(
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        MyTextView(
-                          '${Strings.unit} | ',
-                          textStyleNew: MyTextStyle(
-                              textSize: 32.px,
-                              textColor: AppColors.primerColor,
-                              textWeight: FontWeight.w600),
-                        ),
-                        MyTextView(
-                          'Building [Building Name]',
-                          textStyleNew: MyTextStyle(
-                              textSize: 24.px,
-                              textColor: controller.appColors.textcolor,
-                              textWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ).paddingOnly(
-                        left: 32.px, right: 32.px, bottom: 32.px, top: 36.px),
-                    CommonUnitListView(
+                    MyTextView(
+                      '${Strings.unit} | ',
+                      textStyleNew: MyTextStyle(
+                          textSize: 32.px,
+                          textColor: AppColors.primerColor,
+                          textWeight: FontWeight.w600),
+                    ),
+                    MyTextView(
+                      'Building [Building Name]',
+                      textStyleNew: MyTextStyle(
+                          textSize: 24.px,
+                          textColor: controller.appColors.textcolor,
+                          textWeight: FontWeight.w400),
+                    ),
+                  ],
+                ).paddingOnly(
+                    left: 32.px, right: 32.px, bottom: 32.px, top: 36.px),
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: 5,
+                    itemBuilder: (context, index) => CommonUnitListView(
                       title: 'Building [Building Name]',
                       Subtitle: '[Year Constructed]',
-                    ).paddingSymmetric(horizontal: 32.px)
-                  ],
+                      onTap: () {
+                        Get.toNamed(UnitInspection.routes,
+                            arguments: {"isManually": false});
+                      },
+                    ).paddingSymmetric(horizontal: 32.px),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 24.px);
+                    },
+                  ),
                 )
               ],
             ),

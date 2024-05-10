@@ -53,13 +53,14 @@ class BuildingInspectionSummaryController extends BaseController {
   String inspectorDate = '';
   BuildingInspectionController buildingInspectionController =
       Get.put(BuildingInspectionController());
-
   List<Certificates>? certificates = [];
+  bool isManually = false;
 
   @override
   void onInit() {
     deficiencyArea = [];
     if (Get.arguments != null) {
+      isManually = Get.arguments['isManually'];
       buildingName = Get.arguments['buildingName'];
       buildingType = Get.arguments['buildingtype'];
       propertyName = Get.arguments['propertyInfo']['name'];

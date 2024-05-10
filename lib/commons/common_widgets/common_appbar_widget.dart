@@ -26,8 +26,8 @@ class CommonAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SelectWorkController selectWorkController =
-        Get.put(SelectWorkController());
+    PropertiesListController propertiesListController =
+        Get.put(PropertiesListController());
 
     return ShadowContainer(
       radius: radius,
@@ -64,7 +64,7 @@ class CommonAppBar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyTextView(
-                    selectWorkController.account?.userName ?? "",
+                    propertiesListController.account?.userName ?? "",
                     textStyleNew: MyTextStyle(
                       textColor: AppColors().lightText,
                       textWeight: FontWeight.w600,

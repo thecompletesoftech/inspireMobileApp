@@ -78,6 +78,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
 
                             Get.toNamed(BuildingInspectionSummaryScreen.routes,
                                 arguments: {
+                                  "isManually": controller.isManually,
                                   "buildingName": controller.buildingName,
                                   "buildingtype": controller.buildingType,
                                   "deficiencyArea": deficiencyArea,

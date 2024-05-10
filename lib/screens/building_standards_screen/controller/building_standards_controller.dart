@@ -25,6 +25,7 @@ class BuildingStandardsController extends BaseController {
   var certificatesInfo = [].obs;
   String inspectorName = '';
   String inspectorDate = '';
+  bool isManually = false;
 
   void onInit() {
     super.onInit();
@@ -34,7 +35,11 @@ class BuildingStandardsController extends BaseController {
       searchList.addAll(deficiencyAreas);
     }();
 
-    if (Get.arguments != null) {
+    if (Get.arguments['isManually'] != null) {
+      isManually = Get.arguments['isManually'];
+    }
+
+    if (Get.arguments['buildingtype'] != null) {
       buildingType = Get.arguments['buildingtype'];
       buildingName = Get.arguments['buildingName'];
       propertyName = Get.arguments['propertyInfo']['name'];
