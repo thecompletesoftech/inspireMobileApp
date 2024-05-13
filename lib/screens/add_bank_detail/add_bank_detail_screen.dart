@@ -9,8 +9,8 @@
 // import '../../commons/commmon_screen.dart';
 // import '../../commons/common_widgets/button_widget.dart';
 // import '../../commons/common_widgets/common_container.dart';
-// import '../../commons/common_widgets/mytext_widgets.dart';
-// import '../../commons/common_widgets/textfeild_widgets.dart';
+// import '../../commons/common_widgets/my_text_widgets.dart';
+// import '../../commons/common_widgets/text_field_widgets.dart';
 // import '../../commons/constants.dart';
 // import '../../commons/imagepath.dart';
 // import '../../commons/utils.dart';

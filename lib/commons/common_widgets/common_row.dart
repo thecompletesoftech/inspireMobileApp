@@ -1,13 +1,13 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:public_housing/commons/all.dart';
 
-class CommonRow extends StatelessWidget {
+class CommonTextRow extends StatelessWidget {
   final String imageString;
   final String title;
   final String subTitle;
   final bool? isImage;
 
-  const CommonRow(
+  const CommonTextRow(
       {super.key,
       required this.title,
       required this.subTitle,

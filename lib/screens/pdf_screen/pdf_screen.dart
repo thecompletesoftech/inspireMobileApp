@@ -157,7 +157,7 @@ class PdfScreen extends GetView<PdfController> {
                                             children: [
                                               CommonIconButton(
                                                 icon: icCalenderColor,
-                                                color: controller.appColors.transparent,
+                                                     color: controller.appColors.transparent,
                                                 iconheigth: 20.px,
                                                 space: 4.px,
                                                 padding: EdgeInsets.zero,

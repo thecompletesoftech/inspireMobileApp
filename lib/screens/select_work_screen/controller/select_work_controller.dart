@@ -15,7 +15,6 @@ class SelectWorkController extends BaseController {
   getAccount() async {
     var accountData = await getStorageData.readString(getStorageData.account);
     account = Account.fromJson(jsonDecode(accountData.toString()));
-
     update();
   }
 }

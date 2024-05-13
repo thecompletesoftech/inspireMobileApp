@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
 import '../../screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/models/get_buildingtype_response_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/get_building_type_response_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
-import 'package:public_housing/screens/auth/model/Inspectormodel.dart';
+import 'package:public_housing/screens/auth/model/inspector_model.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
 import '../../../../api_authentication/get_token_account.dart';
@@ -13,16 +13,14 @@ class SigningController extends BaseController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController clientController = TextEditingController();
-
-  List clientList = [];
-
+  LoginRepository loginRepository = LoginRepository();
+  TokenAccount? tokenAccount;
+  var islogin = false.obs;
   bool checked = false;
   bool isEmail = false;
+  List clientList = [];
   bool isPass = false;
-  TokenAccount? tokenAccount;
   var hide = true;
-  LoginRepository loginRepository = LoginRepository();
-  var islogin = false.obs;
 
   @override
   void onInit() {
@@ -96,24 +94,6 @@ class SigningController extends BaseController {
           snackStyle: SnackStyle.FLOATING);
       return null;
     }
-    // FormData formData = FormData.fromMap({
-    //   'email': email.text.toString().toLowerCase().trim(),
-    //   'password': utils.generateMd5(pass.text.toString().trim()),
-    // });
-    // // final data = await APIFunction().apiCall(
-    // //     apiName: Constants.addBankAccount,
-    // //     context: Get.context!,
-    // //     params: formData,
-    // //     token: getStorageData.readObject(getStorageData.token));
-    // //
-    // // BankDModel model = BankDModel.fromJson(data);
-    // // if (model.responseCode == 1) {
-    // getStorageData.saveString(getStorageData.isLogin, true);
-    // //   Get.back(result: "date");
-    // // } else {
-    // //   utils.showSnackBar(context: Get.context!, message: model.responseMsg!);
-    // // }
-    // Get.offAllNamed(PropertyScreen.routes);
   }
 
   validation() {
@@ -121,25 +101,11 @@ class SigningController extends BaseController {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterEmail);
-    }
-    // else if (!utils.emailValidator(email.text.trim())) {
-    //   utils.showSnackBar(
-    //       context: Get.context!,
-    //       message: Languages.of(Get.context!)!.pleaseEnterValidEmail);
-    // }
-
-    else if (utils.isValidationEmpty(passController.text.trim())) {
+    } else if (utils.isValidationEmpty(passController.text.trim())) {
       utils.showSnackBar(
           context: Get.context!,
           message: Languages.of(Get.context!)!.pleaseEnterPassword);
-    }
-    // else if (!utils.passwordValidator(pass.text.trim())) {
-    //   utils.showSnackBar(
-    //       context: Get.context!,
-    //       message: Languages.of(Get.context!)!.pleaseEnterValidPassword);
-    // }
-    else {
-      // checked = true;
+    } else {
       loginApiCallCareCart();
     }
   }
@@ -149,15 +115,7 @@ class SigningController extends BaseController {
     getStorageData.saveString(
         getStorageData.account, jsonEncode(tokenAc.account.toJson()));
     await createInspector(name: tokenAc.account.userName);
-    // tokenAccount = tokenac;
   }
-
-  //inspection api data
-
-  // saveAccount(token, name) async {
-  //   getStorageData.saveString(getStorageData.token, token);
-  //   getStorageData.saveString(getStorageData.inspectorname, name);
-  // }
 
   // login() async {
   //   var map = {"username": email.text, "password": pass.text};
