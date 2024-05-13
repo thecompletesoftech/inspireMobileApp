@@ -1,5 +1,6 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
+import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/controller/unit_list_controller.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 
@@ -24,6 +25,16 @@ class UnitListScreen extends GetView<UnitListController> {
                 CommonAppBar(
                   color: controller.appColors.transparent,
                   radius: 0.px,
+                  onClickBack: () {
+                    if (controller.isComplete) {
+                      Get.toNamed(
+                        BuildingListScreen.routes,
+                        arguments: {"isComplete": controller.isComplete},
+                      );
+                    } else {
+                      Get.back();
+                    }
+                  },
                 ),
                 Row(
                   children: [
@@ -51,15 +62,17 @@ class UnitListScreen extends GetView<UnitListController> {
                       title: 'Building [Building Name]',
                       Subtitle: '[Year Constructed]',
                       onTap: () {
-                        Get.toNamed(UnitInspection.routes,
-                            arguments: {"isManually": false});
+                        Get.toNamed(
+                          UnitInspection.routes,
+                          arguments: {"isManually": false},
+                        );
                       },
                     ).paddingSymmetric(horizontal: 32.px),
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(height: 24.px);
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),

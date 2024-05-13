@@ -209,7 +209,7 @@ class Strings {
   static String notSaved = " will not be saved.";
   static String fieldsMissing = "Some fields are missing";
 
-  ///************** Properties List Screen String **************///
+  ///**************  All offline screen String  **************///
 
   static String publicHousing = "Public Housing";
   static String inspectManually = "Inspect Manually";
@@ -227,5 +227,5 @@ class Strings {
   static String changeSection = "Change to Section 8";
   static String timeframe =
       "These are today's inspections. To see more, select a timeframe.";
-  static String unitUninspectable = "Unit Uninspectable";
+  static String unitUnInspectAble = "Unit Uninspectable";
 }

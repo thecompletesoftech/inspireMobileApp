@@ -58,19 +58,22 @@ class CommonButton extends StatelessWidget {
               (radius ?? 100.px)),
           border: border,
         ),
-        child: MyTextView(
-          title,
-          maxLinesNew: maxLinesNew ?? 1,
-          textStyleNew: MyTextStyle(
-            // textLetterSpacing: 1,
-            textSize: Utils.isSmallScreen(context)
-                ? ScalingQuery(context).fontSize((textSize ?? 16.px) / 10)
-                : Utils.isTabletScreen1(context)
-                    ? ScalingQuery(context).fontSize((textSize ?? 16.px) / 18)
-                    : ScalingQuery(context).fontSize((textSize ?? 16.px) / 20),
-            textWeight: textWeight ?? FontWeight.normal,
-            textFamily: textFamily ?? fontFamilyRegular,
-            textColor: textColor ?? appColors.white,
+        child: Center(
+          child: MyTextView(
+            title,
+            maxLinesNew: maxLinesNew ?? 1,
+            textStyleNew: MyTextStyle(
+              // textLetterSpacing: 1,
+              textSize: Utils.isSmallScreen(context)
+                  ? ScalingQuery(context).fontSize((textSize ?? 16.px) / 10)
+                  : Utils.isTabletScreen1(context)
+                      ? ScalingQuery(context).fontSize((textSize ?? 16.px) / 18)
+                      : ScalingQuery(context)
+                          .fontSize((textSize ?? 16.px) / 20),
+              textWeight: textWeight ?? FontWeight.normal,
+              textFamily: textFamily ?? fontFamilyRegular,
+              textColor: textColor ?? appColors.white,
+            ),
           ),
         ),
       ),

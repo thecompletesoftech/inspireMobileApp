@@ -3,19 +3,19 @@ import 'package:public_housing/api/api_helper/api_base_helper_implementation.dar
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/auth/model/inspector_model.dart';
+import 'package:public_housing/screens/auth/model/login_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/create_building_request_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/create_building_response_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/models/get_buildingtype_response_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/get_building_type_response_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
 import '../../screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
-import '../../screens/auth/model/Inspectormodel.dart';
-import '../../screens/auth/model/LoginModel.dart';
-import '../../screens/building_inspection_screen/models/building_model.dart';
-import '../../screens/building_inspection_screen/models/certificate_model.dart';
-import '../../screens/unitinspectionsummary_screen/models/CreateInspectionmodel.dart';
+import 'package:public_housing/screens/unit_inspection_summary_screen/models/create_inspection_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 
 class ApiProviders extends BaseController {
   ApiBaseHelperImplementation apiBaseHelperImplementation =

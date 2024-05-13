@@ -4,7 +4,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
   const BuildingInspectionScreen({Key? key}) : super(key: key);
@@ -270,7 +270,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Inspector: ',
                                           subTitle: '[Inspector]',
                                           imageString: icPerson,
@@ -278,7 +278,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                       SizedBox(width: 16.px),
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Inspection Date: ',
                                           subTitle: '[Inspection Date]',
                                           imageString: icCalender2,
@@ -454,7 +454,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Property Name: ',
                                           subTitle: '[Property Name]',
                                           imageString: icBuildingss,
@@ -576,7 +576,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Property Address: ',
                                           subTitle:
                                               '[Property Address], [City], [State], [Zip]',
@@ -635,7 +635,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Property ID: ',
                                           subTitle: '[Property ID]',
                                           imageString: hasTagIcon,
@@ -770,7 +770,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Building Name: ',
                                           subTitle: '[Building Name]',
                                           imageString: icBuildings,
@@ -778,7 +778,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                       SizedBox(width: 16.px),
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           isImage: true,
                                           title: 'Year Constructed: ',
                                           subTitle: '[Year Constructed]',
@@ -934,7 +934,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 : Row(
                                     children: [
                                       Expanded(
-                                        child: CommonRow(
+                                        child: CommonTextRow(
                                           title: 'Building Type: ',
                                           subTitle: '[Building Type]',
                                           imageString: icBuildings,
@@ -1040,7 +1040,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                     ),
                   ).paddingOnly(left: 32.px, right: 32.px),
                 ),
-
                 controller.isManually == true
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1086,6 +1085,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   "buildingtype":
                                       controller.buildingTypeController.text,
                                   "imagesList": [],
+                                  "isManually": true,
                                   "inspectionName":
                                       controller.inspectorController.text,
                                   "propertyInfo": controller.propertyInfo,
@@ -1134,6 +1134,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       "buildingName": controller
                                           .buildingNameController.text,
                                       "propertyInfo": controller.propertyInfo,
+                                      "isManually": true,
                                       "buildingInfo": controller.buildingInfo,
                                       "buildingtype": controller
                                           .buildingTypeController.text,

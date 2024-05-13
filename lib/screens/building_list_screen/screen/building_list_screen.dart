@@ -62,7 +62,10 @@ class BuildingListScreen extends GetView<BuildingListController> {
                       Subtitle: '[Year Constructed]',
                       Subtitle1: '[Building Type]',
                       onTap: () {
-                        Get.toNamed(UnitListScreen.routes);
+                        Get.toNamed(UnitListScreen.routes, arguments: {
+                          "isManually": false,
+                          "isComplete": true
+                        });
                       },
                       onTap1: () {
                         Get.toNamed(BuildingInspectionScreen.routes,

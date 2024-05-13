@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/provider/api_provider.dart';
-import 'package:public_housing/screens/auth/model/LoginModel.dart';
+import 'package:public_housing/screens/auth/model/login_model.dart';
 
 import '../../../api/provider/status_objects.dart';
-import '../model/Inspectormodel.dart';
+import '../model/inspector_model.dart';
 
 class LoginRepository {
   final ApiProviders _provider = ApiProviders();

@@ -6,15 +6,15 @@ import 'package:public_housing/commons/strings.dart';
 import 'package:public_housing/commons/svgImage.dart';
 import 'package:public_housing/commons/constants.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
+import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:public_housing/commons/common_widgets/base_widgets.dart';
 import 'package:public_housing/commons/common_widgets/button_widget.dart';
-import 'package:public_housing/commons/common_widgets/mytext_widgets.dart';
-import 'package:public_housing/commons/common_widgets/iconbutton_widget.dart';
-import 'package:public_housing/commons/common_widgets/textfeild_widgets.dart';
+import 'package:public_housing/commons/common_widgets/my_text_widgets.dart';
+import 'package:public_housing/commons/common_widgets/icon_button_widget.dart';
+import 'package:public_housing/commons/common_widgets/text_field_widgets.dart';
 import 'package:public_housing/commons/common_widgets/common_appbar_widget.dart';
-import 'package:public_housing/commons/common_widgets/shadowcontainer_widgets.dart';
-import 'package:public_housing/screens/unit_Inpection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/commons/common_widgets/shadow_container_widgets.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
@@ -30,6 +30,7 @@ class BuildingInspectionSummaryScreen
   Widget build(BuildContext context) {
     BuildingStandardsController buildingStandardsController =
         Get.put(BuildingStandardsController());
+
     return GetBuilder<BuildingInspectionSummaryController>(
       init: BuildingInspectionSummaryController(),
       autoRemove: false,
@@ -89,9 +90,6 @@ class BuildingInspectionSummaryScreen
                                     color: controller.appColors.buttonColor,
                                     onTap: () {
                                       controller.createInspection();
-                                      // if (controller.isSuccess == true) {
-
-                                      // }
                                       controller.update();
                                     },
                                   )
@@ -194,7 +192,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Inspector: ',
                                               subTitle: '[Inspector]',
                                               imageString: icPerson,
@@ -202,7 +200,7 @@ class BuildingInspectionSummaryScreen
                                           ),
                                           SizedBox(width: 16.px),
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Inspection Date: ',
                                               subTitle: '[Inspection Date]',
                                               imageString: icCalender2,
@@ -315,7 +313,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Property Name: ',
                                               subTitle: '[Property Name]',
                                               imageString: icBuildingss,
@@ -408,7 +406,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Property Address: ',
                                               subTitle:
                                                   '[Property Address], [City], [State], [Zip]',
@@ -454,7 +452,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Property ID: ',
                                               subTitle: '[Property ID]',
                                               imageString: hasTagIcon,
@@ -537,7 +535,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Building Name: ',
                                               subTitle: '[Building Name]',
                                               imageString: icBuildings,
@@ -545,7 +543,7 @@ class BuildingInspectionSummaryScreen
                                           ),
                                           SizedBox(width: 16.px),
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               isImage: true,
                                               title: 'Year Constructed: ',
                                               subTitle: '[Year Constructed]',
@@ -616,7 +614,7 @@ class BuildingInspectionSummaryScreen
                                     : Row(
                                         children: [
                                           Expanded(
-                                            child: CommonRow(
+                                            child: CommonTextRow(
                                               title: 'Building Type: ',
                                               subTitle: '[Building Type]',
                                               imageString: icBuildings,

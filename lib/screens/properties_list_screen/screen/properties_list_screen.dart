@@ -4,6 +4,7 @@ import 'package:public_housing/screens/building_list_screen/screen/building_list
 import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertiesListScreen extends GetView<PropertiesListController> {
@@ -132,95 +133,85 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                           itemBuilder: (context) {
                                             return <PopupMenuEntry<int>>[
                                               PopupMenuItem(
-                                                  value: 0,
-                                                  child: ListTile(
-                                                      leading:
-                                                          SvgPicture.string(
-                                                              icEdit),
-                                                      title: MyTextView(
-                                                        Strings.editProfile,
-                                                        textStyleNew:
-                                                            MyTextStyle(
-                                                                textSize: 16.px,
-                                                                textColor:
-                                                                    AppColors()
-                                                                        .black,
-                                                                textWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ))),
+                                                value: 0,
+                                                child: ListTile(
+                                                  leading:
+                                                      SvgPicture.string(icEdit),
+                                                  title: MyTextView(
+                                                    Strings.editProfile,
+                                                    textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textColor:
+                                                            AppColors().black,
+                                                        textWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
                                               PopupMenuItem(
-                                                  value: 1,
-                                                  child: ListTile(
-                                                      leading:
-                                                          SvgPicture.string(
-                                                              icCopy),
-                                                      title: MyTextView(
-                                                        Strings
-                                                            .inspectionHistory,
-                                                        textStyleNew:
-                                                            MyTextStyle(
-                                                                textSize: 16.px,
-                                                                textColor:
-                                                                    AppColors()
-                                                                        .black,
-                                                                textWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ))),
+                                                value: 1,
+                                                child: ListTile(
+                                                  leading:
+                                                      SvgPicture.string(icCopy),
+                                                  title: MyTextView(
+                                                    Strings.inspectionHistory,
+                                                    textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textColor:
+                                                            AppColors().black,
+                                                        textWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
                                               PopupMenuItem(
-                                                  value: 2,
-                                                  child: ListTile(
-                                                      leading:
-                                                          SvgPicture.string(
-                                                              icBook),
-                                                      title: MyTextView(
-                                                        Strings.nSPIREStandards,
-                                                        textStyleNew:
-                                                            MyTextStyle(
-                                                                textSize: 16.px,
-                                                                textColor:
-                                                                    AppColors()
-                                                                        .black,
-                                                                textWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ))),
+                                                value: 2,
+                                                child: ListTile(
+                                                  leading:
+                                                      SvgPicture.string(icBook),
+                                                  title: MyTextView(
+                                                    Strings.nSPIREStandards,
+                                                    textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textColor:
+                                                            AppColors().black,
+                                                        textWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
                                               PopupMenuItem(
-                                                  value: 3,
-                                                  child: ListTile(
-                                                      leading: SvgPicture.string(
-                                                          changeSectionIcon),
-                                                      title: MyTextView(
-                                                        Strings.changeSection,
-                                                        textStyleNew:
-                                                            MyTextStyle(
-                                                                textSize: 16.px,
-                                                                textColor:
-                                                                    AppColors()
-                                                                        .black,
-                                                                textWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ))),
+                                                value: 3,
+                                                child: ListTile(
+                                                  leading: SvgPicture.string(
+                                                      changeSectionIcon),
+                                                  title: MyTextView(
+                                                    Strings.changeSection,
+                                                    textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textColor:
+                                                            AppColors().black,
+                                                        textWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
                                               PopupMenuItem(
-                                                  value: 4,
-                                                  child: ListTile(
-                                                      leading:
-                                                          SvgPicture.string(
-                                                              icLogout),
-                                                      title: MyTextView(
-                                                        Strings.logOut,
-                                                        textStyleNew:
-                                                            MyTextStyle(
-                                                                textSize: 16.px,
-                                                                textColor:
-                                                                    AppColors()
-                                                                        .black,
-                                                                textWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                      ))),
+                                                value: 4,
+                                                child: ListTile(
+                                                  leading: SvgPicture.string(
+                                                      icLogout),
+                                                  title: MyTextView(
+                                                    Strings.logOut,
+                                                    textStyleNew: MyTextStyle(
+                                                        textSize: 16.px,
+                                                        textColor:
+                                                            AppColors().black,
+                                                        textWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                              ),
                                             ];
                                           },
                                         ),
@@ -330,60 +321,69 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                     ),
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, top: 38.px),
-                Row(
-                  children: [
-                    controller.todayDate == controller.startDate
-                        ? MyTextView(
-                            Strings.todayInspections,
-                            textStyleNew: MyTextStyle(
-                              textSize: 24.px,
-                              textWeight: FontWeight.w400,
-                              textColor: controller.appColors.black,
-                            ),
-                          )
-                        : Container(),
-                    MyTextView(
-                      controller.startDate,
-                      textStyleNew: MyTextStyle(
-                        textSize: 24.px,
-                        textWeight: FontWeight.w400,
-                        textColor: controller.appColors.black,
-                      ),
-                    ).paddingOnly(right: 16.px),
-                    Expanded(
-                      child: Container(
-                        height: 2.px,
-                        color: AppColors().divider,
-                      ),
-                    ),
-                  ],
-                ).paddingAll(32.px),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: 2,
-                    itemBuilder: (context, index) => CommonPropertiesListView(
-                      title: '[Property Name]',
-                      Subtitle: '[City] - [Property Address]',
-                      title1: '[Building Count]',
-                      Subtitle1: '[Unit Count]',
-                      onTap: () {
-                        Get.toNamed(BuildingListScreen.routes,
-                            arguments: {"isComplete": false});
-                      },
-                    ).paddingSymmetric(horizontal: 32.px),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 24.px);
-                    },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            controller.todayDate == controller.startDate
+                                ? MyTextView(
+                                    Strings.todayInspections,
+                                    textStyleNew: MyTextStyle(
+                                      textSize: 24.px,
+                                      textWeight: FontWeight.w400,
+                                      textColor: controller.appColors.black,
+                                    ),
+                                  )
+                                : Container(),
+                            MyTextView(
+                              controller.startDate,
+                              textStyleNew: MyTextStyle(
+                                textSize: 24.px,
+                                textWeight: FontWeight.w400,
+                                textColor: controller.appColors.black,
+                              ),
+                            ).paddingOnly(right: 16.px),
+                            Expanded(
+                              child: Container(
+                                height: 2.px,
+                                color: AppColors().divider,
+                              ),
+                            ),
+                          ],
+                        ).paddingAll(32.px),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 2,
+                          itemBuilder: (context, index) =>
+                              CommonPropertiesListView(
+                            title: '[Property Name]',
+                            Subtitle: '[City] - [Property Address]',
+                            title1: '[Building Count]',
+                            Subtitle1: '[Unit Count]',
+                            onTap: () {
+                              Get.toNamed(BuildingListScreen.routes,
+                                  arguments: {"isComplete": false});
+                            },
+                          ).paddingSymmetric(horizontal: 32.px),
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(height: 24.px);
+                          },
+                        ),
+                        MyTextView(
+                          Strings.timeframe,
+                          textStyleNew: MyTextStyle(
+                            textSize: 20.px,
+                            textWeight: FontWeight.w400,
+                            textColor: controller.appColors.black,
+                          ),
+                        ).paddingOnly(top: 40.px),
+                      ],
+                    ),
                   ),
                 ),
-                // MyTextView(
-                //   Strings.timeframe,
-                //   textStyleNew: MyTextStyle(
-                //     textSize: 20.px,
-                //     textWeight: FontWeight.w400,
-                //     textColor: controller.appColors.black,
-                //   ),
-                // ),
               ],
             ),
           ),

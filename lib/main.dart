@@ -15,8 +15,8 @@ import 'commons/all.dart';
 import 'languages/app_localizations_delegate.dart';
 import 'languages/locale_constant.dart';
 import 'routes/app_pages.dart';
-import 'screens/splashscreen/splash_binding.dart';
-import 'screens/splashscreen/splash_screen.dart';
+import 'screens/splashscreen/binding/splash_binding.dart';
+import 'screens/splashscreen/screen/splash_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   printOkStatus(
