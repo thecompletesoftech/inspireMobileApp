@@ -24,8 +24,16 @@ class SigningController extends BaseController {
 
   @override
   void onInit() {
+    // https://dcha.live.gccs.gilsonsoftware.com/auth/login/
+
     clientList = [
-      {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {
+        "title": 'Chattanooga',
+        "baseURL": "chattanooga.live.gccs.gilsonsoftware.com"
+      },
+      {"title": 'Marin', "baseURL": "marin.live.gccs.gilsonsoftware.com"},
+      {"title": 'DCHA', "baseURL": "dcha.live.gccs.gilsonsoftware.com"},
       {"title": 'HACLA', "baseURL": "hacla.live.gccs.gilsonsoftware.com"},
       // {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
       {"title": 'KWHA', "baseURL": "kwha.live.gccs.gilsonsoftware.com"},
