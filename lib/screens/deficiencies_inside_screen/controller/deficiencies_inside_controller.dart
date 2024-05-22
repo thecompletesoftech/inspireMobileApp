@@ -498,7 +498,7 @@ class DeficienciesInsideController extends BaseController {
                     onTap: () {
                       Get.back(closeOverlays: true);
                       getFromGallery();
-                    },
+                      },
                     child: Container(
                       height: 129.px,
                       width: 157.px,
@@ -522,7 +522,7 @@ class DeficienciesInsideController extends BaseController {
                             Languages.of(Get.context!)!.fromGallery,
                             textStyleNew: MyTextStyle(
                               textSize: 15.px,
-                              textWeight: FontWeight.w700,
+                                textWeight: FontWeight.w700,
                               textColor: AppColors().lightText,
                             ),
                           )

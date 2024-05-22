@@ -17,16 +17,18 @@ import 'package:public_housing/screens/properties_list_screen/binding/properties
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/select_work_screen/binding/select_work_binding.dart';
 import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/binding/unit_building_standards_binding.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/screen/unit_building_standards_screen.dart';
+import 'package:public_housing/screens/unit_cabinets_screen%20/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/unit_cabinets_screen%20/screen/standards_details_screen.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/binding/unit_inspection_binding.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/binding/unit_inspection_binding.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/screen/unit_inspection_summary_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/binding/unit_list_binding.dart';
 import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
-import '../screens/Unit_building_standards_screen/binding/unit_building_standards_binding.dart';
-import '../screens/Unit_building_standards_screen/screen/unit_building_standards_screen.dart';
-import '../screens/Unit_deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
-import '../screens/Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import '../screens/areas_screen/areas_binding.dart';
 import '../screens/areas_screen/areas_screen.dart';
 import '../screens/areasbuilding_screen/areasbuilding_binding.dart';
@@ -71,8 +73,6 @@ import '../screens/standard_screen/standard_binding.dart';
 import '../screens/standard_screen/standard_screen.dart';
 import '../screens/text_message_screen/text_message_binding.dart';
 import '../screens/text_message_screen/text_message_screen.dart';
-import '../screens/unit_cabinets_screen /binding/standards_details_binding.dart';
-import '../screens/unit_cabinets_screen /screen/standards_details_screen.dart';
 
 class AppPages {
   static var list = [
@@ -213,7 +213,7 @@ class AppPages {
         page: () => PropertiesListScreen(),
         binding: PropertiesListBinding()),
     GetPage(
-      name: BuildingListScreen.routes,
+        name: BuildingListScreen.routes,
         page: () => BuildingListScreen(),
         binding: BuildingListBinding()),
     GetPage(

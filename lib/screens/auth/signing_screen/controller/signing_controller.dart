@@ -3,10 +3,8 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/auth/model/inspector_model.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
-import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
 import '../../../../api_authentication/get_token_account.dart';
 import '../../../../api_authentication/login_account_direct_request.dart';
-import '../../../building_inspection_screen/screen/building_inspection_screen.dart';
 import '../../repository/login_repository.dart';
 
 class SigningController extends BaseController {
@@ -24,10 +22,8 @@ class SigningController extends BaseController {
 
   @override
   void onInit() {
-    // https://dcha.live.gccs.gilsonsoftware.com/auth/login/
-
     clientList = [
-      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
       {
         "title": 'Chattanooga',
         "baseURL": "chattanooga.live.gccs.gilsonsoftware.com"

@@ -4,7 +4,6 @@ import 'package:public_housing/screens/building_list_screen/screen/building_list
 import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertiesListScreen extends GetView<PropertiesListController> {
@@ -277,25 +276,25 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                     Expanded(
                       flex: 0,
                       child: SizedBox(
-                        width: 250.px,
+                        // width: 250.px,
                         height: 48.px,
                         child: SegmentedButton<PropertyStatus>(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (Set<MaterialState> states) {
-                              return states.contains(MaterialState.selected)
+                            backgroundColor: WidgetStateColor.resolveWith(
+                                (Set<WidgetState> states) {
+                              return states.contains(WidgetState.selected)
                                   ? controller.appColors.pinkcolor
                                   : controller.appColors.transparent;
                             }),
-                            foregroundColor: MaterialStateColor.resolveWith(
-                                (Set<MaterialState> states) {
-                              return states.contains(MaterialState.selected)
+                            foregroundColor: WidgetStateColor.resolveWith(
+                                (Set<WidgetState> states) {
+                              return states.contains(WidgetState.selected)
                                   ? Colors.black
                                   : controller.appColors.border1;
                             }),
-                            side: MaterialStateBorderSide.resolveWith((states) {
+                            side: WidgetStateBorderSide.resolveWith((states) {
                               return BorderSide(
-                                  color: states.contains(MaterialState.selected)
+                                  color: states.contains(WidgetState.selected)
                                       ? Colors.black
                                       : Colors.grey);
                             }),

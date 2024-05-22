@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/internet_services/internet_service.dart';
-import 'package:public_housing/offline_database_services/offline_database_service.dart';
 import 'api_repository/loading.dart';
 import 'commons/all.dart';
 import 'languages/app_localizations_delegate.dart';
@@ -87,7 +86,6 @@ Future<void> main() async {
   //   }
   // }
   HttpOverrides.global = MyHttpOverrides();
-  await DatabaseProvider().getDatabaseInstance();
   runApp(const MyApp());
 }
 

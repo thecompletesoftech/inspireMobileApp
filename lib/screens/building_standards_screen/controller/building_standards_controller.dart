@@ -220,7 +220,8 @@ class BuildingStandardsController extends BaseController {
   }
 
   getDeficiencyAreasData() async {
-    var response = await buildingStandardsRepository.getDeficiencyAreas();
+    var response =
+        await buildingStandardsRepository.getDeficiencyAreas(type: 'Building');
 
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);

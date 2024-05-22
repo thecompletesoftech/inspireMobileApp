@@ -1,14 +1,15 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/widget/title_head_menu_widget.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import '../../../commons/all.dart';
-import '../../Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 
 class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
   const UnitInspectionSummary({Key? key}) : super(key: key);
+
   static const routes = "/UnitInspectionSummary";
 
   @override

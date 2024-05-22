@@ -217,7 +217,8 @@ class UnitBuildingStandardsController extends BaseController {
   }
 
   getDeficiencyAreasData() async {
-    var response = await buildingStandardsRepository.getDeficiencyAreas();
+    var response =
+        await buildingStandardsRepository.getDeficiencyAreas(type: 'Unit');
 
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);

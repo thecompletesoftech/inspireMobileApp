@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
+import 'package:public_housing/screens/properties_list_screen/repository/properties_list_repository.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 enum PropertyStatus { completed, scheduled }
@@ -16,12 +17,15 @@ class PropertiesListController extends BaseController {
   bool isDateSelected = false;
   Account? account;
   PickerDateRange? dateRange;
+  PropertiesListRepository propertiesListRepository =
+      PropertiesListRepository();
 
   @override
   void onInit() {
     dateRange = PickerDateRange(DateTime.now(), DateTime(2025));
     todayDate = todayDateGet(DateTime.now());
     getAccount();
+    setDataLocalStorage();
     super.onInit();
   }
 
@@ -38,6 +42,16 @@ class PropertiesListController extends BaseController {
       isDateSelected = false;
     }
     return isDateSelected;
+  }
+
+  setDataLocalStorage() async {
+    var response = await propertiesListRepository.localStorageDataSet();
+
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      utils.showSnackBar(context: Get.context!, message: r, isOk: true);
+    });
   }
 
   actionPopUpItemSelected(int value) {

@@ -3,7 +3,6 @@ import 'package:public_housing/screens/unit_inspection_summary_screen/repository
 import '../../../commons/all.dart';
 import '../../building_inspection_screen/screen/building_inspection_screen.dart';
 
-
 class UnitController extends BaseController {
   TextEditingController unitNumberName = TextEditingController();
   TextEditingController unitAddress = TextEditingController();

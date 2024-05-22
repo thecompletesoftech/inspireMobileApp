@@ -26,53 +26,53 @@ class ApiProviders extends BaseController {
   ApiProviders();
 
   Future<Either<Failure, DeficiencyAreasResponseModel>>
-      getDeficiencyAreasRequest() async {
-    if (isInternet == IsInternet.connect) {
-      try {
-        Response response = await apiBaseHelperImplementation.get(
-          endPoint: '/inspection/api/deficiency_areas',
-          headers: {
-            'Authorization':
-                '${getStorageData.readString(getStorageData.token)}',
-          },
-        );
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          hiveMethodsProvider.setHousingItemData(response.data);
-          return Right(DeficiencyAreasResponseModel.fromJson(response.data));
-        } else {
-          return Left(Failure(errorMessage: response.statusMessage.toString()));
-        }
-      } on DioException catch (e) {
-        return Left(createFailure(e));
-      }
-    } else {
-      return hiveMethodsProvider.getHousingItemData(type: 'Building');
-    }
+      getDeficiencyAreasRequest({required String type}) async {
+    // if (isInternet == IsInternet.connect) {
+    //   try {
+    //     Response response = await apiBaseHelperImplementation.get(
+    //       endPoint: '/inspection/api/deficiency_areas',
+    //       headers: {
+    //         'Authorization':
+    //             '${getStorageData.readString(getStorageData.token)}',
+    //       },
+    //     );
+    //     if (response.statusCode == 200 || response.statusCode == 201) {
+    //       hiveMethodsProvider.setHousingItemData(response.data);
+    //       return Right(DeficiencyAreasResponseModel.fromJson(response.data));
+    //     } else {
+    //       return Left(Failure(errorMessage: response.statusMessage.toString()));
+    //     }
+    //   } on DioException catch (e) {
+    //     return Left(createFailure(e));
+    //   }
+    // } else {
+    return hiveMethodsProvider.getHousingItemData(type: type);
+    // }
   }
 
-  Future<Either<Failure, DeficiencyAreasResponseModel>>
-      getUnitDeficiencyAreasRequest() async {
-    if (isInternet == IsInternet.connect) {
-      try {
-        Response response = await apiBaseHelperImplementation.get(
-          endPoint: Constants.getDeficiency + "/?housing_item_id=3",
-          headers: {
-            'Authorization':
-                '${getStorageData.readString(getStorageData.token)}',
-          },
-        );
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          return Right(DeficiencyAreasResponseModel.fromJson(response.data));
-        } else {
-          return Left(Failure(errorMessage: response.statusMessage.toString()));
-        }
-      } on DioException catch (e) {
-        return Left(createFailure(e));
-      }
-    } else {
-      return hiveMethodsProvider.getHousingItemData(type: 'Unit');
-    }
-  }
+  // Future<Either<Failure, DeficiencyAreasResponseModel>>
+  //     getUnitDeficiencyAreasRequest() async {
+  //   // if (isInternet == IsInternet.connect) {
+  //   //   try {
+  //   //     Response response = await apiBaseHelperImplementation.get(
+  //   //       endPoint: Constants.getDeficiency + "/?housing_item_id=3",
+  //   //       headers: {
+  //   //         'Authorization':
+  //   //             '${getStorageData.readString(getStorageData.token)}',
+  //   //       },
+  //   //     );
+  //   //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //   //       return Right(DeficiencyAreasResponseModel.fromJson(response.data));
+  //   //     } else {
+  //   //       return Left(Failure(errorMessage: response.statusMessage.toString()));
+  //   //     }
+  //   //   } on DioException catch (e) {
+  //   //     return Left(createFailure(e));
+  //   //   }
+  //   // } else {
+  //   return hiveMethodsProvider.getHousingItemData(type: 'Unit');
+  //   // }
+  // }
 
   Future<Either<Failure, Loginmodel>> loginRequest(mapJson) async {
     try {
@@ -302,6 +302,30 @@ class ApiProviders extends BaseController {
       }
     } on DioException catch (e) {
       return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, String>> localStorageDataSetRequest() async {
+    if (isInternet == IsInternet.connect) {
+      try {
+        Response response = await apiBaseHelperImplementation.get(
+          endPoint: '/inspection/api/deficiency_areas',
+          headers: {
+            'Authorization':
+                '${getStorageData.readString(getStorageData.token)}',
+          },
+        );
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          hiveMethodsProvider.setHousingItemData(response.data);
+          return Right('Success');
+        } else {
+          return Left(Failure(errorMessage: 'Fail'));
+        }
+      } on DioException catch (e) {
+        return Left(createFailure(e));
+      }
+    } else {
+      return Left(Failure(errorMessage: 'fail'));
     }
   }
 }

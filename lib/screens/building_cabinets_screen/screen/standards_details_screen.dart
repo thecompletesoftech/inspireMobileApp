@@ -56,13 +56,16 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            MyTextView(
-                              controller.buildingDataModel.name ?? "",
-                              textStyleNew: MyTextStyle(
-                                textColor: controller.appColors.appColor,
-                                textWeight: FontWeight.w500,
-                                textFamily: fontFamilyBold,
-                                textSize: 40.px,
+                            Flexible(
+                              child: MyTextView(
+                                controller.buildingDataModel.name ?? "",
+                                isMaxLineWrap: true,
+                                textStyleNew: MyTextStyle(
+                                  textColor: controller.appColors.appColor,
+                                  textWeight: FontWeight.w500,
+                                  textFamily: fontFamilyBold,
+                                  textSize: 40.px,
+                                ),
                               ),
                             ),
                           ],
@@ -280,8 +283,6 @@ class StandardsDetailsScreen extends GetView<StandardsDetailsBinding> {
                             ],
                           );
                         }),
-                    
-                    
                       ],
                     ).paddingSymmetric(horizontal: 32.px),
                   ),

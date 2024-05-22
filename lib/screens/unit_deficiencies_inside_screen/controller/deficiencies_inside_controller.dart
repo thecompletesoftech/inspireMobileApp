@@ -10,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
-import 'package:public_housing/screens/Unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:public_housing/screens/unit_cabinets_screen%20/controller/standards_details_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart';
