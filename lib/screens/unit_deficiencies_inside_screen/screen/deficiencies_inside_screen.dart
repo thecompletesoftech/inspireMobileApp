@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/Unit_building_standards_screen/controller/unit_building_standards_controller.dart';
@@ -393,7 +394,18 @@ class UnitDeficienciesInsideScreen
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.px),
-                                                      child: Image.network(
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: controller
+                                                            .imageList[index],
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child:
+                                                                    CircularProgressIndicator()),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ), /* Image.network(
                                                         controller
                                                             .imageList[index],
                                                         frameBuilder: (_,
@@ -453,7 +465,7 @@ class UnitDeficienciesInsideScreen
                                                                 .withOpacity(
                                                                     0.07999999821186066)
                                                             : null,
-                                                      ),
+                                                      ),*/
                                                       /*Image.file(
                                                         File(controller
                                                                 .sendImagesList[

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
@@ -392,7 +393,18 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.px),
-                                                      child: Image.network(
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: controller
+                                                            .imageList[index],
+                                                        placeholder: (context,
+                                                                url) =>
+                                                            Center(
+                                                                child:
+                                                                    CircularProgressIndicator()),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ), /*Image.network(
                                                         controller
                                                             .imageList[index],
                                                         frameBuilder: (_,
@@ -452,7 +464,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                 .withOpacity(
                                                                     0.07999999821186066)
                                                             : null,
-                                                      ) /*Image.file(
+                                                      ) */ /*Image.file(
                                                         File(controller
                                                                 .sendImagesList[
                                                             index]),
@@ -466,7 +478,6 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                                                     0.07999999821186066)
                                                             : null,
                                                       )*/
-                                                      ,
                                                     ),
                                                   ),
                                                   Positioned(
