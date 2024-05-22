@@ -589,7 +589,7 @@ class UnitDeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir, // <-- Uint8List of image
+                savePath: tempDir.path, // <-- Uint8List of image
               ),
             ),
           );

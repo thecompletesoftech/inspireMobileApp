@@ -25,7 +25,7 @@ class SigningController extends BaseController {
   @override
   void onInit() {
     clientList = [
-      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
       {"title": 'HACLA', "baseURL": "hacla.live.gccs.gilsonsoftware.com"},
       // {"title": 'HACLA DEV', "baseURL": "hacla.staging.gccs.gilsonsoftware.com"},
       {"title": 'KWHA', "baseURL": "kwha.live.gccs.gilsonsoftware.com"},
