@@ -15,6 +15,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/models/create_inspection_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 
@@ -326,6 +327,31 @@ class ApiProviders extends BaseController {
       }
     } else {
       return Left(Failure(errorMessage: 'fail'));
+    }
+  }
+
+  Future<Either<Failure, DailySchedulesResponseModel>>
+      getDailySchedulesRequest() async {
+    if (isInternet == IsInternet.connect) {
+      try {
+        Response response = await apiBaseHelperImplementation.get(
+          endPoint: '/inspection/api/daily_schedules',
+          headers: {
+            'Authorization':
+                '${getStorageData.readString(getStorageData.token)}',
+          },
+        );
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          hiveMethodsProvider.setDailySchedulesData(response.data);
+          return Right(DailySchedulesResponseModel.fromJson(response.data));
+        } else {
+          return Left(Failure(errorMessage: response.statusMessage.toString()));
+        }
+      } on DioException catch (e) {
+        return Left(createFailure(e));
+      }
+    } else {
+      return hiveMethodsProvider.getDailySchedulesData();
     }
   }
 }

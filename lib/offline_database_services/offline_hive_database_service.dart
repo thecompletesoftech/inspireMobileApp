@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import '../../screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/get_building_type_response_model.dart';
@@ -12,6 +13,7 @@ import 'package:public_housing/screens/building_standards_screen/models/deficien
 class HiveMethodsProvider {
   late Box<dynamic> _getPropertiesData;
   late Box<dynamic> _getHousingItemData;
+  late Box<dynamic> _getDailySchedulesItemData;
   late Box<dynamic> _getInspectionTypeData;
   late Box<dynamic> _getBuildingTypeData;
   late Box<dynamic> _getCertificateData;
@@ -20,6 +22,7 @@ class HiveMethodsProvider {
 
   String getPropertiesKey = 'PROPERTIES';
   String getHousingItemKey = 'HOUSINGITEM';
+  String getDailySchedulesItemKey = 'DAILYSCHEDULES';
   String getInspectionTypeKey = 'INSPECTIONTYPE';
   String getBuildingTypeKey = 'BUILDINGTYPE';
   String getCertificateKey = 'CERTIFICATE';
@@ -39,6 +42,7 @@ class HiveMethodsProvider {
 
   initialize() async {
     _getPropertiesData = await Hive.openBox('getPropertiesData');
+    _getDailySchedulesItemData = await Hive.openBox('getDailySchedulesItemKey');
     _getHousingItemData = await Hive.openBox('getHousingItemData');
     _getInspectionTypeData = await Hive.openBox('getInspectionTypeData');
     _getBuildingTypeData = await Hive.openBox('getBuildingTypeData');
@@ -121,6 +125,28 @@ class HiveMethodsProvider {
 
     if (certificateModel != null) {
       return Right(CertificateModel.fromJson(_parser(certificateModel)));
+    } else {
+      return Left(Failure(errorMessage: ''));
+    }
+  }
+
+  Future<void> setDailySchedulesData(
+      Map<String, dynamic> dailySchedulesModel) async {
+    Map<String, dynamic> setData = <String, dynamic>{};
+    for (var p in dailySchedulesModel.entries) {
+      setData[p.key] = p.value;
+    }
+    await _getDailySchedulesItemData.put(getDailySchedulesItemKey, setData);
+  }
+
+  Future<Either<Failure, DailySchedulesResponseModel>>
+      getDailySchedulesData() async {
+    var dailySchedulesModel =
+        await _getDailySchedulesItemData.get(getDailySchedulesItemKey);
+
+    if (dailySchedulesModel != null) {
+      return Right(
+          DailySchedulesResponseModel.fromJson(_parser(dailySchedulesModel)));
     } else {
       return Left(Failure(errorMessage: ''));
     }

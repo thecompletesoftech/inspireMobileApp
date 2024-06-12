@@ -7,6 +7,7 @@ class CommonBuildingListView extends StatelessWidget {
   final String title1;
   final String Subtitle;
   final String Subtitle1;
+  final String date;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
 
@@ -17,7 +18,7 @@ class CommonBuildingListView extends StatelessWidget {
     required this.Subtitle,
     required this.Subtitle1,
     this.onTap,
-    this.onTap1,
+    this.onTap1, required this.date,
   });
 
   @override
@@ -79,7 +80,7 @@ class CommonBuildingListView extends StatelessWidget {
             children: [
               CommonRow(
                 image: icCalenderColor,
-                imageName: 'Date',
+                imageName: date,
                 imageNameColor: AppColors().black,
               ),
               Spacer(),
