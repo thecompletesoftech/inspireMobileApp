@@ -12,15 +12,6 @@ class SplashScreen extends GetView<SplashController> {
       child: Stack(
         alignment: const Alignment(0, 0),
         children: [
-          // Container(
-          //   alignment: Alignment.centerLeft,
-          //   child: Image.asset(
-          //     ImagePath.splashBack,
-          //     fit: BoxFit.cover,
-          //     scale: 0.5,
-          //     // height: 100.h,
-          //   ),
-          // ),
           Align(
             alignment: const Alignment(0, 0),
             child: Column(
@@ -31,14 +22,6 @@ class SplashScreen extends GetView<SplashController> {
                   width: 487.68.px,
                   // height: 87.68.px,
                 ),
-                // MyTextView(
-                //   Strings.appName,
-                //   textStyleNew: MyTextStyle(
-                //     textColor: appColors.textBlack,
-                //     textWeight: FontWeight.w900,
-                //     textSize: 50.px,
-                //   ),
-                // )
               ],
             ),
           )

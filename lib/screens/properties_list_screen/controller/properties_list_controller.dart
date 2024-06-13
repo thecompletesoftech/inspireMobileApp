@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
+import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/repository/properties_list_repository.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
-enum PropertyStatus { completed, scheduled }
-
-enum ApiResponseStatus { initial, loading, success, failure }
 
 class PropertiesListController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -32,13 +30,82 @@ class PropertiesListController extends BaseController {
   void onInit() {
     dateRange = PickerDateRange(DateTime.now(), DateTime(2025));
     todayDate = todayDateGet(DateTime.now());
-
+    getAccount();
     () async {
-      await getAccount();
-      await setDataLocalStorage();
-      await getDailySchedulesData();
+      if (isInternet == IsInternet.connect) {
+        await localStorageDataset();
+      }
+      await getLocalDailySchedulesData();
     }();
     super.onInit();
+  }
+
+  localStorageDataset() async {
+    await setDataLocalStorage();
+    await getDailySchedulesData();
+    await getCertificatesData();
+    await getPropertyInfoData();
+    await getBuildingTypeData();
+  }
+
+  setDataLocalStorage() async {
+    apiResponseStatus = ApiResponseStatus.loading;
+    var response = await propertiesListRepository.localDeficiencyAreaDataSet();
+
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) {
+      apiResponseStatus = ApiResponseStatus.success;
+    });
+    update();
+  }
+
+  getDailySchedulesData() async {
+    apiResponseStatus = ApiResponseStatus.loading;
+    var response = await propertiesListRepository.localDailySchedulesDataSet();
+
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) {
+      apiResponseStatus = ApiResponseStatus.success;
+    });
+    update();
+  }
+
+  getCertificatesData() async {
+    apiResponseStatus = ApiResponseStatus.loading;
+    var response = await propertiesListRepository.localCertificatesDataSet();
+
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) {
+      apiResponseStatus = ApiResponseStatus.success;
+    });
+    update();
+  }
+
+  getPropertyInfoData() async {
+    apiResponseStatus = ApiResponseStatus.loading;
+    var response = await propertiesListRepository.localPropertyInfoDataSet();
+
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) {
+      apiResponseStatus = ApiResponseStatus.success;
+    });
+    update();
+  }
+
+  getBuildingTypeData() async {
+    apiResponseStatus = ApiResponseStatus.loading;
+    var response = await propertiesListRepository.localBuildingTypeDataSet();
+
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) {
+      apiResponseStatus = ApiResponseStatus.success;
+    });
+    update();
   }
 
   getAccount() async {
@@ -56,20 +123,7 @@ class PropertiesListController extends BaseController {
     return isDateSelected;
   }
 
-  setDataLocalStorage() async {
-    apiResponseStatus = ApiResponseStatus.loading;
-    var response = await propertiesListRepository.localStorageDataSet();
-
-    response.fold((l) {
-      apiResponseStatus = ApiResponseStatus.failure;
-      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
-    }, (r) {
-      apiResponseStatus = ApiResponseStatus.success;
-      utils.showSnackBar(context: Get.context!, message: r, isOk: true);
-    });
-  }
-
-  getDailySchedulesData() async {
+  getLocalDailySchedulesData() async {
     scheduleMainDataList = [];
     apiResponseStatus = ApiResponseStatus.loading;
     var response = await propertiesListRepository.getDailySchedules();
@@ -82,8 +136,8 @@ class PropertiesListController extends BaseController {
       });
       await getTodayData();
       apiResponseStatus = ApiResponseStatus.success;
-      update();
     });
+    update();
   }
 
   getTodayData() {

@@ -42,7 +42,7 @@ class ScheduleDatum {
   String? city;
   DateTime? date;
   String? property;
-  Building? building;
+  BuildingData? building;
 
   ScheduleDatum({
     this.state,
@@ -61,7 +61,7 @@ class ScheduleDatum {
         property: json["Property"],
         building: json["building"] == null
             ? null
-            : Building.fromJson(json["building"]),
+            : BuildingData.fromJson(json["building"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,7 +75,7 @@ class ScheduleDatum {
       };
 }
 
-class Building {
+class BuildingData {
   String? buildingName;
   String? buildingType;
   String? year;
@@ -83,7 +83,7 @@ class Building {
   String? id;
   List<Unit>? units;
 
-  Building({
+  BuildingData({
     this.buildingName,
     this.buildingType,
     this.year,
@@ -92,7 +92,7 @@ class Building {
     this.units,
   });
 
-  factory Building.fromJson(Map<String, dynamic> json) => Building(
+  factory BuildingData.fromJson(Map<String, dynamic> json) => BuildingData(
         buildingName: json["building_name"],
         buildingType: json["building_type"],
         year: json["year"],

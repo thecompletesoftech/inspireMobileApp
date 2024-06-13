@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/background_services/background_service.dart';
 
 StreamSubscription<List<ConnectivityResult>>? subscription;
 
-enum IsInternet { initial, connect, failed }
 
 IsInternet isInternet = IsInternet.initial;
 

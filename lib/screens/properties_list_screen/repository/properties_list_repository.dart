@@ -8,14 +8,34 @@ class PropertiesListRepository {
 
   PropertiesListRepository();
 
-  Future<Either<Failure, String>> localStorageDataSet() async {
-    var response = await _provider.localStorageDataSetRequest();
-    return response.fold((l) => Left(l), (r) => Right(r));
-  }
-
   Future<Either<Failure, DailySchedulesResponseModel>>
       getDailySchedules() async {
     var response = await _provider.getDailySchedulesRequest();
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, String>> localDeficiencyAreaDataSet() async {
+    var response = await _provider.localDeficiencyAreaDataSetRequest();
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, String>> localDailySchedulesDataSet() async {
+    var response = await _provider.localDailySchedulesDataSetRequest();
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, String>> localCertificatesDataSet() async {
+    var response = await _provider.localCertificatesDataSetRequest();
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, String>> localPropertyInfoDataSet() async {
+    var response = await _provider.localPropertyInfoDataSetRequest();
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, String>> localBuildingTypeDataSet() async {
+    var response = await _provider.localBuildingTypeDataSetRequest();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }
