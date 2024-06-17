@@ -25,6 +25,8 @@ class PropertiesListController extends BaseController {
   List<ScheduleDatum> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
+  List<BuildingsData> completedBuildings = [];
+  List<UnitsData> completedUnits = [];
 
   @override
   void onInit() {
@@ -146,10 +148,13 @@ class PropertiesListController extends BaseController {
       if (getDateFormat(date: e.date!) ==
           DateFormat('yyyy-MM-dd').format(DateTime.now())) {
         if (scheduleDataList.isEmpty) {
-          scheduleDataList.add(DataSorting(
-              date: todayDateGet(DateTime.now()),
-              scheduleDataList: [e],
-              prefix: Strings.todayInspections));
+          scheduleDataList.add(
+            DataSorting(
+                date: todayDateGet(DateTime.now()),
+                scheduleDataList: [e],
+                prefix: Strings.todayInspections,
+                isToday: true),
+          );
         } else {
           scheduleDataList
               .firstWhere(
@@ -210,6 +215,7 @@ class PropertiesListController extends BaseController {
         scheduleDataList.add(DataSorting(
             date: todayDateGet(DateTime.parse(e)),
             scheduleDataList: sortingData.toList(),
+            isToday: DateTime.now().day == DateTime.parse(e).day ? true : false,
             prefix: DateTime.now().day == DateTime.parse(e).day
                 ? Strings.todayInspections
                 : ''));
@@ -218,15 +224,57 @@ class PropertiesListController extends BaseController {
     Get.back();
     update();
   }
+
+  int unitsCount({List<BuildingsData>? buildings}) {
+    int totalCount = 0;
+    buildings?.forEach(
+      (element) {
+        totalCount += element.units?.length ?? 0;
+      },
+    );
+    return totalCount;
+  }
+
+  isCompletedData() {
+    if (status.toString() == PropertyStatus.completed.toString()) {
+      completedBuildings = [];
+      completedUnits = [];
+
+      for (var scheduleMainDataListData in scheduleMainDataList) {
+        for (var buildingsListData
+            in scheduleMainDataListData.buildings ?? []) {
+          if (buildingsListData.iscompleted == true) {
+            BuildingsData buildingsData = buildingsListData;
+            buildingsData.date = scheduleMainDataListData.date;
+            completedBuildings.add(buildingsData);
+          }
+
+          for (var unitsListData in buildingsListData.units ?? []) {
+            if (unitsListData.iscompleted == true) {
+              UnitsData unitsData = unitsListData;
+              unitsData.date = scheduleMainDataListData.date;
+              completedUnits.add(unitsData);
+            }
+          }
+        }
+      }
+    } else {
+      getTodayData();
+    }
+    update();
+  }
 }
 
 class DataSorting {
   final String date;
   final List<ScheduleDatum> scheduleDataList;
   final String prefix;
+  final bool isToday;
 
-  DataSorting(
-      {required this.date,
-      required this.scheduleDataList,
-      required this.prefix});
+  DataSorting({
+    required this.date,
+    required this.scheduleDataList,
+    required this.isToday,
+    required this.prefix,
+  });
 }

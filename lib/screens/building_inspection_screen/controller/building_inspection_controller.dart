@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
 import '../../../Models/accountmodel/account_model.dart';
@@ -6,7 +8,7 @@ import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen
 import 'package:public_housing/screens/building_inspection_screen/models/property_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/create_building_request_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/repository/buding_inpection_repository.dart';
+import 'package:public_housing/screens/building_inspection_screen/repository/building_inspection_repository.dart';
 
 class BuildingInspectionController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -27,11 +29,8 @@ class BuildingInspectionController extends BaseController {
   List checked = [];
   BuildingInspectionRepository buildingInspectionRepository =
       BuildingInspectionRepository();
-
-  // List<String> propertyList = [];
+  BuildingsData buildingsData = BuildingsData();
   List<String> cityList = [];
-
-  // List<String> buildingList = [];
   List<Building> buildingList = [];
   List<String> buildingTypeList = [];
   List<Properties>? propertyList = [];
@@ -44,16 +43,21 @@ class BuildingInspectionController extends BaseController {
   List<BuildingType> buildingTypes = [];
   bool isSelected = false;
   bool isManually = false;
+  PropertyDataModel propertyDataModel = PropertyDataModel();
 
   @override
   void onInit() {
-    if (Get.arguments != null) {
+    if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['buildingsData'] != null) {
+      buildingsData = Get.arguments['buildingsData'];
+    }
+    if (Get.arguments['propertyDataModel'] != null) {
+      propertyDataModel = Get.arguments['propertyDataModel'];
     }
 
     clearAllData();
-    // searchPropertyNameList == propertyList;
-    // searchBuildingList == buildingList;
     getPropertyInfo();
     getCertificates();
     getBuildingType();

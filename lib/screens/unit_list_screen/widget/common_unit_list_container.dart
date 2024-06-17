@@ -3,12 +3,22 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
 
 class CommonUnitListView extends StatelessWidget {
+  final String date;
   final String title;
+  final bool isToday;
   final String Subtitle;
+  final bool isComplete;
   final VoidCallback? onTap;
 
-  const CommonUnitListView(
-      {super.key, required this.title, required this.Subtitle, this.onTap});
+  const CommonUnitListView({
+    super.key,
+    this.onTap,
+    required this.date,
+    required this.title,
+    required this.isToday,
+    required this.Subtitle,
+    required this.isComplete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +26,7 @@ class CommonUnitListView extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +47,18 @@ class CommonUnitListView extends StatelessWidget {
                   ),
                 ],
               ),
+              Spacer(),
+              isComplete == true
+                  ? Padding(
+                      padding: EdgeInsets.only(top: 5.px),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.string(icComplete),
+                        ],
+                      ),
+                    )
+                  : SizedBox.shrink()
             ],
           ).paddingAll(16.px),
           Container(height: 2.px, color: AppColors().divider),
@@ -43,12 +66,14 @@ class CommonUnitListView extends StatelessWidget {
             children: [
               CommonRow(
                 image: icCalenderColor,
-                imageName: 'Date',
+                imageName: date,
                 imageNameColor: AppColors().black,
               ),
               Spacer(),
               CommonIconButton(
-                title: Strings.inspectUnit,
+                title: isComplete == true
+                    ? Strings.editInspection
+                    : Strings.inspectUnit,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -60,10 +85,14 @@ class CommonUnitListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
                 onTap: onTap,
-                iconColor: AppColors.primerColor,
-                icon: icHome,
+                iconColor: isToday == true
+                    ? AppColors.primerColor
+                    : AppColors().border1,
+                icon: isComplete == true ? icPencil : icHome,
                 iconheigth: 20.px,
-                textColor: AppColors.primerColor,
+                textColor: isToday == true
+                    ? AppColors.primerColor
+                    : AppColors().border1,
                 border: Border.all(color: AppColors().black),
               ),
             ],
@@ -77,19 +106,19 @@ class CommonUnitListView extends StatelessWidget {
 class CommonRow extends StatelessWidget {
   final String image;
   final String imageName;
-  final Color imageNameColor;
   final double? textSize;
   final Color? textColor;
+  final Color imageNameColor;
   final FontWeight? textWeight;
 
   const CommonRow({
     super.key,
-    required this.image,
-    required this.imageName,
-    required this.imageNameColor,
     this.textSize,
     this.textColor,
     this.textWeight,
+    required this.image,
+    required this.imageName,
+    required this.imageNameColor,
   });
 
   @override

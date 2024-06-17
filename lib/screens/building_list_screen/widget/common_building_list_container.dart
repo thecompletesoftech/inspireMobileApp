@@ -3,22 +3,27 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
 
 class CommonBuildingListView extends StatelessWidget {
+  final String date;
   final String title;
+  final bool isToday;
   final String title1;
   final String Subtitle;
   final String Subtitle1;
-  final String date;
+  final bool isCompleted;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
 
   const CommonBuildingListView({
     super.key,
+    this.onTap,
+    this.onTap1,
+    required this.date,
     required this.title,
     required this.title1,
+    required this.isToday,
     required this.Subtitle,
     required this.Subtitle1,
-    this.onTap,
-    this.onTap1, required this.date,
+    required this.isCompleted,
   });
 
   @override
@@ -28,11 +33,13 @@ class CommonBuildingListView extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MyTextView(
                         '${title} - ',
@@ -70,6 +77,18 @@ class CommonBuildingListView extends StatelessWidget {
                   ),
                 ],
               ),
+              Spacer(),
+              isCompleted == true
+                  ? Padding(
+                      padding: EdgeInsets.only(top: 5.px),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SvgPicture.string(icComplete),
+                        ],
+                      ),
+                    )
+                  : SizedBox.shrink()
             ],
           ).paddingAll(16.px),
           Container(
@@ -87,14 +106,16 @@ class CommonBuildingListView extends StatelessWidget {
               CommonRow(
                 image: icHome,
                 onTap: onTap,
-                imageName: 'See Units',
+                imageName: Strings.seeUnits,
                 imageNameColor: AppColors().black,
                 textSize: 16.px,
                 textColor: AppColors.primerColor,
                 textWeight: FontWeight.w500,
               ).paddingOnly(right: 24.px),
               CommonIconButton(
-                title: Strings.inspectBuilding,
+                title: isCompleted == true
+                    ? Strings.editInspection
+                    : Strings.inspectBuilding,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -106,10 +127,14 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
                 onTap: onTap1,
-                iconColor: AppColors.primerColor,
-                icon: icBuildings,
+                iconColor: isToday == true || isCompleted == true
+                    ? AppColors.primerColor
+                    : AppColors().border1,
+                icon: isCompleted == true ? icPencil : icBuildings,
                 iconheigth: 20.px,
-                textColor: AppColors.primerColor,
+                textColor: isToday == true || isCompleted == true
+                    ? AppColors.primerColor
+                    : AppColors().border1,
                 border: Border.all(color: AppColors().black),
               ),
             ],
@@ -123,21 +148,21 @@ class CommonBuildingListView extends StatelessWidget {
 class CommonRow extends StatelessWidget {
   final String image;
   final String imageName;
-  final Color imageNameColor;
-  final VoidCallback? onTap;
   final double? textSize;
   final Color? textColor;
+  final VoidCallback? onTap;
+  final Color imageNameColor;
   final FontWeight? textWeight;
 
   const CommonRow({
     super.key,
-    required this.image,
-    required this.imageName,
-    required this.imageNameColor,
     this.onTap,
     this.textSize,
     this.textColor,
     this.textWeight,
+    required this.image,
+    required this.imageName,
+    required this.imageNameColor,
   });
 
   @override

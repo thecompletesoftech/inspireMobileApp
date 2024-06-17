@@ -37,6 +37,8 @@ class BuildingStandardsController extends BaseController {
 
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+      propertyName = Get.arguments['propertyName'];
+      buildingName = Get.arguments['buildingName'];
     }
 
     if (Get.arguments['buildingtype'] != null) {

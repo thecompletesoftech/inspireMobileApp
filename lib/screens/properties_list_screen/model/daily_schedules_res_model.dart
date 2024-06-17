@@ -42,7 +42,8 @@ class ScheduleDatum {
   String? city;
   DateTime? date;
   String? property;
-  BuildingData? building;
+  String? propertyName;
+  List<BuildingsData>? buildings;
 
   ScheduleDatum({
     this.state,
@@ -50,7 +51,8 @@ class ScheduleDatum {
     this.city,
     this.date,
     this.property,
-    this.building,
+    this.propertyName,
+    this.buildings,
   });
 
   factory ScheduleDatum.fromJson(Map<String, dynamic> json) => ScheduleDatum(
@@ -59,9 +61,11 @@ class ScheduleDatum {
         city: json["City"],
         date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
         property: json["Property"],
-        building: json["building"] == null
-            ? null
-            : BuildingData.fromJson(json["building"]),
+        propertyName: json["Property name"],
+        buildings: json["buildings"] == null
+            ? []
+            : List<BuildingsData>.from(
+                json["buildings"]!.map((x) => BuildingsData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,28 +75,33 @@ class ScheduleDatum {
         "Date":
             "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
         "Property": property,
-        "building": building?.toJson(),
+        "Property name": propertyName,
+        "buildings": buildings == null
+            ? []
+            : List<dynamic>.from(buildings!.map((x) => x.toJson())),
       };
 }
 
-class BuildingData {
+class BuildingsData {
   String? buildingName;
   String? buildingType;
-  String? year;
+  int? year;
   bool? iscompleted;
   String? id;
-  List<Unit>? units;
+  List<UnitsData>? units;
+  DateTime? date;
 
-  BuildingData({
+  BuildingsData({
     this.buildingName,
     this.buildingType,
     this.year,
     this.iscompleted,
     this.id,
     this.units,
+    this.date,
   });
 
-  factory BuildingData.fromJson(Map<String, dynamic> json) => BuildingData(
+  factory BuildingsData.fromJson(Map<String, dynamic> json) => BuildingsData(
         buildingName: json["building_name"],
         buildingType: json["building_type"],
         year: json["year"],
@@ -100,7 +109,8 @@ class BuildingData {
         id: json["id"],
         units: json["Units"] == null
             ? []
-            : List<Unit>.from(json["Units"]!.map((x) => Unit.fromJson(x))),
+            : List<UnitsData>.from(
+                json["Units"]!.map((x) => UnitsData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,28 +125,26 @@ class BuildingData {
       };
 }
 
-class Unit {
-  String? year;
+class UnitsData {
   bool? iscompleted;
   String? id;
   String? unitName;
+  DateTime? date;
 
-  Unit({
-    this.year,
+  UnitsData({
     this.iscompleted,
     this.id,
     this.unitName,
+    this.date,
   });
 
-  factory Unit.fromJson(Map<String, dynamic> json) => Unit(
-        year: json["year"],
+  factory UnitsData.fromJson(Map<String, dynamic> json) => UnitsData(
         iscompleted: json["iscompleted"],
         id: json["id"],
         unitName: json["unit_name"],
       );
 
   Map<String, dynamic> toJson() => {
-        "year": year,
         "iscompleted": iscompleted,
         "id": id,
         "unit_name": unitName,

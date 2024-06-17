@@ -3,9 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
+import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
 import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
+import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertiesListScreen extends GetView<PropertiesListController> {
@@ -298,20 +300,32 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                             color: controller.appColors.transparent,
                             padding: EdgeInsets.symmetric(horizontal: 24.px),
                             textSize: 16.px,
-                            border:
-                                Border.all(color: controller.appColors.black),
-                            textColor: AppColors.primerColor,
+                            border: controller.status.toString() ==
+                                    PropertyStatus.completed.toString()
+                                ? Border.all(
+                                    color: controller.appColors.border1)
+                                : Border.all(color: controller.appColors.black),
+                            textColor: controller.status.toString() ==
+                                    PropertyStatus.completed.toString()
+                                ? controller.appColors.border1
+                                : AppColors.primerColor,
                             textWeight: FontWeight.w500,
                             textFamily: fontFamilyRegular,
-                            onTap: () {
-                              navigateToDateTime();
-                              controller.dateRange =
-                                  PickerDateRange(null, null);
-                              controller.startDate = '';
-                              controller.endDate = '';
-                              controller.confirmSelectedDates();
-                            },
-                            iconColor: AppColors.primerColor,
+                            onTap: controller.status.toString() ==
+                                    PropertyStatus.completed.toString()
+                                ? () {}
+                                : () {
+                                    navigateToDateTime();
+                                    controller.dateRange =
+                                        PickerDateRange(null, null);
+                                    controller.startDate = '';
+                                    controller.endDate = '';
+                                    controller.confirmSelectedDates();
+                                  },
+                            iconColor: controller.status.toString() ==
+                                    PropertyStatus.completed.toString()
+                                ? controller.appColors.border1
+                                : AppColors.primerColor,
                             icon: icCalender1,
                             iconheigth: 20.px,
                           ),
@@ -319,7 +333,6 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                           Expanded(
                             flex: 0,
                             child: SizedBox(
-                              // width: 250.px,
                               height: 48.px,
                               child: SegmentedButton<PropertyStatus>(
                                 style: ButtonStyle(
@@ -358,7 +371,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                 onSelectionChanged:
                                     (Set<PropertyStatus> newSelection) {
                                   controller.status = newSelection.first;
-                                  controller.update();
+                                  controller.isCompletedData();
                                 },
                               ),
                             ),
@@ -369,82 +382,229 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              ListView.builder(
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.scheduleDataList.length,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          MyTextView(
-                                            '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
-                                            textStyleNew: MyTextStyle(
-                                              textSize: 24.px,
-                                              textWeight: FontWeight.w400,
-                                              textColor:
-                                                  controller.appColors.black,
+                              controller.status.toString() ==
+                                      PropertyStatus.completed.toString()
+                                  ? Column(
+                                      children: [
+                                        controller.completedBuildings.isNotEmpty
+                                            ? Row(
+                                                children: [
+                                                  MyTextView(
+                                                    Strings.completedBuildings,
+                                                    textStyleNew: MyTextStyle(
+                                                      textSize: 24.px,
+                                                      textWeight:
+                                                          FontWeight.w400,
+                                                      textColor: controller
+                                                          .appColors.black,
+                                                    ),
+                                                  ).paddingOnly(right: 16.px),
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 2.px,
+                                                      color:
+                                                          AppColors().divider,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ).paddingOnly(
+                                                right: 32.px,
+                                                left: 32.px,
+                                                top: 32.px)
+                                            : MyTextView(
+                                                Strings.notFound,
+                                                textStyleNew: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w400,
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                ),
+                                              ),
+                                        ListView.builder(
+                                          itemCount: controller
+                                              .completedBuildings.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            var buildingData = controller
+                                                .completedBuildings[index];
+                                            return CommonBuildingListView(
+                                              isToday: false,
+                                              title:
+                                                  'Building ${buildingData.buildingName}',
+                                              title1:
+                                                  '${buildingData.units?.length} Units',
+                                              Subtitle: '${buildingData.year}',
+                                              Subtitle1:
+                                                  '${buildingData.buildingType}',
+                                              date:
+                                                  '${DateFormat('yyyy-MM-dd').format(buildingData.date!)}',
+                                              onTap: () {},
+                                              onTap1: () {},
+                                              isCompleted:
+                                                  (buildingData.iscompleted ??
+                                                      false),
+                                            ).paddingOnly(
+                                                left: 32.px,
+                                                right: 32.px,
+                                                top: 20.px);
+                                          },
+                                        ),
+                                        controller.completedUnits.isNotEmpty
+                                            ? Row(
+                                                children: [
+                                                  MyTextView(
+                                                    Strings.completedUnits,
+                                                    textStyleNew: MyTextStyle(
+                                                      textSize: 24.px,
+                                                      textWeight:
+                                                          FontWeight.w400,
+                                                      textColor: controller
+                                                          .appColors.black,
+                                                    ),
+                                                  ).paddingOnly(right: 16.px),
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 2.px,
+                                                      color:
+                                                          AppColors().divider,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ).paddingOnly(
+                                                right: 32.px,
+                                                left: 32.px,
+                                                top: 32.px)
+                                            : MyTextView(
+                                                Strings.notFound,
+                                                textStyleNew: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w400,
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                ),
+                                              ),
+                                        ListView.builder(
+                                          itemCount:
+                                              controller.completedUnits.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            var unitsData = controller
+                                                .completedUnits[index];
+
+                                            return CommonUnitListView(
+                                              isComplete:
+                                                  (unitsData.iscompleted ??
+                                                      false),
+                                              title:
+                                                  '${Strings.unit} ${unitsData.unitName}',
+                                              Subtitle: '[Unit Address]',
+                                              date:
+                                                  '${DateFormat('yyyy-MM-dd').format(unitsData.date!)}',
+                                              onTap: () {},
+                                              isToday: false,
+                                            ).paddingOnly(
+                                                left: 32.px,
+                                                right: 32.px,
+                                                top: 20.px);
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount:
+                                          controller.scheduleDataList.length,
+                                      itemBuilder: (context, index) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                MyTextView(
+                                                  '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
+                                                  textStyleNew: MyTextStyle(
+                                                    textSize: 24.px,
+                                                    textWeight: FontWeight.w400,
+                                                    textColor: controller
+                                                        .appColors.black,
+                                                  ),
+                                                ).paddingOnly(right: 16.px),
+                                                Expanded(
+                                                  child: Container(
+                                                    height: 2.px,
+                                                    color: AppColors().divider,
+                                                  ),
+                                                ),
+                                              ],
+                                            ).paddingAll(32.px),
+                                            ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  NeverScrollableScrollPhysics(),
+                                              itemCount: controller
+                                                  .scheduleDataList[index]
+                                                  .scheduleDataList
+                                                  .length,
+                                              itemBuilder: (context, i) {
+                                                var propertyData = controller
+                                                    .scheduleDataList[index]
+                                                    .scheduleDataList[i];
+                                                return CommonPropertiesListView(
+                                                  title: propertyData
+                                                          .propertyName ??
+                                                      "",
+                                                  Subtitle:
+                                                      '${propertyData.city} - ${propertyData.zip}',
+                                                  title1:
+                                                      '${propertyData.buildings?.length ?? 0}',
+                                                  Subtitle1:
+                                                      '${controller.unitsCount(buildings: propertyData.buildings)} Units',
+                                                  date:
+                                                      '${DateFormat('yyyy-MM-dd').format(propertyData.date!)}',
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                        BuildingListScreen
+                                                            .routes,
+                                                        arguments: {
+                                                          "isComplete": false,
+                                                          "building":
+                                                              propertyData,
+                                                          "isToday": controller
+                                                              .scheduleDataList[
+                                                                  index]
+                                                              .isToday
+                                                        });
+                                                  },
+                                                ).paddingSymmetric(
+                                                    horizontal: 32.px);
+                                              },
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return SizedBox(height: 24.px);
+                                              },
                                             ),
-                                          ).paddingOnly(right: 16.px),
-                                          Expanded(
-                                            child: Container(
-                                              height: 2.px,
-                                              color: AppColors().divider,
-                                            ),
-                                          ),
-                                        ],
-                                      ).paddingAll(32.px),
-                                      ListView.separated(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount: controller
-                                            .scheduleDataList[index]
-                                            .scheduleDataList
-                                            .length,
-                                        itemBuilder: (context, i) {
-                                          var propertyData = controller
-                                              .scheduleDataList[index]
-                                              .scheduleDataList[i];
-                                          return CommonPropertiesListView(
-                                            title: propertyData.property ?? "",
-                                            Subtitle:
-                                                '${propertyData.city} - ${propertyData.zip}',
-                                            title1: '[Building Count]',
-                                            Subtitle1:
-                                                '${propertyData.building?.units?.length ?? 0} Units',
-                                            date:
-                                                '${DateFormat('yyyy-MM-dd').format(propertyData.date!)}',
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  BuildingListScreen.routes,
-                                                  arguments: {
-                                                    "isComplete": false,
-                                                    "building": propertyData,
-                                                  });
-                                            },
-                                          ).paddingSymmetric(horizontal: 32.px);
-                                        },
-                                        separatorBuilder:
-                                            (BuildContext context, int index) {
-                                          return SizedBox(height: 24.px);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                              if (controller.scheduleDataList.length == 1 &&
-                                  controller.scheduleDataList.first.prefix
-                                      .contains(Strings.todayInspections))
-                                MyTextView(
-                                  Strings.timeframe,
-                                  textStyleNew: MyTextStyle(
-                                    textSize: 20.px,
-                                    textWeight: FontWeight.w400,
-                                    textColor: controller.appColors.black,
-                                  ),
-                                ).paddingOnly(top: 40.px),
+                                          ],
+                                        );
+                                      },
+                                    ).paddingOnly(bottom: 32.px),
+                              if (controller.status.toString() !=
+                                  PropertyStatus.completed.toString())
+                                if (controller.scheduleDataList.length == 1 &&
+                                    controller.scheduleDataList.first.prefix
+                                        .contains(Strings.todayInspections))
+                                  MyTextView(
+                                    Strings.timeframe,
+                                    textStyleNew: MyTextStyle(
+                                      textSize: 20.px,
+                                      textWeight: FontWeight.w400,
+                                      textColor: controller.appColors.black,
+                                    ),
+                                  ).paddingOnly(top: 40.px),
                             ],
                           ),
                         ),

@@ -3,21 +3,21 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
 
 class CommonPropertiesListView extends StatelessWidget {
+  final String date;
   final String title;
   final String title1;
   final String Subtitle;
   final String Subtitle1;
-  final String date;
   final VoidCallback? onTap;
 
   const CommonPropertiesListView({
     super.key,
-    required this.title,
-    required this.Subtitle,
-    required this.title1,
-    required this.Subtitle1,
     this.onTap,
     required this.date,
+    required this.title,
+    required this.title1,
+    required this.Subtitle,
+    required this.Subtitle1,
   });
 
   @override
@@ -85,7 +85,7 @@ class CommonPropertiesListView extends StatelessWidget {
                 onTap: onTap,
                 child: CommonRow(
                   image: icBuildings,
-                  imageName: 'See Buildings',
+                  imageName: Strings.seeBuildings,
                   imageNameColor: AppColors().black,
                   textSize: 16.px,
                   textColor: AppColors.primerColor,
@@ -103,21 +103,21 @@ class CommonPropertiesListView extends StatelessWidget {
 class CommonRow extends StatelessWidget {
   final String image;
   final String imageName;
-  final Color imageNameColor;
-  final VoidCallback? onTap;
-  final double? textSize;
   final Color? textColor;
+  final double? textSize;
+  final VoidCallback? onTap;
+  final Color imageNameColor;
   final FontWeight? textWeight;
 
   const CommonRow({
     super.key,
-    required this.image,
-    required this.imageName,
-    required this.imageNameColor,
     this.onTap,
     this.textSize,
     this.textColor,
     this.textWeight,
+    required this.image,
+    required this.imageName,
+    required this.imageNameColor,
   });
 
   @override

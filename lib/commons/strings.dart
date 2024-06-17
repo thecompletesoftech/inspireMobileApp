@@ -228,4 +228,10 @@ class Strings {
   static String timeframe =
       "These are today's inspections. To see more, select a timeframe.";
   static String unitUnInspectAble = "Unit Uninspectable";
+  static String completedBuildings = "Completed Buildings";
+  static String completedUnits = "Completed Units";
+  static String seeUnits = "See Units";
+  static String seeBuildings = "See Buildings";
+  static String notFound = "Not Found";
+  static String building = "Building";
 }

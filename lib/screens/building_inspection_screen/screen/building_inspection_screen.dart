@@ -4,6 +4,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
+import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 
 class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
@@ -13,6 +14,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
 
   @override
   Widget build(BuildContext context) {
+    PropertiesListController propertiesListController =
+        Get.put(PropertiesListController());
+
     return GetBuilder<BuildingInspectionController>(
       init: BuildingInspectionController(),
       autoRemove: true,
@@ -272,7 +276,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Inspector: ',
-                                          subTitle: '[Inspector]',
+                                          subTitle: propertiesListController
+                                                  .account?.userName ??
+                                              '',
                                           imageString: icPerson,
                                         ),
                                       ),
@@ -280,7 +286,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Inspection Date: ',
-                                          subTitle: '[Inspection Date]',
+                                          subTitle: controller
+                                                  .propertyDataModel.date ??
+                                              '',
                                           imageString: icCalender2,
                                         ),
                                       ),
@@ -456,7 +464,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Property Name: ',
-                                          subTitle: '[Property Name]',
+                                          subTitle: controller
+                                                  .propertyDataModel.name ??
+                                              '',
                                           imageString: icBuildingss,
                                         ),
                                       ),
@@ -579,7 +589,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         child: CommonTextRow(
                                           title: 'Property Address: ',
                                           subTitle:
-                                              '[Property Address], [City], [State], [Zip]',
+                                              '${controller.propertyDataModel.address ?? ''}, ${controller.propertyDataModel.city ?? ''}, ${controller.propertyDataModel.state ?? ''}, ${controller.propertyDataModel.zip ?? ''}',
                                           imageString: icLocation,
                                         ),
                                       ),
@@ -637,7 +647,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Property ID: ',
-                                          subTitle: '[Property ID]',
+                                          subTitle:
+                                              controller.propertyDataModel.id ??
+                                                  '',
                                           imageString: hasTagIcon,
                                         ),
                                       ),
@@ -772,7 +784,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Building Name: ',
-                                          subTitle: '[Building Name]',
+                                          subTitle: controller
+                                                  .buildingsData.buildingName ??
+                                              '',
                                           imageString: icBuildings,
                                         ),
                                       ),
@@ -781,7 +795,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                         child: CommonTextRow(
                                           isImage: true,
                                           title: 'Year Constructed: ',
-                                          subTitle: '[Year Constructed]',
+                                          subTitle:
+                                              '${controller.buildingsData.year ?? 0}',
                                           imageString: icCalender2,
                                         ),
                                       ),
@@ -936,7 +951,9 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       Expanded(
                                         child: CommonTextRow(
                                           title: 'Building Type: ',
-                                          subTitle: '[Building Type]',
+                                          subTitle: controller
+                                                  .buildingsData.buildingType ??
+                                              '',
                                           imageString: icBuildings,
                                         ),
                                       ),
@@ -1171,7 +1188,13 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                             color: controller.appColors.textPink,
                             onTap: () async {
                               Get.toNamed(BuildingStandardsScreen.routes,
-                                  arguments: {"isManually": false});
+                                  arguments: {
+                                    "isManually": false,
+                                    "buildingName":
+                                        controller.buildingsData.buildingName,
+                                    "propertyName":
+                                        controller.propertyDataModel.name
+                                  });
                               controller.update();
                             },
                           ).paddingSymmetric(vertical: 24.px),

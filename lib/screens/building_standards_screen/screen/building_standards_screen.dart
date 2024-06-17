@@ -31,15 +31,25 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 ),
                 Column(
                   children: [
-                    MyTextView(
-                      '${controller.propertyInfo['name'] ?? ""} - ${controller.buildingInfo['name'] ?? ""}',
-                      textStyleNew: MyTextStyle(
-                        textColor: controller.appColors.appColor,
-                        textWeight: FontWeight.w600,
-                        textFamily: fontFamilyBold,
-                        textSize: 20.px,
-                      ),
-                    ).paddingOnly(top: 32.px, bottom: 48.px),
+                    controller.isManually == true
+                        ? MyTextView(
+                            '${controller.propertyInfo['name'] ?? ""} - ${controller.buildingInfo['name'] ?? ""}',
+                            textStyleNew: MyTextStyle(
+                              textColor: controller.appColors.appColor,
+                              textWeight: FontWeight.w600,
+                              textFamily: fontFamilyBold,
+                              textSize: 20.px,
+                            ),
+                          ).paddingOnly(top: 32.px, bottom: 48.px)
+                        : MyTextView(
+                            '${controller.propertyName} - ${controller.buildingName}',
+                            textStyleNew: MyTextStyle(
+                              textColor: controller.appColors.appColor,
+                              textWeight: FontWeight.w600,
+                              textFamily: fontFamilyBold,
+                              textSize: 20.px,
+                            ),
+                          ).paddingOnly(top: 32.px, bottom: 48.px),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
