@@ -28,6 +28,7 @@ class SigningController extends BaseController {
 
     clientList = [
       // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'Newport', "baseURL": "hacn.live.gccs.gilsonsoftware.com"},
       {
         "title": 'Chattanooga',
         "baseURL": "chattanooga.live.gccs.gilsonsoftware.com"
