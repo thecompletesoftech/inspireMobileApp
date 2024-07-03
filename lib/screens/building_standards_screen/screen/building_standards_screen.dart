@@ -67,10 +67,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           radius: 100.px,
                           width: 198.px,
                           height: 44.px,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15.px,
-                            horizontal: 24.px,
-                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 24.px),
                           textSize: 16.px,
                           textWeight: FontWeight.w500,
                           textFamily: fontFamilyRegular,

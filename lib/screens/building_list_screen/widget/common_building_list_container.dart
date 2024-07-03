@@ -9,7 +9,7 @@ class CommonBuildingListView extends StatelessWidget {
   final String title1;
   final String Subtitle;
   final String Subtitle1;
-  final bool isCompleted;
+  final String isCompleted;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
 
@@ -78,7 +78,7 @@ class CommonBuildingListView extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              isCompleted == true
+              isCompleted == 'Completed'
                   ? Padding(
                       padding: EdgeInsets.only(top: 5.px),
                       child: Column(
@@ -113,7 +113,7 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
               ).paddingOnly(right: 24.px),
               CommonIconButton(
-                title: isCompleted == true
+                title: isCompleted == 'Completed'
                     ? Strings.editInspection
                     : Strings.inspectBuilding,
                 radius: 100.px,
@@ -127,12 +127,12 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
                 onTap: onTap1,
-                iconColor: isToday == true || isCompleted == true
+                iconColor: isToday == true || isCompleted == 'Completed'
                     ? AppColors.primerColor
                     : AppColors().border1,
-                icon: isCompleted == true ? icPencil : icBuildings,
+                icon: isCompleted == 'Completed' ? icPencil : icBuildings,
                 iconheigth: 20.px,
-                textColor: isToday == true || isCompleted == true
+                textColor: isToday == true || isCompleted == 'Completed'
                     ? AppColors.primerColor
                     : AppColors().border1,
                 border: Border.all(color: AppColors().black),

@@ -6,7 +6,8 @@ class UnitListController extends BaseController {
   bool isComplete = false;
   List<UnitsData> unitsData = [];
   DateTime? date;
-  String? buildingName;
+  BuildingsData buildingsData = BuildingsData();
+  ScheduleDatum scheduleDatum = ScheduleDatum();
   bool isToday = false;
 
   @override
@@ -24,11 +25,14 @@ class UnitListController extends BaseController {
       if (Get.arguments['date'] != null) {
         date = Get.arguments['date'];
       }
-      if (Get.arguments['buildingName'] != null) {
-        buildingName = Get.arguments['buildingName'];
+      if (Get.arguments['buildingsData'] != null) {
+        buildingsData = Get.arguments['buildingsData'];
       }
       if (Get.arguments['isToday'] != null) {
         isToday = Get.arguments['isToday'];
+      }
+      if (Get.arguments['propertyData'] != null) {
+        scheduleDatum = Get.arguments['propertyData'];
       }
       update();
       super.onInit();

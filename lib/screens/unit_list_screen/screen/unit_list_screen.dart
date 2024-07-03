@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
 import 'package:public_housing/screens/unit_list_screen/controller/unit_list_controller.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
+import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 
 class UnitListScreen extends GetView<UnitListController> {
   const UnitListScreen({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class UnitListScreen extends GetView<UnitListController> {
                           textWeight: FontWeight.w600),
                     ),
                     MyTextView(
-                      '${Strings.building} ${controller.buildingName}',
+                      '${Strings.building} ${controller.buildingsData.buildingName}',
                       textStyleNew: MyTextStyle(
                           textSize: 24.px,
                           textColor: controller.appColors.textcolor,
@@ -54,7 +55,7 @@ class UnitListScreen extends GetView<UnitListController> {
                       return CommonUnitListView(
                         isToday: controller.isToday,
                         title: '${Strings.unit} ${unitsData.unitName}',
-                        isComplete: (unitsData.iscompleted ?? false),
+                        isComplete: (unitsData.iscompleted ?? 'Completed'),
                         Subtitle: '[Unit Address]',
                         date:
                             '${DateFormat('yyyy-MM-dd').format(controller.date!)}',
@@ -62,7 +63,21 @@ class UnitListScreen extends GetView<UnitListController> {
                             ? () {
                                 Get.toNamed(
                                   UnitInspection.routes,
-                                  arguments: {"isManually": false},
+                                  arguments: {
+                                    "isManually": false,
+                                    "propertyDataModel": PropertyDataModel(
+                                        id: controller.scheduleDatum.property,
+                                        name: controller
+                                            .scheduleDatum.propertyName,
+                                        address: '',
+                                        city: controller.scheduleDatum.city,
+                                        state: controller.scheduleDatum.state,
+                                        zip: controller.scheduleDatum.zip,
+                                        date:
+                                            '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}'),
+                                    "buildingsData": controller.buildingsData,
+                                    "unitsData": unitsData,
+                                  },
                                 );
                               }
                             : () {},

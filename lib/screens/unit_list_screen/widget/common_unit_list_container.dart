@@ -7,7 +7,7 @@ class CommonUnitListView extends StatelessWidget {
   final String title;
   final bool isToday;
   final String Subtitle;
-  final bool isComplete;
+  final String isComplete;
   final VoidCallback? onTap;
 
   const CommonUnitListView({
@@ -48,7 +48,7 @@ class CommonUnitListView extends StatelessWidget {
                 ],
               ),
               Spacer(),
-              isComplete == true
+              isComplete == 'Completed'
                   ? Padding(
                       padding: EdgeInsets.only(top: 5.px),
                       child: Column(

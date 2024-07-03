@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
-import 'package:public_housing/screens/building_list_screen/controller/building_list_controller.dart';
-import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
-import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
 import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
+import 'package:public_housing/screens/building_list_screen/controller/building_list_controller.dart';
+import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
+import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 
 class BuildingListScreen extends GetView<BuildingListController> {
   const BuildingListScreen({Key? key}) : super(key: key);
@@ -65,15 +65,17 @@ class BuildingListScreen extends GetView<BuildingListController> {
                         Subtitle1: '${buildingsData?.buildingType}',
                         date:
                             '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}',
-                        isCompleted: (buildingsData?.iscompleted ?? false),
+                        isCompleted:
+                            (buildingsData?.iscompleted ?? 'Completed'),
                         onTap: () {
                           Get.toNamed(UnitListScreen.routes, arguments: {
                             "isManually": false,
                             "isComplete": true,
                             "unitsData": buildingsData?.units,
                             "date": controller.scheduleDatum.date,
-                            "buildingName": buildingsData?.buildingName,
-                            "isToday": controller.isToday
+                            "buildingsData": buildingsData,
+                            "isToday": controller.isToday,
+                            "propertyData": controller.scheduleDatum,
                           });
                         },
                         onTap1: controller.isToday == true

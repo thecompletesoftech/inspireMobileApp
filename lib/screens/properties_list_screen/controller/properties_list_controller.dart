@@ -215,7 +215,8 @@ class PropertiesListController extends BaseController {
         scheduleDataList.add(DataSorting(
             date: todayDateGet(DateTime.parse(e)),
             scheduleDataList: sortingData.toList(),
-            isToday: DateTime.now().day == DateTime.parse(e).day ? true : false,
+            isToday:
+                true /*DateTime.now().day == DateTime.parse(e).day ? true : false*/,
             prefix: DateTime.now().day == DateTime.parse(e).day
                 ? Strings.todayInspections
                 : ''));
@@ -243,14 +244,14 @@ class PropertiesListController extends BaseController {
       for (var scheduleMainDataListData in scheduleMainDataList) {
         for (var buildingsListData
             in scheduleMainDataListData.buildings ?? []) {
-          if (buildingsListData.iscompleted == true) {
+          if (buildingsListData.iscompleted == 'Completed') {
             BuildingsData buildingsData = buildingsListData;
             buildingsData.date = scheduleMainDataListData.date;
             completedBuildings.add(buildingsData);
           }
 
           for (var unitsListData in buildingsListData.units ?? []) {
-            if (unitsListData.iscompleted == true) {
+            if (unitsListData.iscompleted == 'Completed') {
               UnitsData unitsData = unitsListData;
               unitsData.date = scheduleMainDataListData.date;
               completedUnits.add(unitsData);

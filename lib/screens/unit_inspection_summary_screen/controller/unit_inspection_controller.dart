@@ -1,4 +1,6 @@
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
@@ -25,6 +27,9 @@ class UnitInspectionSummaryController extends BaseController {
   List<DeficiencyArea> deficiencyArea = [];
   var inspectionInfo = {};
   var deficiencyInfo = [].obs;
+  PropertyDataModel propertyDataModel = PropertyDataModel();
+  BuildingsData buildingsData = BuildingsData();
+  UnitsData unitsData = UnitsData();
 
   @override
   void onInit() {
@@ -34,6 +39,16 @@ class UnitInspectionSummaryController extends BaseController {
     }
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyDataModel'] != null) {
+      propertyDataModel = Get.arguments['propertyDataModel'];
+    }
+    if (Get.arguments['buildingsData'] != null) {
+      buildingsData = Get.arguments['buildingsData'];
+    }
+    if (Get.arguments['unitsData'] != null) {
+      unitsData = Get.arguments['unitsData'];
+      isDataSet();
     }
 
     unitHouseKeepingList = [
@@ -105,6 +120,13 @@ class UnitInspectionSummaryController extends BaseController {
   getUnitInspectionSummary() {
     update();
     return unitNumberName.text.isNotEmpty && unitAddress.text.isNotEmpty;
+  }
+
+  isDataSet() {
+    unitNumberName.text = Get.arguments['unitinfo']['name'] ?? "";
+    unitAddress.text = Get.arguments['unitinfo']['address'];
+    bathrooms.text = Get.arguments['unitinfo']['number_of_bathrooms'] ?? "";
+    bedrooms.text = Get.arguments['unitinfo']['number_of_bedrooms'] ?? "";
   }
 
   setDataController() {

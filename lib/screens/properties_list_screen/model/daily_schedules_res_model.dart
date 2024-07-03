@@ -43,6 +43,7 @@ class ScheduleDatum {
   DateTime? date;
   String? property;
   String? propertyName;
+  String? propertyAddress;
   List<BuildingsData>? buildings;
 
   ScheduleDatum({
@@ -53,6 +54,7 @@ class ScheduleDatum {
     this.property,
     this.propertyName,
     this.buildings,
+    this.propertyAddress,
   });
 
   factory ScheduleDatum.fromJson(Map<String, dynamic> json) => ScheduleDatum(
@@ -62,6 +64,7 @@ class ScheduleDatum {
         date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
         property: json["Property"],
         propertyName: json["Property name"],
+        propertyAddress: json["Property address"],
         buildings: json["buildings"] == null
             ? []
             : List<BuildingsData>.from(
@@ -72,6 +75,7 @@ class ScheduleDatum {
         "State": state,
         "Zip": zip,
         "City": city,
+        "Property address": propertyAddress,
         "Date":
             "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
         "Property": property,
@@ -86,7 +90,7 @@ class BuildingsData {
   String? buildingName;
   String? buildingType;
   int? year;
-  bool? iscompleted;
+  String? iscompleted;
   String? id;
   List<UnitsData>? units;
   DateTime? date;
@@ -126,7 +130,7 @@ class BuildingsData {
 }
 
 class UnitsData {
-  bool? iscompleted;
+  String? iscompleted;
   String? id;
   String? unitName;
   DateTime? date;

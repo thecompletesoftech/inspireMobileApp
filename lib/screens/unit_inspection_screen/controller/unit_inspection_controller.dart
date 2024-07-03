@@ -1,4 +1,6 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
 import '../../building_inspection_screen/screen/building_inspection_screen.dart';
@@ -20,6 +22,9 @@ class UnitController extends BaseController {
   var buildingInfo = {}.obs;
   var buildingType = "".obs;
   bool isManually = false;
+  PropertyDataModel propertyDataModel = PropertyDataModel();
+  BuildingsData buildingsData = BuildingsData();
+  UnitsData unitsData = UnitsData();
 
   void onInit() {
     if (Get.arguments['deficiencyArea'] != null) {
@@ -31,6 +36,15 @@ class UnitController extends BaseController {
     }
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyDataModel'] != null) {
+      propertyDataModel = Get.arguments['propertyDataModel'];
+    }
+    if (Get.arguments['buildingsData'] != null) {
+      buildingsData = Get.arguments['buildingsData'];
+    }
+    if (Get.arguments['unitsData'] != null) {
+      unitsData = Get.arguments['unitsData'];
     }
     if (isManually == false) {
       switchButton.value = true;

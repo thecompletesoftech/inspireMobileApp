@@ -1,14 +1,14 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:public_housing/commons/general_enum.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/commons/general_enum.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
+import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
-import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
-import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 
 class PropertiesListScreen extends GetView<PropertiesListController> {
   const PropertiesListScreen({Key? key}) : super(key: key);
@@ -444,7 +444,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                               onTap1: () {},
                                               isCompleted:
                                                   (buildingData.iscompleted ??
-                                                      false),
+                                                      'Completed'),
                                             ).paddingOnly(
                                                 left: 32.px,
                                                 right: 32.px,
@@ -498,7 +498,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                             return CommonUnitListView(
                                               isComplete:
                                                   (unitsData.iscompleted ??
-                                                      false),
+                                                      'Completed'),
                                               title:
                                                   '${Strings.unit} ${unitsData.unitName}',
                                               Subtitle: '[Unit Address]',
@@ -558,7 +558,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                           .propertyName ??
                                                       "",
                                                   Subtitle:
-                                                      '${propertyData.city} - ${propertyData.zip}',
+                                                      '${propertyData.city} - ${propertyData.propertyAddress}',
                                                   title1:
                                                       '${propertyData.buildings?.length ?? 0}',
                                                   Subtitle1:
@@ -614,7 +614,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                 : controller.apiResponseStatus == ApiResponseStatus.loading
                     ? Center(child: CircularProgressIndicator())
                     : controller.apiResponseStatus == ApiResponseStatus.failure
-                        ? Text('No Data Found')
+                        ? Text(Strings.noDataFound)
                         : SizedBox(),
           ),
         );
