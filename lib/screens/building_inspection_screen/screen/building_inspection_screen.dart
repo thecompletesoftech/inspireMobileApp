@@ -977,13 +977,16 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                           children: [
                                             Checkbox(
                                               onChanged: (value) async {
-                                                await controller.isAllSelected(
-                                                    value ?? false);
                                                 controller
-                                                    .getCertificatesJson();
+                                                    .isCertificateSelection(
+                                                        isAllSelectionChange:
+                                                            true);
+                                                // await controller.isAllSelected(
+                                                //     value ?? false);
                                               },
                                               tristate: true,
-                                              value: controller.isData,
+                                              value: controller
+                                                  .isCheckAllCertificate,
                                               activeColor:
                                                   controller.appColors.appColor,
                                             ),
@@ -1016,12 +1019,16 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                               children: [
                                                 Checkbox(
                                                   onChanged: (value) {
-                                                    controller.checked[i] =
-                                                        value;
-                                                    controller.allSelected();
                                                     controller
-                                                        .getCertificatesJson();
-                                                    controller.update();
+                                                        .isCertificateSelection(
+                                                            index: i);
+
+                                                    // controller.checked[i] =
+                                                    //     value;
+                                                    // controller.allSelected();
+                                                    // controller
+                                                    //     .getCertificatesJson();
+                                                    // controller.update();
                                                   },
                                                   value: controller.checked[i],
                                                   activeColor: controller
@@ -1160,7 +1167,8 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       "inspectorName":
                                           controller.inspectorController.text,
                                       "inspectorDate": controller
-                                          .inspectionDateController.text
+                                          .inspectionDateController.text,
+                                      "buildingsData": controller.buildingsData,
                                     });
                               }
                             },
@@ -1187,13 +1195,27 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                             textColor: controller.appColors.black,
                             color: controller.appColors.textPink,
                             onTap: () async {
+                              await controller.setLocalCertificateData();
                               Get.toNamed(BuildingStandardsScreen.routes,
                                   arguments: {
+                                    "buildingInspectionDataModelList":
+                                        controller.buildingsData
+                                            .buildingInspectionDataModelList,
                                     "isManually": false,
                                     "buildingName":
                                         controller.buildingsData.buildingName,
                                     "propertyName":
-                                        controller.propertyDataModel.name
+                                        controller.propertyDataModel.name,
+                                    "propertyDataModel":
+                                        controller.propertyDataModel,
+                                    "buildingsData": controller.buildingsData,
+                                    "inspectorDate":
+                                        controller.propertyDataModel.date ?? '',
+                                    "inspectorName": propertiesListController
+                                            .account?.userName ??
+                                        '',
+                                    "certificatesInfo":
+                                        controller.certificatesInfo,
                                   });
                               controller.update();
                             },

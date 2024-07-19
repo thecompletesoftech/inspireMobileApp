@@ -6,6 +6,8 @@ import 'package:public_housing/screens/building_list_screen/controller/building_
 import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 
+import '../../building_standards_screen/screen/building_standards_screen.dart';
+
 class BuildingListScreen extends GetView<BuildingListController> {
   const BuildingListScreen({Key? key}) : super(key: key);
 
@@ -51,59 +53,210 @@ class BuildingListScreen extends GetView<BuildingListController> {
                 ).paddingOnly(
                     left: 32.px, right: 32.px, bottom: 32.px, top: 36.px),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: controller.scheduleDatum.buildings?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      var buildingsData =
-                          controller.scheduleDatum.buildings?[index];
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        controller.buildingList.isNotEmpty
+                            ? ListView.separated(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: controller.buildingList.length,
+                                itemBuilder: (context, index) {
+                                  var buildingsData =
+                                      controller.buildingList[index];
+                                  return CommonBuildingListView(
+                                    isToday: controller.isToday,
+                                    title:
+                                        'Building ${buildingsData.buildingName}',
+                                    title1:
+                                        '${buildingsData.units?.length} Units',
+                                    Subtitle: '${buildingsData.year}',
+                                    Subtitle1: '${buildingsData.buildingType}',
+                                    date:
+                                        '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}',
+                                    isCompleted: (buildingsData.iscompleted ??
+                                        'Completed'),
+                                    onTap: () {
+                                      Get.toNamed(UnitListScreen.routes,
+                                          arguments: {
+                                            "isManually": false,
+                                            "isComplete": true,
+                                            "unitsData": buildingsData.units,
+                                            "date":
+                                                controller.scheduleDatum.date,
+                                            "buildingsData": buildingsData,
+                                            "isToday": controller.isToday,
+                                            "propertyData":
+                                                controller.scheduleDatum,
+                                          });
+                                    },
+                                    onTap1: controller.isToday == true
+                                        ? () {
+                                            Get.toNamed(
+                                                BuildingInspectionScreen.routes,
+                                                arguments: {
+                                                  "isManually": false,
+                                                  "buildingsData":
+                                                      buildingsData,
+                                                  "propertyDataModel":
+                                                      PropertyDataModel(
+                                                          id: controller
+                                                              .scheduleDatum
+                                                              .property,
+                                                          name: controller
+                                                              .scheduleDatum
+                                                              .propertyName,
+                                                          address: '',
+                                                          city: controller
+                                                              .scheduleDatum
+                                                              .city,
+                                                          state: controller
+                                                              .scheduleDatum
+                                                              .state,
+                                                          zip: controller
+                                                              .scheduleDatum
+                                                              .zip,
+                                                          date:
+                                                              '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}'),
+                                                });
+                                          }
+                                        : () {},
+                                  ).paddingSymmetric(horizontal: 32.px);
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(height: 24.px);
+                                },
+                              )
+                            : SizedBox.shrink(),
+                        controller.completedBuildingList.isNotEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 16.px,
+                                  ),
+                                  Row(
+                                    children: [
+                                      MyTextView(
+                                        Strings.completedBuildings,
+                                        textStyleNew: MyTextStyle(
+                                          textColor: controller.appColors.black,
+                                          textWeight: FontWeight.w400,
+                                          textFamily: fontFamilyBold,
+                                          textSize: 24.px,
+                                        ),
+                                      ).paddingOnly(right: 10.px),
+                                      Expanded(
+                                        child: Container(
+                                          height: 2.px,
+                                          color: AppColors().divider,
+                                        ),
+                                      ),
+                                    ],
+                                  ).paddingSymmetric(horizontal: 32.px),
+                                  SizedBox(
+                                    height: 16.px,
+                                  ),
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        controller.completedBuildingList.length,
+                                    itemBuilder: (context, index) {
+                                      var buildingsData = controller
+                                          .completedBuildingList[index];
 
-                      return CommonBuildingListView(
-                        isToday: controller.isToday,
-                        title: 'Building ${buildingsData?.buildingName}',
-                        title1: '${buildingsData?.units?.length} Units',
-                        Subtitle: '${buildingsData?.year}',
-                        Subtitle1: '${buildingsData?.buildingType}',
-                        date:
-                            '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}',
-                        isCompleted:
-                            (buildingsData?.iscompleted ?? 'Completed'),
-                        onTap: () {
-                          Get.toNamed(UnitListScreen.routes, arguments: {
-                            "isManually": false,
-                            "isComplete": true,
-                            "unitsData": buildingsData?.units,
-                            "date": controller.scheduleDatum.date,
-                            "buildingsData": buildingsData,
-                            "isToday": controller.isToday,
-                            "propertyData": controller.scheduleDatum,
-                          });
-                        },
-                        onTap1: controller.isToday == true
-                            ? () {
-                                Get.toNamed(BuildingInspectionScreen.routes,
-                                    arguments: {
-                                      "isManually": false,
-                                      "buildingsData": buildingsData,
-                                      "propertyDataModel": PropertyDataModel(
-                                          id: controller.scheduleDatum.property,
-                                          name: controller
-                                              .scheduleDatum.propertyName,
-                                          address: '',
-                                          city: controller.scheduleDatum.city,
-                                          state: controller.scheduleDatum.state,
-                                          zip: controller.scheduleDatum.zip,
-                                          date:
-                                              '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}'),
-                                    });
-                              }
-                            : () {},
-                      ).paddingSymmetric(horizontal: 32.px);
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 24.px);
-                    },
-                  ).paddingOnly(bottom: 20.px),
-                )
+                                      return CommonBuildingListView(
+                                        isToday: controller.isToday,
+                                        title:
+                                            'Building ${buildingsData.buildingName}',
+                                        title1:
+                                            '${buildingsData.units?.length} Units',
+                                        Subtitle: '${buildingsData.year}',
+                                        Subtitle1:
+                                            '${buildingsData.buildingType}',
+                                        date:
+                                            '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}',
+                                        isCompleted:
+                                            (buildingsData.iscompleted ??
+                                                'Completed'),
+                                        onTap: () {
+                                          Get.toNamed(UnitListScreen.routes,
+                                              arguments: {
+                                                "isManually": false,
+                                                "isComplete": true,
+                                                "unitsData":
+                                                    buildingsData.units,
+                                                "date": controller
+                                                    .scheduleDatum.date,
+                                                "buildingsData": buildingsData,
+                                                "isToday": controller.isToday,
+                                                "propertyData":
+                                                    controller.scheduleDatum,
+                                              });
+                                        },
+                                        onTap1: controller.isToday == true
+                                            ? () {
+                                                Get.toNamed(
+                                                    BuildingStandardsScreen
+                                                        .routes,
+                                                    arguments: {
+                                                      "buildingInspectionDataModelList":
+                                                          buildingsData
+                                                              .buildingInspectionDataModelList,
+                                                      "isManually": false,
+                                                      "buildingsData":
+                                                          buildingsData,
+                                                      "buildingName":
+                                                          buildingsData
+                                                              .buildingName,
+                                                      "propertyName": controller
+                                                          .scheduleDatum
+                                                          .propertyName,
+                                                      "propertyDataModel": PropertyDataModel(
+                                                          id: controller
+                                                              .scheduleDatum
+                                                              .property,
+                                                          name: controller
+                                                              .scheduleDatum
+                                                              .propertyName,
+                                                          address: controller
+                                                              .scheduleDatum
+                                                              .propertyAddress,
+                                                          city: controller
+                                                              .scheduleDatum
+                                                              .city,
+                                                          state: controller
+                                                              .scheduleDatum
+                                                              .state,
+                                                          zip: controller
+                                                              .scheduleDatum
+                                                              .zip,
+                                                          date:
+                                                              '${DateFormat('yyyy-MM-dd').format(controller.scheduleDatum.date!)}'),
+                                                      "certificatesInfo":
+                                                          buildingsData
+                                                              .certificateList,
+                                                    });
+                                              }
+                                            : () {},
+                                      ).paddingSymmetric(horizontal: 32.px);
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(height: 24.px);
+                                    },
+                                  ).paddingOnly(bottom: 20.px),
+                                ],
+                              )
+                            : SizedBox(
+                                height: 20.px,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

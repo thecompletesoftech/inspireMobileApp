@@ -12,8 +12,8 @@ String createInspectionRequestModelToJson(CreateInspectionRequestModel data) =>
 
 class CreateInspectionRequestModel {
   Inspection? inspection;
-  Property? property;
-  Building? building;
+  PropertyData? property;
+  BuildingData? building;
   List<Certificate>? certificates;
   List<DeficiencyInspection>? deficiencyInspections;
 
@@ -32,10 +32,10 @@ class CreateInspectionRequestModel {
             : Inspection.fromJson(json["inspection"]),
         property: json["property"] == null
             ? null
-            : Property.fromJson(json["property"]),
+            : PropertyData.fromJson(json["property"]),
         building: json["building"] == null
             ? null
-            : Building.fromJson(json["building"]),
+            : BuildingData.fromJson(json["building"]),
         certificates: json["certificates"] == null
             ? []
             : List<Certificate>.from(
@@ -59,20 +59,15 @@ class CreateInspectionRequestModel {
       };
 }
 
-class Building {
+class BuildingData {
   String? id;
   String? name;
   String? constructedYear;
   String? buildingTypeId;
 
-  Building({
-    this.id,
-    this.name,
-    this.constructedYear,
-    this.buildingTypeId,
-  });
+  BuildingData({this.id, this.name, this.constructedYear, this.buildingTypeId});
 
-  factory Building.fromJson(Map<String, dynamic> json) => Building(
+  factory BuildingData.fromJson(Map<String, dynamic> json) => BuildingData(
         id: json["id"],
         name: json["name"],
         constructedYear: json["constructed_year"],
@@ -90,17 +85,12 @@ class Building {
 class Certificate {
   String? id;
 
-  Certificate({
-    this.id,
-  });
+  Certificate({this.id});
 
-  factory Certificate.fromJson(Map<String, dynamic> json) => Certificate(
-        id: json["id"],
-      );
+  factory Certificate.fromJson(Map<String, dynamic> json) =>
+      Certificate(id: json["id"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-      };
+  Map<String, dynamic> toJson() => {"id": id};
 }
 
 class DeficiencyInspection {
@@ -142,18 +132,14 @@ class DeficiencyInspection {
 class DeficiencyProofPicture {
   String? picturePath;
 
-  DeficiencyProofPicture({
-    this.picturePath,
-  });
+  DeficiencyProofPicture({this.picturePath});
 
   factory DeficiencyProofPicture.fromJson(Map<String, dynamic> json) =>
       DeficiencyProofPicture(
         picturePath: json["picture_path"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "picture_path": picturePath,
-      };
+  Map<String, dynamic> toJson() => {"picture_path": picturePath};
 }
 
 class Inspection {
@@ -170,7 +156,9 @@ class Inspection {
     this.date,
     this.comment,
     this.inspectionStateId,
-    this.inspectionTypeId,this.general_physical_condition,this.unit_house_keeping
+    this.inspectionTypeId,
+    this.general_physical_condition,
+    this.unit_house_keeping,
   });
 
   factory Inspection.fromJson(Map<String, dynamic> json) => Inspection(
@@ -179,8 +167,8 @@ class Inspection {
         comment: json["comment"],
         inspectionStateId: json["inspection_state_id"],
         inspectionTypeId: json["inspection_type_id"],
-    general_physical_condition: json["general_physical_condition"],
-    unit_house_keeping: json["unit_house_keeping"],
+        general_physical_condition: json["general_physical_condition"],
+        unit_house_keeping: json["unit_house_keeping"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -195,7 +183,7 @@ class Inspection {
       };
 }
 
-class Property {
+class PropertyData {
   String? id;
   String? name;
   String? city;
@@ -203,16 +191,10 @@ class Property {
   String? zip;
   String? address;
 
-  Property({
-    this.id,
-    this.name,
-    this.city,
-    this.state,
-    this.zip,
-    this.address,
-  });
+  PropertyData(
+      {this.id, this.name, this.city, this.state, this.zip, this.address});
 
-  factory Property.fromJson(Map<String, dynamic> json) => Property(
+  factory PropertyData.fromJson(Map<String, dynamic> json) => PropertyData(
         id: json["id"],
         name: json["name"],
         city: json["city"],

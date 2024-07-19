@@ -1,9 +1,12 @@
+import 'package:public_housing/commons/common_mixins/common_mixin.dart';
+
+import '../../offline_database_services/offline_hive_database_service.dart';
 import '../all.dart';
 
-class BaseController extends GetxController {
+class BaseController extends GetxController with AppCommonMixin {
   AppColors appColors = AppColors();
   Utils utils = Utils();
-  GetStorageData getStorageData = GetStorageData();
+  HiveMethodsProvider hiveMethodsProvider = Get.find<HiveMethodsProvider>();
 }
 
 //base screen==-=-=-==-=--
@@ -15,6 +18,7 @@ class BaseScreen extends StatelessWidget {
   final bool? resizeToAvoidBottomInset;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
+
   const BaseScreen(
       {Key? key,
       required this.child,

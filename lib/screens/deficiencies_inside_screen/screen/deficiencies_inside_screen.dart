@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/screens/building_cabinets_screen/binding/standards_details_binding.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
@@ -45,19 +46,35 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}',
+                              controller.isManually == true
+                                  ? '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}'
+                                  : '${controller.propertyDataModel.name} - ${controller.buildingsData.buildingName}',
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,
                                 textFamily: fontFamilyBold,
                                 textSize: 20.px,
                               ),
-                            ).paddingOnly(top: 32.px, bottom: 48.px),
+                            ),
+                            CommonButton(
+                              radius: 100.px,
+                              title: '00:00:00',
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.px,
+                                vertical: 10.px,
+                              ),
+                              textWeight: FontWeight.w500,
+                              textSize: 14.px,
+                              color: controller.appColors.white,
+                              textColor: AppColors.primerColor,
+                              onTap: () {},
+                            ).paddingOnly(left: 24.px),
                           ],
-                        ),
+                        ).paddingOnly(top: 32.px, bottom: 48.px),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -66,7 +83,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MyTextView(
-                                  '${controller.successListOfDeficiencies.definition}',
+                                  '${controller.deficiencyInspectionsReqModel.definition}',
                                   isMaxLineWrap: true,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.appColor,
@@ -123,7 +140,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
+                                                '${controller.deficiencyInspectionsReqModel.deficiencyItemHousingDeficiency?.severity?.correctionTimeFrame ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -151,7 +168,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                               ).paddingOnly(left: 20.px),
                                               Spacer(),
                                               MyTextView(
-                                                '${controller.successListOfDeficiencies.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
+                                                '${controller.deficiencyInspectionsReqModel.deficiencyItemHousingDeficiency?.severity?.healthySafetyDesignation ?? ""}',
                                                 isMaxLineWrap: true,
                                                 textStyleNew: MyTextStyle(
                                                   textColor: controller
@@ -175,31 +192,33 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                MyTextView(
-                                  Strings.deficiencyCriteria,
-                                  isMaxLineWrap: true,
-                                  textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.black,
-                                    textWeight: FontWeight.w400,
-                                    textFamily: fontFamilyBold,
-                                    textSize: 24.px,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  MyTextView(
+                                    Strings.deficiencyCriteria,
+                                    isMaxLineWrap: true,
+                                    textStyleNew: MyTextStyle(
+                                      textColor: controller.appColors.black,
+                                      textWeight: FontWeight.w400,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 24.px,
+                                    ),
                                   ),
-                                ),
-                                MyTextView(
-                                  '${controller.successListOfDeficiencies.criteria}',
-                                  isMaxLineWrap: true,
-                                  textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.textBlack2,
-                                    textWeight: FontWeight.w400,
-                                    textFamily: fontFamilyBold,
-                                    textSize: 16.px,
-                                  ),
-                                ).paddingOnly(top: 16.px),
-                              ],
-                            )),
+                                  MyTextView(
+                                    '${controller.deficiencyInspectionsReqModel.criteria}',
+                                    isMaxLineWrap: true,
+                                    textStyleNew: MyTextStyle(
+                                      textColor:
+                                          controller.appColors.textBlack2,
+                                      textWeight: FontWeight.w400,
+                                      textFamily: fontFamilyBold,
+                                      textSize: 16.px,
+                                    ),
+                                  ).paddingOnly(top: 16.px),
+                                ],
+                              ),
+                            ),
                             SizedBox(width: 16.px),
                             Expanded(
                                 child: Column(
@@ -593,9 +612,7 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
-                                            return SizedBox(
-                                              width: 32.px,
-                                            );
+                                            return SizedBox(width: 32.px);
                                           },
                                         )
                                       : controller.imageUploadStatus ==
@@ -889,12 +906,12 @@ class DeficienciesInsideScreen extends GetView<StandardsDetailsBinding> {
                                           await controller.saveChanges();
                                           Get.back(result: {
                                             "isSuccess": controller
-                                                .successListOfDeficiencies
+                                                .deficiencyInspectionsReqModel
                                                 .housingDeficiencyId,
                                             "imagesList": controller.imageList,
                                             "deficiencyInspectionsReqModel":
                                                 controller
-                                                    .deficiencyInspectionsReqModel
+                                                    .deficiencyInspectionsReqModelList
                                           });
                                         }
                                       }),

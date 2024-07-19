@@ -31,25 +31,36 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                 ),
                 Column(
                   children: [
-                    controller.isManually == true
-                        ? MyTextView(
-                            '${controller.propertyInfo['name'] ?? ""} - ${controller.buildingInfo['name'] ?? ""}',
-                            textStyleNew: MyTextStyle(
-                              textColor: controller.appColors.appColor,
-                              textWeight: FontWeight.w600,
-                              textFamily: fontFamilyBold,
-                              textSize: 20.px,
-                            ),
-                          ).paddingOnly(top: 32.px, bottom: 48.px)
-                        : MyTextView(
-                            '${controller.propertyName} - ${controller.buildingName}',
-                            textStyleNew: MyTextStyle(
-                              textColor: controller.appColors.appColor,
-                              textWeight: FontWeight.w600,
-                              textFamily: fontFamilyBold,
-                              textSize: 20.px,
-                            ),
-                          ).paddingOnly(top: 32.px, bottom: 48.px),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MyTextView(
+                          controller.isManually == true
+                              ? '${controller.propertyInfo['name'] ?? ""} - ${controller.buildingInfo['name'] ?? ""}'
+                              : '${controller.propertyName} - ${controller.buildingName}',
+                          textStyleNew: MyTextStyle(
+                            textColor: controller.appColors.appColor,
+                            textWeight: FontWeight.w600,
+                            textFamily: fontFamilyBold,
+                            textSize: 20.px,
+                          ),
+                        ),
+                        CommonButton(
+                          radius: 100.px,
+                          title: '00:00:00',
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24.px,
+                            vertical: 10.px,
+                          ),
+                          textWeight: FontWeight.w500,
+                          textSize: 14.px,
+                          color: controller.appColors.white,
+                          textColor: AppColors.primerColor,
+                          onTap: () {},
+                        ).paddingOnly(left: 24.px),
+                      ],
+                    ).paddingOnly(top: 32.px, bottom: 48.px),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -65,7 +76,6 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                         CommonButton(
                           title: Strings.inspectionSummary,
                           radius: 100.px,
-                          width: 198.px,
                           height: 44.px,
                           padding: EdgeInsets.symmetric(horizontal: 24.px),
                           textSize: 16.px,
@@ -74,9 +84,10 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                           textColor: controller.appColors.white,
                           color: controller.appColors.appColor,
                           onTap: () {
+
                             List<DeficiencyArea> deficiencyArea = [];
                             controller.searchList.forEach((element) {
-                              element.buildingDataModel?.forEach((e) {
+                              element.deficiencyAreaList?.forEach((e) {
                                 if (e.isArea == true) {
                                   deficiencyArea.add(e);
                                 }
@@ -90,6 +101,11 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                   "buildingtype": controller.buildingType,
                                   "deficiencyArea": deficiencyArea,
                                   "inspectionName": controller.inspectionName,
+                                  "propertyDataModel":
+                                      controller.propertyDataModel,
+                                  "buildingDataModelList":
+                                      controller.searchList,
+                                  "buildingsData": controller.buildingsData,
                                   "buildingInfo": controller.buildingInfo,
                                   "propertyInfo": controller.propertyInfo,
                                   "certificatesInfo":
@@ -127,7 +143,6 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                         SizedBox(width: 16.px),
                         Expanded(
                           flex: 4,
-                          // flex: 6,
                           child: GestureDetector(
                             onTap: controller.isExpanded,
                             child: Container(
@@ -290,7 +305,7 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                 shrinkWrap: true,
                                                 itemCount: controller
                                                     .searchList[index]
-                                                    .buildingDataModel
+                                                    .deficiencyAreaList
                                                     ?.length,
                                                 physics:
                                                     const NeverScrollableScrollPhysics(),
@@ -298,7 +313,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                   var buildingDataList =
                                                       controller
                                                           .searchList[index]
-                                                          .buildingDataModel?[i];
+                                                          .deficiencyAreaList?[i];
+
                                                   return GestureDetector(
                                                     onTap: () async {
                                                       var result =
@@ -311,6 +327,15 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                                                     .buildingName,
                                                             "deficiencyArea":
                                                                 buildingDataList,
+                                                            "propertyDataModel":
+                                                                controller
+                                                                    .propertyDataModel,
+                                                            "buildingsData":
+                                                                controller
+                                                                    .buildingsData,
+                                                            "isManually":
+                                                                controller
+                                                                    .isManually,
                                                             "successListOfStandards":
                                                                 buildingDataList
                                                                         .deficiencyInspectionsReqModel ??

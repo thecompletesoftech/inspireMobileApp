@@ -8,21 +8,25 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/building_cabinets_screen/controller/standards_details_controller.dart';
+import 'package:public_housing/screens/building_list_screen/controller/building_list_controller.dart';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
+import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-
-enum ImageUploadStatus { initial, uploading, success }
 
 class DeficienciesInsideController extends BaseController {
   String buildingName = '';
   String deficiencies = '';
-  DeficiencyInspectionsReqModel successListOfDeficiencies =
+  int? standardId;
+  DeficiencyInspectionsReqModel deficiencyInspectionsReqModel =
       DeficiencyInspectionsReqModel();
-
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
   var selectedItem = "null";
@@ -32,7 +36,7 @@ class DeficienciesInsideController extends BaseController {
   final dateController = TextEditingController();
   bool change = true;
   List<String> imageList = [];
-  List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModel = [];
+  List<DeficiencyInspectionsReqModel> deficiencyInspectionsReqModelList = [];
   int? listIndex;
   var isListening = false.obs;
   var speechText = "".obs;
@@ -41,20 +45,37 @@ class DeficienciesInsideController extends BaseController {
       Get.put(StandardsDetailsController());
   bool isDeleted = false;
   String standard = '';
+  PropertyDataModel propertyDataModel = PropertyDataModel();
+  BuildingsData buildingsData = BuildingsData();
+  bool isManually = false;
+  DeficiencyAreaItem? deficiencyAreaItem;
 
   @override
   void onInit() {
     super.onInit();
     if (Get.arguments != null) {
+      if (Get.arguments['standardId'] != null) {
+        standardId = Get.arguments['standardId'];
+      }
+      if (Get.arguments['propertyDataModel'] != null) {
+        propertyDataModel = Get.arguments['propertyDataModel'];
+      }
+      if (Get.arguments['buildingsData'] != null) {
+        buildingsData = Get.arguments['buildingsData'];
+      }
+      if (Get.arguments['isManually'] != null) {
+        isManually = Get.arguments['isManually'];
+      }
+
       buildingName = Get.arguments['buildingName'] ?? "";
       deficiencies = Get.arguments['deficiencies'] ?? "";
       listIndex = Get.arguments['listIndex'] ?? 0;
       standard = Get.arguments['standard'] ?? "";
 
       if (Get.arguments['deficiencyInspectionsReqModel'] != null) {
-        successListOfDeficiencies =
+        deficiencyInspectionsReqModel =
             Get.arguments['deficiencyInspectionsReqModel'];
-        deficiencyInspectionsReqModel = [
+        deficiencyInspectionsReqModelList = [
           DeficiencyInspectionsReqModel(
             housingDeficiencyId: Get
                 .arguments['deficiencyInspectionsReqModel'].housingDeficiencyId
@@ -76,54 +97,46 @@ class DeficienciesInsideController extends BaseController {
           )
         ];
       } else {
-        List<String> deficiencyProofPictures = [];
-        if (Get.arguments['successListOfDeficiencies'].deficiencyProofPictures
-            .isNotEmpty) {
-          deficiencyProofPictures = Get
-              .arguments['successListOfDeficiencies'].deficiencyProofPictures;
-        }
-        successListOfDeficiencies.isSuccess =
-            Get.arguments['deficiencyAreaItem'].isSuccess;
-        successListOfDeficiencies.housingDeficiencyId =
-            Get.arguments['deficiencyAreaItem'].housingDeficiencyId.toString();
-        successListOfDeficiencies.deficiencyItemHousingDeficiency =
-            Get.arguments['deficiencyAreaItem'].deficiencyItemHousingDeficiency;
-        successListOfDeficiencies.definition =
-            Get.arguments['deficiencyAreaItem'].definition;
-        successListOfDeficiencies.criteria =
-            Get.arguments['deficiencyAreaItem'].criteria;
-        successListOfDeficiencies.comment =
-            Get.arguments['deficiencyAreaItem'].comment;
-        successListOfDeficiencies.date =
-            Get.arguments['deficiencyAreaItem'].date;
-        successListOfDeficiencies.deficiencyProofPictures =
-            Get.arguments['deficiencyAreaItem'].deficiencyProofPictures;
-
-        deficiencyInspectionsReqModel = [
-          DeficiencyInspectionsReqModel(
-              housingDeficiencyId: Get
-                  .arguments['successListOfDeficiencies'].housingDeficiencyId
-                  .toString(),
-              deficiencyProofPictures: deficiencyProofPictures,
-              date: Get.arguments['successListOfDeficiencies'].date == ""
-                  ? DateFormat("MM/dd/yyyy").format(DateTime.now())
-                  : Get.arguments['successListOfDeficiencies'].date,
-              comment: Get.arguments['successListOfDeficiencies'].comment ?? "",
-              definition:
-                  Get.arguments['successListOfDeficiencies'].definition ?? "",
-              deficiencyItemHousingDeficiency: Get
-                      .arguments['successListOfDeficiencies']
-                      .deficiencyItemHousingDeficiency ??
-                  DeficiencyItemHousingDeficiency(),
-              criteria:
-                  Get.arguments['successListOfDeficiencies'].criteria ?? "",
-              isSuccess:
-                  Get.arguments['successListOfDeficiencies'].isSuccess ?? false)
-        ];
+        deficiencyAreaItem =
+            Get.arguments['deficiencyAreaItem'] as DeficiencyAreaItem;
+        deficiencyInspectionsReqModel.isSuccess =
+            deficiencyAreaItem?.isDeficiencyCheck;
+        deficiencyInspectionsReqModel.housingDeficiencyId =
+            deficiencyAreaItem?.id.toString();
+        deficiencyInspectionsReqModel.deficiencyItemHousingDeficiency =
+            deficiencyAreaItem?.deficiencyItemHousingDeficiencyData;
+        deficiencyInspectionsReqModel.definition =
+            deficiencyAreaItem?.description;
+        deficiencyInspectionsReqModel.criteria = deficiencyAreaItem?.criteria;
+        deficiencyInspectionsReqModel.comment = deficiencyAreaItem?.comment;
+        deficiencyInspectionsReqModel.date = deficiencyAreaItem?.date != null
+            ? DateFormat("MM/dd/yyyy")
+                .format(DateTime.parse(deficiencyAreaItem?.date ?? ""))
+            : "";
+        deficiencyInspectionsReqModel.deficiencyProofPictures =
+            deficiencyAreaItem?.deficiencyProofPictures;
+        setDeficiencyInspectionsReqModelData();
       }
       dataFill();
     }
     update();
+  }
+
+  /// for set deficiencyAreaItem data
+  setDeficiencyInspectionsReqModelData() {
+    deficiencyInspectionsReqModelList = [
+      DeficiencyInspectionsReqModel(
+        isSuccess: deficiencyAreaItem?.isDeficiencyCheck,
+        housingDeficiencyId: deficiencyAreaItem?.id.toString(),
+        deficiencyItemHousingDeficiency:
+            deficiencyAreaItem?.deficiencyItemHousingDeficiencyData,
+        definition: deficiencyAreaItem?.description,
+        criteria: deficiencyAreaItem?.criteria,
+        comment: deficiencyAreaItem?.comment,
+        date: deficiencyAreaItem?.date,
+        deficiencyProofPictures: deficiencyAreaItem?.deficiencyProofPictures,
+      )
+    ];
   }
 
   final Rx<DateTime> _selectedDate = DateTime.now().obs;
@@ -131,12 +144,16 @@ class DeficienciesInsideController extends BaseController {
   Rx<DateTime> get selectedDate => _selectedDate;
 
   dataFill() {
-    deficiencyInspectionsReqModel.forEach((element) {
+    dateController.clear();
+    deficiencyInspectionsReqModelList.forEach((element) {
       element.deficiencyProofPictures?.forEach((element1) {
         imageList.add(element1);
       });
       commentController.text = element.comment ?? "";
-      dateController.text = element.date ?? "";
+      if (element.date?.isNotEmpty ?? false) {
+        dateController.text =
+            DateFormat("MM/dd/yyyy").format(DateTime.parse(element.date ?? ""));
+      }
     });
     if (imageList.isNotEmpty || dateController.text.isNotEmpty) {
       imageUploadStatus = imageList.isNotEmpty
@@ -145,7 +162,10 @@ class DeficienciesInsideController extends BaseController {
       visibleBtn = true;
       selectedItem = 'present';
     }
-    print("fljfnbjlhn ${deficiencyInspectionsReqModel}");
+    if (dateController.text.isEmpty) {
+      dateController.text = DateFormat("MM/dd/yyyy").format(DateTime.now());
+    }
+
     update();
   }
 
@@ -332,11 +352,12 @@ class DeficienciesInsideController extends BaseController {
                             //   deficiencyInspectionsReqModel[0].comment = "";
                             //   deficiencyInspectionsReqModel[0].date = "";
                             // } else {
-                            deficiencyInspectionsReqModel[0]
+                            deficiencyInspectionsReqModelList[0]
                                 .deficiencyProofPictures = <String>[];
-                            deficiencyInspectionsReqModel[0].isSuccess = false;
-                            deficiencyInspectionsReqModel[0].comment = "";
-                            deficiencyInspectionsReqModel[0].date = "";
+                            deficiencyInspectionsReqModelList[0].isSuccess =
+                                false;
+                            deficiencyInspectionsReqModelList[0].comment = "";
+                            deficiencyInspectionsReqModelList[0].date = "";
                             isDeleted = true;
                             // }
                             commentController.clear();
@@ -368,7 +389,6 @@ class DeficienciesInsideController extends BaseController {
           children: [
             Container(
               width: 322.px,
-              // height: 184.px,
               padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -498,7 +518,7 @@ class DeficienciesInsideController extends BaseController {
                     onTap: () {
                       Get.back(closeOverlays: true);
                       getFromGallery();
-                      },
+                    },
                     child: Container(
                       height: 129.px,
                       width: 157.px,
@@ -522,7 +542,7 @@ class DeficienciesInsideController extends BaseController {
                             Languages.of(Get.context!)!.fromGallery,
                             textStyleNew: MyTextStyle(
                               textSize: 15.px,
-                                textWeight: FontWeight.w700,
+                              textWeight: FontWeight.w700,
                               textColor: AppColors().lightText,
                             ),
                           )
@@ -589,7 +609,7 @@ class DeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir.path, // <-- Uint8List of image
+                savePath: tempDir.path,
               ),
             ),
           );
@@ -829,7 +849,7 @@ class DeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir.path, // <-- Uint8List of image
+                savePath: tempDir.path,
               ),
             ),
           );
@@ -870,29 +890,127 @@ class DeficienciesInsideController extends BaseController {
     }
   }
 
-  saveChanges() {
-    deficiencyInspectionsReqModel = [
+  saveChanges() async {
+    deficiencyInspectionsReqModelList = [
       DeficiencyInspectionsReqModel(
         comment: commentController.text,
         date: dateController.text,
         deficiencyProofPictures: imageList,
         housingDeficiencyId:
-            successListOfDeficiencies.housingDeficiencyId.toString(),
-        definition: successListOfDeficiencies.definition.toString(),
+            deficiencyInspectionsReqModel.housingDeficiencyId.toString(),
+        definition: deficiencyInspectionsReqModel.definition.toString(),
         deficiencyItemHousingDeficiency:
-            successListOfDeficiencies.deficiencyItemHousingDeficiency,
-        criteria: successListOfDeficiencies.criteria,
+            deficiencyInspectionsReqModel.deficiencyItemHousingDeficiency,
+        criteria: deficiencyInspectionsReqModel.criteria,
         isSuccess: true,
       )
     ];
+
+    DeficiencyAreaUpdatedItem deficiencyAreaUpdatedItem =
+        DeficiencyAreaUpdatedItem(
+            deficiencyAreaItemsId: deficiencyAreaItem?.id,
+            // int.parse(
+            //     deficiencyInspectionsReqModel.housingDeficiencyId.toString()),
+            // isDeficiencyCheck: true,
+            deficiencyItemHousingDeficiencyId:
+                deficiencyAreaItem?.deficiencyItemHousingDeficiencyData?.id,
+            comment: commentController.text,
+            date: DateFormat("MM/dd/yyyy").parse(dateController.text),
+            deficiencyProofPictures: imageList);
+
+    /// for update BuildingDataModel
+    BuildingsData buildingsData =
+        Get.find<BuildingStandardsController>().buildingsData;
+    if (buildingsData.buildingInspectionDataModelList?.isNotEmpty ?? false) {
+      int buildingInspectionDataModelListIndex =
+          buildingsData.buildingInspectionDataModelList?.indexWhere(
+                (element) => element.standardId == standardId,
+              ) ??
+              -1;
+      if (buildingInspectionDataModelListIndex != -1) {
+        int deficiencyAreaUpdatedItemIndex = buildingsData
+                .buildingInspectionDataModelList?[
+                    buildingInspectionDataModelListIndex]
+                .deficiencyAreaUpdatedItemList
+                ?.indexWhere((element) =>
+                    element.deficiencyAreaItemsId == deficiencyAreaItem?.id &&
+                    element.deficiencyItemHousingDeficiencyId ==
+                        deficiencyAreaItem
+                            ?.deficiencyItemHousingDeficiencyData?.id) ??
+            -1;
+
+        if (deficiencyAreaUpdatedItemIndex != -1) {
+          buildingsData
+                  .buildingInspectionDataModelList?[
+                      buildingInspectionDataModelListIndex]
+                  .deficiencyAreaUpdatedItemList?[
+              deficiencyAreaUpdatedItemIndex] = deficiencyAreaUpdatedItem;
+        } else {
+          List<DeficiencyAreaUpdatedItem>? deficiencyAreaItemUpdatedList =
+              buildingsData
+                  .buildingInspectionDataModelList?[
+                      buildingInspectionDataModelListIndex]
+                  .deficiencyAreaUpdatedItemList;
+          deficiencyAreaItemUpdatedList?.add(deficiencyAreaUpdatedItem);
+          buildingsData
+              .buildingInspectionDataModelList?[
+                  buildingInspectionDataModelListIndex]
+              .deficiencyAreaUpdatedItemList = deficiencyAreaItemUpdatedList;
+        }
+      } else {
+        List<DeficiencyAreaUpdatedItem>? deficiencyAreaUpdatedItemList = [];
+
+        List<BuildingInspectionDataModel> buildingInspectionDataModelList =
+            buildingsData.buildingInspectionDataModelList!;
+
+        deficiencyAreaUpdatedItemList.add(deficiencyAreaUpdatedItem);
+
+        buildingInspectionDataModelList.add(BuildingInspectionDataModel(
+            isStandardCheck: true,
+            deficiencyAreaUpdatedItemList: deficiencyAreaUpdatedItemList,
+            standardId: standardId));
+
+        buildingsData.buildingInspectionDataModelList =
+            buildingInspectionDataModelList;
+      }
+    } else {
+      List<BuildingInspectionDataModel> buildingInspectionDataModelList = [];
+      List<DeficiencyAreaUpdatedItem>? deficiencyAreaUpdatedItemList = [];
+
+      deficiencyAreaUpdatedItemList.add(deficiencyAreaUpdatedItem);
+      buildingInspectionDataModelList.add(BuildingInspectionDataModel(
+          isStandardCheck: true,
+          deficiencyAreaUpdatedItemList: deficiencyAreaUpdatedItemList,
+          standardId: standardId));
+      buildingsData.buildingInspectionDataModelList =
+          buildingInspectionDataModelList;
+      buildingsData.iscompleted = 'Completed';
+    }
+    Get.find<PropertiesListController>().update();
+
+    await hiveMethodsProvider.setDailySchedulesData(DailySchedulesResponseModel(
+            scheduleData:
+                Get.find<PropertiesListController>().scheduleMainDataList)
+        .toJson());
+    dateController.clear();
+
+    /// for update deficiencyAreaItemData
+    deficiencyAreaItem?.isDeficiencyCheck = true;
+    deficiencyAreaItem?.comment = deficiencyAreaUpdatedItem.comment;
+    deficiencyAreaItem?.date = deficiencyAreaUpdatedItem.date.toString();
+    deficiencyAreaItem?.deficiencyProofPictures =
+        deficiencyAreaUpdatedItem.deficiencyProofPictures;
+    Get.find<StandardsDetailsController>().deficiencyArea.isArea = true;
+    Get.find<BuildingStandardsController>().update();
+    Get.find<BuildingListController>().filterCompletedBuildingInspection();
     update();
   }
 
   isCheck() {
     Function deepEq = const DeepCollectionEquality().equals;
     return deepEq(
-            imageList, successListOfDeficiencies.deficiencyProofPictures) &&
-        successListOfDeficiencies.comment == commentController.text &&
-        successListOfDeficiencies.date == dateController.text;
+            imageList, deficiencyInspectionsReqModel.deficiencyProofPictures) &&
+        deficiencyInspectionsReqModel.comment == commentController.text &&
+        deficiencyInspectionsReqModel.date == dateController.text;
   }
 }

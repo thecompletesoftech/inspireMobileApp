@@ -127,7 +127,7 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
                 onTap: onTap1,
-                iconColor: isToday == true || isCompleted == 'Completed'
+                iconColor: isToday == true
                     ? AppColors.primerColor
                     : AppColors().border1,
                 icon: isCompleted == 'Completed' ? icPencil : icBuildings,

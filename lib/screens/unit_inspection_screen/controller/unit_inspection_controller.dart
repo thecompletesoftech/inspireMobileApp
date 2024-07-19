@@ -1,9 +1,9 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
-import '../../../commons/all.dart';
-import '../../building_inspection_screen/screen/building_inspection_screen.dart';
 
 class UnitController extends BaseController {
   TextEditingController unitNumberName = TextEditingController();
@@ -81,17 +81,17 @@ class UnitController extends BaseController {
     if (deficiencyArea.length > 0) {
       for (var i = 0; i < deficiencyArea.length; i++) {
         for (var j = 0;
-            j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+            j < deficiencyArea[i].deficiencyInspectionsReqModelList!.length;
             j++) {
           deficiencyInfo.add({
             "housing_deficiency_id": deficiencyArea[i]
-                .deficiencyInspectionsReqModel![j]
+                .deficiencyInspectionsReqModelList![j]
                 .deficiencyItemHousingDeficiency!
                 .id,
             "deficiency_proof_pictures": await getDeficiencyImage(),
             "comment":
-                deficiencyArea[i].deficiencyInspectionsReqModel![j].comment,
-            "date": deficiencyArea[i].deficiencyInspectionsReqModel![j].date
+                deficiencyArea[i].deficiencyInspectionsReqModelList![j].comment,
+            "date": deficiencyArea[i].deficiencyInspectionsReqModelList![j].date
           });
         }
       }
@@ -103,18 +103,18 @@ class UnitController extends BaseController {
     var result = [];
     for (var i = 0; i < deficiencyArea.length; i++) {
       for (var j = 0;
-          j < deficiencyArea[i].deficiencyInspectionsReqModel!.length;
+          j < deficiencyArea[i].deficiencyInspectionsReqModelList!.length;
           j++) {
         for (var k = 0;
             k <
                 deficiencyArea[i]
-                    .deficiencyInspectionsReqModel![j]
+                    .deficiencyInspectionsReqModelList![j]
                     .deficiencyProofPictures!
                     .length;
             k++) {
           result.add({
             "picture_path": deficiencyArea[i]
-                .deficiencyInspectionsReqModel![j]
+                .deficiencyInspectionsReqModelList![j]
                 .deficiencyProofPictures![k],
           });
         }

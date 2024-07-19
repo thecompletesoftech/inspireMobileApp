@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
+import '../../properties_list_screen/controller/properties_list_controller.dart';
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
 import '../../../Models/accountmodel/account_model.dart';
@@ -35,11 +35,11 @@ class BuildingInspectionController extends BaseController {
   List<String> buildingTypeList = [];
   List<Properties>? propertyList = [];
   List<Certificates>? certificates = [];
-  bool? isData;
+  bool? isCheckAllCertificate;
   Account? account;
   var propertyInfo = {}.obs;
   var buildingInfo = {}.obs;
-  var certificatesInfo = [].obs;
+  RxList<Certificates> certificatesInfo = <Certificates>[].obs;
   List<BuildingType> buildingTypes = [];
   bool isSelected = false;
   bool isManually = false;
@@ -61,8 +61,11 @@ class BuildingInspectionController extends BaseController {
     getPropertyInfo();
     getCertificates();
     getBuildingType();
-    getAccount();
     getCurrentDate();
+    () async {
+      account = await getAccount();
+    };
+    update();
     super.onInit();
   }
 
@@ -77,9 +80,9 @@ class BuildingInspectionController extends BaseController {
       message = 'You selected ${Strings.nSPIREStandards}';
     } else if (value == 3) {
       message = 'You selected ${Strings.logOut}';
-      Get.offAllNamed(SigningScreen.routes);
       getStorageData.removeData(getStorageData.isLogin);
       getStorageData.removeData(getStorageData.baseURL);
+      Get.offAllNamed(SigningScreen.routes);
     } else {
       message = 'Not implemented';
     }
@@ -87,23 +90,17 @@ class BuildingInspectionController extends BaseController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
   }
 
-  getAccount() async {
-    var accountData = await getStorageData.readString(getStorageData.account);
-    account = Account.fromJson(jsonDecode(accountData.toString()));
-    inspectorController.text = await account!.userName;
-    update();
-  }
-
   getCertificatesJson() {
     certificatesInfo.clear();
     for (var i = 0; i < certificates!.length; i += 1) {
       if (checked[i]) {
-        certificatesInfo.add({"id": certificates![i].id.toString()});
+        certificatesInfo.add(Certificates(
+            id: certificates![i].id,
+            certificate: certificates![i].certificate.toString()));
+        // certificatesInfo.add({"id": certificates![i].id.toString()});
         print(certificates![i].certificate.toString());
       }
     }
-    print('fgdsfg${certificatesInfo.toJson()}');
-    update();
   }
 
   getPropertyJson() {
@@ -136,14 +133,36 @@ class BuildingInspectionController extends BaseController {
     inspectionDateController.text = Utils().currentTime();
   }
 
-  allSelected() {
-    final data = checked.where((element) => element == true);
-    if (data.length == checked.length) {
-      isData = true;
-    } else if (data.length > 0) {
-      isData = null;
-    } else {
-      isData = false;
+  // allSelected() {
+  //   final data = checked.where((element) => element == true);
+  //   if (data.length == checked.length) {
+  //     isCheckAllCertificate = true;
+  //   } else if (data.length > 0) {
+  //     isCheckAllCertificate = null;
+  //   } else {
+  //     isCheckAllCertificate = false;
+  //   }
+  //   update();
+  // }
+
+  isCertificateSelection({int? index, bool isAllSelectionChange = false}) {
+    if (index != null) {
+      checked[index] = !checked[index];
+      final data = checked.where((element) => element);
+      if (data.length == checked.length) {
+        isCheckAllCertificate = true;
+      } else if (data.length > 0) {
+        isCheckAllCertificate = null;
+      } else {
+        isCheckAllCertificate = false;
+      }
+    }
+    if (isAllSelectionChange) {
+      isCheckAllCertificate =
+          isCheckAllCertificate != null ? !isCheckAllCertificate! : false;
+      for (int i = 0; i < checked.length; i++) {
+        checked[i] = isCheckAllCertificate;
+      }
     }
     update();
   }
@@ -170,13 +189,13 @@ class BuildingInspectionController extends BaseController {
     // buildingTypeController.text.isNotEmpty;
   }
 
-  isAllSelected(value) {
-    for (int i = 0; i < checked.length; i++) {
-      checked[i] = value;
-    }
-    isData = value;
-    update();
-  }
+// isAllSelected(value) {
+//   for (int i = 0; i < checked.length; i++) {
+//     checked[i] = value;
+//   }
+//   isCheckAllCertificate = value;
+//   getCertificatesJson();
+// }
 
   actionProperty(Properties value) async {
     buildingNameController.clear();
@@ -319,6 +338,26 @@ class BuildingInspectionController extends BaseController {
       certificates = r.certificates;
       checked = List.filled(certificates!.length, false);
     });
+    buildingsData.certificateList?.forEach((certificate) {
+      if (certificate.id != null) {
+        if (certificate.id! <= checked.length) {
+          checked[certificate.id! - 1] = true;
+        }
+      }
+    });
+    certificatesInfo = buildingsData.certificateList?.isNotEmpty ?? false
+        ? RxList(List<Certificates>.from(buildingsData.certificateList!
+            .map<Certificates>((e) => Certificates.fromJson(e.toJson()))))
+        : RxList([]);
+    if (certificatesInfo.isEmpty) {
+      isCheckAllCertificate = false;
+    } else {
+      if (certificatesInfo.length == certificates?.length) {
+        isCheckAllCertificate = true;
+      } else {
+        isCheckAllCertificate = null;
+      }
+    }
     update();
   }
 
@@ -351,6 +390,7 @@ class BuildingInspectionController extends BaseController {
       propertyId: int.tryParse(propertyIDController.text),
       zip: zipController.text,
     );
+
     var response = await buildingInspectionRepository.createBuildings(
         createBuildingRequestModel: createBuildingRequestModel);
     response.fold((l) {
@@ -376,5 +416,17 @@ class BuildingInspectionController extends BaseController {
       searchBuilding(searchText: "");
     });
     update();
+  }
+
+  setLocalCertificateData() async {
+    getCertificatesJson();
+    buildingsData.certificateList = certificatesInfo.isNotEmpty
+        ? List.from(certificatesInfo
+            .map<Certificates>((e) => Certificates.fromJson(e.toJson())))
+        : [];
+    await hiveMethodsProvider.setDailySchedulesData(DailySchedulesResponseModel(
+            scheduleData:
+                Get.find<PropertiesListController>().scheduleMainDataList)
+        .toJson());
   }
 }

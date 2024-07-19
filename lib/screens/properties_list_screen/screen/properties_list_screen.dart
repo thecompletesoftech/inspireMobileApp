@@ -411,7 +411,8 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                 right: 32.px,
                                                 left: 32.px,
                                                 top: 32.px)
-                                            : MyTextView(
+                                            : SizedBox
+                                                .shrink() /*MyTextView(
                                                 Strings.notFound,
                                                 textStyleNew: MyTextStyle(
                                                   textSize: 24.px,
@@ -419,7 +420,8 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                   textColor: controller
                                                       .appColors.black,
                                                 ),
-                                              ),
+                                              )*/
+                                        ,
                                         ListView.builder(
                                           itemCount: controller
                                               .completedBuildings.length,
@@ -476,7 +478,8 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                 right: 32.px,
                                                 left: 32.px,
                                                 top: 32.px)
-                                            : MyTextView(
+                                            : SizedBox
+                                                .shrink() /*MyTextView(
                                                 Strings.notFound,
                                                 textStyleNew: MyTextStyle(
                                                   textSize: 24.px,
@@ -484,7 +487,8 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                   textColor: controller
                                                       .appColors.black,
                                                 ),
-                                              ),
+                                              )*/
+                                        ,
                                         ListView.builder(
                                           itemCount:
                                               controller.completedUnits.length,
@@ -602,9 +606,9 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                     textStyleNew: MyTextStyle(
                                       textSize: 20.px,
                                       textWeight: FontWeight.w400,
-                                      textColor: controller.appColors.black,
+                                      textColor: controller.appColors.textcolor,
                                     ),
-                                  ).paddingOnly(top: 40.px),
+                                  ),
                             ],
                           ),
                         ),

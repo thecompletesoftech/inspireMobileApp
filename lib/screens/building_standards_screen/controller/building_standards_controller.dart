@@ -1,9 +1,10 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
+import 'package:public_housing/screens/building_list_screen/model/property_data_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
-
-// enum BuildingStandardsStatus { all, failed }
 
 class BuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
@@ -17,15 +18,17 @@ class BuildingStandardsController extends BaseController {
   String propertyName = '';
   bool isSuccess = false;
   String inspectionName = '';
-  List<BuildingModel> deficiencyAreas = [];
-  RxList<BuildingModel> searchList = <BuildingModel>[].obs;
-  RxList<BuildingModel> dataList = <BuildingModel>[].obs;
+  List<BuildingDataModel> deficiencyAreas = [];
+  RxList<BuildingDataModel> searchList = <BuildingDataModel>[].obs;
+  RxList<BuildingDataModel> dataList = <BuildingDataModel>[].obs;
   RxMap propertyInfo = {}.obs;
   RxMap buildingInfo = {}.obs;
-  var certificatesInfo = [].obs;
+  List<Certificates> certificatesInfo = [];
   String inspectorName = '';
   String inspectorDate = '';
   bool isManually = false;
+  BuildingsData buildingsData = BuildingsData();
+  PropertyDataModel propertyDataModel = PropertyDataModel();
 
   void onInit() {
     super.onInit();
@@ -37,8 +40,26 @@ class BuildingStandardsController extends BaseController {
 
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyName'] != null) {
       propertyName = Get.arguments['propertyName'];
+    }
+    if (Get.arguments['buildingName'] != null) {
       buildingName = Get.arguments['buildingName'];
+    }
+    if (Get.arguments['propertyDataModel'] != null) {
+      propertyDataModel = Get.arguments['propertyDataModel'];
+    }
+    if (Get.arguments['buildingsData'] != null) {
+      buildingsData = Get.arguments['buildingsData'];
+    }
+    if (Get.arguments['inspectorName'] != null) {
+      inspectorName = Get.arguments['inspectorName'];
+    }
+    if (Get.arguments['inspectorDate'] != null) {
+      inspectorDate = Get.arguments['inspectorDate'];
+    } else {
+      inspectorDate = propertyDataModel.date ?? '';
     }
 
     if (Get.arguments['buildingtype'] != null) {
@@ -47,9 +68,9 @@ class BuildingStandardsController extends BaseController {
       propertyName = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
+    }
+    if (Get.arguments['certificatesInfo'] != null) {
       certificatesInfo = Get.arguments['certificatesInfo'];
-      inspectorName = Get.arguments['inspectorName'];
-      inspectorDate = Get.arguments['inspectorDate'];
     }
     update();
   }
@@ -60,15 +81,15 @@ class BuildingStandardsController extends BaseController {
     dataList.clear();
   }
 
-  isUpdateList({required String name}) {
-    searchList.forEach((e) {
-      // e.buildingDataModel?.forEach((element) {
-      //   if (element.name == name) {
-      //     element.isSuccess = true;
-      //   }
-      // });
-    });
-  }
+  // isUpdateList({required String name}) {
+  //   searchList.forEach((e) {
+  //     e.buildingDataModel?.forEach((element) {
+  //       if (element.name == name) {
+  //         element.isSuccess = true;
+  //       }
+  //     });
+  //   });
+  // }
 
   // searchTypeItem() {
   //   searchList.clear();
@@ -105,9 +126,11 @@ class BuildingStandardsController extends BaseController {
     searchList.clear();
     if (!utils.isValidationEmpty(searchText)) {
       for (int i = 0; i < deficiencyAreas.length; i++) {
-        for (int j = 0; j < deficiencyAreas[i].buildingDataModel!.length; j++) {
+        for (int j = 0;
+            j < deficiencyAreas[i].deficiencyAreaList!.length;
+            j++) {
           if (deficiencyAreas[i]
-              .buildingDataModel![j]
+              .deficiencyAreaList![j]
               .name
               .toString()
               .toLowerCase()
@@ -117,13 +140,13 @@ class BuildingStandardsController extends BaseController {
 
             if (itemIndex != -1) {
               searchList[itemIndex]
-                  .buildingDataModel
-                  ?.add(deficiencyAreas[i].buildingDataModel![j]);
+                  .deficiencyAreaList
+                  ?.add(deficiencyAreas[i].deficiencyAreaList![j]);
             } else {
-              searchList.add(BuildingModel(
+              searchList.add(BuildingDataModel(
                   deficiencyAreas[i].type,
                   isExpand: true,
-                  [deficiencyAreas[i].buildingDataModel![j]]));
+                  [deficiencyAreas[i].deficiencyAreaList![j]]));
             }
           }
         }
@@ -228,12 +251,20 @@ class BuildingStandardsController extends BaseController {
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (r) {
-      if (r.deficiencyAreas!.isNotEmpty) {
-        r.deficiencyAreas?.forEach((element) {
+      if (r.deficiencyAreas?.isNotEmpty ?? false) {
+        List<DeficiencyArea> deficiencyAreaList = r.deficiencyAreas!;
+        List<BuildingInspectionDataModel>? buildingInspectionDataModelList =
+            buildingsData.buildingInspectionDataModelList;
+        deficiencyAreaList = extractAndSetLocalDeficiencyAreaData(
+            buildingInspectionDataModelList:
+                buildingInspectionDataModelList ?? [],
+            deficiencyAreaListData: deficiencyAreaList);
+
+        deficiencyAreaList.forEach((element) {
           if (deficiencyAreas.indexWhere(
                   (element1) => element1.type == element.name.toString()[0]) ==
               -1) {
-            deficiencyAreas.add(BuildingModel(
+            deficiencyAreas.add(BuildingDataModel(
               element.name.toString()[0],
               [element],
               isExpand: false,
@@ -241,7 +272,7 @@ class BuildingStandardsController extends BaseController {
           } else {
             deficiencyAreas[deficiencyAreas.indexWhere(
                     (element2) => element2.type == element.name.toString()[0])]
-                .buildingDataModel!
+                .deficiencyAreaList!
                 .add(element);
           }
         });
@@ -252,21 +283,21 @@ class BuildingStandardsController extends BaseController {
 
   isSuccessStandards1(successList, standardsId) {
     for (int i = 0; i < searchList.length; i++) {
-      for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
-        if (searchList[i].buildingDataModel![j].id == standardsId) {
+      for (int j = 0; j < searchList[i].deficiencyAreaList!.length; j++) {
+        if (searchList[i].deficiencyAreaList![j].id == standardsId) {
           var data = successList.where((e) => e.isSuccess == true);
 
           if (data.length > 0) {
-            searchList[i].buildingDataModel![j].isArea = true;
+            searchList[i].deficiencyAreaList![j].isArea = true;
           } else {
-            searchList[i].buildingDataModel![j].isArea = false;
+            searchList[i].deficiencyAreaList![j].isArea = false;
           }
-          searchList[i].buildingDataModel![j].deficiencyInspectionsReqModel =
+          searchList[i].deficiencyAreaList![j].deficiencyInspectionsReqModel =
               [];
           successList.forEach((dataElement) {
             if (dataElement.isSuccess == true) {
               if (searchList[i]
-                      .buildingDataModel![j]
+                      .deficiencyAreaList![j]
                       .deficiencyInspectionsReqModel !=
                   null) {
                 List<String> deficiencyProofPictures = [];
@@ -274,7 +305,7 @@ class BuildingStandardsController extends BaseController {
                   deficiencyProofPictures = dataElement.deficiencyProofPictures;
                 }
                 searchList[i]
-                    .buildingDataModel![j]
+                    .deficiencyAreaList![j]
                     .deficiencyInspectionsReqModel
                     ?.add(DeficiencyInspectionsReqModel(
                       isSuccess: dataElement.isSuccess,
@@ -294,7 +325,7 @@ class BuildingStandardsController extends BaseController {
                   deficiencyProofPictures = dataElement.deficiencyProofPictures;
                 }
                 searchList[i]
-                    .buildingDataModel![j]
+                    .deficiencyAreaList![j]
                     .deficiencyInspectionsReqModel = [
                   DeficiencyInspectionsReqModel(
                     isSuccess: dataElement.isSuccess,
@@ -319,10 +350,11 @@ class BuildingStandardsController extends BaseController {
   }
 }
 
-class BuildingModel {
+class BuildingDataModel {
   String? type;
   bool? isExpand = false;
-  List<DeficiencyArea>? buildingDataModel;
+  List<DeficiencyArea>? deficiencyAreaList;
 
-  BuildingModel(this.type, this.buildingDataModel, {this.isExpand = false});
+  BuildingDataModel(this.type, this.deficiencyAreaList,
+      {this.isExpand = false});
 }

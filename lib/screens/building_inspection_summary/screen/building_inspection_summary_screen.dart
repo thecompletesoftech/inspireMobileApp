@@ -1,20 +1,11 @@
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
-import 'package:public_housing/commons/strings.dart';
-import 'package:public_housing/commons/svgImage.dart';
-import 'package:public_housing/commons/constants.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:public_housing/commons/common_widgets/base_widgets.dart';
-import 'package:public_housing/commons/common_widgets/button_widget.dart';
-import 'package:public_housing/commons/common_widgets/my_text_widgets.dart';
-import 'package:public_housing/commons/common_widgets/icon_button_widget.dart';
-import 'package:public_housing/commons/common_widgets/text_field_widgets.dart';
-import 'package:public_housing/commons/common_widgets/common_appbar_widget.dart';
-import 'package:public_housing/commons/common_widgets/shadow_container_widgets.dart';
+import 'package:public_housing/screens/building_list_screen/controller/building_list_controller.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/controller/building_standards_controller.dart';
 import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
@@ -29,7 +20,7 @@ class BuildingInspectionSummaryScreen
   @override
   Widget build(BuildContext context) {
     BuildingStandardsController buildingStandardsController =
-        Get.put(BuildingStandardsController());
+        Get.find<BuildingStandardsController>();
 
     return GetBuilder<BuildingInspectionSummaryController>(
       init: BuildingInspectionSummaryController(),
@@ -48,15 +39,36 @@ class BuildingInspectionSummaryScreen
                     Get.back();
                   },
                 ),
-                MyTextView(
-                  '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}',
-                  textStyleNew: MyTextStyle(
-                    textColor: controller.appColors.appColor,
-                    textWeight: FontWeight.w600,
-                    textFamily: fontFamilyBold,
-                    textSize: 20.px,
-                  ),
-                ).paddingOnly(top: 32.px, bottom: 48.px),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyTextView(
+                      controller.isManually == true
+                          ? '${buildingStandardsController.propertyInfo['name'] ?? ""} - ${buildingStandardsController.buildingInfo['name'] ?? ""}'
+                          : '${controller.propertyDataModel.name ?? ""} - ${controller.buildingsData.buildingName ?? ""}',
+                      textStyleNew: MyTextStyle(
+                        textColor: controller.appColors.appColor,
+                        textWeight: FontWeight.w600,
+                        textFamily: fontFamilyBold,
+                        textSize: 20.px,
+                      ),
+                    ),
+                    CommonButton(
+                      radius: 100.px,
+                      title: '00:00:00',
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.px,
+                        vertical: 10.px,
+                      ),
+                      textWeight: FontWeight.w500,
+                      textSize: 14.px,
+                      color: controller.appColors.white,
+                      textColor: AppColors.primerColor,
+                      onTap: () {},
+                    ).paddingOnly(left: 24.px),
+                  ],
+                ).paddingOnly(top: 32.px),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
@@ -77,12 +89,10 @@ class BuildingInspectionSummaryScreen
                                 ? CommonButton(
                                     title: Strings.saveAddUnit,
                                     radius: 100.px,
-                                    width: 171.px,
+                                    width: 200.px,
                                     height: 44.px,
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 15.px,
-                                      horizontal: 24.px,
-                                    ),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 24.px),
                                     textSize: 16.px,
                                     textWeight: FontWeight.w500,
                                     textFamily: fontFamilyRegular,
@@ -96,16 +106,15 @@ class BuildingInspectionSummaryScreen
                                 : CommonButton(
                                     title: Strings.completeInspection,
                                     radius: 100.px,
-                                    width: 171.px,
                                     height: 44.px,
                                     textSize: 16.px,
                                     textWeight: FontWeight.w500,
                                     textFamily: fontFamilyRegular,
-                                    textColor: controller.appColors.lightText,
+                                    textColor: controller.appColors.black,
                                     color: controller.appColors.textPink,
                                     onTap: () {
-                                      Get.offAllNamed(BuildingListScreen.routes,
-                                          arguments: {"isComplete": true});
+                                      // Get.offAllNamed(BuildingListScreen.routes,
+                                      //     arguments: {"isComplete": true});
                                       controller.update();
                                     },
                                   ),
@@ -140,7 +149,7 @@ class BuildingInspectionSummaryScreen
                                       ),
                                     ),
                                   ],
-                                ),
+                                ).paddingOnly(bottom: 32.px),
                                 controller.isManually == true
                                     ? Row(
                                         children: [
@@ -194,7 +203,9 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Inspector: ',
-                                              subTitle: '[Inspector]',
+                                              subTitle: controller
+                                                      .account?.userName ??
+                                                  '',
                                               imageString: icPerson,
                                             ),
                                           ),
@@ -202,12 +213,13 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Inspection Date: ',
-                                              subTitle: '[Inspection Date]',
+                                              subTitle:
+                                                  controller.inspectorDate,
                                               imageString: icCalender2,
                                             ),
                                           ),
                                         ],
-                                      ).paddingOnly(top: 24.px),
+                                      ),
                                 Row(
                                   children: [
                                     MyTextView(
@@ -315,7 +327,9 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Property Name: ',
-                                              subTitle: '[Property Name]',
+                                              subTitle: controller
+                                                      .propertyDataModel.name ??
+                                                  "",
                                               imageString: icBuildingss,
                                             ),
                                           ),
@@ -409,7 +423,7 @@ class BuildingInspectionSummaryScreen
                                             child: CommonTextRow(
                                               title: 'Property Address: ',
                                               subTitle:
-                                                  '[Property Address], [City], [State], [Zip]',
+                                                  '${controller.propertyDataModel.address ?? ""}, ${controller.propertyDataModel.city ?? ""}, ${controller.propertyDataModel.state ?? ""} ${controller.propertyDataModel.zip ?? ""}',
                                               imageString: icLocation,
                                             ),
                                           ),
@@ -454,7 +468,9 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Property ID: ',
-                                              subTitle: '[Property ID]',
+                                              subTitle: controller
+                                                      .propertyDataModel.id ??
+                                                  "",
                                               imageString: hasTagIcon,
                                             ),
                                           ),
@@ -537,7 +553,9 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Building Name: ',
-                                              subTitle: '[Building Name]',
+                                              subTitle: controller.buildingsData
+                                                      .buildingName ??
+                                                  "",
                                               imageString: icBuildings,
                                             ),
                                           ),
@@ -546,7 +564,9 @@ class BuildingInspectionSummaryScreen
                                             child: CommonTextRow(
                                               isImage: true,
                                               title: 'Year Constructed: ',
-                                              subTitle: '[Year Constructed]',
+                                              subTitle: controller
+                                                  .buildingsData.year
+                                                  .toString(),
                                               imageString: icCalender2,
                                             ),
                                           ),
@@ -616,7 +636,9 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Building Type: ',
-                                              subTitle: '[Building Type]',
+                                              subTitle: controller.buildingsData
+                                                      .buildingType ??
+                                                  "",
                                               imageString: icBuildings,
                                             ),
                                           ),
@@ -641,11 +663,14 @@ class BuildingInspectionSummaryScreen
                                               children: [
                                                 Checkbox(
                                                   onChanged: (value) {
-                                                    controller.isAllSelected(
-                                                        value ?? false);
+                                                    controller
+                                                        .isCertificateSelection(
+                                                            isAllSelectionChange:
+                                                                true);
                                                   },
                                                   tristate: true,
-                                                  value: controller.isData,
+                                                  value: controller
+                                                      .isCheckAllCertificate,
                                                   activeColor: controller
                                                       .appColors.appColor,
                                                 ),
@@ -678,13 +703,9 @@ class BuildingInspectionSummaryScreen
                                                   children: [
                                                     Checkbox(
                                                       onChanged: (value) {
-                                                        controller.checked[i] =
-                                                            value;
                                                         controller
-                                                            .allSelected();
-                                                        controller
-                                                            .getCertificatesJson();
-                                                        controller.update();
+                                                            .isCertificateSelection(
+                                                                index: i);
                                                       },
                                                       value:
                                                           controller.checked[i],
@@ -749,16 +770,17 @@ class BuildingInspectionSummaryScreen
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             final item = controller.deficiencyArea[index];
+                            List<DeficiencyAreaItem>? deficiencyAreaItemsList =
+                                item.deficiencyAreaItems
+                                    ?.where(
+                                        (element) => element.isDeficiencyCheck)
+                                    .toList();
                             return ListView.separated(
-                              itemCount: item.deficiencyInspectionsReqModel !=
-                                      null
-                                  ? item.deficiencyInspectionsReqModel!.length
-                                  : 0,
+                              itemCount: deficiencyAreaItemsList?.length ?? 0,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, i) {
-                                var data =
-                                    item.deficiencyInspectionsReqModel?[i];
+                                var data = deficiencyAreaItemsList?[i];
                                 return ShadowContainer2(
                                   padding: EdgeInsets.zero,
                                   divider: controller.appColors.divider,
@@ -785,14 +807,12 @@ class BuildingInspectionSummaryScreen
                                             radius: 100.px,
                                             onTap: () {},
                                             title: data
-                                                    ?.deficiencyItemHousingDeficiency
+                                                    ?.deficiencyItemHousingDeficiencyData
                                                     ?.housingItem
                                                     ?.item ??
                                                 "",
                                             padding: EdgeInsets.symmetric(
-                                              horizontal: 24.px,
-                                              vertical: 10.px,
-                                            ),
+                                                horizontal: 24.px),
                                             textWeight: FontWeight.w500,
                                             textSize: 16.px,
                                             color:
@@ -854,7 +874,7 @@ class BuildingInspectionSummaryScreen
                                         ),
                                       ),
                                       MyTextView(
-                                        data?.definition ?? "",
+                                        data?.description ?? "",
                                         isMaxLineWrap: true,
                                         textStyleNew: MyTextStyle(
                                           textSize: 20.px,
@@ -877,8 +897,18 @@ class BuildingInspectionSummaryScreen
                                                     controller,
                                                     Strings.comments,
                                                     data?.comment ?? ""),
-                                                dotIcons(controller, 'Date',
-                                                    data?.date ?? ""),
+                                                dotIcons(
+                                                    controller,
+                                                    'Date',
+                                                    data?.date?.isNotEmpty ??
+                                                            false
+                                                        ? DateFormat(
+                                                                "MM/dd/yyyy")
+                                                            .format(
+                                                                DateTime.parse(
+                                                                    data!
+                                                                        .date!))
+                                                        : ''),
                                               ],
                                             ),
                                           ),
@@ -906,9 +936,7 @@ class BuildingInspectionSummaryScreen
                                                       DeficienciesInsideScreen
                                                           .routes,
                                                       arguments: {
-                                                        "deficiencyAreaList": item
-                                                            .deficiencyAreaItems,
-                                                        "deficiencyInspectionsReqModel":
+                                                        "deficiencyAreaItem":
                                                             data,
                                                         "deficiencyArea":
                                                             controller
@@ -953,48 +981,72 @@ class BuildingInspectionSummaryScreen
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 24.px,
-                                );
+                                return SizedBox(height: 24.px);
                               },
                             );
                           },
                         ),
-                        CommonButton(
-                          title: Strings.saveAddUnit,
-                          radius: 100.px,
-                          width: 171.px,
-                          height: 44.px,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15.px,
-                            horizontal: 24.px,
-                          ),
-                          textSize: 16.px,
-                          textWeight: FontWeight.w500,
-                          textFamily: fontFamilyRegular,
-                          textColor: controller.appColors.lightText,
-                          color: controller.appColors.buttonColor,
-                          onTap: () async {
-                            await controller.createInspection();
-                            if (controller.isSuccess == true) {
-                              Get.toNamed(UnitInspection.routes, arguments: {
-                                "deficiencyArea": controller.deficiencyArea,
-                                "buildingName": controller.buildingName,
-                                "buildingtype": controller.buildingType,
-                                "imagesList": controller.imagesList,
-                                "inspectionName": controller.inspectionName,
-                                "propertyInfo": controller.propertyInfo,
-                                "buildingInfo": controller.buildingInfo,
-                                "certificatesInfo": controller.certificatesInfo,
-                                "inspectorName": controller.inspectorName,
-                                "inspectorDate": controller.inspectorDate
-                              })?.then((value) {
-                                controller.update();
-                              });
-                            }
-                            controller.update();
-                          },
-                        ).paddingSymmetric(vertical: 24.px),
+                        controller.isManually == true
+                            ? CommonButton(
+                                title: Strings.saveAddUnit,
+                                radius: 100.px,
+                                width: 200.px,
+                                height: 44.px,
+                                textSize: 16.px,
+                                textWeight: FontWeight.w500,
+                                textFamily: fontFamilyRegular,
+                                textColor: controller.appColors.lightText,
+                                color: controller.appColors.buttonColor,
+                                onTap: () async {
+                                  await controller.createInspection();
+                                  if (controller.isSuccess == true) {
+                                    Get.toNamed(UnitInspection.routes,
+                                        arguments: {
+                                          "deficiencyArea":
+                                              controller.deficiencyArea,
+                                          "buildingName":
+                                              controller.buildingName,
+                                          "buildingtype":
+                                              controller.buildingType,
+                                          "imagesList": controller.imagesList,
+                                          "inspectionName":
+                                              controller.inspectionName,
+                                          "propertyInfo":
+                                              controller.propertyInfo,
+                                          "buildingInfo":
+                                              controller.buildingInfo,
+                                          "certificatesInfo":
+                                              controller.certificatesInfo,
+                                          "inspectorName":
+                                              controller.inspectorName,
+                                          "inspectorDate":
+                                              controller.inspectorDate
+                                        })?.then((value) {
+                                      controller.update();
+                                    });
+                                  }
+                                  controller.update();
+                                },
+                              ).paddingSymmetric(vertical: 24.px)
+                            : CommonButton(
+                                title: Strings.completeInspection,
+                                radius: 100.px,
+                                height: 44.px,
+                                width: 200.px,
+                                textSize: 16.px,
+                                textWeight: FontWeight.w500,
+                                textFamily: fontFamilyRegular,
+                                textColor: controller.appColors.black,
+                                color: controller.appColors.textPink,
+                                onTap: () async {
+                                  await controller.setLocalCertificateData();
+                                  Get.find<BuildingListController>().update();
+                                  Get.until((route) =>
+                                      route.settings.name ==
+                                      BuildingListScreen.routes);
+                                  controller.update();
+                                },
+                              ).paddingSymmetric(vertical: 24.px),
                       ],
                     ),
                   ),

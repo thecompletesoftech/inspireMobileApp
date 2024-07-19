@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:public_housing/Models/accountmodel/account_model.dart';
-import 'package:public_housing/commons/general_enum.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/commons/general_enum.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/internet_services/internet_service.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/repository/properties_list_repository.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertiesListController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
@@ -32,8 +31,9 @@ class PropertiesListController extends BaseController {
   void onInit() {
     dateRange = PickerDateRange(DateTime.now(), DateTime(2025));
     todayDate = todayDateGet(DateTime.now());
-    getAccount();
+
     () async {
+      account = await getAccount();
       if (isInternet == IsInternet.connect) {
         await localStorageDataset();
       }
@@ -110,12 +110,6 @@ class PropertiesListController extends BaseController {
     update();
   }
 
-  getAccount() async {
-    var accountData = await getStorageData.readString(getStorageData.account);
-    account = Account.fromJson(jsonDecode(accountData.toString()));
-    update();
-  }
-
   bool confirmSelectedDates() {
     if (startDate != '' && endDate != '') {
       isDateSelected = true;
@@ -166,7 +160,7 @@ class PropertiesListController extends BaseController {
     });
   }
 
-  actionPopUpItemSelected(int value) {
+  actionPopUpItemSelected(int value) async {
     ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
     String message;
     if (value == 0) {
@@ -179,9 +173,10 @@ class PropertiesListController extends BaseController {
       message = 'You selected ${Strings.changeSection}';
     } else if (value == 4) {
       message = 'You selected ${Strings.logOut}';
-      Get.offAllNamed(SigningScreen.routes);
+      await hiveMethodsProvider.clearDatabase();
       getStorageData.removeData(getStorageData.isLogin);
       getStorageData.removeData(getStorageData.baseURL);
+      Get.offAllNamed(SigningScreen.routes);
     } else {
       message = 'Not implemented';
     }
@@ -215,8 +210,7 @@ class PropertiesListController extends BaseController {
         scheduleDataList.add(DataSorting(
             date: todayDateGet(DateTime.parse(e)),
             scheduleDataList: sortingData.toList(),
-            isToday:
-                true /*DateTime.now().day == DateTime.parse(e).day ? true : false*/,
+            isToday: DateTime.now().day == DateTime.parse(e).day ? true : false,
             prefix: DateTime.now().day == DateTime.parse(e).day
                 ? Strings.todayInspections
                 : ''));

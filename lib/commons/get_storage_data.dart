@@ -43,7 +43,7 @@ class GetStorageData {
   }
 
   /// <<< To clear all data --------- >>>
-  clearAlldata() async {
+  clearAllData() async {
     final box = GetStorage();
     return box.erase();
   }

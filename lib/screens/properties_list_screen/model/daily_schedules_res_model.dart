@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
+
 DailySchedulesResponseModel dailySchedulesResponseModelFromJson(String str) =>
     DailySchedulesResponseModel.fromJson(json.decode(str));
 
@@ -14,10 +16,7 @@ class DailySchedulesResponseModel {
   String? type;
   List<ScheduleDatum>? scheduleData;
 
-  DailySchedulesResponseModel({
-    this.type,
-    this.scheduleData,
-  });
+  DailySchedulesResponseModel({this.type, this.scheduleData});
 
   factory DailySchedulesResponseModel.fromJson(Map<String, dynamic> json) =>
       DailySchedulesResponseModel(
@@ -94,6 +93,8 @@ class BuildingsData {
   String? id;
   List<UnitsData>? units;
   DateTime? date;
+  List<Certificates>? certificateList;
+  List<BuildingInspectionDataModel>? buildingInspectionDataModelList;
 
   BuildingsData({
     this.buildingName,
@@ -103,6 +104,8 @@ class BuildingsData {
     this.id,
     this.units,
     this.date,
+    this.certificateList,
+    this.buildingInspectionDataModelList,
   });
 
   factory BuildingsData.fromJson(Map<String, dynamic> json) => BuildingsData(
@@ -115,6 +118,16 @@ class BuildingsData {
             ? []
             : List<UnitsData>.from(
                 json["Units"]!.map((x) => UnitsData.fromJson(x))),
+        certificateList: json["certificateList"] == null
+            ? []
+            : List<Certificates>.from(
+                json["certificateList"]!.map((x) => Certificates.fromJson(x))),
+        buildingInspectionDataModelList:
+            json["buildingInspectionDataModelList"] == null
+                ? []
+                : List<BuildingInspectionDataModel>.from(
+                    json["buildingInspectionDataModelList"]!
+                        .map((x) => BuildingInspectionDataModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -126,6 +139,14 @@ class BuildingsData {
         "Units": units == null
             ? []
             : List<dynamic>.from(units!.map((x) => x.toJson())),
+        "certificateList": certificateList == null
+            ? []
+            : List<dynamic>.from(certificateList!.map((x) => x.toJson())),
+        "buildingInspectionDataModelList":
+            buildingInspectionDataModelList == null
+                ? []
+                : List<dynamic>.from(
+                    buildingInspectionDataModelList!.map((x) => x.toJson())),
       };
 }
 
@@ -135,12 +156,7 @@ class UnitsData {
   String? unitName;
   DateTime? date;
 
-  UnitsData({
-    this.iscompleted,
-    this.id,
-    this.unitName,
-    this.date,
-  });
+  UnitsData({this.iscompleted, this.id, this.unitName, this.date});
 
   factory UnitsData.fromJson(Map<String, dynamic> json) => UnitsData(
         iscompleted: json["iscompleted"],
@@ -152,5 +168,77 @@ class UnitsData {
         "iscompleted": iscompleted,
         "id": id,
         "unit_name": unitName,
+      };
+}
+
+class BuildingInspectionDataModel {
+  int? standardId;
+  bool isStandardCheck = false;
+  List<DeficiencyAreaUpdatedItem>? deficiencyAreaUpdatedItemList;
+
+  BuildingInspectionDataModel({
+    this.deficiencyAreaUpdatedItemList,
+    this.isStandardCheck = false,
+    this.standardId,
+  });
+
+  factory BuildingInspectionDataModel.fromJson(Map<String, dynamic> json) =>
+      BuildingInspectionDataModel(
+        standardId: json['standardId'] as int?,
+        isStandardCheck: json['isStandardCheck'] ?? false,
+        deficiencyAreaUpdatedItemList:
+            json["deficiencyAreaUpdatedItemList"] == null
+                ? []
+                : List<DeficiencyAreaUpdatedItem>.from(
+                    json["deficiencyAreaUpdatedItemList"]!
+                        .map((x) => DeficiencyAreaUpdatedItem.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'standardId': standardId,
+        'isStandardCheck': isStandardCheck,
+        "deficiencyAreaUpdatedItemList": deficiencyAreaUpdatedItemList == null
+            ? []
+            : List<dynamic>.from(
+                deficiencyAreaUpdatedItemList!.map((x) => x.toJson())),
+      };
+}
+
+class DeficiencyAreaUpdatedItem {
+  DateTime? date;
+  String? comment;
+  int? deficiencyAreaItemsId;
+  List<String>? deficiencyProofPictures;
+  int? deficiencyItemHousingDeficiencyId;
+
+  DeficiencyAreaUpdatedItem({
+    this.date,
+    this.comment,
+    this.deficiencyAreaItemsId,
+    this.deficiencyProofPictures,
+    this.deficiencyItemHousingDeficiencyId,
+  });
+
+  factory DeficiencyAreaUpdatedItem.fromJson(Map<String, dynamic> json) =>
+      DeficiencyAreaUpdatedItem(
+        deficiencyAreaItemsId: json["deficiencyAreaItemsId"],
+        deficiencyItemHousingDeficiencyId:
+            json["deficiencyItemHousingDeficiencyId"],
+        comment: json["comment"],
+        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        deficiencyProofPictures: json["deficiencyProofPictures"] == null
+            ? []
+            : List<String>.from(json["deficiencyProofPictures"]!.map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "deficiencyAreaItemsId": deficiencyAreaItemsId,
+        "deficiencyItemHousingDeficiencyId": deficiencyItemHousingDeficiencyId,
+        "comment": comment,
+        "date":
+            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "deficiencyProofPictures": deficiencyProofPictures == null
+            ? []
+            : List<dynamic>.from(deficiencyProofPictures!.map((x) => x)),
       };
 }

@@ -1,10 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:public_housing/internet_services/internet_service.dart';
-
-import '../controller/signing_controller.dart';
-import '../../../../languages/language.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/languages/language.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:public_housing/screens/auth/signing_screen/controller/signing_controller.dart';
 
 class SigningScreen extends GetView<SigningController> {
   const SigningScreen({Key? key}) : super(key: key);

@@ -16,10 +16,7 @@ class DeficiencyAreasResponseModel {
   String? type;
   List<DeficiencyArea>? deficiencyAreas;
 
-  DeficiencyAreasResponseModel({
-    this.type,
-    this.deficiencyAreas,
-  });
+  DeficiencyAreasResponseModel({this.type, this.deficiencyAreas});
 
   factory DeficiencyAreasResponseModel.fromJson(Map<String, dynamic> json) =>
       DeficiencyAreasResponseModel(
@@ -97,6 +94,11 @@ class DeficiencyAreaItem {
   String? moreInformation;
   String? requestForHelp;
   bool? status;
+  List<String>? deficiencyProofPictures;
+  String? comment;
+  String? date;
+  bool isDeficiencyCheck = false;
+  DeficiencyItemHousingDeficiency? deficiencyItemHousingDeficiencyData;
   List<DeficiencyItemHousingDeficiency>? deficiencyItemHousingDeficiency;
 
   DeficiencyAreaItem({
@@ -110,25 +112,41 @@ class DeficiencyAreaItem {
     this.status,
     this.requestForHelp,
     this.deficiencyItemHousingDeficiency,
+    this.isDeficiencyCheck = false,
+    this.comment,
+    this.date,
+    this.deficiencyProofPictures,
+    this.deficiencyItemHousingDeficiencyData,
   });
 
   factory DeficiencyAreaItem.fromJson(Map<String, dynamic> json) =>
       DeficiencyAreaItem(
-        id: json["id"],
-        description: json["description"],
-        note: json["note"],
-        criteria: json["criteria"],
-        observation: json["observation"],
-        action: json["action"],
-        moreInformation: json["more_information"],
-        requestForHelp: json["request_for_help"],
-        deficiencyItemHousingDeficiency:
-            json["deficiency_item_housing_deficiency"] == null
-                ? []
-                : List<DeficiencyItemHousingDeficiency>.from(
-                    json["deficiency_item_housing_deficiency"]!.map(
-                        (x) => DeficiencyItemHousingDeficiency.fromJson(x))),
-      );
+          id: json["id"],
+          description: json["description"],
+          note: json["note"],
+          criteria: json["criteria"],
+          observation: json["observation"],
+          isDeficiencyCheck: json["isDeficiencyCheck"] ?? false,
+          action: json["action"],
+          moreInformation: json["more_information"],
+          requestForHelp: json["request_for_help"],
+          deficiencyItemHousingDeficiency:
+              json["deficiency_item_housing_deficiency"] == null
+                  ? []
+                  : List<DeficiencyItemHousingDeficiency>.from(
+                      json["deficiency_item_housing_deficiency"]!.map(
+                          (x) => DeficiencyItemHousingDeficiency.fromJson(x))),
+          deficiencyProofPictures: json["deficiency_proof_pictures"] == null
+              ? []
+              : List<String>.from(
+                  json["deficiency_proof_pictures"]!.map((x) => x)),
+          comment: json["comment"],
+          date: json["date"],
+          deficiencyItemHousingDeficiencyData:
+              json["deficiencyItemHousingDeficiencyData"] == null
+                  ? null
+                  : DeficiencyItemHousingDeficiency.fromJson(
+                      json["deficiencyItemHousingDeficiencyData"]));
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -137,6 +155,7 @@ class DeficiencyAreaItem {
         "criteria": criteria,
         "observation": observation,
         "action": action,
+        "isDeficiencyCheck": isDeficiencyCheck,
         "more_information": moreInformation,
         "request_for_help": requestForHelp,
         "deficiency_item_housing_deficiency":
@@ -144,6 +163,13 @@ class DeficiencyAreaItem {
                 ? []
                 : List<dynamic>.from(
                     deficiencyItemHousingDeficiency!.map((x) => x.toJson())),
+        "deficiency_proof_pictures": deficiencyProofPictures == null
+            ? []
+            : List<dynamic>.from(deficiencyProofPictures!.map((x) => x)),
+        "comment": comment,
+        "date": date,
+        "deficiencyItemHousingDeficiencyData":
+            deficiencyItemHousingDeficiencyData?.toJson(),
       };
 }
 
@@ -152,11 +178,7 @@ class DeficiencyItemHousingDeficiency {
   Severity? severity;
   HousingItem? housingItem;
 
-  DeficiencyItemHousingDeficiency({
-    this.id,
-    this.severity,
-    this.housingItem,
-  });
+  DeficiencyItemHousingDeficiency({this.id, this.severity, this.housingItem});
 
   factory DeficiencyItemHousingDeficiency.fromJson(Map<String, dynamic> json) =>
       DeficiencyItemHousingDeficiency(
@@ -181,11 +203,7 @@ class HousingItem {
   String? item;
   dynamic description;
 
-  HousingItem({
-    this.id,
-    this.item,
-    this.description,
-  });
+  HousingItem({this.id, this.item, this.description});
 
   factory HousingItem.fromJson(Map<String, dynamic> json) => HousingItem(
         id: json["id"],
@@ -193,11 +211,8 @@ class HousingItem {
         description: json["description"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "item": item,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "item": item, "description": description};
 }
 
 class Severity {
@@ -205,11 +220,7 @@ class Severity {
   String? healthySafetyDesignation;
   String? correctionTimeFrame;
 
-  Severity({
-    this.id,
-    this.healthySafetyDesignation,
-    this.correctionTimeFrame,
-  });
+  Severity({this.id, this.healthySafetyDesignation, this.correctionTimeFrame});
 
   factory Severity.fromJson(Map<String, dynamic> json) => Severity(
         id: json["id"],

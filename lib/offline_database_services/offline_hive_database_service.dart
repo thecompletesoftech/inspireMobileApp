@@ -51,6 +51,17 @@ class HiveMethodsProvider {
     _getPropertyInfoData = await Hive.openBox('getPropertyInfoData');
   }
 
+  clearDatabase() {
+    _getPropertiesData.clear();
+    _getDailySchedulesItemData.clear();
+    _getHousingItemData.clear();
+    _getInspectionTypeData.clear();
+    _getBuildingTypeData.clear();
+    _getCertificateData.clear();
+    _getBuildingInfoData.clear();
+    _getPropertyInfoData.clear();
+  }
+
   Future<void> setHousingItemData(
       Map<String, dynamic> deficiencyAreasResponseModel) async {
     Map<String, dynamic> setData = <String, dynamic>{};

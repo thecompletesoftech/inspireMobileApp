@@ -55,15 +55,15 @@ class UnitBuildingStandardsController extends BaseController {
     update();
   }
 
-  isUpdateList({required String name}) {
-    searchList.forEach((e) {
-      // e.buildingDataModel?.forEach((element) {
-      //   if (element.name == name) {
-      //     element.isSuccess = true;
-      //   }
-      // });
-    });
-  }
+  // isUpdateList({required String name}) {
+  //   searchList.forEach((e) {
+  //     e.buildingDataModel?.forEach((element) {
+  //       if (element.name == name) {
+  //         element.isSuccess = true;
+  //       }
+  //     });
+  //   });
+  // }
 
   // searchTypeItem() {
   //   searchList.clear();

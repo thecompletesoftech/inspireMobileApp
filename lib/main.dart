@@ -259,49 +259,51 @@ class _MyAppState extends State<MyApp> {
           );
 
     return ResponsiveSizer(
-      builder: (p0, p1, p2) => GetMaterialApp(
-        title: Strings.appName,
-        debugShowCheckedModeBanner: false,
-        getPages: AppPages.list,
-        supportedLocales: const [
-          Locale(Constants.languageCodeEn, ''),
-          Locale(Constants.languageCodeAr, ''),
-        ],
-        localizationsDelegates: [
-          AppLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale?.languageCode &&
-                supportedLocale.countryCode == locale?.countryCode) {
-              return supportedLocale;
+      builder: (p0, p1, p2) {
+        return GetMaterialApp(
+          title: Strings.appName,
+          debugShowCheckedModeBanner: false,
+          getPages: AppPages.list,
+          supportedLocales: const [
+            Locale(Constants.languageCodeEn, ''),
+            Locale(Constants.languageCodeAr, ''),
+          ],
+          localizationsDelegates: [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (var supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale?.languageCode &&
+                  supportedLocale.countryCode == locale?.countryCode) {
+                return supportedLocale;
+              }
             }
-          }
-          return supportedLocales.first;
-        },
-        locale: local,
-        theme: ThemeData(
-          primarySwatch: AppColors.primerColor,
-          fontFamily: fontFamilyBold,
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: {
-              TargetPlatform.android: ZoomPageTransitionsBuilder(),
-              // TargetPlatform.iOS: CupertinoWillPopScopePageTransionsBuilder(),
-            },
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors().appColor, // button text color
+            return supportedLocales.first;
+          },
+          locale: local,
+          theme: ThemeData(
+            primarySwatch: AppColors.primerColor,
+            fontFamily: fontFamilyBold,
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: ZoomPageTransitionsBuilder(),
+                // TargetPlatform.iOS: CupertinoWillPopScopePageTransionsBuilder(),
+              },
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors().appColor, // button text color
+              ),
             ),
           ),
-        ),
-        initialBinding: SplashBinding(),
-        home: const SplashScreen(),
-        builder: EasyLoading.init(),
-      ),
+          initialBinding: SplashBinding(),
+          home: const SplashScreen(),
+          builder: EasyLoading.init(),
+        );
+      },
     );
   }
 }
