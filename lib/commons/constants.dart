@@ -35,7 +35,8 @@ const int limitResultSearchesTermGrid = 40;
 const int limitResultByIdSubCategory = 20;
 const int limitResultByTerm = 15;
 const String ipLocalDenisHost = "192.168.15.44";
-const String ipRemoteTesting = "209.208.27.55"; // remote testing
+// const String ipRemoteTesting = "209.208.27.55"; // remote testing
+const String ipRemoteTesting = "104.245.38.245"; // remote testing
 const String ipRemoteProduction = "104.245.38.245"; //remote Live
 String serverAddress = ipRemoteTesting;
 
