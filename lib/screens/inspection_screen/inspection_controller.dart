@@ -17,8 +17,6 @@ import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
 import '../home_screen/home_controller.dart';
 
-
-
 class InspectionController extends BaseController {
   /// ---- Get Inspection APi ----------->>>
   // getHome({var lat, lng}) async {
@@ -63,7 +61,9 @@ class InspectionController extends BaseController {
   final commentController = TextEditingController();
   final dateController = TextEditingController(text: "mm/dd/yyyy");
 
-  List itemCount = [RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")];
+  List itemCount = [
+    RxCommonModel(title: Strings.comment, subtitle: "05/21/2023")
+  ];
 
   final date1Controller = TextEditingController();
 
@@ -300,8 +300,10 @@ class InspectionController extends BaseController {
 
   Future<void> processNext() async {
     if (getStorageData.containKey(getStorageData.userLAT)) {
-      printAction("position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
-      printAction("position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
+      printAction(
+          "position----StorageLat->>${getStorageData.readString(getStorageData.userLAT)}");
+      printAction(
+          "position----StorageLng--->>${getStorageData.readString(getStorageData.userLNG)}");
       userLocationLat = getStorageData.readString(getStorageData.userLAT);
       userLocationLng = getStorageData.readString(getStorageData.userLNG);
     } else {
@@ -361,7 +363,9 @@ class InspectionController extends BaseController {
     update();
   }
 
-  CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  CustomInfoWindowController _customInfoWindowController =
+      CustomInfoWindowController();
+
   // GoogleMapController? mapController;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
@@ -378,14 +382,16 @@ class InspectionController extends BaseController {
   }
 
   setMarker() async {
-    _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: LatLng(userLocationLat!, userLocationLng!), zoom: 17),
+    _customInfoWindowController.googleMapController!
+        .animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+          target: LatLng(userLocationLat!, userLocationLng!), zoom: 17),
     ));
 
     mapList.forEach((element) {
       _addMarker(element);
     });
-    _getPolyline();
+    // _getPolyline();
     update();
   }
 
@@ -393,8 +399,10 @@ class InspectionController extends BaseController {
     MarkerId markerId = MarkerId(element.id.toString());
     Marker marker = Marker(
         markerId: markerId,
-        icon: await utils.convertNetworkImageToCustomBitmapDescriptor("${element.id}",
-            imageUrl: element.image!, titleBackgroundColor: appColors.appColor),
+        icon: await utils.convertNetworkImageToCustomBitmapDescriptor(
+            "${element.id}",
+            imageUrl: element.image!,
+            titleBackgroundColor: appColors.appColor),
         // icon: BitmapDescriptor.fromBytes(await utils.getBytesFromAsset(element.image!, 70)),
         position: LatLng(element.lat!, element.lng!),
         onTap: () {
@@ -402,7 +410,9 @@ class InspectionController extends BaseController {
             Column(children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(color: appColors.white, borderRadius: BorderRadius.circular(8.px)),
+                  decoration: BoxDecoration(
+                      color: appColors.white,
+                      borderRadius: BorderRadius.circular(8.px)),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -431,7 +441,9 @@ class InspectionController extends BaseController {
                                 textFamily: fontFamilyRegular),
                           ),
                         ],
-                      ).paddingSymmetric(vertical: 16.px).paddingOnly(right: 24.px, left: 16.px),
+                      )
+                          .paddingSymmetric(vertical: 16.px)
+                          .paddingOnly(right: 24.px, left: 16.px),
                       Image.asset(
                         element.imgId!,
                         width: 75.px,
@@ -458,23 +470,23 @@ class InspectionController extends BaseController {
     update();
   }
 
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        Constants.googleApiKey,
-        PointLatLng(mapList[0].lat!, mapList[0].lng!),
-        PointLatLng(mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
-        travelMode: TravelMode.driving,
-        wayPoints: mapList.map((element) => PolylineWayPoint(location: "${element.lat!},${element.lng!}")).toList());
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      PolylineId id = PolylineId(mapList[0].title!);
-      Polyline polyline = Polyline(polylineId: id, color: const Color(0xFF002D74), points: polylineCoordinates);
-      polylines[id] = polyline;
-      update();
-    }
-  }
+  // _getPolyline() async {
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       Constants.googleApiKey,
+  //       PointLatLng(mapList[0].lat!, mapList[0].lng!),
+  //       PointLatLng(mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
+  //       travelMode: TravelMode.driving,
+  //       wayPoints: mapList.map((element) => PolylineWayPoint(location: "${element.lat!},${element.lng!}")).toList());
+  //   if (result.points.isNotEmpty) {
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //     PolylineId id = PolylineId(mapList[0].title!);
+  //     Polyline polyline = Polyline(polylineId: id, color: const Color(0xFF002D74), points: polylineCoordinates);
+  //     polylines[id] = polyline;
+  //     update();
+  //   }
+  // }
 
   void navigateToMap() {
     showModalBottomSheet(
@@ -527,16 +539,21 @@ class InspectionController extends BaseController {
                   final item = mapList[index];
                   return ListTile(
                     onTap: () {
-                      _customInfoWindowController.googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-                          CameraPosition(target: LatLng(item.lat!, item.lng!), zoom: 17)));
+                      _customInfoWindowController.googleMapController!
+                          .animateCamera(CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                  target: LatLng(item.lat!, item.lng!),
+                                  zoom: 17)));
                     },
                     isThreeLine: true,
                     leading: CircleAvatar(
                       backgroundColor: appColors.appColor.withOpacity(0.8),
                       child: MyTextView(
                         "${index + 1}",
-                        textStyleNew:
-                            MyTextStyle(textSize: 16.px, textWeight: FontWeight.w500, textColor: appColors.white),
+                        textStyleNew: MyTextStyle(
+                            textSize: 16.px,
+                            textWeight: FontWeight.w500,
+                            textColor: appColors.white),
                       ),
                     ),
                     title: Column(
@@ -544,7 +561,9 @@ class InspectionController extends BaseController {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyTextView(
-                          item.check == false ? Strings.annualInspection : Strings.tenant,
+                          item.check == false
+                              ? Strings.annualInspection
+                              : Strings.tenant,
                           textStyleNew: MyTextStyle(
                             textSize: 12.px,
                             textWeight: FontWeight.w500,
@@ -561,7 +580,8 @@ class InspectionController extends BaseController {
                         ),
                       ],
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 12.px, horizontal: 16.px),
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 12.px, horizontal: 16.px),
                     subtitle: MyTextView(
                       item.title.toString(),
                       textStyleNew: MyTextStyle(
@@ -629,7 +649,10 @@ class InspectionController extends BaseController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width: 24.px, height: 24.px, child: SvgPicture.string(icOops)),
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
                   MyTextView(
                     Strings.inspectionIncomplete,
                     textStyleNew: MyTextStyle(
@@ -645,7 +668,8 @@ class InspectionController extends BaseController {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'This inspection is still incomplete. Do you want to go back anyway?',
+                            text:
+                                'This inspection is still incomplete. Do you want to go back anyway?',
                             style: MyTextStyle(
                               textColor: appColors.lightText,
                               textSize: 16.px,
@@ -679,7 +703,8 @@ class InspectionController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back();
@@ -691,7 +716,8 @@ class InspectionController extends BaseController {
                           textSize: 16.px,
                           textFamily: fontFamilyRegular,
                           textWeight: FontWeight.w500,
-                          padding: EdgeInsets.symmetric(horizontal: 24.px, vertical: 10.px),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
                           radius: 100.px,
                           onTap: () {
                             Get.back(closeOverlays: true);
