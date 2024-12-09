@@ -3,6 +3,7 @@
 //     final createInspectionRequestModel = createInspectionRequestModelFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 CreateInspectionRequestModel createInspectionRequestModelFromJson(String str) =>
     CreateInspectionRequestModel.fromJson(json.decode(str));
@@ -170,7 +171,9 @@ class Inspection {
     this.date,
     this.comment,
     this.inspectionStateId,
-    this.inspectionTypeId,this.general_physical_condition,this.unit_house_keeping
+    this.inspectionTypeId,
+    this.general_physical_condition,
+    this.unit_house_keeping,
   });
 
   factory Inspection.fromJson(Map<String, dynamic> json) => Inspection(
@@ -179,14 +182,14 @@ class Inspection {
         comment: json["comment"],
         inspectionStateId: json["inspection_state_id"],
         inspectionTypeId: json["inspection_type_id"],
-    general_physical_condition: json["general_physical_condition"],
-    unit_house_keeping: json["unit_house_keeping"],
+        general_physical_condition: json["general_physical_condition"],
+        unit_house_keeping: json["unit_house_keeping"],
       );
 
   Map<String, dynamic> toJson() => {
         "inspector_id": inspectorId,
         "date":
-            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+            "${DateFormat("yyyy-MM-dd HH:mm:ss").format(date!)}${date!.timeZoneOffset.isNegative ? '-' : '+'}${date!.timeZoneOffset.inHours.toString().padLeft(2, '0')}:${(date!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}",
         "comment": comment,
         "inspection_state_id": inspectionStateId,
         "inspection_type_id": inspectionTypeId,

@@ -206,6 +206,6 @@ class Strings {
   static String dontSave = "Don't Save";
   static String changesNotSaved =
       "You need to complete all the fields or the changes";
-  static String notSaved = "will not be saved.";
+  static String notSaved = " will not be saved.";
   static String fieldsMissing = "Some fields are missing";
 }

@@ -145,7 +145,6 @@ class DeficienciesInsideController extends BaseController {
       visibleBtn = true;
       selectedItem = 'present';
     }
-    print("fljfnbjlhn ${deficiencyInspectionsReqModel}");
     update();
   }
 

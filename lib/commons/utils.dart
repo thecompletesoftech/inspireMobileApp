@@ -800,17 +800,17 @@ class Utils {
 
   /// <<< To get current time --------- >>>
   String currentTime() {
-    String month = DateFormat.M().format(DateTime.now().toUtc());
-    String day = DateFormat.d().format(DateTime.now().toUtc());
-    String time = DateFormat.Hm().format(DateTime.now().toUtc());
+    String month = DateFormat.M().format(DateTime.now().toLocal());
+    String day = DateFormat.d().format(DateTime.now().toLocal());
+    String time = DateFormat.Hm().format(DateTime.now().toLocal());
     String timeDate =
-        '${DateFormat.y().format(DateTime.now().toUtc())}-${month.length == 1 ? '0$month' : month}-${day.length == 1 ? '0$day' : day} $time';
+        '${DateFormat.y().format(DateTime.now().toLocal())}-${month.length == 1 ? '0$month' : month}-${day.length == 1 ? '0$day' : day} $time';
     return timeDate;
   }
 
   /// <<< To get current date --------- >>>
   String currentDate(String outputFormat) {
-    var now = DateTime.now().toUtc();
+    var now = DateTime.now().toLocal();
     var formatter = DateFormat(outputFormat);
     String formattedDate = formatter.format(now);
 
@@ -820,7 +820,7 @@ class Utils {
   /// <<< To launch url --------- >>>
   void urlLaunch(Uri url) async {
     if (await canLaunchUrl(url)) {
-      await launchUrl(url); 
+      await launchUrl(url);
     }
   }
 
