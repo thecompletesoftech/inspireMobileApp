@@ -6,12 +6,19 @@ import 'package:public_housing/screens/building_inspection_screen/binding/buildi
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/building_inspection_summary/binding/building_inspection_summary_binding.dart';
 import 'package:public_housing/screens/building_inspection_summary/screen/building_inspection_summary_screen.dart';
+import 'package:public_housing/screens/building_list_screen/binding/building_list_binding.dart';
+import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/binding/building_standards_binding.dart';
 import 'package:public_housing/screens/building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
-
+import 'package:public_housing/screens/properties_list_screen/binding/properties_list_binding.dart';
+import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
+import 'package:public_housing/screens/select_work_screen/binding/select_work_binding.dart';
+import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
+import 'package:public_housing/screens/unit_list_screen/binding/unit_list_binding.dart';
+import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import '../screens/Unit_building_standards_screen/binding/building_standards_binding.dart';
 import '../screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
 import '../screens/Unit_deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
@@ -201,5 +208,21 @@ class AppPages {
         name: UnitDeficienciesInsideScreen.routes,
         page: () => UnitDeficienciesInsideScreen(),
         binding: UntiDeficienciesInsideBinding()),
+    GetPage(
+        name: PropertiesListScreen.routes,
+        page: () => PropertiesListScreen(),
+        binding: PropertiesListBinding()),
+    GetPage(
+      name: BuildingListScreen.routes,
+        page: () => BuildingListScreen(),
+        binding: BuildingListBinding()),
+    GetPage(
+        name: SelectWorkScreen.routes,
+        page: () => SelectWorkScreen(),
+        binding: SelectWorkBinding()),
+    GetPage(
+        name: UnitListScreen.routes,
+        page: () => UnitListScreen(),
+        binding: UnitListBinding()),
   ];
 }

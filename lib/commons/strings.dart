@@ -208,4 +208,21 @@ class Strings {
       "You need to complete all the fields or the changes";
   static String notSaved = " will not be saved.";
   static String fieldsMissing = "Some fields are missing";
+
+  ///************** Properties List Screen String **************///
+
+  static String publicHousing = "Public Housing";
+  static String inspectManually = "Inspect Manually";
+  static String selectTimeframe = "Select Timeframe";
+  static String selectDates = "Select dates";
+  static String today = "Today";
+  static String todayInspections = "Today Inspections | ";
+  static String from = "From";
+  static String selectDate = "Select a date";
+  static String to = "To";
+  static String confirmDates = "Confirm Dates";
+  static String welcome = "Welcome back";
+  static String workToday = "Select with which program you will work today";
+  static String section = "Section 8";
+  static String changeSection = "Change to Section 8";
 }
