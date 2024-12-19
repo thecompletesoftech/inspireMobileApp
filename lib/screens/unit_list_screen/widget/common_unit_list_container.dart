@@ -5,9 +5,10 @@ import 'package:public_housing/commons/common_widgets/common_container.dart';
 class CommonUnitListView extends StatelessWidget {
   final String title;
   final String Subtitle;
+  final VoidCallback? onTap;
 
   const CommonUnitListView(
-      {super.key, required this.title, required this.Subtitle});
+      {super.key, required this.title, required this.Subtitle, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class CommonUnitListView extends StatelessWidget {
                 textSize: 16.px,
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
-                onTap: () {},
+                onTap: onTap,
                 iconColor: AppColors.primerColor,
                 icon: icHome,
                 iconheigth: 20.px,
@@ -77,7 +78,6 @@ class CommonRow extends StatelessWidget {
   final String image;
   final String imageName;
   final Color imageNameColor;
-  final VoidCallback? onTap;
   final double? textSize;
   final Color? textColor;
   final FontWeight? textWeight;
@@ -87,7 +87,6 @@ class CommonRow extends StatelessWidget {
     required this.image,
     required this.imageName,
     required this.imageNameColor,
-    this.onTap,
     this.textSize,
     this.textColor,
     this.textWeight,
@@ -95,24 +94,21 @@ class CommonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: [
-          SvgPicture.string(
-            image,
-            color: AppColors.primerColor,
-          ).paddingOnly(right: 8.px),
-          MyTextView(
-            imageName,
-            textStyleNew: MyTextStyle(
-              textSize: textSize ?? 20.px,
-              textColor: textColor ?? imageNameColor,
-              textWeight: textWeight ?? FontWeight.w600,
-            ),
+    return Row(
+      children: [
+        SvgPicture.string(
+          image,
+          color: AppColors.primerColor,
+        ).paddingOnly(right: 8.px),
+        MyTextView(
+          imageName,
+          textStyleNew: MyTextStyle(
+            textSize: textSize ?? 20.px,
+            textColor: textColor ?? imageNameColor,
+            textWeight: textWeight ?? FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

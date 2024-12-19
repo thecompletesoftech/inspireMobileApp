@@ -4,6 +4,7 @@ import 'package:public_housing/screens/building_list_screen/screen/building_list
 import 'package:public_housing/screens/properties_list_screen/widget/common_properties_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PropertiesListScreen extends GetView<PropertiesListController> {
   const PropertiesListScreen({Key? key}) : super(key: key);
@@ -236,14 +237,14 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                 width: 191.px,
                                 height: 44.px,
                                 color: AppColors.primerColor,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 24.px,
-                                ),
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 24.px),
                                 textSize: 16.px,
                                 textWeight: FontWeight.w500,
                                 textFamily: fontFamilyRegular,
                                 onTap: () {
-                                  Get.toNamed(BuildingInspectionScreen.routes);
+                                  Get.toNamed(BuildingInspectionScreen.routes,
+                                      arguments: {'isManually': true});
                                 },
                                 iconColor: controller.appColors.white,
                                 icon: inspectIcon,
@@ -264,16 +265,18 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                       width: 191.px,
                       height: 44.px,
                       color: controller.appColors.transparent,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 24.px,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 24.px),
                       textSize: 16.px,
                       border: Border.all(color: controller.appColors.black),
                       textColor: AppColors.primerColor,
                       textWeight: FontWeight.w500,
                       textFamily: fontFamilyRegular,
                       onTap: () {
-                        controller.navigateToDateTime();
+                        navigateToDateTime();
+                        controller.dateRange = PickerDateRange(null, null);
+                        controller.startDate = '';
+                        controller.endDate = '';
+                        controller.confirmSelectedDates();
                       },
                       iconColor: AppColors.primerColor,
                       icon: icCalender1,
@@ -329,7 +332,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                 ).paddingOnly(left: 32.px, right: 32.px, top: 38.px),
                 Row(
                   children: [
-                    controller.date == controller.todayDate
+                    controller.todayDate == controller.startDate
                         ? MyTextView(
                             Strings.todayInspections,
                             textStyleNew: MyTextStyle(
@@ -340,7 +343,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                           )
                         : Container(),
                     MyTextView(
-                      controller.todayDate,
+                      controller.startDate,
                       textStyleNew: MyTextStyle(
                         textSize: 24.px,
                         textWeight: FontWeight.w400,
@@ -355,19 +358,196 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                     ),
                   ],
                 ).paddingAll(32.px),
-                CommonPropertiesListView(
-                  title: '[Property Name]',
-                  Subtitle: '[City] - [Property Address]',
-                  title1: '[Building Count]',
-                  Subtitle1: '[Unit Count]',
-                  onTap: () {
-                    Get.toNamed(BuildingListScreen.routes);
-                  },
-                ).paddingSymmetric(horizontal: 32.px),
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: 2,
+                    itemBuilder: (context, index) => CommonPropertiesListView(
+                      title: '[Property Name]',
+                      Subtitle: '[City] - [Property Address]',
+                      title1: '[Building Count]',
+                      Subtitle1: '[Unit Count]',
+                      onTap: () {
+                        Get.toNamed(BuildingListScreen.routes,
+                            arguments: {"isComplete": false});
+                      },
+                    ).paddingSymmetric(horizontal: 32.px),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 24.px);
+                    },
+                  ),
+                ),
+                // MyTextView(
+                //   Strings.timeframe,
+                //   textStyleNew: MyTextStyle(
+                //     textSize: 20.px,
+                //     textWeight: FontWeight.w400,
+                //     textColor: controller.appColors.black,
+                //   ),
+                // ),
               ],
             ),
           ),
         );
+      },
+    );
+  }
+
+  void navigateToDateTime() {
+    showModalBottomSheet(
+      context: Get.context!,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(28.px),
+        ),
+      ),
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return Container(
+            height: MediaQuery.of(context).size.height / 2,
+            color: controller.appColors.white,
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.px),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      MyTextView(
+                        Strings.selectDates,
+                        textStyleNew: MyTextStyle(
+                            textSize: 32.px,
+                            textColor: controller.appColors.black,
+                            textWeight: FontWeight.w400),
+                      ),
+                      Spacer(),
+                      CommonButton(
+                        title: Strings.today,
+                        textColor: AppColors.primerColor,
+                        textWeight: FontWeight.w500,
+                        textSize: 16.px,
+                        onTap: () {
+                          controller.startDate =
+                              controller.todayDateGet(DateTime.now());
+                          Get.back();
+                          controller.update();
+                        },
+                        width: 92.px,
+                        height: 44.px,
+                        color: controller.appColors.transparent,
+                        border: Border.all(color: controller.appColors.black),
+                      ),
+                    ],
+                  ).paddingAll(24.px),
+                  Container(height: 2.px, color: controller.appColors.divider),
+                  Flexible(
+                    child: SfDateRangePicker(
+                      rangeSelectionColor: controller.appColors.greyColor,
+                      initialSelectedDate: DateTime.now(),
+                      onSelectionChanged:
+                          (DateRangePickerSelectionChangedArgs args) {
+                        setState(() {
+                          if (args.value.startDate != null) {
+                            controller.startDate =
+                                controller.todayDateGet(args.value.startDate);
+                          } else {
+                            controller.startDate = '';
+                            controller.confirmSelectedDates();
+                          }
+
+                          if (args.value.endDate != null) {
+                            controller.endDate =
+                                controller.todayDateGet(args.value.endDate);
+                          } else {
+                            controller.endDate = '';
+                            controller.confirmSelectedDates();
+                          }
+                          if (args.value.startDate != null ||
+                              args.value.endDate != null) {
+                            controller.confirmSelectedDates();
+                          }
+                        });
+                      },
+                      selectionShape: DateRangePickerSelectionShape.rectangle,
+                      selectionRadius: 50.0,
+                      selectionMode: DateRangePickerSelectionMode.range,
+                      initialSelectedRange: controller.dateRange,
+                      selectionTextStyle: const TextStyle(color: Colors.white),
+                      startRangeSelectionColor: AppColors.primerColor,
+                      endRangeSelectionColor: AppColors.primerColor,
+                    ),
+                  ),
+                  Container(height: 2.px, color: controller.appColors.divider),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyTextView(
+                            Strings.from,
+                            textStyleNew: MyTextStyle(
+                                textSize: 20.px,
+                                textColor: controller.appColors.textcolor,
+                                textWeight: FontWeight.w400),
+                          ),
+                          MyTextView(
+                            controller.startDate,
+                            textStyleNew: MyTextStyle(
+                                textSize: 24.px,
+                                textColor: controller.appColors.black,
+                                textWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyTextView(
+                            controller.endDate == ''
+                                ? Strings.selectDate
+                                : Strings.to,
+                            textStyleNew: MyTextStyle(
+                                textSize: 20.px,
+                                textColor: controller.appColors.textcolor,
+                                textWeight: FontWeight.w400),
+                          ),
+                          MyTextView(
+                            controller.endDate,
+                            textStyleNew: MyTextStyle(
+                                textSize: 24.px,
+                                textColor: controller.appColors.black,
+                                textWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                      CommonButton(
+                        title: Strings.confirmDates,
+                        textColor: controller.isDateSelected
+                            ? controller.appColors.white
+                            : controller.appColors.border1,
+                        textWeight: FontWeight.w500,
+                        textSize: 16.px,
+                        onTap: () {
+                          Get.back();
+                        },
+                        width: 152.px,
+                        height: 44.px,
+                        color: controller.isDateSelected
+                            ? AppColors.primerColor
+                            : controller.appColors.black.withOpacity(.12),
+                      ),
+                    ],
+                  ).paddingAll(24.px)
+                ],
+              ),
+            ),
+          );
+        });
       },
     );
   }

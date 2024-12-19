@@ -225,4 +225,7 @@ class Strings {
   static String workToday = "Select with which program you will work today";
   static String section = "Section 8";
   static String changeSection = "Change to Section 8";
+  static String timeframe =
+      "These are today's inspections. To see more, select a timeframe.";
+  static String unitUninspectable = "Unit Uninspectable";
 }

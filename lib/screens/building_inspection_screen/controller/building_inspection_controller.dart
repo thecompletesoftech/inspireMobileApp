@@ -43,9 +43,14 @@ class BuildingInspectionController extends BaseController {
   var certificatesInfo = [].obs;
   List<BuildingType> buildingTypes = [];
   bool isSelected = false;
+  bool isManually = false;
 
   @override
   void onInit() {
+    if (Get.arguments != null) {
+      isManually = Get.arguments['isManually'];
+    }
+
     clearAllData();
     // searchPropertyNameList == propertyList;
     // searchBuildingList == buildingList;

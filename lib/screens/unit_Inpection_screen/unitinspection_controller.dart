@@ -19,16 +19,24 @@ class UnitController extends BaseController {
   var propertyInfo = {}.obs;
   var buildingInfo = {}.obs;
   var buildingType = "".obs;
+  bool isManually = false;
 
   void onInit() {
-    if (Get.arguments != null) {
+    if (Get.arguments['deficiencyArea'] != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
       buildingType.value = Get.arguments['buildingtype'];
       unitAddress.text = Get.arguments['propertyInfo']['address'].toString();
     }
-    getInspectionInfoJson();
+    if (Get.arguments['isManually'] != null) {
+      isManually = Get.arguments['isManually'];
+      switchButton.value = true;
+    }
+
+    if (Get.arguments['inspectorDate'] != null) {
+      getInspectionInfoJson();
+    }
     getDeficiencyJson();
     super.onInit();
   }

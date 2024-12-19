@@ -60,6 +60,7 @@ class AppColors {
   Color bottomSheetBackground = const Color(0xFF273840);
   Color delete = const Color(0xFFD72B2B);
   Color pinkcolor = const Color(0xFFE8DEF8);
+  Color greyColor = const Color(0xFFEAEAEB);
 }
 
 //

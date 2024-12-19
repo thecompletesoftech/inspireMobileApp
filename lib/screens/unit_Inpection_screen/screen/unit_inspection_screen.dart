@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/commons/common_widgets/common_row.dart';
 import 'package:public_housing/screens/Unit_building_standards_screen/screen/building_standards_screen.dart';
 import 'package:public_housing/screens/unit_Inpection_screen/unitinspection_controller.dart';
 import '../../../commons/all.dart';
@@ -210,25 +211,48 @@ class UnitInspection extends GetView<UnitController> {
                                     ).paddingOnly(left: 10.px),
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: (() {
-                                    if (controller.getUnitInspection()) {
-                                      controller.unitCannotInspected(
-                                          context, Get.arguments);
-                                    }
-                                  }),
-                                  child: MyTextView(
-                                    Strings.unitcannitbeinspected,
-                                    textStyleNew: MyTextStyle(
-                                      textColor: controller.getUnitInspection()
-                                          ? controller.appColors.appColor
-                                          : controller.appColors.border1,
-                                      textWeight: FontWeight.w500,
-                                      textFamily: fontFamilyBold,
-                                      textSize: 16.px,
-                                    ),
-                                  ).paddingOnly(right: 10.px),
-                                ),
+                                controller.isManually == true
+                                    ? GestureDetector(
+                                        onTap: (() {
+                                          if (controller.getUnitInspection()) {
+                                            controller.unitCannotInspected(
+                                                context, Get.arguments);
+                                          }
+                                        }),
+                                        child: MyTextView(
+                                          Strings.unitcannitbeinspected,
+                                          textStyleNew: MyTextStyle(
+                                            textColor: controller
+                                                    .getUnitInspection()
+                                                ? controller.appColors.appColor
+                                                : controller.appColors.border1,
+                                            textWeight: FontWeight.w500,
+                                            textFamily: fontFamilyBold,
+                                            textSize: 16.px,
+                                          ),
+                                        ).paddingOnly(right: 10.px),
+                                      )
+                                    : CommonIconButton(
+                                        title: Strings.unitUninspectable,
+                                        radius: 100.px,
+                                        width: 171.px,
+                                        height: 44.px,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 24.px,
+                                        ),
+                                        textSize: 16.px,
+                                        textWeight: FontWeight.w500,
+                                        textFamily: fontFamilyRegular,
+                                        textColor: AppColors.primerColor,
+                                        color: controller.appColors.transparent,
+                                        onTap: () {},
+                                        border: Border.all(
+                                            color: controller.appColors.black,
+                                            width: 1.5),
+                                        icon: blockIcon,
+                                        iconColor: AppColors.primerColor,
+                                        iconheigth: null,
+                                      ).paddingSymmetric(vertical: 24.px),
                               ],
                             ),
                           ],
@@ -239,48 +263,72 @@ class UnitInspection extends GetView<UnitController> {
                             left: 24.px),
                       ),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 10.px),
-                    Center(
-                      child: CommonButton(
-                        title: Strings.startInspection,
-                        radius: 100.px,
-                        width: 171.px,
-                        height: 44.px,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 15.px,
-                          horizontal: 24.px,
-                        ),
-                        textSize: 16.px,
-                        textWeight: FontWeight.w500,
-                        textFamily: fontFamilyRegular,
-                        textColor: controller.getUnitInspection()
-                            ? controller.appColors.black
-                            : controller.appColors.border1,
-                        color: controller.getUnitInspection()
-                            ? controller.appColors.textPink
-                            : controller.appColors.black
-                                .withOpacity(0.11999999731779099),
-                        onTap: () async {
-                          if (controller.getUnitInspection()) {
-                            controller.getUnitJson();
-                            Get.toNamed(
-                              UnitBuildingStandardsScreen.routes,
-                              preventDuplicates: false,
-                              arguments: {
-                                "unitinfo": controller.unitJson,
-                                "propertyInfo": Get.arguments['propertyInfo'],
-                                "buildingInfo": Get.arguments['buildingInfo'],
-                                "buildingtype": Get.arguments['buildingtype'],
-                                "switchvalue": controller.switchButton.value,
-                                "certificatesInfo":
-                                    Get.arguments['certificatesInfo'],
-                                "inspectorName": Get.arguments['inspectorName'],
-                                "inspectorDate": Get.arguments['inspectorDate'],
+                    controller.isManually == true
+                        ? Center(
+                            child: CommonButton(
+                              title: Strings.startInspection,
+                              radius: 100.px,
+                              width: 171.px,
+                              height: 44.px,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 15.px,
+                                horizontal: 24.px,
+                              ),
+                              textSize: 16.px,
+                              textWeight: FontWeight.w500,
+                              textFamily: fontFamilyRegular,
+                              textColor: controller.getUnitInspection()
+                                  ? controller.appColors.black
+                                  : controller.appColors.border1,
+                              color: controller.getUnitInspection()
+                                  ? controller.appColors.textPink
+                                  : controller.appColors.black
+                                      .withOpacity(0.11999999731779099),
+                              onTap: () async {
+                                if (controller.getUnitInspection()) {
+                                  controller.getUnitJson();
+                                  Get.toNamed(
+                                    UnitBuildingStandardsScreen.routes,
+                                    preventDuplicates: false,
+                                    arguments: {
+                                      "unitinfo": controller.unitJson,
+                                      "propertyInfo":
+                                          Get.arguments['propertyInfo'],
+                                      "buildingInfo":
+                                          Get.arguments['buildingInfo'],
+                                      "buildingtype":
+                                          Get.arguments['buildingtype'],
+                                      "switchvalue":
+                                          controller.switchButton.value,
+                                      "certificatesInfo":
+                                          Get.arguments['certificatesInfo'],
+                                      "inspectorName":
+                                          Get.arguments['inspectorName'],
+                                      "inspectorDate":
+                                          Get.arguments['inspectorDate'],
+                                    },
+                                  );
+                                }
                               },
-                            );
-                          }
-                        },
-                      ).paddingSymmetric(vertical: 24.px),
-                    ),
+                            ).paddingSymmetric(vertical: 24.px),
+                          )
+                        : Center(
+                            child: CommonButton(
+                              title: Strings.startInspection,
+                              radius: 100.px,
+                              width: 171.px,
+                              height: 44.px,
+                              textSize: 16.px,
+                              textWeight: FontWeight.w600,
+                              textFamily: fontFamilyRegular,
+                              textColor: controller.appColors.black,
+                              color: controller.appColors.textPink,
+                              onTap: () async {
+                                Get.toNamed(UnitBuildingStandardsScreen.routes,
+                                    preventDuplicates: false);
+                              },
+                            ).paddingSymmetric(vertical: 24.px),
+                          ),
                     Row(
                       children: [
                         MyTextView(
@@ -300,86 +348,172 @@ class UnitInspection extends GetView<UnitController> {
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TitleheadMenu(
-                          title: Strings.propertyName,
-                          value: controller.propertyInfo['name'].toString(),
-                        ),
-                        Row(
-                          children: [
-                            TitleheadMenu(
-                              title: Strings.city,
-                              value: controller.propertyInfo['city'].toString(),
-                            ).paddingOnly(right: 20.px),
-                            TitleheadMenu(
-                              title: Strings.propertyID,
-                              value: controller.propertyInfo['id'].toString(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TitleheadMenu(
-                          title: Strings.propertyAddress,
-                          value: controller.propertyInfo['address'].toString(),
-                        ),
-                        Row(
-                          children: [
-                            TitleheadMenu(
-                              title: Strings.state,
-                              value:
-                                  controller.propertyInfo['state'].toString(),
-                            ).paddingOnly(right: 20.px),
-                            TitleheadMenu(
-                              title: Strings.zip,
-                              value: controller.propertyInfo['zip'].toString(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
-                    Row(
-                      children: [
-                        MyTextView(
-                          Strings.buildingInformation,
-                          textStyleNew: MyTextStyle(
-                            textColor: controller.appColors.black,
-                            textWeight: FontWeight.w400,
-                            textFamily: fontFamilyBold,
-                            textSize: 24.px,
-                          ),
-                        ).paddingOnly(right: 10.px),
-                        Expanded(
-                          child: Container(
-                            height: 2.px,
-                            color: AppColors().divider,
-                          ),
-                        ),
-                      ],
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TitleheadMenu(
-                          title: Strings.buildingName,
-                          value: controller.buildingInfo['name'].toString(),
-                        ),
-                        TitleheadMenu(
-                          title: Strings.buildingType,
-                          value: controller.buildingType.value.toString(),
-                        ),
-                      ],
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                    TitleheadMenu(
+                    controller.isManually == true
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TitleheadMenu(
+                                title: Strings.propertyName,
+                                value:
+                                    controller.propertyInfo['name'].toString(),
+                              ),
+                              Row(
+                                children: [
+                                  TitleheadMenu(
+                                    title: Strings.city,
+                                    value: controller.propertyInfo['city']
+                                        .toString(),
+                                  ).paddingOnly(right: 20.px),
+                                  TitleheadMenu(
+                                    title: Strings.propertyID,
+                                    value: controller.propertyInfo['id']
+                                        .toString(),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px)
+                        : CommonRow(
+                            title: 'Property Name: ',
+                            subTitle: '[Property Name]',
+                            imageString: icBuildingss,
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px),
+                    controller.isManually == true
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TitleheadMenu(
+                                title: Strings.propertyAddress,
+                                value: controller.propertyInfo['address']
+                                    .toString(),
+                              ),
+                              Row(
+                                children: [
+                                  TitleheadMenu(
+                                    title: Strings.state,
+                                    value: controller.propertyInfo['state']
+                                        .toString(),
+                                  ).paddingOnly(right: 20.px),
+                                  TitleheadMenu(
+                                    title: Strings.zip,
+                                    value: controller.propertyInfo['zip']
+                                        .toString(),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 40.px)
+                        : CommonRow(
+                            title: 'Property Address: ',
+                            subTitle:
+                                '[Property Address], [City], [State], [Zip]',
+                            imageString: icLocation,
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px),
+                    controller.isManually == true
+                        ? Row(
+                            children: [
+                              MyTextView(
+                                Strings.buildingInformation,
+                                textStyleNew: MyTextStyle(
+                                  textColor: controller.appColors.black,
+                                  textWeight: FontWeight.w400,
+                                  textFamily: fontFamilyBold,
+                                  textSize: 24.px,
+                                ),
+                              ).paddingOnly(right: 10.px),
+                              Expanded(
+                                child: Container(
+                                  height: 2.px,
+                                  color: AppColors().divider,
+                                ),
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px)
+                        : CommonRow(
+                            title: 'Property ID: ',
+                            subTitle: '[Property ID]',
+                            imageString: hasTagIcon,
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px),
+                    controller.isManually == true
+                        ? SizedBox.shrink()
+                        : Row(
+                            children: [
+                              MyTextView(
+                                Strings.buildingInformation,
+                                textStyleNew: MyTextStyle(
+                                  textColor: controller.appColors.black,
+                                  textWeight: FontWeight.w400,
+                                  textFamily: fontFamilyBold,
+                                  textSize: 24.px,
+                                ),
+                              ).paddingOnly(right: 10.px),
+                              Expanded(
+                                child: Container(
+                                  height: 2.px,
+                                  color: AppColors().divider,
+                                ),
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px,
+                            right: 32.px,
+                            bottom: 40.px,
+                            top: 20.px),
+                    controller.isManually == true
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TitleheadMenu(
+                                title: Strings.buildingName,
+                                value:
+                                    controller.buildingInfo['name'].toString(),
+                              ),
+                              TitleheadMenu(
+                                title: Strings.buildingType,
+                                value: controller.buildingType.value.toString(),
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px)
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: CommonRow(
+                                  title: 'Building Name: ',
+                                  subTitle: '[Building Name]',
+                                  imageString: icBuildings,
+                                ),
+                              ),
+                              SizedBox(width: 16.px),
+                              Expanded(
+                                child: CommonRow(
+                                  isImage: true,
+                                  title: 'Year Constructed: ',
+                                  subTitle: '[Year Constructed]',
+                                  imageString: icCalender2,
+                                ),
+                              ),
+                            ],
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 20.px),
+                    controller.isManually == true
+                        ?TitleheadMenu(
                       title: Strings.yearConstructed,
                       value:
                           controller.buildingInfo['constructed_year'].toString(),
-                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px),
+                    ).paddingOnly(left: 32.px, right: 32.px, bottom: 40.px)
+                        : CommonRow(
+                            title: 'Building Type: ',
+                            subTitle: '[Building Type]',
+                            imageString: icBuildings,
+                          ).paddingOnly(
+                            left: 32.px, right: 32.px, bottom: 40.px),
                   ],
                 ),
               ),
