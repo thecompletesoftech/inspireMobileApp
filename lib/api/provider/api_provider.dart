@@ -13,7 +13,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
-import '../../screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/models/create_inspection_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 

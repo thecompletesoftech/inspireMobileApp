@@ -1,6 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/screen/unit_building_standards_screen.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/screen/unit_building_standards_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/screen/unit_inspection_summary_screen.dart';
 import '../../../commons/all.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/unit_cabinets_screen%20/controller/unit_standards_details_controller.dart';
 
-import '../../Unit_building_standards_screen/controller/unit_building_standards_controller.dart';
-import '../../Unit_deficiencies_inside_screen/controller/deficiencies_inside_controller.dart';
-import '../../Unit_deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
+import '../../unit_building_standards_screen/controller/unit_building_standards_controller.dart';
+import '../../unit_deficiencies_inside_screen/controller/unit_deficiencies_inside_controller.dart';
+import '../../unit_deficiencies_inside_screen/screen/unit_deficiencies_inside_screen.dart';
 import '../../building_cabinets_screen/widgets/building_text_common_widget.dart';
-import '../binding/standards_details_binding.dart';
-import '../controller/standards_details_controller.dart';
+import '../binding/unit_standards_details_binding.dart';
 
 class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
   const UnitStandardsDetailsScreen({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
 
   @override
   Widget build(BuildContext context) {
-    UnitBuildingStandardsController _unitbuildingStandardsController =
+    UnitBuildingStandardsController _unitBuildingStandardsController =
         Get.put(UnitBuildingStandardsController());
 
     return GetBuilder<UnitStandardsDetailsController>(
@@ -45,7 +45,7 @@ class UnitStandardsDetailsScreen extends GetView<UnitStandardsDetailsBinding> {
                     child: Column(
                       children: [
                         MyTextView(
-                          '${_unitbuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitbuildingStandardsController.buildingName}-${_unitbuildingStandardsController.unitname}',
+                          '${_unitBuildingStandardsController.propertyInfo['name'] ?? ""}-${_unitBuildingStandardsController.buildingName}-${_unitBuildingStandardsController.unitname}',
                           textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,

@@ -1,13 +1,12 @@
 import 'package:dartz/dartz.dart';
+import '../../../api/provider/status_objects.dart';
 import 'package:public_housing/api/provider/api_provider.dart';
-import 'package:public_housing/api/provider/status_objects.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 
-import '../models/deficiency_areas_res_model.dart';
-
-class BuildingStandardsRepository {
+class UnitBuildingStandardsRepository {
   final ApiProviders _provider = ApiProviders();
 
-  BuildingStandardsRepository();
+  UnitBuildingStandardsRepository();
 
   Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
       getDeficiencyAreas() async {

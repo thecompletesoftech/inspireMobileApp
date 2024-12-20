@@ -3,7 +3,7 @@ import 'package:public_housing/screens/auth/model/inspector_model.dart';
 import 'package:public_housing/screens/auth/repository/login_repository.dart';
 import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/certificate_model.dart';
-import 'package:public_housing/screens/building_inspection_screen/repository/buding_inpection_repository.dart';
+import 'package:public_housing/screens/building_inspection_screen/repository/building_inspection_repository.dart';
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repository.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';

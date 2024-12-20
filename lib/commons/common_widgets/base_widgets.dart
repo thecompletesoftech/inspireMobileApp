@@ -6,8 +6,6 @@ class BaseController extends GetxController {
   GetStorageData getStorageData = GetStorageData();
 }
 
-//base screen==-=-=-==-=--
-
 class BaseScreen extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
@@ -15,14 +13,15 @@ class BaseScreen extends StatelessWidget {
   final bool? resizeToAvoidBottomInset;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
-  const BaseScreen(
-      {Key? key,
-      required this.child,
-      this.backgroundColor,
-      this.bottomNavigationBar,
-      this.floatingActionButton,
-      this.resizeToAvoidBottomInset = true})
-      : super(key: key);
+
+  const BaseScreen({
+    Key? key,
+    required this.child,
+    this.backgroundColor,
+    this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.resizeToAvoidBottomInset = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

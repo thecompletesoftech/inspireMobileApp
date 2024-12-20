@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../controller/standards_details_controller.dart';
+import '../controller/unit_standards_details_controller.dart';
 
 class UnitStandardsDetailsBinding implements Bindings {
   @override

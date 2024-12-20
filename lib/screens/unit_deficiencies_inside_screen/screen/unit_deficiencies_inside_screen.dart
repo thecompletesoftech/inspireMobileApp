@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/controller/unit_building_standards_controller.dart';
-import 'package:public_housing/screens/unit_cabinets_screen%20/binding/standards_details_binding.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/controller/unit_building_standards_controller.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/controller/unit_deficiencies_inside_controller.dart';
+import 'package:public_housing/screens/unit_cabinets_screen%20/binding/unit_standards_details_binding.dart';
 
 class UnitDeficienciesInsideScreen
     extends GetView<UnitStandardsDetailsBinding> {
@@ -12,7 +13,7 @@ class UnitDeficienciesInsideScreen
 
   @override
   Widget build(BuildContext context) {
-    UnitBuildingStandardsController unibuildingStandardsController =
+    UnitBuildingStandardsController unitBuildingStandardsController =
         Get.put(UnitBuildingStandardsController());
 
     return GetBuilder<UnitDeficienciesInsideController>(
@@ -48,7 +49,7 @@ class UnitDeficienciesInsideScreen
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              '${unibuildingStandardsController.propertyInfo['name'] ?? ""}-${unibuildingStandardsController.buildingName}-${unibuildingStandardsController.unitname}',
+                              '${unitBuildingStandardsController.propertyInfo['name'] ?? ""}-${unitBuildingStandardsController.buildingName}-${unitBuildingStandardsController.unitname}',
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,

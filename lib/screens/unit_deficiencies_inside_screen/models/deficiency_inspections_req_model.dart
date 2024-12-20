@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import '../../Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
+import '../../unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 
 DeficiencyInspectionsReqModel deficiencyInspectionsReqModelFromJson(
         String str) =>

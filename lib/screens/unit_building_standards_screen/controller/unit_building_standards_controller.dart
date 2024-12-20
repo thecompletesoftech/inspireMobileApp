@@ -1,14 +1,14 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/models/deficiency_areas_res_model.dart';
-import 'package:public_housing/screens/Unit_building_standards_screen/repository/unit_building_standards_repository.dart';
-import 'package:public_housing/screens/Unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/unit_building_standards_screen/repository/unit_building_standards_repository.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
 // enum BuildingStandardsStatus { all, failed }
 
 class UnitBuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
-  BuildingStandardsRepository buildingStandardsRepository =
-      BuildingStandardsRepository();
+  UnitBuildingStandardsRepository buildingStandardsRepository =
+      UnitBuildingStandardsRepository();
 
   // BuildingStandardsStatus status = BuildingStandardsStatus.all;
   bool isCollapseStandards = false;

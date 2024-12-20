@@ -1,8 +1,6 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
-import 'package:public_housing/screens/building_inspection_screen/controller/building_inspection_controller.dart';
 import 'package:public_housing/screens/properties_list_screen/controller/properties_list_controller.dart';
-import 'package:public_housing/screens/select_work_screen/controller/select_work_controller.dart';
 
 class CommonAppBar extends StatelessWidget {
   final String? image;

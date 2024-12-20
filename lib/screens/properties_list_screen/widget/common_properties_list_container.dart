@@ -7,6 +7,7 @@ class CommonPropertiesListView extends StatelessWidget {
   final String title1;
   final String Subtitle;
   final String Subtitle1;
+  final String date;
   final VoidCallback? onTap;
 
   const CommonPropertiesListView({
@@ -16,6 +17,7 @@ class CommonPropertiesListView extends StatelessWidget {
     required this.title1,
     required this.Subtitle1,
     this.onTap,
+    required this.date,
   });
 
   @override
@@ -75,7 +77,7 @@ class CommonPropertiesListView extends StatelessWidget {
             children: [
               CommonRow(
                 image: icCalenderColor,
-                imageName: 'Date',
+                imageName: date,
                 imageNameColor: AppColors().black,
               ),
               Spacer(),

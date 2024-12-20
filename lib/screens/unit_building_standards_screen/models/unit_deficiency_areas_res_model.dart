@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-import 'package:public_housing/screens/Unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 
-
-
-UnitDeficiencyAreasResponseModel UnitDeficiencyAreasResponseModelFromJson(String str) =>
+UnitDeficiencyAreasResponseModel UnitDeficiencyAreasResponseModelFromJson(
+        String str) =>
     UnitDeficiencyAreasResponseModel.fromJson(json.decode(str));
 
-String UnitDeficiencyAreasResponseModelToJson(UnitDeficiencyAreasResponseModel data) =>
+String UnitDeficiencyAreasResponseModelToJson(
+        UnitDeficiencyAreasResponseModel data) =>
     json.encode(data.toJson());
 
 class UnitDeficiencyAreasResponseModel {
@@ -23,7 +23,8 @@ class UnitDeficiencyAreasResponseModel {
     this.deficiencyAreas,
   });
 
-  factory UnitDeficiencyAreasResponseModel.fromJson(Map<String, dynamic> json) =>
+  factory UnitDeficiencyAreasResponseModel.fromJson(
+          Map<String, dynamic> json) =>
       UnitDeficiencyAreasResponseModel(
         type: json["type"],
         deficiencyAreas: json["deficiency_areas"] == null
