@@ -243,7 +243,7 @@ class BuildingInspectionSummaryController extends BaseController {
       certificates: certificates,
       deficiencyInspections: deficiencyInspections,
       inspection: Inspection(
-        date: DateTime.now(),
+        date: DateTime.parse(inspectionDateController.text),
         comment: '',
         inspectionStateId: '1',
         inspectionTypeId: '1',

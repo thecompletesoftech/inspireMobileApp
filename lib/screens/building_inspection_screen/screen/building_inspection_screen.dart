@@ -237,23 +237,45 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                   SizedBox(width: 16.px),
                                   Expanded(
                                     child: CommonTextField(
-                                      isLable: true,
-                                      readOnly: true,
-                                      controller:
-                                          controller.inspectionDateController,
-                                      color: controller.appColors.transparent,
-                                      suffixIcon: SvgPicture.string(
-                                        icCalender2,
-                                        color: controller.appColors.grey,
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.px),
-                                      shadowColor:
-                                          controller.appColors.transparent,
-                                      labelText: Strings.inspectionDate,
-                                    ),
+                                        isLable: true,
+                                        readOnly: true,
+                                        onTap: () {
+                                          controller.selectDate();
+                                        },
+                                        padding: EdgeInsets.zero,
+                                        contentPadding:
+                                            EdgeInsets.only(left: 16.px),
+                                        controller:
+                                            controller.inspectionDateController,
+                                        color: controller.appColors.transparent,
+                                        suffixIcon: SvgPicture.string(
+                                          icCalender2,
+                                          color: controller.appColors
+                                              .border1 /*: controller.appColors.lightText*/,
+                                        ),
+                                        shadowColor:
+                                            controller.appColors.transparent,
+                                        labelText: Strings.inspectionDate),
                                   ),
+                                  // Expanded(
+                                  //   child: CommonTextField(
+                                  //     isLable: true,
+                                  //     readOnly: false,
+                                  //     controller:
+                                  //         controller.inspectionDateController,
+                                  //     color: controller.appColors.transparent,
+                                  //     suffixIcon: SvgPicture.string(
+                                  //       icCalender2,
+                                  //       color: controller.appColors.grey,
+                                  //     ),
+                                  //     padding: EdgeInsets.zero,
+                                  //     contentPadding:
+                                  //         EdgeInsets.only(left: 15.px),
+                                  //     shadowColor:
+                                  //         controller.appColors.transparent,
+                                  //     labelText: Strings.inspectionDate,
+                                  //   ),
+                                  // ),
                                 ],
                               ).paddingOnly(top: 32.px),
                               Row(

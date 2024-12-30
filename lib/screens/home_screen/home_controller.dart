@@ -344,7 +344,7 @@ class HomeController extends BaseController {
       _addMarker(element);
     });
 
-    _getPolyline();
+    // _getPolyline();
     update();
   }
 
@@ -422,30 +422,30 @@ class HomeController extends BaseController {
     update();
   }
 
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        Constants.googleApiKey,
-        PointLatLng(mapList[0].lat!, mapList[0].lng!),
-        PointLatLng(
-            mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
-        travelMode: TravelMode.driving,
-        wayPoints: mapList
-            .map((element) =>
-                PolylineWayPoint(location: "${element.lat!},${element.lng!}"))
-            .toList());
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      PolylineId id = PolylineId(mapList[0].title!);
-      Polyline polyline = Polyline(
-          polylineId: id,
-          color: const Color(0xFF002D74),
-          points: polylineCoordinates);
-      polylines[id] = polyline;
-      update();
-    }
-  }
+  // _getPolyline() async {
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       Constants.googleApiKey,
+  //       PointLatLng(mapList[0].lat!, mapList[0].lng!),
+  //       PointLatLng(
+  //           mapList[mapList.length - 1].lat!, mapList[mapList.length - 1].lng!),
+  //       travelMode: TravelMode.driving,
+  //       wayPoints: mapList
+  //           .map((element) =>
+  //               PolylineWayPoint(location: "${element.lat!},${element.lng!}"))
+  //           .toList());
+  //   if (result.points.isNotEmpty) {
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+  //     });
+  //     PolylineId id = PolylineId(mapList[0].title!);
+  //     Polyline polyline = Polyline(
+  //         polylineId: id,
+  //         color: const Color(0xFF002D74),
+  //         points: polylineCoordinates);
+  //     polylines[id] = polyline;
+  //     update();
+  //   }
+  // }
 
   void navigateToMap() {
     showModalBottomSheet(
