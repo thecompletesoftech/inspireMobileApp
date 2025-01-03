@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
 import '../../building_inspection_screen/screen/building_inspection_screen.dart';
@@ -20,6 +21,9 @@ class UnitController extends BaseController {
   var buildingInfo = {}.obs;
   var buildingType = "".obs;
   bool isManually = false;
+  ScheduleDatum propertyData = ScheduleDatum();
+  ExternalBuilding externalBuilding = ExternalBuilding();
+  Unit unitsData = Unit();
 
   void onInit() {
     if (Get.arguments['deficiencyArea'] != null) {
@@ -31,6 +35,19 @@ class UnitController extends BaseController {
     }
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyData'] != null) {
+      propertyData = Get.arguments['propertyData'];
+    }
+    if (Get.arguments['externalBuilding'] != null) {
+      externalBuilding = Get.arguments['externalBuilding'];
+    }
+    if (Get.arguments['unitsData'] != null) {
+      unitsData = Get.arguments['unitsData'];
+      unitNumberName.text = unitsData.name ?? "";
+      unitAddress.text = unitsData.address ?? "";
+      bedrooms.text = '${unitsData.numberOfBedrooms ?? 0}';
+      bathrooms.text = '${unitsData.numberOfBathrooms ?? 0}';
     }
     if (isManually == false) {
       switchButton.value = true;

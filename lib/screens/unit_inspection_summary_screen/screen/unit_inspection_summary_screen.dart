@@ -50,7 +50,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                       children: [
                         Center(
                           child: MyTextView(
-                            '${controller.propertyName}-${controller.buildingName} - ${controller.unitNumberName.text}',
+                            '${controller.propertyName} - ${controller.buildingName} - ${controller.unitNumberName.text}',
                             textStyleNew: MyTextStyle(
                               textColor: controller.appColors.appColor,
                               textWeight: FontWeight.w600,
@@ -374,7 +374,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 left: 32.px, right: 32.px, bottom: 20.px)
                             : CommonTextRow(
                                 title: 'Property Name: ',
-                                subTitle: '[Property Name]',
+                                subTitle: '${controller.propertyData.name}',
                                 imageString: icBuildingss,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -417,7 +417,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             : CommonTextRow(
                                 title: 'Property Address: ',
                                 subTitle:
-                                    '[Property Address], [City], [State], [Zip]',
+                                    '${controller.propertyData.address1}, ${controller.propertyData.city}, ${controller.propertyData.state}, ${controller.propertyData.zip}',
                                 imageString: icLocation,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -425,7 +425,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             ? SizedBox.shrink()
                             : CommonTextRow(
                                 title: 'Property ID: ',
-                                subTitle: '[Property ID]',
+                                subTitle:
+                                    '${controller.propertyData.externalProperty?.id}',
                                 imageString: hasTagIcon,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -475,7 +476,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                   Expanded(
                                     child: CommonTextRow(
                                       title: 'Building Name: ',
-                                      subTitle: '[Building Name]',
+                                      subTitle:
+                                          '${controller.externalBuilding.name}',
                                       imageString: icBuildings,
                                     ),
                                   ),
@@ -484,7 +486,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                     child: CommonTextRow(
                                       isImage: true,
                                       title: 'Year Constructed: ',
-                                      subTitle: '[Year Constructed]',
+                                      subTitle:
+                                          '${controller.externalBuilding.constructedYear}',
                                       imageString: icCalender2,
                                     ),
                                   ),
@@ -504,7 +507,8 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 left: 32.px, right: 32.px, bottom: 40.px)
                             : CommonTextRow(
                                 title: 'Building Type: ',
-                                subTitle: '[Building Type]',
+                                subTitle:
+                                    '${controller.externalBuilding.buildingType?.name}',
                                 imageString: icBuildings,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 40.px),

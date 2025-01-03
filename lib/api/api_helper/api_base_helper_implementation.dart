@@ -7,14 +7,28 @@ class ApiBaseHelperImplementation extends ApiBaseHelper {
           '${GetStorageData().readString(GetStorageData().baseURL)}',
       followRedirects: true));
 
+  final Dio _dio1 = Dio(BaseOptions(
+      baseUrl: '${Constants.baseUrl}'
+          '31f6-45-249-10-232.ngrok-free.app',
+      followRedirects: true));
+
   @override
   Future<dynamic> get(
       {String? endPoint,
       Map<String, dynamic>? headers,
-      Map<String, dynamic>? queryParameter}) async {
-    final Response response = await _dio.get(endPoint!,
-        queryParameters: queryParameter ?? {},
-        options: Options(headers: headers ?? {}));
+      Map<String, dynamic>? queryParameter,
+      bool isTrue = false}) async {
+    final Response response = isTrue
+        ? await _dio1.get(
+            endPoint!,
+            queryParameters: queryParameter ?? {},
+            options: Options(headers: headers ?? {}),
+          )
+        : await _dio.get(
+            endPoint!,
+            queryParameters: queryParameter ?? {},
+            options: Options(headers: headers ?? {}),
+          );
 
     return response.data is String ? response : response;
   }

@@ -1,4 +1,5 @@
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
@@ -25,6 +26,9 @@ class UnitInspectionSummaryController extends BaseController {
   List<DeficiencyArea> deficiencyArea = [];
   var inspectionInfo = {};
   var deficiencyInfo = [].obs;
+  ScheduleDatum propertyData = ScheduleDatum();
+  ExternalBuilding externalBuilding = ExternalBuilding();
+  Unit unitsData = Unit();
 
   @override
   void onInit() {
@@ -34,6 +38,21 @@ class UnitInspectionSummaryController extends BaseController {
     }
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyData'] != null) {
+      propertyData = Get.arguments['propertyData'];
+      propertyName = propertyData.name ?? "";
+    }
+    if (Get.arguments['externalBuilding'] != null) {
+      externalBuilding = Get.arguments['externalBuilding'];
+      buildingName = externalBuilding.name ?? "";
+    }
+    if (Get.arguments['unitsData'] != null) {
+      unitsData = Get.arguments['unitsData'];
+      unitNumberName.text = unitsData.name ?? "";
+      unitAddress.text = unitsData.address ?? "";
+      bedrooms.text = '${unitsData.numberOfBedrooms ?? 0}';
+      bathrooms.text = '${unitsData.numberOfBathrooms ?? 0}';
     }
 
     unitHouseKeepingList = [

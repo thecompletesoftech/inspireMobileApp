@@ -368,9 +368,10 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                             title: propertyData.property ?? "",
                                             Subtitle:
                                                 '${propertyData.city} - ${propertyData.zip}',
-                                            title1: '[Building Count]',
+                                            title1:
+                                                '${propertyData.externalBuildings?.length ?? 0}',
                                             Subtitle1:
-                                                '${propertyData.building?.units?.length ?? 0} Units',
+                                                '${controller.getUnitCount(propertyData.externalBuildings)} Units',
                                             date:
                                                 '${DateFormat('yyyy-MM-dd').format(propertyData.date!)}',
                                             onTap: () {
@@ -378,7 +379,11 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                   BuildingListScreen.routes,
                                                   arguments: {
                                                     "isComplete": false,
-                                                    "building": propertyData,
+                                                    "propertyData":
+                                                        propertyData,
+                                                    "externalBuildingData":
+                                                        propertyData
+                                                            .externalBuildings,
                                                   });
                                             },
                                           ).paddingSymmetric(horizontal: 32.px);

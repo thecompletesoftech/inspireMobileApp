@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/commons/common_widgets/common_container.dart';
 
@@ -7,6 +8,7 @@ class CommonBuildingListView extends StatelessWidget {
   final String title1;
   final String Subtitle;
   final String Subtitle1;
+  final DateTime dateTime;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
 
@@ -18,6 +20,7 @@ class CommonBuildingListView extends StatelessWidget {
     required this.Subtitle1,
     this.onTap,
     this.onTap1,
+    required this.dateTime,
   });
 
   @override
@@ -79,7 +82,7 @@ class CommonBuildingListView extends StatelessWidget {
             children: [
               CommonRow(
                 image: icCalenderColor,
-                imageName: 'Date',
+                imageName: '${DateFormat('yyyy-MM-dd').format(dateTime)}',
                 imageNameColor: AppColors().black,
               ),
               Spacer(),
@@ -105,11 +108,20 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
                 textFamily: fontFamilyRegular,
                 onTap: onTap1,
-                iconColor: AppColors.primerColor,
+                iconColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
+                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                    ? AppColors.primerColor
+                    : AppColors().border1,
                 icon: icBuildings,
                 iconheigth: 20.px,
-                textColor: AppColors.primerColor,
-                border: Border.all(color: AppColors().black),
+                textColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
+                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                    ? AppColors.primerColor
+                    : AppColors().border1,
+                border: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
+                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                    ? Border.all(color: AppColors().black)
+                    : Border.all(color: AppColors().border1),
               ),
             ],
           ).paddingAll(16.px)

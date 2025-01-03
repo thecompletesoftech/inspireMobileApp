@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/building_list_screen/controller/building_list_controller.dart';
@@ -44,7 +45,7 @@ class BuildingListScreen extends GetView<BuildingListController> {
                           textWeight: FontWeight.w600),
                     ),
                     MyTextView(
-                      '[Property Name]',
+                      controller.propertyData.name,
                       textStyleNew: MyTextStyle(
                           textSize: 24.px,
                           textColor: controller.appColors.textcolor,
@@ -55,23 +56,44 @@ class BuildingListScreen extends GetView<BuildingListController> {
                     left: 32.px, right: 32.px, bottom: 32.px, top: 36.px),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: 5,
-                    itemBuilder: (context, index) => CommonBuildingListView(
-                      title: 'Building [Building Name]',
-                      title1: '[Unit Count] Units',
-                      Subtitle: '[Year Constructed]',
-                      Subtitle1: '[Building Type]',
-                      onTap: () {
-                        Get.toNamed(UnitListScreen.routes, arguments: {
-                          "isManually": false,
-                          "isComplete": true
-                        });
-                      },
-                      onTap1: () {
-                        Get.toNamed(BuildingInspectionScreen.routes,
-                            arguments: {"isManually": false});
-                      },
-                    ).paddingSymmetric(horizontal: 32.px),
+                    itemCount: controller.externalBuildings.length,
+                    itemBuilder: (context, index) {
+                      return CommonBuildingListView(
+                        title: controller.externalBuildings[index].name ?? "",
+                        title1:
+                            '${controller.externalBuildings[index].units?.length ?? ""} Units',
+                        Subtitle:
+                            '${controller.externalBuildings[index].constructedYear ?? ""}',
+                        Subtitle1:
+                            '${controller.externalBuildings[index].buildingType?.name ?? ""}',
+                        onTap: () {
+                          Get.toNamed(UnitListScreen.routes, arguments: {
+                            "isManually": false,
+                            "isComplete": true,
+                            'externalBuilding':
+                                controller.externalBuildings[index],
+                            "propertyData": controller.propertyData,
+                          });
+                        },
+                        dateTime:
+                            controller.propertyData.date ?? DateTime.now(),
+                        onTap1: () {
+                          if ('${DateFormat('yyyy-MM-dd').format(controller.propertyData.date!)}' ==
+                              '${DateFormat('yyyy-MM-dd').format(DateTime.now())}') {
+                            Get.toNamed(
+                              BuildingInspectionScreen.routes,
+                              arguments: {
+                                "isManually": false,
+                                'externalBuilding':
+                                    controller.externalBuildings[index],
+                                "propertyData": controller.propertyData,
+
+                              },
+                            );
+                          }
+                        },
+                      ).paddingSymmetric(horizontal: 32.px);
+                    },
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(height: 24.px);
                     },

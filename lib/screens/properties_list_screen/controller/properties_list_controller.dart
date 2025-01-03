@@ -58,18 +58,27 @@ class PropertiesListController extends BaseController {
   getDailySchedulesData() async {
     scheduleMainDataList = [];
     apiResponseStatus = ApiResponseStatus.loading;
-    // var response = await propertiesListRepository.getDailySchedules();
+    var response = await propertiesListRepository.getDailySchedules();
 
-    // response.fold((l) {
-    //   apiResponseStatus = ApiResponseStatus.failure;
-    // }, (r) async {
-    //   r.scheduleData?.forEach((e) {
-    //     scheduleMainDataList.add(e);
-    //   });
-    //   await getTodayData();
+    response.fold((l) {
+      apiResponseStatus = ApiResponseStatus.failure;
+    }, (r) async {
+      r.scheduleData?.forEach((e) {
+        scheduleMainDataList.add(e);
+      });
+      await getTodayData();
       apiResponseStatus = ApiResponseStatus.success;
-    //   update();
-    // });
+      update();
+    });
+  }
+
+  getUnitCount(List<ExternalBuilding>? externalBuildings) {
+    int totalUnit = 0;
+
+    for (ExternalBuilding i in externalBuildings ?? []) {
+      totalUnit += i.totalUnits ?? 0;
+    }
+    return totalUnit;
   }
 
   getTodayData() {

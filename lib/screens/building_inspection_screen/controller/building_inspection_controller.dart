@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
+
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
 import '../../../Models/accountmodel/account_model.dart';
@@ -27,6 +29,8 @@ class BuildingInspectionController extends BaseController {
   List checked = [];
   BuildingInspectionRepository buildingInspectionRepository =
       BuildingInspectionRepository();
+  ExternalBuilding externalBuilding = ExternalBuilding();
+  ScheduleDatum propertyData = ScheduleDatum();
 
   // List<String> propertyList = [];
   List<String> cityList = [];
@@ -49,6 +53,12 @@ class BuildingInspectionController extends BaseController {
   void onInit() {
     if (Get.arguments != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyData'] != null) {
+      propertyData = Get.arguments['propertyData'];
+    }
+    if (Get.arguments['externalBuilding'] != null) {
+      externalBuilding = Get.arguments['externalBuilding'];
     }
 
     clearAllData();

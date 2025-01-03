@@ -328,7 +328,11 @@ class UnitInspection extends GetView<UnitController> {
                               onTap: () {
                                 Get.toNamed(UnitInspectionSummary.routes,
                                     arguments: {
-                                      "isManually": controller.isManually
+                                      "isManually": controller.isManually,
+                                      "propertyData": controller.propertyData,
+                                      "externalBuilding":
+                                          controller.externalBuilding,
+                                      "unitsData": controller.unitsData
                                     });
                               },
                             ).paddingSymmetric(vertical: 24.px),
@@ -380,7 +384,7 @@ class UnitInspection extends GetView<UnitController> {
                             left: 32.px, right: 32.px, bottom: 20.px)
                         : CommonTextRow(
                             title: 'Property Name: ',
-                            subTitle: '[Property Name]',
+                            subTitle: '${controller.propertyData.name}',
                             imageString: icBuildingss,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -413,7 +417,7 @@ class UnitInspection extends GetView<UnitController> {
                         : CommonTextRow(
                             title: 'Property Address: ',
                             subTitle:
-                                '[Property Address], [City], [State], [Zip]',
+                                '${controller.propertyData.address1}, ${controller.propertyData.city}, ${controller.propertyData.state}, ${controller.propertyData.zip}',
                             imageString: icLocation,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -440,7 +444,8 @@ class UnitInspection extends GetView<UnitController> {
                             left: 32.px, right: 32.px, bottom: 20.px)
                         : CommonTextRow(
                             title: 'Property ID: ',
-                            subTitle: '[Property ID]',
+                            subTitle:
+                                '${controller.propertyData.externalProperty?.id}',
                             imageString: hasTagIcon,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -490,7 +495,8 @@ class UnitInspection extends GetView<UnitController> {
                               Expanded(
                                 child: CommonTextRow(
                                   title: 'Building Name: ',
-                                  subTitle: '[Building Name]',
+                                  subTitle:
+                                      '${controller.externalBuilding.name}',
                                   imageString: icBuildings,
                                 ),
                               ),
@@ -499,7 +505,8 @@ class UnitInspection extends GetView<UnitController> {
                                 child: CommonTextRow(
                                   isImage: true,
                                   title: 'Year Constructed: ',
-                                  subTitle: '[Year Constructed]',
+                                  subTitle:
+                                      '${controller.externalBuilding.constructedYear}',
                                   imageString: icCalender2,
                                 ),
                               ),
@@ -515,7 +522,8 @@ class UnitInspection extends GetView<UnitController> {
                             left: 32.px, right: 32.px, bottom: 40.px)
                         : CommonTextRow(
                             title: 'Building Type: ',
-                            subTitle: '[Building Type]',
+                            subTitle:
+                                '${controller.externalBuilding.buildingType?.name}',
                             imageString: icBuildings,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 40.px),

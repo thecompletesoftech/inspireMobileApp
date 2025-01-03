@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
@@ -46,7 +47,7 @@ class UnitListScreen extends GetView<UnitListController> {
                           textWeight: FontWeight.w600),
                     ),
                     MyTextView(
-                      'Building [Building Name]',
+                      'Building ${controller.externalBuilding.name}',
                       textStyleNew: MyTextStyle(
                           textSize: 24.px,
                           textColor: controller.appColors.textcolor,
@@ -57,17 +58,31 @@ class UnitListScreen extends GetView<UnitListController> {
                     left: 32.px, right: 32.px, bottom: 32.px, top: 36.px),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: 5,
-                    itemBuilder: (context, index) => CommonUnitListView(
-                      title: 'Building [Building Name]',
-                      Subtitle: '[Year Constructed]',
-                      onTap: () {
-                        Get.toNamed(
-                          UnitInspection.routes,
-                          arguments: {"isManually": false},
-                        );
-                      },
-                    ).paddingSymmetric(horizontal: 32.px),
+                    itemCount: controller.externalBuilding.units?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return CommonUnitListView(
+                        title: 'Building ${controller.externalBuilding.name}',
+                        Subtitle:
+                            '${controller.externalBuilding.constructedYear ?? 0}',
+                        onTap: () {
+                          if ('${DateFormat('yyyy-MM-dd').format(controller.propertyData.date!)}' ==
+                              '${DateFormat('yyyy-MM-dd').format(DateTime.now())}') {
+                            Get.toNamed(
+                              UnitInspection.routes,
+                              arguments: {
+                                "isManually": false,
+                                "propertyData": controller.propertyData,
+                                "externalBuilding": controller.externalBuilding,
+                                "unitsData":
+                                    controller.externalBuilding.units?[index]
+                              },
+                            );
+                          }
+                        },
+                        dateTime:
+                            controller.propertyData.date ?? DateTime.now(),
+                      ).paddingSymmetric(horizontal: 32.px);
+                    },
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(height: 24.px);
                     },
