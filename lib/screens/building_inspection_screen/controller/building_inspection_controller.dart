@@ -62,7 +62,7 @@ class BuildingInspectionController extends BaseController {
   void selectDate() async {
     final DateTime? pickedDate = await showDatePicker(
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(1970),
       lastDate: DateTime(2050),
       context: Get.context!,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
