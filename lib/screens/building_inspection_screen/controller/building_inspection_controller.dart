@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart'
     as daily;
+import 'package:intl/intl.dart';
 
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
@@ -90,6 +91,45 @@ class BuildingInspectionController extends BaseController {
     getAccount();
     getCurrentDate();
     super.onInit();
+  }
+
+  void selectDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1970),
+      lastDate: DateTime(2050),
+      context: Get.context!,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: Get.context!,
+        initialTime: TimeOfDay.fromDateTime(DateTime.now()),
+      );
+
+      if (pickedTime != null) {
+        final DateTime combinedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        String month = DateFormat.M().format(combinedDateTime);
+        String day = DateFormat.d().format(combinedDateTime);
+        String time = DateFormat.Hm().format(combinedDateTime);
+        String timeDate =
+            '${DateFormat.y().format(combinedDateTime)}-${month.padLeft(2, '0')}-${day.padLeft(2, '0')} $time';
+        inspectionDateController.text = timeDate;
+        update();
+      } else {
+        print("Time picker was canceled");
+      }
+    } else {
+      print("Date picker was canceled");
+    }
   }
 
   void actionPopUpItemSelected(int value) {
