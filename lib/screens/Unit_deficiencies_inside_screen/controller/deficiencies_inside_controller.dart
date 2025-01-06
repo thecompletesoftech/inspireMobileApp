@@ -152,7 +152,7 @@ class UnitDeficienciesInsideController extends BaseController {
     final DateTime? pickedDate = await showDatePicker(
       initialDate: _selectedDate.value,
       firstDate: DateTime(1985),
-      lastDate: DateTime.now(),
+      lastDate: DateTime(2050),
       context: Get.context!,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
     );
@@ -828,7 +828,7 @@ class UnitDeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir, // <-- Uint8List of image
+                savePath: tempDir.path, // <-- Uint8List of image
               ),
             ),
           );
