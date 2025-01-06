@@ -9,7 +9,8 @@ class ApiBaseHelperImplementation extends ApiBaseHelper {
 
   final Dio _dio1 = Dio(BaseOptions(
       baseUrl: '${Constants.baseUrl}'
-          '31f6-45-249-10-232.ngrok-free.app',
+          // '31f6-45-249-10-232.ngrok-free.app',
+          '0f06-39-62-199-73.ngrok-free.app',
       followRedirects: true));
 
   @override

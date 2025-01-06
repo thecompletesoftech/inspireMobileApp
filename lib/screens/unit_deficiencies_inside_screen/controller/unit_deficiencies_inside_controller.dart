@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/unit_cabinets_screen%20/controller/unit_standards_details_controller.dart';
 import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
@@ -833,7 +834,7 @@ class UnitDeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir, // <-- Uint8List of image
+                savePath: tempDir.path, // <-- Uint8List of image
               ),
             ),
           );

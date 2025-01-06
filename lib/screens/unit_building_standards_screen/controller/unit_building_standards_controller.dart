@@ -1,4 +1,6 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unit_building_standards_screen/repository/unit_building_standards_repository.dart';
 import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
@@ -29,6 +31,7 @@ class UnitBuildingStandardsController extends BaseController {
   String inspectorDate = '';
   String unitname = '';
   var switchbtn = false.obs;
+  bool isManually = false;
 
   void onInit() {
     super.onInit();
@@ -41,13 +44,14 @@ class UnitBuildingStandardsController extends BaseController {
 
     if (Get.arguments != null) {
       buildingtype = Get.arguments['buildingtype'];
+      isManually = Get.arguments['isManually'];
       buildingName = Get.arguments['buildingInfo']['name'];
       propertyname = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
       certificatesInfo.value = Get.arguments['certificatesInfo'];
       inspectorName = Get.arguments['inspectorName'];
-      inspectorDate = Get.arguments['inspectorDate'];
+      inspectorDate = Get.arguments['inspectorDate'].toString();
       unitinfo = Get.arguments['unitinfo'];
       unitname = Get.arguments['unitinfo']['name'];
       switchbtn.value = bool.parse(Get.arguments['switchvalue'].toString());

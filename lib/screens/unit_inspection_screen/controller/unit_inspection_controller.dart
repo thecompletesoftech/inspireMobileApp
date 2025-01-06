@@ -21,9 +21,9 @@ class UnitController extends BaseController {
   var buildingInfo = {}.obs;
   var buildingType = "".obs;
   bool isManually = false;
-  ScheduleDatum propertyData = ScheduleDatum();
-  ExternalBuilding externalBuilding = ExternalBuilding();
-  Unit unitsData = Unit();
+  ScheduleInspection propertyData = ScheduleInspection();
+  ScheduleInspectionBuilding externalBuilding = ScheduleInspectionBuilding();
+  ScheduleInspectionUnit unitsData = ScheduleInspectionUnit();
 
   void onInit() {
     if (Get.arguments['deficiencyArea'] != null) {
@@ -44,10 +44,11 @@ class UnitController extends BaseController {
     }
     if (Get.arguments['unitsData'] != null) {
       unitsData = Get.arguments['unitsData'];
-      unitNumberName.text = unitsData.name ?? "";
-      unitAddress.text = unitsData.address ?? "";
-      bedrooms.text = '${unitsData.numberOfBedrooms ?? 0}';
-      bathrooms.text = '${unitsData.numberOfBathrooms ?? 0}';
+      unitNumberName.text = unitsData.unit?.name ?? "";
+      unitAddress.text = unitsData.unit?.address ?? "";
+      bedrooms.text = '${unitsData.unit?.numberOfBedrooms ?? 0}';
+      bathrooms.text = '${unitsData.unit?.numberOfBathrooms ?? 0}';
+      switchButton.value = unitsData.unit?.occupied ?? false;
     }
     if (isManually == false) {
       switchButton.value = true;

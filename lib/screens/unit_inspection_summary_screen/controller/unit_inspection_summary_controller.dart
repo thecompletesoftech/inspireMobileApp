@@ -1,5 +1,6 @@
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
@@ -26,9 +27,11 @@ class UnitInspectionSummaryController extends BaseController {
   List<DeficiencyArea> deficiencyArea = [];
   var inspectionInfo = {};
   var deficiencyInfo = [].obs;
-  ScheduleDatum propertyData = ScheduleDatum();
-  ExternalBuilding externalBuilding = ExternalBuilding();
-  Unit unitsData = Unit();
+  ScheduleInspection propertyData = ScheduleInspection();
+  ScheduleInspectionBuilding externalBuilding = ScheduleInspectionBuilding();
+  ScheduleInspectionUnit unitsData = ScheduleInspectionUnit();
+  var propertyInfo = {}.obs;
+  var buildingInfo = {}.obs;
 
   @override
   void onInit() {
@@ -39,20 +42,27 @@ class UnitInspectionSummaryController extends BaseController {
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
     }
+    if (Get.arguments['propertyInfo'] != null) {
+      propertyInfo = Get.arguments['propertyInfo'];
+    }
+    if (Get.arguments['buildingInfo'] != null) {
+      buildingInfo = Get.arguments['buildingInfo'];
+    }
     if (Get.arguments['propertyData'] != null) {
       propertyData = Get.arguments['propertyData'];
-      propertyName = propertyData.name ?? "";
+      propertyName = propertyData.property?.name ?? "";
     }
     if (Get.arguments['externalBuilding'] != null) {
       externalBuilding = Get.arguments['externalBuilding'];
-      buildingName = externalBuilding.name ?? "";
+      buildingName = externalBuilding.building?.name ?? "";
     }
     if (Get.arguments['unitsData'] != null) {
       unitsData = Get.arguments['unitsData'];
-      unitNumberName.text = unitsData.name ?? "";
-      unitAddress.text = unitsData.address ?? "";
-      bedrooms.text = '${unitsData.numberOfBedrooms ?? 0}';
-      bathrooms.text = '${unitsData.numberOfBathrooms ?? 0}';
+      unitNumberName.text = unitsData.unit?.name ?? "";
+      unitAddress.text = unitsData.unit?.address ?? "";
+      bedrooms.text = '${unitsData.unit?.numberOfBedrooms ?? 0}';
+      bathrooms.text = '${unitsData.unit?.numberOfBathrooms ?? 0}';
+      switchButton.value = unitsData.unit?.occupied ?? false;
     }
 
     unitHouseKeepingList = [
@@ -205,7 +215,7 @@ class UnitInspectionSummaryController extends BaseController {
           message: "Unit inspection Submitted Successfully!!",
           isOk: true);
 
-      await Get.offAllNamed(BuildingInspectionScreen.routes);
+      await Get.offAllNamed(PropertiesListScreen.routes);
 
       isLoading.value = false;
       update();

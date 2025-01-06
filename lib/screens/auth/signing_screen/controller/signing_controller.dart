@@ -25,7 +25,7 @@ class SigningController extends BaseController {
     // https://dcha.live.gccs.gilsonsoftware.com/auth/login/
 
     clientList = [
-      // {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
+      {"title": 'Dev', "baseURL": "inspections.dev.gccs.gilsonsoftware.com"},
       {"title": 'Newport', "baseURL": "hacn.live.gccs.gilsonsoftware.com"},
       {
         "title": 'Chattanooga',

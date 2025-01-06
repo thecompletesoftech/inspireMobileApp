@@ -9,12 +9,16 @@ class CommonUnitListView extends StatelessWidget {
   final VoidCallback? onTap;
   final DateTime dateTime;
 
-  const CommonUnitListView(
-      {super.key,
-      required this.title,
-      required this.Subtitle,
-      this.onTap,
-      required this.dateTime});
+  // final bool isComplete;
+
+  const CommonUnitListView({
+    super.key,
+    required this.title,
+    required this.Subtitle,
+    this.onTap,
+    required this.dateTime,
+    // required this.isComplete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +30,22 @@ class CommonUnitListView extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyTextView(
-                    title,
-                    textStyleNew: MyTextStyle(
-                        textSize: 24.px,
-                        textColor: AppColors().black,
-                        textWeight: FontWeight.w600),
+                  Row(
+                    children: [
+                      MyTextView(
+                        title,
+                        textStyleNew: MyTextStyle(
+                            textSize: 24.px,
+                            textColor: AppColors().black,
+                            textWeight: FontWeight.w600),
+                      ),
+                      // if (isComplete)
+                      //   ClipOval(
+                      //     child: SvgPicture.string(
+                      //       icComplete,
+                      //     ),
+                      //   )
+                    ],
                   ),
                   MyTextView(
                     Subtitle,
@@ -54,7 +68,8 @@ class CommonUnitListView extends StatelessWidget {
               ),
               Spacer(),
               CommonIconButton(
-                title: Strings.inspectUnit,
+                title: /*isComplete ? Strings.editInspection :*/
+                    Strings.inspectUnit,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -68,9 +83,10 @@ class CommonUnitListView extends StatelessWidget {
                 onTap: onTap,
                 iconColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
                         '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                    // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}'
                     ? AppColors.primerColor
                     : AppColors().border1,
-                icon: icHome,
+                icon: /*isComplete ? icEditNotes :*/ icHome,
                 iconheigth: 20.px,
                 textColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
                         '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'

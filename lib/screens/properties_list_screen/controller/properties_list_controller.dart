@@ -17,14 +17,14 @@ class PropertiesListController extends BaseController {
   String todayDate = '';
   String startDate = '';
   String endDate = '';
-  DateTime? startDateTime;
-  DateTime? endDateTime;
+  DateTime? startDateTime = DateTime.now();
+  DateTime? endDateTime = DateTime.now();
   bool isDateSelected = false;
   Account? account;
   PickerDateRange? dateRange;
   PropertiesListRepository propertiesListRepository =
       PropertiesListRepository();
-  List<ScheduleDatum> scheduleMainDataList = [];
+  List<ScheduleInspection> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
 
@@ -58,25 +58,25 @@ class PropertiesListController extends BaseController {
   getDailySchedulesData() async {
     scheduleMainDataList = [];
     apiResponseStatus = ApiResponseStatus.loading;
-    var response = await propertiesListRepository.getDailySchedules();
+    var response = await propertiesListRepository.getDailySchedules(
+        startDate: startDateTime!, endDate: endDateTime!);
 
     response.fold((l) {
       apiResponseStatus = ApiResponseStatus.failure;
     }, (r) async {
-      r.scheduleData?.forEach((e) {
+      r.scheduleInspections?.forEach((e) {
         scheduleMainDataList.add(e);
       });
       await getTodayData();
       apiResponseStatus = ApiResponseStatus.success;
-      update();
     });
+    update();
   }
 
-  getUnitCount(List<ExternalBuilding>? externalBuildings) {
+  getUnitCount(List<ScheduleInspectionBuilding>? externalBuildings) {
     int totalUnit = 0;
-
-    for (ExternalBuilding i in externalBuildings ?? []) {
-      totalUnit += i.totalUnits ?? 0;
+    for (ScheduleInspectionBuilding i in externalBuildings ?? []) {
+      totalUnit += i.scheduleInspectionUnits!.length;
     }
     return totalUnit;
   }
@@ -84,21 +84,26 @@ class PropertiesListController extends BaseController {
   getTodayData() {
     scheduleDataList = [];
     scheduleMainDataList.forEach((e) {
-      if (getDateFormat(date: e.date!) ==
-          DateFormat('yyyy-MM-dd').format(DateTime.now())) {
-        if (scheduleDataList.isEmpty) {
-          scheduleDataList.add(DataSorting(
-              date: todayDateGet(DateTime.now()),
-              scheduleDataList: [e],
-              prefix: Strings.todayInspections));
-        } else {
-          scheduleDataList
-              .firstWhere(
-                  (element) => element.date == todayDateGet(DateTime.now()))
-              .scheduleDataList
-              .add(e);
-        }
-      }
+      // if (getDateFormat(date: e.scheduleDate!) ==
+      //     DateFormat('yyyy-MM-dd').format(DateTime.now())) {
+      // DateFormat('yyyy-MM-dd')
+      //     .format(DateTime.parse('2025-01-16T00:00:00-05:00'))) {
+      // if (scheduleDataList.isEmpty) {
+      scheduleDataList.add(DataSorting(
+          date: todayDateGet(e.scheduleDate!),
+          scheduleDataList: [e],
+          prefix: DateFormat('yyyy-MM-dd').format(e.scheduleDate!) ==
+                  DateFormat('yyyy-MM-dd').format(DateTime.now())
+              ? Strings.todayInspections
+              : ''));
+      // } else {
+      //   scheduleDataList
+      //       .firstWhere(
+      //           (element) => element.date == todayDateGet(e.scheduleDate!))
+      //       .scheduleDataList
+      //       .add(e);
+      // }
+      // }
     });
   }
 
@@ -136,26 +141,27 @@ class PropertiesListController extends BaseController {
   }
 
   selectedDateFilterData() {
-    scheduleDataList = [];
-    List<String> days = [];
-
-    for (int i = 0; i <= endDateTime!.difference(startDateTime!).inDays; i++) {
-      days.add(getDateFormat(date: startDateTime!.add(Duration(days: i))));
-    }
-
-    days.forEach((e) {
-      final sortingData = scheduleMainDataList.where((element) =>
-          DateTime.parse(e) == DateTime.parse(element.date.toString()));
-
-      if (sortingData.isNotEmpty) {
-        scheduleDataList.add(DataSorting(
-            date: todayDateGet(DateTime.parse(e)),
-            scheduleDataList: sortingData.toList(),
-            prefix: DateTime.now().day == DateTime.parse(e).day
-                ? Strings.todayInspections
-                : ''));
-      }
-    });
+    getDailySchedulesData();
+    // scheduleDataList = [];
+    // List<String> days = [];
+    //
+    // for (int i = 0; i <= endDateTime!.difference(startDateTime!).inDays; i++) {
+    //   days.add(getDateFormat(date: startDateTime!.add(Duration(days: i))));
+    // }
+    //
+    // days.forEach((e) {
+    //   final sortingData = scheduleMainDataList.where((element) =>
+    //       DateTime.parse(e) == DateTime.parse(element.scheduleDate.toString()));
+    //
+    //   if (sortingData.isNotEmpty) {
+    //     scheduleDataList.add(DataSorting(
+    //         date: todayDateGet(DateTime.parse(e)),
+    //         scheduleDataList: sortingData.toList(),
+    //         prefix: DateTime.now().day == DateTime.parse(e).day
+    //             ? Strings.todayInspections
+    //             : ''));
+    //   }
+    // });
     Get.back();
     update();
   }
@@ -163,11 +169,12 @@ class PropertiesListController extends BaseController {
 
 class DataSorting {
   final String date;
-  final List<ScheduleDatum> scheduleDataList;
+  final List<ScheduleInspection> scheduleDataList;
   final String prefix;
 
-  DataSorting(
-      {required this.date,
-      required this.scheduleDataList,
-      required this.prefix});
+  DataSorting({
+    required this.date,
+    required this.scheduleDataList,
+    required this.prefix,
+  });
 }

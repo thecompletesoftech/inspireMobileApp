@@ -308,6 +308,7 @@ class UnitInspection extends GetView<UnitController> {
                                           Get.arguments['inspectorName'],
                                       "inspectorDate":
                                           Get.arguments['inspectorDate'],
+                                      "isManually": controller.isManually
                                     },
                                   );
                                 }
@@ -326,14 +327,39 @@ class UnitInspection extends GetView<UnitController> {
                               textColor: controller.appColors.black,
                               color: controller.appColors.textPink,
                               onTap: () {
-                                Get.toNamed(UnitInspectionSummary.routes,
+                                if (controller.getUnitInspection()) {
+                                  controller.getUnitJson();
+                                  Get.toNamed(
+                                    UnitBuildingStandardsScreen.routes,
+                                    preventDuplicates: false,
                                     arguments: {
                                       "isManually": controller.isManually,
-                                      "propertyData": controller.propertyData,
-                                      "externalBuilding":
-                                          controller.externalBuilding,
-                                      "unitsData": controller.unitsData
-                                    });
+                                      "unitinfo": controller.unitJson,
+                                      "propertyInfo":
+                                          Get.arguments['propertyInfo'],
+                                      "buildingInfo":
+                                          Get.arguments['buildingInfo'],
+                                      "buildingtype":
+                                          Get.arguments['buildingtype'],
+                                      "switchvalue":
+                                          controller.switchButton.value,
+                                      "certificatesInfo":
+                                          Get.arguments['certificatesInfo'],
+                                      "inspectorName":
+                                          Get.arguments['inspectorName'],
+                                      "inspectorDate":
+                                          Get.arguments['inspectorDate'],
+                                    },
+                                  );
+                                }
+                                // Get.toNamed(UnitInspectionSummary.routes,
+                                //     arguments: {
+                                //       "isManually": controller.isManually,
+                                //       "propertyData": controller.propertyData,
+                                //       "externalBuilding":
+                                //           controller.externalBuilding,
+                                //       "unitsData": controller.unitsData
+                                //     });
                               },
                             ).paddingSymmetric(vertical: 24.px),
                           ),
@@ -384,7 +410,8 @@ class UnitInspection extends GetView<UnitController> {
                             left: 32.px, right: 32.px, bottom: 20.px)
                         : CommonTextRow(
                             title: 'Property Name: ',
-                            subTitle: '${controller.propertyData.name}',
+                            subTitle:
+                                '${controller.propertyData.property?.name}',
                             imageString: icBuildingss,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -417,7 +444,7 @@ class UnitInspection extends GetView<UnitController> {
                         : CommonTextRow(
                             title: 'Property Address: ',
                             subTitle:
-                                '${controller.propertyData.address1}, ${controller.propertyData.city}, ${controller.propertyData.state}, ${controller.propertyData.zip}',
+                                '${controller.propertyData.property?.address1}, ${controller.propertyData.property?.city}, ${controller.propertyData.property?.state}, ${controller.propertyData.property?.zip}',
                             imageString: icLocation,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -444,8 +471,7 @@ class UnitInspection extends GetView<UnitController> {
                             left: 32.px, right: 32.px, bottom: 20.px)
                         : CommonTextRow(
                             title: 'Property ID: ',
-                            subTitle:
-                                '${controller.propertyData.externalProperty?.id}',
+                            subTitle: '${controller.propertyData.property?.id}',
                             imageString: hasTagIcon,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
@@ -496,7 +522,7 @@ class UnitInspection extends GetView<UnitController> {
                                 child: CommonTextRow(
                                   title: 'Building Name: ',
                                   subTitle:
-                                      '${controller.externalBuilding.name}',
+                                      '${controller.externalBuilding.building?.name}',
                                   imageString: icBuildings,
                                 ),
                               ),
@@ -506,7 +532,7 @@ class UnitInspection extends GetView<UnitController> {
                                   isImage: true,
                                   title: 'Year Constructed: ',
                                   subTitle:
-                                      '${controller.externalBuilding.constructedYear}',
+                                      '${controller.externalBuilding.building?.constructedYear}',
                                   imageString: icCalender2,
                                 ),
                               ),
@@ -523,7 +549,7 @@ class UnitInspection extends GetView<UnitController> {
                         : CommonTextRow(
                             title: 'Building Type: ',
                             subTitle:
-                                '${controller.externalBuilding.buildingType?.name}',
+                                '${controller.externalBuilding.building?.buildingType?.name}',
                             imageString: icBuildings,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 40.px),

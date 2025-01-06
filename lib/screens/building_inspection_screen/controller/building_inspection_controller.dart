@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart'
+    as daily;
 
 import '../models/certificate_model.dart';
 import 'package:public_housing/commons/all.dart';
@@ -29,8 +30,10 @@ class BuildingInspectionController extends BaseController {
   List checked = [];
   BuildingInspectionRepository buildingInspectionRepository =
       BuildingInspectionRepository();
-  ExternalBuilding externalBuilding = ExternalBuilding();
-  ScheduleDatum propertyData = ScheduleDatum();
+  daily.ScheduleInspectionBuilding externalBuilding =
+      daily.ScheduleInspectionBuilding();
+  daily.ScheduleInspection propertyData = daily.ScheduleInspection();
+  int buildingId = 0;
 
   // List<String> propertyList = [];
   List<String> cityList = [];
@@ -56,9 +59,26 @@ class BuildingInspectionController extends BaseController {
     }
     if (Get.arguments['propertyData'] != null) {
       propertyData = Get.arguments['propertyData'];
+      propertyInfo.addAll({
+        "id": propertyData.property?.id,
+        "name": propertyData.property?.name,
+        "city": propertyData.property?.city,
+        "state": propertyData.property?.state,
+        "zip": propertyData.property?.zip,
+        "address": propertyData.property?.address1
+      });
+    }
+    if (Get.arguments['buildingId'] != null) {
+      buildingId = Get.arguments['buildingId'];
     }
     if (Get.arguments['externalBuilding'] != null) {
       externalBuilding = Get.arguments['externalBuilding'];
+      buildingInfo.addAll({
+        "id": externalBuilding.id,
+        "name": externalBuilding.building?.name,
+        "constructed_year": externalBuilding.building?.constructedYear,
+        "building_type_id": externalBuilding.building?.buildingType?.id
+      });
     }
 
     clearAllData();

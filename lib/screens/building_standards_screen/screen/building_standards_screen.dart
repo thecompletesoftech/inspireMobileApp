@@ -89,6 +89,8 @@ class BuildingStandardsScreen extends GetView<BuildingStandardsController> {
                                       controller.certificatesInfo,
                                   "inspectorName": controller.inspectorName,
                                   "inspectorDate": controller.inspectorDate,
+                                  "propertyData": controller.propertyData,
+                                  "buildingId": controller.buildingId
                                 })?.then((value) {
                               controller.update();
                             });

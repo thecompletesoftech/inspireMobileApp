@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unit_building_standards_screen/controller/unit_building_standards_controller.dart';
 import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unit_cabinets_screen%20/screen/unit_standards_details_screen.dart';
@@ -78,10 +79,10 @@ class UnitBuildingStandardsScreen
                                 }
                               });
                             });
-
                             // if (deficiencyArea.isNotEmpty) {
                             Get.toNamed(UnitInspectionSummary.routes,
                                 arguments: {
+                                  "isManually": controller.isManually,
                                   "buildingName": controller.buildingName,
                                   "buildingtype": controller.buildingtype,
                                   "deficiencyArea": deficiencyArea,
@@ -92,7 +93,7 @@ class UnitBuildingStandardsScreen
                                   "inspectorName": controller.inspectorName,
                                   "inspectorDate": controller.inspectorDate,
                                   "unitinfo": controller.unitinfo,
-                                  "switchvalue": controller.switchbtn.value
+                                  "switchvalue": controller.switchbtn.value,
                                 });
                             // }
                           },

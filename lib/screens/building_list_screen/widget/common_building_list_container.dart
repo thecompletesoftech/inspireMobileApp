@@ -12,6 +12,8 @@ class CommonBuildingListView extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
 
+  // final bool isComplete;
+
   const CommonBuildingListView({
     super.key,
     required this.title,
@@ -21,6 +23,7 @@ class CommonBuildingListView extends StatelessWidget {
     this.onTap,
     this.onTap1,
     required this.dateTime,
+    // required this.isComplete,
   });
 
   @override
@@ -31,46 +34,59 @@ class CommonBuildingListView extends StatelessWidget {
         children: [
           Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      MyTextView(
-                        '${title} - ',
-                        textStyleNew: MyTextStyle(
-                            textSize: 24.px,
-                            textColor: AppColors().black,
-                            textWeight: FontWeight.w600),
-                      ),
-                      MyTextView(
-                        title1,
-                        textStyleNew: MyTextStyle(
-                            textSize: 20.px,
-                            textColor: AppColors().textcolor,
-                            textWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      MyTextView(
-                        '${Subtitle} - ',
-                        textStyleNew: MyTextStyle(
-                            textSize: 24.px,
-                            textColor: AppColors().black,
-                            textWeight: FontWeight.w600),
-                      ),
-                      MyTextView(
-                        Subtitle1,
-                        textStyleNew: MyTextStyle(
-                            textSize: 20.px,
-                            textColor: AppColors().textcolor,
-                            textWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            MyTextView(
+                              '${title} - ',
+                              textStyleNew: MyTextStyle(
+                                  textSize: 24.px,
+                                  textColor: AppColors().black,
+                                  textWeight: FontWeight.w600),
+                            ),
+                            MyTextView(
+                              title1,
+                              textStyleNew: MyTextStyle(
+                                  textSize: 20.px,
+                                  textColor: AppColors().textcolor,
+                                  textWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
+                        // if (isComplete)
+                        //   ClipOval(
+                        //     child: SvgPicture.string(
+                        //       icComplete,
+                        //     ),
+                        //   )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        MyTextView(
+                          '${Subtitle} - ',
+                          textStyleNew: MyTextStyle(
+                              textSize: 24.px,
+                              textColor: AppColors().black,
+                              textWeight: FontWeight.w600),
+                        ),
+                        MyTextView(
+                          Subtitle1,
+                          textStyleNew: MyTextStyle(
+                              textSize: 20.px,
+                              textColor: AppColors().textcolor,
+                              textWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ).paddingAll(16.px),
@@ -96,7 +112,10 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
               ).paddingOnly(right: 24.px),
               CommonIconButton(
-                title: Strings.inspectBuilding,
+                title: /*isComplete
+                    ? Strings.editInspection
+                    : */
+                    Strings.inspectBuilding,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -110,9 +129,10 @@ class CommonBuildingListView extends StatelessWidget {
                 onTap: onTap1,
                 iconColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
                         '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                    // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}'
                     ? AppColors.primerColor
                     : AppColors().border1,
-                icon: icBuildings,
+                icon: /*isComplete ? icEditNotes :*/ icBuildings,
                 iconheigth: 20.px,
                 textColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
                         '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'

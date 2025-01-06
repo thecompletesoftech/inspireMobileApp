@@ -6,8 +6,12 @@ import 'package:public_housing/screens/building_inspection_screen/models/certifi
 import 'package:public_housing/screens/building_inspection_screen/repository/building_inspection_repository.dart';
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_inspection_summary/repository/building_inspection_summry_repository.dart';
+import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart'
+    as daily;
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 
 class BuildingInspectionSummaryController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey1 = GlobalKey();
@@ -53,12 +57,27 @@ class BuildingInspectionSummaryController extends BaseController {
       Get.put(BuildingInspectionController());
   List<Certificates>? certificates = [];
   bool isManually = false;
+  daily.ScheduleInspection propertyData = daily.ScheduleInspection();
+  int buildingId = 0;
+  daily.ScheduleInspectionBuilding scheduleInspectionBuilding =
+      daily.ScheduleInspectionBuilding();
 
   @override
   void onInit() {
     deficiencyArea = [];
-    if (Get.arguments != null) {
+    if (Get.arguments['propertyData'] != null) {
+      propertyData = Get.arguments['propertyData'];
+    }
+
+    if (Get.arguments['buildingId'] != null) {
+      buildingId = Get.arguments['buildingId'];
+      getUnitData();
+    }
+
+    if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments != null) {
       buildingName = Get.arguments['buildingName'];
       buildingType = Get.arguments['buildingtype'];
       propertyName = Get.arguments['propertyInfo']['name'];
@@ -84,12 +103,27 @@ class BuildingInspectionSummaryController extends BaseController {
       setControllerData(
           propertyInfo, buildingInfo, inspectorName, inspectorDate);
     }
-
     super.onInit();
   }
 
   clearData() {
     deficiencyArea.clear();
+  }
+
+  getUnitData() {
+    propertyData.scheduleInspectionBuildings?.forEach(
+      (element) {
+        if (element.id == buildingId) {
+          scheduleInspectionBuilding.id = element.id;
+          scheduleInspectionBuilding.scheduleInspectionUnits =
+              element.scheduleInspectionUnits;
+          scheduleInspectionBuilding.building = element.building;
+          scheduleInspectionBuilding.isBuildingInspection =
+              element.isBuildingInspection;
+        }
+      },
+    );
+    update();
   }
 
   getCertificatesJson() {
@@ -117,7 +151,7 @@ class BuildingInspectionSummaryController extends BaseController {
   setControllerData(propertyInfo, buildingInfo, inspectorName, inspectorDate) {
     propertyNameController.text = propertyInfo['name'] ?? "";
     cityController.text = propertyInfo['city'] ?? "";
-    propertyIDController.text = propertyInfo['id'] ?? "";
+    propertyIDController.text = propertyInfo['id'].toString() ?? "";
     stateController.text = propertyInfo['state'] ?? "";
     zipController.text = propertyInfo['zip'] ?? "";
     propertyAddressController.text = propertyInfo['address'] ?? "";
@@ -234,9 +268,9 @@ class BuildingInspectionSummaryController extends BaseController {
     CreateInspectionRequestModel createInspectionRequestModel =
         CreateInspectionRequestModel(
       building: Building(
-        id: buildingInfo['id'],
-        buildingTypeId: buildingInfo['building_type_id'],
-        constructedYear: buildingInfo['constructed_year'],
+        id: buildingInfo['id'].toString(),
+        buildingTypeId: buildingInfo['building_type_id'].toString(),
+        constructedYear: buildingInfo['constructed_year'].toString(),
         name: buildingInfo['name'],
       ),
       certificates: certificates,
@@ -250,7 +284,7 @@ class BuildingInspectionSummaryController extends BaseController {
       ),
       property: Property(
         name: propertyInfo['name'],
-        id: propertyInfo['id'],
+        id: propertyInfo['id'].toString(),
         address: propertyInfo['address'],
         city: propertyInfo['city'],
         state: propertyInfo['state'],
@@ -270,18 +304,27 @@ class BuildingInspectionSummaryController extends BaseController {
           message: "Building  inspection Submitted Successfully!!",
           isOk: true);
       isSuccess = true;
-      Get.toNamed(UnitInspection.routes, arguments: {
-        "deficiencyArea": deficiencyArea,
-        "buildingName": buildingName,
-        "buildingtype": buildingType,
-        "imagesList": imagesList,
-        "inspectionName": inspectionName,
-        "propertyInfo": propertyInfo,
-        "buildingInfo": buildingInfo,
-        "certificatesInfo": certificatesInfo,
-        "inspectorName": inspectorName,
-        "inspectorDate": inspectorDate
-      });
+      if (isManually) {
+        Get.toNamed(UnitInspection.routes, arguments: {
+          "deficiencyArea": deficiencyArea,
+          "buildingName": buildingName,
+          "buildingtype": buildingType,
+          "imagesList": imagesList,
+          "inspectionName": inspectionName,
+          "propertyInfo": propertyInfo,
+          "buildingInfo": buildingInfo,
+          "certificatesInfo": certificatesInfo,
+          "inspectorName": inspectorName,
+          "inspectorDate": inspectorDate,
+          "isManually": isManually
+        });
+      } else {
+        Get.toNamed(UnitListScreen.routes, arguments: {
+          'externalBuilding': scheduleInspectionBuilding,
+          "propertyData": propertyData,
+          "isManually": isManually
+        });
+      }
     });
     // update();
   }

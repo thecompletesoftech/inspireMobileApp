@@ -147,9 +147,11 @@
 //
 //     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
 
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
 
-import '../../building_inspection_screen/models/building_model.dart';
+import 'dart:convert';
 
 DailySchedulesResponseModel dailySchedulesResponseModelFromJson(String str) =>
     DailySchedulesResponseModel.fromJson(json.decode(str));
@@ -159,124 +161,202 @@ String dailySchedulesResponseModelToJson(DailySchedulesResponseModel data) =>
 
 class DailySchedulesResponseModel {
   String? type;
-  List<ScheduleDatum>? scheduleData;
+  List<ScheduleInspection>? scheduleInspections;
 
-  DailySchedulesResponseModel({
-    this.type,
-    this.scheduleData,
-  });
+  DailySchedulesResponseModel({this.type, this.scheduleInspections});
 
   factory DailySchedulesResponseModel.fromJson(Map<String, dynamic> json) =>
       DailySchedulesResponseModel(
         type: json["type"],
-        scheduleData: json["schedule_data"] == null
+        scheduleInspections: json["schedule_inspections"] == null
             ? []
-            : List<ScheduleDatum>.from(
-                json["schedule_data"]!.map((x) => ScheduleDatum.fromJson(x))),
+            : List<ScheduleInspection>.from(json["schedule_inspections"]!
+                .map((x) => ScheduleInspection.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "type": type,
-        "schedule_data": scheduleData == null
+        "schedule_inspections": scheduleInspections == null
             ? []
-            : List<dynamic>.from(scheduleData!.map((x) => x.toJson())),
+            : List<dynamic>.from(scheduleInspections!.map((x) => x.toJson())),
       };
 }
 
-class ScheduleDatum {
-  String? property;
-  String? name;
-  String? unit;
-  String? address1;
-  String? city;
-  String? state;
-  int? counter;
-  String? building;
-  DateTime? date;
-  String? inspector;
-  String? zip;
-  String? iscompleted;
-  ExternalProperty? externalProperty;
-  List<ExternalBuilding>? externalBuildings;
-  Inspector? scheduleDatumInspector;
-  bool? inspectionBuilding;
-  DateTime? scheduleInspectionDate;
+class ScheduleInspection {
+  int? id;
+  DateTime? scheduleDate;
+  String? status;
+  Inspector? inspector;
+  ScheduleInspectionProperty? property;
+  List<ScheduleInspectionBuilding>? scheduleInspectionBuildings;
+  String? formattedScheduleDate;
 
-  ScheduleDatum({
-    this.property,
-    this.name,
-    this.unit,
-    this.address1,
-    this.city,
-    this.state,
-    this.counter,
-    this.building,
-    this.date,
+  ScheduleInspection({
+    this.id,
+    this.scheduleDate,
+    this.status,
     this.inspector,
-    this.zip,
-    this.iscompleted,
-    this.externalProperty,
-    this.externalBuildings,
-    this.scheduleDatumInspector,
-    this.inspectionBuilding,
-    this.scheduleInspectionDate,
+    this.property,
+    this.scheduleInspectionBuildings,
+    this.formattedScheduleDate,
   });
 
-  factory ScheduleDatum.fromJson(Map<String, dynamic> json) => ScheduleDatum(
-        property: json["Property"],
-        name: json["Name"],
-        unit: json["Unit"],
-        address1: json["Address1"],
-        city: json["City"],
-        state: json["State"],
-        counter: json["Counter"],
-        building: json["Building"],
-        date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
-        inspector: json["Inspector"],
-        zip: json["Zip"],
-        iscompleted: json["iscompleted"],
-        externalProperty: json["external_property"] == null
+  factory ScheduleInspection.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspection(
+        id: json["id"],
+        scheduleDate: json["schedule_date"] == null
             ? null
-            : ExternalProperty.fromJson(json["external_property"]),
-        externalBuildings: json["external_buildings"] == null
-            ? []
-            : List<ExternalBuilding>.from(json["external_buildings"]!
-                .map((x) => ExternalBuilding.fromJson(x))),
-        scheduleDatumInspector: json["inspector"] == null
+            : DateTime.parse(json["schedule_date"]),
+        status: json["status"],
+        inspector: json["inspector"] == null
             ? null
             : Inspector.fromJson(json["inspector"]),
-        inspectionBuilding: json["inspection_building"],
-        scheduleInspectionDate: json["schedule_inspection_date"] == null
+        property: json["property"] == null
             ? null
-            : DateTime.parse(json["schedule_inspection_date"]),
+            : ScheduleInspectionProperty.fromJson(json["property"]),
+        scheduleInspectionBuildings:
+            json["schedule_inspection_buildings"] == null
+                ? []
+                : List<ScheduleInspectionBuilding>.from(
+                    json["schedule_inspection_buildings"]!
+                        .map((x) => ScheduleInspectionBuilding.fromJson(x))),
+        formattedScheduleDate: json["formatted_schedule_date"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Property": property,
-        "Name": name,
-        "Unit": unit,
-        "Address1": address1,
-        "City": city,
-        "State": state,
-        "Counter": counter,
-        "Building": building,
-        "Date":
-            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-        "Inspector": inspector,
-        "Zip": zip,
-        "iscompleted": iscompleted,
-        "external_property": externalProperty?.toJson(),
-        "external_buildings": externalBuildings == null
+        "id": id,
+        "schedule_date": scheduleDate?.toIso8601String(),
+        "status": status,
+        "inspector": inspector?.toJson(),
+        "property": property?.toJson(),
+        "schedule_inspection_buildings": scheduleInspectionBuildings == null
             ? []
-            : List<dynamic>.from(externalBuildings!.map((x) => x.toJson())),
-        "inspector": scheduleDatumInspector?.toJson(),
-        "inspection_building": inspectionBuilding,
-        "schedule_inspection_date":
-            "${scheduleInspectionDate!.year.toString().padLeft(4, '0')}-${scheduleInspectionDate!.month.toString().padLeft(2, '0')}-${scheduleInspectionDate!.day.toString().padLeft(2, '0')}",
+            : List<dynamic>.from(
+                scheduleInspectionBuildings!.map((x) => x.toJson())),
+        "formatted_schedule_date": formattedScheduleDate,
       };
 }
 
-class ExternalBuilding {
+class Inspector {
+  int? id;
+  int? externalAccountId;
+  dynamic externalPersonalId;
+  String? name;
+
+  Inspector({
+    this.id,
+    this.externalAccountId,
+    this.externalPersonalId,
+    this.name,
+  });
+
+  factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
+        id: json["id"],
+        externalAccountId: json["external_account_id"],
+        externalPersonalId: json["external_personal_id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "external_account_id": externalAccountId,
+        "external_personal_id": externalPersonalId,
+        "name": name,
+      };
+}
+
+class ScheduleInspectionProperty {
+  int? id;
+  String? address1;
+  dynamic address2;
+  String? city;
+  String? state;
+  String? zip;
+  String? name;
+  String? number;
+  dynamic ampNumber;
+  String? notes;
+
+  ScheduleInspectionProperty({
+    this.id,
+    this.address1,
+    this.address2,
+    this.city,
+    this.state,
+    this.zip,
+    this.name,
+    this.number,
+    this.ampNumber,
+    this.notes,
+  });
+
+  factory ScheduleInspectionProperty.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspectionProperty(
+        id: json["id"],
+        address1: json["address1"],
+        address2: json["address2"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
+        name: json["name"],
+        number: json["number"],
+        ampNumber: json["amp_number"],
+        notes: json["notes"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "address1": address1,
+        "address2": address2,
+        "city": city,
+        "state": state,
+        "zip": zip,
+        "name": name,
+        "number": number,
+        "amp_number": ampNumber,
+        "notes": notes,
+      };
+}
+
+class ScheduleInspectionBuilding {
+  int? id;
+  bool? isBuildingInspection;
+  Building? building;
+  List<ScheduleInspectionUnit>? scheduleInspectionUnits;
+
+  ScheduleInspectionBuilding({
+    this.id,
+    this.isBuildingInspection,
+    this.building,
+    this.scheduleInspectionUnits,
+  });
+
+  factory ScheduleInspectionBuilding.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspectionBuilding(
+        id: json["id"],
+        isBuildingInspection: json["is_building_inspection"],
+        building: json["building"] == null
+            ? null
+            : Building.fromJson(json["building"]),
+        scheduleInspectionUnits: json["schedule_inspection_units"] == null
+            ? []
+            : List<ScheduleInspectionUnit>.from(
+                json["schedule_inspection_units"]!
+                    .map((x) => ScheduleInspectionUnit.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "is_building_inspection": isBuildingInspection,
+        "building": building?.toJson(),
+        "schedule_inspection_units": scheduleInspectionUnits == null
+            ? []
+            : List<dynamic>.from(
+                scheduleInspectionUnits!.map((x) => x.toJson())),
+      };
+}
+
+class Building {
   int? id;
   String? address1;
   dynamic address2;
@@ -285,13 +365,11 @@ class ExternalBuilding {
   String? zip;
   String? name;
   dynamic number;
-  Property? property;
+  BuildingProperty? property;
   int? constructedYear;
   BuildingType? buildingType;
-  int? totalUnits;
-  List<Unit>? units;
 
-  ExternalBuilding({
+  Building({
     this.id,
     this.address1,
     this.address2,
@@ -303,12 +381,9 @@ class ExternalBuilding {
     this.property,
     this.constructedYear,
     this.buildingType,
-    this.totalUnits,
-    this.units,
   });
 
-  factory ExternalBuilding.fromJson(Map<String, dynamic> json) =>
-      ExternalBuilding(
+  factory Building.fromJson(Map<String, dynamic> json) => Building(
         id: json["id"],
         address1: json["address1"],
         address2: json["address2"],
@@ -319,15 +394,11 @@ class ExternalBuilding {
         number: json["number"],
         property: json["property"] == null
             ? null
-            : Property.fromJson(json["property"]),
+            : BuildingProperty.fromJson(json["property"]),
         constructedYear: json["constructed_year"],
         buildingType: json["building_type"] == null
             ? null
             : BuildingType.fromJson(json["building_type"]),
-        totalUnits: json["total_units"],
-        units: json["units"] == null
-            ? []
-            : List<Unit>.from(json["units"]!.map((x) => Unit.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -342,23 +413,44 @@ class ExternalBuilding {
         "property": property?.toJson(),
         "constructed_year": constructedYear,
         "building_type": buildingType?.toJson(),
-        "total_units": totalUnits,
-        "units": units == null
-            ? []
-            : List<dynamic>.from(units!.map((x) => x.toJson())),
       };
 }
 
-class Property {
+class BuildingType {
+  int? id;
+  String? name;
+  dynamic description;
+
+  BuildingType({
+    this.id,
+    this.name,
+    this.description,
+  });
+
+  factory BuildingType.fromJson(Map<String, dynamic> json) => BuildingType(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+      };
+}
+
+class BuildingProperty {
   int? id;
   String? address1;
 
-  Property({
+  BuildingProperty({
     this.id,
     this.address1,
   });
 
-  factory Property.fromJson(Map<String, dynamic> json) => Property(
+  factory BuildingProperty.fromJson(Map<String, dynamic> json) =>
+      BuildingProperty(
         id: json["id"],
         address1: json["address1"],
       );
@@ -366,6 +458,27 @@ class Property {
   Map<String, dynamic> toJson() => {
         "id": id,
         "address1": address1,
+      };
+}
+
+class ScheduleInspectionUnit {
+  int? id;
+  Unit? unit;
+
+  ScheduleInspectionUnit({
+    this.id,
+    this.unit,
+  });
+
+  factory ScheduleInspectionUnit.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspectionUnit(
+        id: json["id"],
+        unit: json["unit"] == null ? null : Unit.fromJson(json["unit"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "unit": unit?.toJson(),
       };
 }
 
@@ -402,86 +515,5 @@ class Unit {
         "number_of_bedrooms": numberOfBedrooms,
         "number_of_bathrooms": numberOfBathrooms,
         "occupied": occupied,
-      };
-}
-
-class ExternalProperty {
-  int? id;
-  String? address1;
-  String? address2;
-  String? city;
-  String? state;
-  String? zip;
-  String? name;
-  String? number;
-  String? ampNumber;
-  String? notes;
-
-  ExternalProperty({
-    this.id,
-    this.address1,
-    this.address2,
-    this.city,
-    this.state,
-    this.zip,
-    this.name,
-    this.number,
-    this.ampNumber,
-    this.notes,
-  });
-
-  factory ExternalProperty.fromJson(Map<String, dynamic> json) =>
-      ExternalProperty(
-        id: json["id"],
-        address1: json["address1"],
-        address2: json["address2"],
-        city: json["city"],
-        state: json["state"],
-        zip: json["zip"],
-        name: json["name"],
-        number: json["number"],
-        ampNumber: json["amp_number"],
-        notes: json["notes"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "address1": address1,
-        "address2": address2,
-        "city": city,
-        "state": state,
-        "zip": zip,
-        "name": name,
-        "number": number,
-        "amp_number": ampNumber,
-        "notes": notes,
-      };
-}
-
-class Inspector {
-  int? id;
-  int? externalAccountId;
-  dynamic externalPersonalId;
-  String? name;
-
-  Inspector({
-    this.id,
-    this.externalAccountId,
-    this.externalPersonalId,
-    this.name,
-  });
-
-  factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
-        id: json["id"],
-        externalAccountId: json["external_account_id"],
-        externalPersonalId: json["external_personal_id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "external_account_id": externalAccountId,
-        "external_personal_id": externalPersonalId,
-        "name": name,
       };
 }

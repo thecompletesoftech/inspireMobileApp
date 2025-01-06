@@ -365,15 +365,17 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                               .scheduleDataList[index]
                                               .scheduleDataList[i];
                                           return CommonPropertiesListView(
-                                            title: propertyData.property ?? "",
+                                            title:
+                                                propertyData.property?.name ??
+                                                    "",
                                             Subtitle:
-                                                '${propertyData.city} - ${propertyData.zip}',
+                                                '${propertyData.property?.city} - ${propertyData.property?.zip}',
                                             title1:
-                                                '${propertyData.externalBuildings?.length ?? 0}',
+                                                '${propertyData.scheduleInspectionBuildings?.length ?? 0}',
                                             Subtitle1:
-                                                '${controller.getUnitCount(propertyData.externalBuildings)} Units',
+                                                '${controller.getUnitCount(propertyData.scheduleInspectionBuildings)} Units',
                                             date:
-                                                '${DateFormat('yyyy-MM-dd').format(propertyData.date!)}',
+                                                '${DateFormat('yyyy-MM-dd').format(propertyData.scheduleDate!)}',
                                             onTap: () {
                                               Get.toNamed(
                                                   BuildingListScreen.routes,
@@ -383,7 +385,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                                         propertyData,
                                                     "externalBuildingData":
                                                         propertyData
-                                                            .externalBuildings,
+                                                            .scheduleInspectionBuildings,
                                                   });
                                             },
                                           ).paddingSymmetric(horizontal: 32.px);
@@ -469,7 +471,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                         onTap: () {
                           controller.startDate =
                               controller.todayDateGet(DateTime.now());
-                          controller.getTodayData();
+                          controller.getDailySchedulesData();
                           Get.back();
                           controller.update();
                         },

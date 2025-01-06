@@ -3,8 +3,13 @@ import 'package:public_housing/screens/properties_list_screen/model/daily_schedu
 
 class BuildingListController extends BaseController {
   bool isComplete = false;
-  List<ExternalBuilding> externalBuildings = [];
-  ScheduleDatum propertyData = ScheduleDatum();
+  List<ScheduleInspectionBuilding> externalBuildings = [];
+  // List<ScheduleInspectionBuilding> completeBuildings = [];
+  // List<ScheduleInspectionBuilding> remainBuildings = [];
+  ScheduleInspection propertyData = ScheduleInspection();
+  var propertyInfo = {}.obs;
+  var buildingInfo = {}.obs;
+  var certificatesInfo = {}.obs;
 
   @override
   void onInit() {
@@ -16,8 +21,29 @@ class BuildingListController extends BaseController {
     }
     if (Get.arguments['propertyData'] != null) {
       propertyData = Get.arguments['propertyData'];
+      propertyInfo.addAll({
+        "id": propertyData.property?.id,
+        "name": propertyData.property?.name,
+        "city": propertyData.property?.city,
+        "state": propertyData.property?.state,
+        "zip": propertyData.property?.zip,
+        "address": propertyData.property?.address1
+      });
     }
+    // externalCompleteBuildings();
     update();
     super.onInit();
   }
+
+  // externalCompleteBuildings() {
+  //   externalBuildings.forEach(
+  //     (element) {
+  //       if (element.isBuildingInspection ?? false) {
+  //         completeBuildings.add(element);
+  //       } else {
+  //         remainBuildings.add(element);
+  //       }
+  //     },
+  //   );
+  // }
 }

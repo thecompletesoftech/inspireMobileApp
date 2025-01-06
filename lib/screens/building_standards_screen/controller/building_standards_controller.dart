@@ -2,6 +2,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/repository/building_standards_repository.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 
 // enum BuildingStandardsStatus { all, failed }
 
@@ -9,6 +10,7 @@ class BuildingStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
   BuildingStandardsRepository buildingStandardsRepository =
       BuildingStandardsRepository();
+  ScheduleInspection propertyData = ScheduleInspection();
 
   // BuildingStandardsStatus status = BuildingStandardsStatus.all;
   bool isCollapseStandards = false;
@@ -26,6 +28,7 @@ class BuildingStandardsController extends BaseController {
   String inspectorName = '';
   String inspectorDate = '';
   bool isManually = false;
+  int buildingId = 0;
 
   void onInit() {
     super.onInit();
@@ -34,9 +37,14 @@ class BuildingStandardsController extends BaseController {
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
     }();
-
+    if (Get.arguments['buildingId'] != null) {
+      buildingId = Get.arguments['buildingId'];
+    }
     if (Get.arguments['isManually'] != null) {
       isManually = Get.arguments['isManually'];
+    }
+    if (Get.arguments['propertyData'] != null) {
+      propertyData = Get.arguments['propertyData'];
     }
 
     if (Get.arguments['buildingtype'] != null) {
@@ -45,10 +53,13 @@ class BuildingStandardsController extends BaseController {
       propertyName = Get.arguments['propertyInfo']['name'];
       propertyInfo = Get.arguments['propertyInfo'];
       buildingInfo = Get.arguments['buildingInfo'];
-      certificatesInfo = Get.arguments['certificatesInfo'];
       inspectorName = Get.arguments['inspectorName'];
       inspectorDate = Get.arguments['inspectorDate'];
     }
+    if (Get.arguments['certificatesInfo'] != null) {
+      certificatesInfo = Get.arguments['certificatesInfo'];
+    }
+
     update();
   }
 

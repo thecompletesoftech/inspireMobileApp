@@ -2,7 +2,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/common_widgets/common_row.dart';
 import 'package:public_housing/screens/unit_inspection_screen/widget/title_head_menu_widget.dart';
-import 'package:public_housing/screens/unit_inspection_summary_screen/controller/unit_inspection_controller.dart';
+import 'package:public_housing/screens/unit_inspection_summary_screen/controller/unit_inspection_summary_controller.dart';
 import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import '../../../commons/all.dart';
 import '../../unit_deficiencies_inside_screen/screen/unit_deficiencies_inside_screen.dart';
@@ -308,12 +308,14 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                   textFamily: fontFamilyRegular,
                                   textColor: controller.appColors.black,
                                   color: controller.appColors.textPink,
-                                  onTap: () {
-                                    Get.toNamed(UnitListScreen.routes,
-                                        arguments: {
-                                          "isManually": controller.isManually,
-                                          "isComplete": true
-                                        });
+                                  onTap: () async {
+                                    if (controller.generalPhysicalCondition.text
+                                            .isNotEmpty &&
+                                        controller
+                                            .unitHouseKeeping.text.isNotEmpty) {
+                                      await controller.getInspectionInfoJson();
+                                      controller.createInspection();
+                                    }
                                   },
                                 ),
                               ).paddingOnly(top: 15.px, bottom: 30.px),
@@ -374,7 +376,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 left: 32.px, right: 32.px, bottom: 20.px)
                             : CommonTextRow(
                                 title: 'Property Name: ',
-                                subTitle: '${controller.propertyData.name}',
+                                subTitle: '${controller.propertyInfo['name']}',
                                 imageString: icBuildingss,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -417,7 +419,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             : CommonTextRow(
                                 title: 'Property Address: ',
                                 subTitle:
-                                    '${controller.propertyData.address1}, ${controller.propertyData.city}, ${controller.propertyData.state}, ${controller.propertyData.zip}',
+                                    '${controller.propertyInfo['address']}, ${controller.propertyInfo['city']}, ${controller.propertyInfo['state']}, ${controller.propertyInfo['zip']}',
                                 imageString: icLocation,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -425,8 +427,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             ? SizedBox.shrink()
                             : CommonTextRow(
                                 title: 'Property ID: ',
-                                subTitle:
-                                    '${controller.propertyData.externalProperty?.id}',
+                                subTitle: '${controller.propertyInfo['id']}',
                                 imageString: hasTagIcon,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
@@ -477,7 +478,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                     child: CommonTextRow(
                                       title: 'Building Name: ',
                                       subTitle:
-                                          '${controller.externalBuilding.name}',
+                                          '${controller.buildingInfo['name']}',
                                       imageString: icBuildings,
                                     ),
                                   ),
@@ -487,7 +488,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                       isImage: true,
                                       title: 'Year Constructed: ',
                                       subTitle:
-                                          '${controller.externalBuilding.constructedYear}',
+                                          '${controller.buildingInfo['constructed_year']}',
                                       imageString: icCalender2,
                                     ),
                                   ),
@@ -508,7 +509,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             : CommonTextRow(
                                 title: 'Building Type: ',
                                 subTitle:
-                                    '${controller.externalBuilding.buildingType?.name}',
+                                    '${controller.buildingInfo['building_type_id']}',
                                 imageString: icBuildings,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 40.px),
@@ -1107,87 +1108,117 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                         //     );
                         //   },
                         // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: (() async {
-                                if (controller.generalPhysicalCondition.text
-                                        .isNotEmpty &&
-                                    controller
-                                        .unitHouseKeeping.text.isNotEmpty) {
-                                  await controller.getInspectionInfoJson();
-                                  controller.saveCreateInspection();
-                                }
-                              }),
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 44.px,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100.px),
-                                    border: Border.all(
-                                      color: controller.generalPhysicalCondition
-                                                  .text.isNotEmpty &&
-                                              controller.unitHouseKeeping.text
-                                                  .isNotEmpty
-                                          ? controller.appColors.appColor
-                                          : controller.appColors.grey,
-                                    )),
-                                child: MyTextView(
-                                  Strings.saveandunit,
-                                  textStyleNew: MyTextStyle(
+                        controller.isManually == true
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (() async {
+                                      if (controller.generalPhysicalCondition
+                                              .text.isNotEmpty &&
+                                          controller.unitHouseKeeping.text
+                                              .isNotEmpty) {
+                                        await controller
+                                            .getInspectionInfoJson();
+                                        controller.saveCreateInspection();
+                                      }
+                                    }),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 44.px,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100.px),
+                                          border: Border.all(
+                                            color: controller
+                                                        .generalPhysicalCondition
+                                                        .text
+                                                        .isNotEmpty &&
+                                                    controller.unitHouseKeeping
+                                                        .text.isNotEmpty
+                                                ? controller.appColors.appColor
+                                                : controller.appColors.grey,
+                                          )),
+                                      child: MyTextView(
+                                        Strings.saveandunit,
+                                        textStyleNew: MyTextStyle(
+                                          textColor: controller
+                                                      .generalPhysicalCondition
+                                                      .text
+                                                      .isNotEmpty &&
+                                                  controller.unitHouseKeeping
+                                                      .text.isNotEmpty
+                                              ? controller.appColors.appColor
+                                              : controller.appColors.grey,
+                                          textWeight: FontWeight.w500,
+                                          textFamily: fontFamilyBold,
+                                          textSize: 16.px,
+                                        ),
+                                      )
+                                          .paddingOnly(left: 8.px)
+                                          .paddingSymmetric(horizontal: 16.px),
+                                    ),
+                                  ).paddingOnly(right: 16.px),
+                                  CommonButton(
+                                    title: Strings.CompleteInspection,
+                                    radius: 100.px,
+                                    width: 198.px,
+                                    height: 44.px,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 15.px,
+                                      horizontal: 24.px,
+                                    ),
+                                    textSize: 16.px,
+                                    textWeight: FontWeight.w500,
+                                    textFamily: fontFamilyRegular,
                                     textColor: controller
                                                 .generalPhysicalCondition
                                                 .text
                                                 .isNotEmpty &&
                                             controller.unitHouseKeeping.text
                                                 .isNotEmpty
-                                        ? controller.appColors.appColor
-                                        : controller.appColors.grey,
-                                    textWeight: FontWeight.w500,
-                                    textFamily: fontFamilyBold,
-                                    textSize: 16.px,
-                                  ),
-                                )
-                                    .paddingOnly(left: 8.px)
-                                    .paddingSymmetric(horizontal: 16.px),
-                              ),
-                            ).paddingOnly(right: 16.px),
-                            CommonButton(
-                              title: Strings.CompleteInspection,
-                              radius: 100.px,
-                              width: 198.px,
-                              height: 44.px,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 15.px,
-                                horizontal: 24.px,
-                              ),
-                              textSize: 16.px,
-                              textWeight: FontWeight.w500,
-                              textFamily: fontFamilyRegular,
-                              textColor: controller.generalPhysicalCondition
-                                          .text.isNotEmpty &&
-                                      controller
-                                          .unitHouseKeeping.text.isNotEmpty
-                                  ? controller.appColors.black
-                                  : controller.appColors.border1,
-                              color: controller
-                                      .generalPhysicalCondition.text.isNotEmpty
-                                  ? controller.appColors.textPink
-                                  : controller.appColors.black
-                                      .withOpacity(0.11999999731779099),
-                              onTap: () async {
-                                if (controller.generalPhysicalCondition.text
-                                        .isNotEmpty &&
-                                    controller
-                                        .unitHouseKeeping.text.isNotEmpty) {
-                                  await controller.getInspectionInfoJson();
-                                  controller.createInspection();
-                                }
-                              },
-                            )
-                          ],
-                        ).paddingOnly(top: 30.px, bottom: 30.px),
+                                        ? controller.appColors.black
+                                        : controller.appColors.border1,
+                                    color: controller.generalPhysicalCondition
+                                            .text.isNotEmpty
+                                        ? controller.appColors.textPink
+                                        : controller.appColors.black
+                                            .withOpacity(0.11999999731779099),
+                                    onTap: () async {
+                                      if (controller.generalPhysicalCondition
+                                              .text.isNotEmpty &&
+                                          controller.unitHouseKeeping.text
+                                              .isNotEmpty) {
+                                        await controller
+                                            .getInspectionInfoJson();
+                                        controller.createInspection();
+                                      }
+                                    },
+                                  )
+                                ],
+                              ).paddingOnly(top: 30.px, bottom: 30.px)
+                            : Center(
+                                child: CommonButton(
+                                  title: Strings.CompleteInspection,
+                                  radius: 100.px,
+                                  width: 198.px,
+                                  height: 44.px,
+                                  textSize: 16.px,
+                                  textWeight: FontWeight.w500,
+                                  textFamily: fontFamilyRegular,
+                                  textColor: controller.appColors.black,
+                                  color: controller.appColors.textPink,
+                                  onTap: () async {
+                                    if (controller.generalPhysicalCondition.text
+                                            .isNotEmpty &&
+                                        controller
+                                            .unitHouseKeeping.text.isNotEmpty) {
+                                      await controller.getInspectionInfoJson();
+                                      controller.createInspection();
+                                    }
+                                  },
+                                ),
+                              ).paddingOnly(top: 15.px, bottom: 30.px),
                       ],
                     ),
                   ),

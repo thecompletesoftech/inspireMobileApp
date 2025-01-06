@@ -7,6 +7,7 @@ import 'package:public_housing/commons/svgImage.dart';
 import 'package:public_housing/commons/constants.dart';
 import 'package:public_housing/screens/building_list_screen/screen/building_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
+import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:public_housing/commons/common_widgets/base_widgets.dart';
 import 'package:public_housing/commons/common_widgets/button_widget.dart';
@@ -103,10 +104,8 @@ class BuildingInspectionSummaryScreen
                                     textFamily: fontFamilyRegular,
                                     textColor: controller.appColors.lightText,
                                     color: controller.appColors.textPink,
-                                    onTap: () {
-                                      Get.offAllNamed(BuildingListScreen.routes,
-                                          arguments: {"isComplete": true});
-                                      controller.update();
+                                    onTap: () async {
+                                      await controller.createInspection();
                                     },
                                   ),
                           ],
@@ -194,7 +193,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Inspector: ',
-                                              subTitle: '[Inspector]',
+                                              subTitle:
+                                                  '${controller.inspectorName}',
                                               imageString: icPerson,
                                             ),
                                           ),
@@ -202,7 +202,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Inspection Date: ',
-                                              subTitle: '[Inspection Date]',
+                                              subTitle:
+                                                  '${controller.inspectorDate}',
                                               imageString: icCalender2,
                                             ),
                                           ),
@@ -315,7 +316,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Property Name: ',
-                                              subTitle: '[Property Name]',
+                                              subTitle:
+                                                  '${controller.propertyName}',
                                               imageString: icBuildingss,
                                             ),
                                           ),
@@ -409,7 +411,7 @@ class BuildingInspectionSummaryScreen
                                             child: CommonTextRow(
                                               title: 'Property Address: ',
                                               subTitle:
-                                                  '[Property Address], [City], [State], [Zip]',
+                                                  '${controller.propertyAddressController.text}, ${controller.cityController.text}, ${controller.stateController.text}, ${controller.zipController.text}',
                                               imageString: icLocation,
                                             ),
                                           ),
@@ -454,7 +456,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Property ID: ',
-                                              subTitle: '[Property ID]',
+                                              subTitle:
+                                                  '${controller.propertyIDController.text}',
                                               imageString: hasTagIcon,
                                             ),
                                           ),
@@ -537,7 +540,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Building Name: ',
-                                              subTitle: '[Building Name]',
+                                              subTitle:
+                                                  '${controller.buildingNameController.text}',
                                               imageString: icBuildings,
                                             ),
                                           ),
@@ -546,7 +550,8 @@ class BuildingInspectionSummaryScreen
                                             child: CommonTextRow(
                                               isImage: true,
                                               title: 'Year Constructed: ',
-                                              subTitle: '[Year Constructed]',
+                                              subTitle:
+                                                  '${controller.yearConstructedController.text}',
                                               imageString: icCalender2,
                                             ),
                                           ),
@@ -616,7 +621,8 @@ class BuildingInspectionSummaryScreen
                                           Expanded(
                                             child: CommonTextRow(
                                               title: 'Building Type: ',
-                                              subTitle: '[Building Type]',
+                                              subTitle:
+                                                  '${controller.buildingTypeController.text}',
                                               imageString: icBuildings,
                                             ),
                                           ),
@@ -976,23 +982,23 @@ class BuildingInspectionSummaryScreen
                           color: controller.appColors.buttonColor,
                           onTap: () async {
                             await controller.createInspection();
-                            if (controller.isSuccess == true) {
-                              Get.toNamed(UnitInspection.routes, arguments: {
-                                "deficiencyArea": controller.deficiencyArea,
-                                "buildingName": controller.buildingName,
-                                "buildingtype": controller.buildingType,
-                                "imagesList": controller.imagesList,
-                                "inspectionName": controller.inspectionName,
-                                "propertyInfo": controller.propertyInfo,
-                                "buildingInfo": controller.buildingInfo,
-                                "certificatesInfo": controller.certificatesInfo,
-                                "inspectorName": controller.inspectorName,
-                                "inspectorDate": controller.inspectorDate
-                              })?.then((value) {
-                                controller.update();
-                              });
-                            }
-                            controller.update();
+                            // if (controller.isSuccess == true) {
+                            //   Get.toNamed(UnitInspection.routes, arguments: {
+                            //     "deficiencyArea": controller.deficiencyArea,
+                            //     "buildingName": controller.buildingName,
+                            //     "buildingtype": controller.buildingType,
+                            //     "imagesList": controller.imagesList,
+                            //     "inspectionName": controller.inspectionName,
+                            //     "propertyInfo": controller.propertyInfo,
+                            //     "buildingInfo": controller.buildingInfo,
+                            //     "certificatesInfo": controller.certificatesInfo,
+                            //     "inspectorName": controller.inspectorName,
+                            //     "inspectorDate": controller.inspectorDate
+                            //   })?.then((value) {
+                            //     controller.update();
+                            //   });
+                            // }
+                            // controller.update();
                           },
                         ).paddingSymmetric(vertical: 24.px),
                       ],

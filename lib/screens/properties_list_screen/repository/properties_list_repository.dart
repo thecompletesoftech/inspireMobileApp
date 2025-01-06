@@ -8,9 +8,10 @@ class PropertiesListRepository {
 
   PropertiesListRepository();
 
-  Future<Either<Failure, DailySchedulesResponseModel>>
-      getDailySchedules() async {
-    var response = await _provider.getDailySchedulesRequest();
+  Future<Either<Failure, DailySchedulesResponseModel>> getDailySchedules(
+      {DateTime? startDate, DateTime? endDate}) async {
+    var response = await _provider.getDailySchedulesRequest(
+        startDate: startDate, endDate: endDate);
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

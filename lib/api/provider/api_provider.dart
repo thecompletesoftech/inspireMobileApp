@@ -44,7 +44,7 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, UnitDeficiencyAreasResponseModel>>
+  Future<Either<Failure, DeficiencyAreasResponseModel>>
       getUnitDeficiencyAreasRequest() async {
     try {
       Response response = await apiBaseHelperImplementation.get(
@@ -54,7 +54,7 @@ class ApiProviders extends BaseController {
         },
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return Right(UnitDeficiencyAreasResponseModel.fromJson(response.data));
+        return Right(DeficiencyAreasResponseModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }
@@ -271,13 +271,19 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, DailySchedulesResponseModel>>
-      getDailySchedulesRequest() async {
+  Future<Either<Failure, DailySchedulesResponseModel>> getDailySchedulesRequest(
+      {DateTime? startDate, DateTime? endDate}) async {
     try {
+      Map<String, dynamic> queryParameter = {};
+      queryParameter = {
+        "start_date": startDate,
+        "end_date": endDate,
+      };
+
       Response response = await apiBaseHelperImplementation.get(
         endPoint: Constants.dailySchedules,
-        isTrue: true,
-        queryParameter: {"page": 1, "items_per_page": 10},
+        // isTrue: true,
+        queryParameter: queryParameter,
         headers: {
           'Authorization': '${getStorageData.readString(getStorageData.token)}',
         },
