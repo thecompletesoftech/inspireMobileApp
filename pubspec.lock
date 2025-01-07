@@ -1366,7 +1366,7 @@ packages:
     source: hosted
     version: "2.1.8"
   pointer_interceptor:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: pointer_interceptor
       sha256: "57210410680379aea8b1b7ed6ae0c3ad349bfd56fe845b8ea934a53344b9d523"
@@ -1771,13 +1771,13 @@ packages:
     source: hosted
     version: "6.3.9"
   url_launcher_ios:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher_ios
-      sha256: "16a513b6c12bb419304e72ea0ae2ab4fed569920d1c7cb850263fe3acc824626"
+      sha256: e43b677296fadce447e987a2f519dcf5f6d1e527dc35d01ffab4fff5b8a7063e
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.2"
+    version: "6.3.1"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1899,7 +1899,7 @@ packages:
     source: hosted
     version: "3.0.1"
   win32:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: win32
       sha256: "68d1e89a91ed61ad9c370f9f8b6effed9ae5e0ede22a270bdfa6daf79fc2290a"
@@ -1931,5 +1931,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.4.0 <4.0.0"
+  dart: ">=3.5.0 <4.0.0"
   flutter: ">=3.22.0"
