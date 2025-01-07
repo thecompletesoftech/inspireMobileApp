@@ -14,6 +14,20 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          controller.hasMore) {
+        controller.getDailySchedulesData(isLoadMore: true);
+      } else if (_scrollController.position.pixels ==
+              _scrollController.position.minScrollExtent &&
+          controller.page > 1) {
+        controller.getDailySchedulesData(isPrevious: true);
+      }
+    });
+
     return GetBuilder<PropertiesListController>(
       init: PropertiesListController(),
       autoRemove: true,
@@ -323,6 +337,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                 ).paddingOnly(left: 32.px, right: 32.px, top: 38.px),
                 Expanded(
                   child: SingleChildScrollView(
+                    controller: _scrollController,
                     child: Column(
                       children: [
                         controller.apiResponseStatus ==
@@ -330,73 +345,83 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                             ? ListView.builder(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.scheduleDataList.length,
+                                itemCount: controller.scheduleDataList.length +
+                                    (controller.hasMore ? 1 : 0),
                                 itemBuilder: (context, index) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          MyTextView(
-                                            '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
-                                            textStyleNew: MyTextStyle(
-                                              textSize: 24.px,
-                                              textWeight: FontWeight.w400,
-                                              textColor:
-                                                  controller.appColors.black,
+                                  if (index <
+                                      controller.scheduleDataList.length) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            MyTextView(
+                                              '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
+                                              textStyleNew: MyTextStyle(
+                                                textSize: 24.px,
+                                                textWeight: FontWeight.w400,
+                                                textColor:
+                                                    controller.appColors.black,
+                                              ),
+                                            ).paddingOnly(right: 16.px),
+                                            Expanded(
+                                              child: Container(
+                                                height: 2.px,
+                                                color: AppColors().divider,
+                                              ),
                                             ),
-                                          ).paddingOnly(right: 16.px),
-                                          Expanded(
-                                            child: Container(
-                                              height: 2.px,
-                                              color: AppColors().divider,
-                                            ),
-                                          ),
-                                        ],
-                                      ).paddingAll(32.px),
-                                      ListView.separated(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount: controller
-                                            .scheduleDataList[index]
-                                            .scheduleDataList
-                                            .length,
-                                        itemBuilder: (context, i) {
-                                          var propertyData = controller
+                                          ],
+                                        ).paddingAll(32.px),
+                                        ListView.separated(
+                                          shrinkWrap: true,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: controller
                                               .scheduleDataList[index]
-                                              .scheduleDataList[i];
-                                          return CommonPropertiesListView(
-                                            title:
-                                                propertyData.property?.name ??
-                                                    "",
-                                            Subtitle:
-                                                '${propertyData.property?.city} - ${propertyData.property?.zip}',
-                                            title1:
-                                                '${propertyData.scheduleInspectionBuildings?.length ?? 0}',
-                                            Subtitle1:
-                                                '${controller.getUnitCount(propertyData.scheduleInspectionBuildings)} Units',
-                                            date:
-                                                '${DateFormat('yyyy-MM-dd').format(propertyData.scheduleDate!)}',
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  BuildingListScreen.routes,
-                                                  arguments: {
-                                                    "isComplete": false,
-                                                    "propertyData":
-                                                        propertyData,
-                                                    "externalBuildingData":
-                                                        propertyData
-                                                            .scheduleInspectionBuildings,
-                                                  });
-                                            },
-                                          ).paddingSymmetric(horizontal: 32.px);
-                                        },
-                                        separatorBuilder:
-                                            (BuildContext context, int index) {
-                                          return SizedBox(height: 24.px);
-                                        },
-                                      ),
-                                    ],
-                                  );
+                                              .scheduleDataList
+                                              .length,
+                                          itemBuilder: (context, i) {
+                                            var propertyData = controller
+                                                .scheduleDataList[index]
+                                                .scheduleDataList[i];
+                                            return CommonPropertiesListView(
+                                              title:
+                                                  propertyData.property?.name ??
+                                                      "",
+                                              Subtitle:
+                                                  '${propertyData.property?.city} - ${propertyData.property?.zip}',
+                                              title1:
+                                                  '${propertyData.scheduleInspectionBuildings?.length ?? 0}',
+                                              Subtitle1:
+                                                  '${controller.getUnitCount(propertyData.scheduleInspectionBuildings)} Units',
+                                              date:
+                                                  '${DateFormat('yyyy-MM-dd').format(propertyData.scheduleDate!)}',
+                                              onTap: () {
+                                                Get.toNamed(
+                                                    BuildingListScreen.routes,
+                                                    arguments: {
+                                                      "isComplete": false,
+                                                      "propertyData":
+                                                          propertyData,
+                                                      "externalBuildingData":
+                                                          propertyData
+                                                              .scheduleInspectionBuildings,
+                                                    });
+                                              },
+                                            ).paddingSymmetric(
+                                                horizontal: 32.px);
+                                          },
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                                  int index) {
+                                            return SizedBox(height: 24.px);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
                                 },
                               )
                             : controller.apiResponseStatus ==

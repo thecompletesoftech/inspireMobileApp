@@ -4,7 +4,6 @@ import 'package:public_housing/screens/properties_list_screen/screen/properties_
 import 'package:public_housing/screens/unit_inspection_screen/controller/unit_inspection_controller.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
 import '../../../commons/all.dart';
-import '../../building_inspection_screen/screen/building_inspection_screen.dart';
 
 class UnitInspectionSummaryController extends BaseController {
   TextEditingController unitNumberName = TextEditingController();

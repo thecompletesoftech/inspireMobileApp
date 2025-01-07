@@ -12,7 +12,6 @@ import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/unit_cabinets_screen%20/controller/unit_standards_details_controller.dart';
-import 'package:public_housing/screens/unit_deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -146,7 +145,6 @@ class UnitDeficienciesInsideController extends BaseController {
       visibleBtn = true;
       selectedItem = 'present';
     }
-    print("fljfnbjlhn ${deficiencyInspectionsReqModel}");
     update();
   }
 

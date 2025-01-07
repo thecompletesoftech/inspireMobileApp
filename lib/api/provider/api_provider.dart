@@ -14,7 +14,6 @@ import 'package:public_housing/screens/building_inspection_summary/model/create_
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
-import 'package:public_housing/screens/unit_building_standards_screen/models/unit_deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/models/create_inspection_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
 
@@ -271,13 +270,20 @@ class ApiProviders extends BaseController {
     }
   }
 
-  Future<Either<Failure, DailySchedulesResponseModel>> getDailySchedulesRequest(
-      {DateTime? startDate, DateTime? endDate}) async {
+  Future<Either<Failure, DailySchedulesResponseModel>>
+      getDailySchedulesRequest({
+    required int page,
+    required int itemsPerPage,
+    required DateTime endDate,
+    required DateTime startDate,
+  }) async {
     try {
       Map<String, dynamic> queryParameter = {};
       queryParameter = {
-        "start_date": startDate,
+        "page": page,
         "end_date": endDate,
+        "start_date": startDate,
+        "items_per_page": itemsPerPage,
       };
 
       Response response = await apiBaseHelperImplementation.get(

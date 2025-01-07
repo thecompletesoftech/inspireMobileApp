@@ -27,6 +27,9 @@ class PropertiesListController extends BaseController {
   List<ScheduleInspection> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
+  int itemsPerPage = 5;
+  int page = 1;
+  bool hasMore = true;
 
   @override
   void onInit() {
@@ -55,22 +58,64 @@ class PropertiesListController extends BaseController {
     return isDateSelected;
   }
 
-  getDailySchedulesData() async {
-    scheduleMainDataList = [];
-    apiResponseStatus = ApiResponseStatus.loading;
-    var response = await propertiesListRepository.getDailySchedules(
-        startDate: startDateTime!, endDate: endDateTime!);
+  Future<void> getDailySchedulesData(
+      {bool isLoadMore = false, bool isPrevious = false}) async {
+    try {
+      if (!isLoadMore && !isPrevious) {
+        page = 1;
+        hasMore = true;
+        scheduleMainDataList.clear();
+        apiResponseStatus = ApiResponseStatus.loading;
+        update();
+      } else if (isLoadMore && hasMore) {
+        page++;
+      } else if (isPrevious && page > 1) {
+        page--;
+      } else {
+        return;
+      }
 
-    response.fold((l) {
-      apiResponseStatus = ApiResponseStatus.failure;
-    }, (r) async {
-      r.scheduleInspections?.forEach((e) {
-        scheduleMainDataList.add(e);
+      var response = await propertiesListRepository.getDailySchedules(
+        page: page,
+        endDate: endDateTime!,
+        startDate: startDateTime!,
+        itemsPerPage: itemsPerPage,
+      );
+
+      response.fold((l) {
+        if (!isLoadMore && !isPrevious) {
+          apiResponseStatus = ApiResponseStatus.failure;
+        }
+        hasMore = false;
+      }, (r) async {
+        if (r.scheduleInspections != null &&
+            r.scheduleInspections!.isNotEmpty) {
+          final uniqueItems = r.scheduleInspections!
+              .where((newItem) => !scheduleMainDataList
+                  .any((existing) => existing.id == newItem.id))
+              .toList();
+
+          if (isLoadMore) {
+            scheduleMainDataList.addAll(uniqueItems);
+          } else if (isPrevious) {
+            scheduleMainDataList.insertAll(0, uniqueItems);
+          } else {
+            scheduleMainDataList = r.scheduleInspections!;
+          }
+          getTodayData();
+          hasMore = r.scheduleInspections!.length == itemsPerPage;
+        } else {
+          hasMore = false;
+        }
+
+        apiResponseStatus = ApiResponseStatus.success;
       });
-      await getTodayData();
-      apiResponseStatus = ApiResponseStatus.success;
-    });
-    update();
+    } catch (e) {
+      apiResponseStatus = ApiResponseStatus.failure;
+      hasMore = false;
+    } finally {
+      update();
+    }
   }
 
   getUnitCount(List<ScheduleInspectionBuilding>? externalBuildings) {
@@ -84,26 +129,35 @@ class PropertiesListController extends BaseController {
   getTodayData() {
     scheduleDataList = [];
     scheduleMainDataList.forEach((e) {
-      // if (getDateFormat(date: e.scheduleDate!) ==
-      //     DateFormat('yyyy-MM-dd').format(DateTime.now())) {
-      // DateFormat('yyyy-MM-dd')
-      //     .format(DateTime.parse('2025-01-16T00:00:00-05:00'))) {
-      // if (scheduleDataList.isEmpty) {
-      scheduleDataList.add(DataSorting(
+      if (scheduleDataList.isEmpty) {
+        scheduleDataList.add(DataSorting(
           date: todayDateGet(e.scheduleDate!),
           scheduleDataList: [e],
           prefix: DateFormat('yyyy-MM-dd').format(e.scheduleDate!) ==
                   DateFormat('yyyy-MM-dd').format(DateTime.now())
               ? Strings.todayInspections
-              : ''));
-      // } else {
-      //   scheduleDataList
-      //       .firstWhere(
-      //           (element) => element.date == todayDateGet(e.scheduleDate!))
-      //       .scheduleDataList
-      //       .add(e);
-      // }
-      // }
+              : '',
+        ));
+      } else {
+        var matchingItem = scheduleDataList
+            .where(
+              (element) => element.date == todayDateGet(e.scheduleDate!),
+            )
+            .toList();
+
+        if (matchingItem.isNotEmpty) {
+          matchingItem.first.scheduleDataList.add(e);
+        } else {
+          scheduleDataList.add(DataSorting(
+            date: todayDateGet(e.scheduleDate!),
+            scheduleDataList: [e],
+            prefix: DateFormat('yyyy-MM-dd').format(e.scheduleDate!) ==
+                    DateFormat('yyyy-MM-dd').format(DateTime.now())
+                ? Strings.todayInspections
+                : '',
+          ));
+        }
+      }
     });
   }
 
@@ -142,26 +196,6 @@ class PropertiesListController extends BaseController {
 
   selectedDateFilterData() {
     getDailySchedulesData();
-    // scheduleDataList = [];
-    // List<String> days = [];
-    //
-    // for (int i = 0; i <= endDateTime!.difference(startDateTime!).inDays; i++) {
-    //   days.add(getDateFormat(date: startDateTime!.add(Duration(days: i))));
-    // }
-    //
-    // days.forEach((e) {
-    //   final sortingData = scheduleMainDataList.where((element) =>
-    //       DateTime.parse(e) == DateTime.parse(element.scheduleDate.toString()));
-    //
-    //   if (sortingData.isNotEmpty) {
-    //     scheduleDataList.add(DataSorting(
-    //         date: todayDateGet(DateTime.parse(e)),
-    //         scheduleDataList: sortingData.toList(),
-    //         prefix: DateTime.now().day == DateTime.parse(e).day
-    //             ? Strings.todayInspections
-    //             : ''));
-    //   }
-    // });
     Get.back();
     update();
   }
