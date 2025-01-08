@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:intl/intl.dart';
 import 'package:public_housing/api/api_helper/api_base_helper_implementation.dart';
 import 'package:public_housing/api/api_helper/dio_exceptions.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
@@ -274,8 +275,8 @@ class ApiProviders extends BaseController {
       getDailySchedulesRequest({
     required int page,
     required int itemsPerPage,
-    required DateTime endDate,
-    required DateTime startDate,
+    required String endDate,
+    required String startDate,
   }) async {
     try {
       Map<String, dynamic> queryParameter = {};

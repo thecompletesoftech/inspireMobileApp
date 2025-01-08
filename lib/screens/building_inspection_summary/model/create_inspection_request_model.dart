@@ -189,7 +189,7 @@ class Inspection {
   Map<String, dynamic> toJson() => {
         "inspector_id": inspectorId,
         "date":
-            "${DateFormat("yyyy-MM-dd HH:mm:ss").format(date!)}${date!.timeZoneOffset.isNegative ? '-' : '+'}${date!.timeZoneOffset.inHours.toString().padLeft(2, '0')}:${(date!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}",
+            "${DateFormat("yyyy-MM-dd HH:mm:ss").format(date!)}${date!.timeZoneOffset.isNegative ? '-' : '+'}${date!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(date!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}",
         "comment": comment,
         "inspection_state_id": inspectionStateId,
         "inspection_type_id": inspectionTypeId,

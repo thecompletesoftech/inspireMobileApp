@@ -77,8 +77,10 @@ class PropertiesListController extends BaseController {
 
       var response = await propertiesListRepository.getDailySchedules(
         page: page,
-        endDate: endDateTime!,
-        startDate: startDateTime!,
+        endDate:
+            '${DateFormat("yyyy-MM-dd 00:00:00").format(endDateTime!)}${endDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${endDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(endDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
+        startDate:
+            '${DateFormat("yyyy-MM-dd 00:00:00").format(startDateTime!)}${startDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${startDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(startDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
         itemsPerPage: itemsPerPage,
       );
 

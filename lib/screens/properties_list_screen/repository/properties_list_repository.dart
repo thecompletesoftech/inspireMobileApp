@@ -11,8 +11,8 @@ class PropertiesListRepository {
   Future<Either<Failure, DailySchedulesResponseModel>> getDailySchedules({
     required int page,
     required int itemsPerPage,
-    required DateTime endDate,
-    required DateTime startDate,
+    required String endDate,
+    required String startDate,
   }) async {
     var response = await _provider.getDailySchedulesRequest(
       page: page,
