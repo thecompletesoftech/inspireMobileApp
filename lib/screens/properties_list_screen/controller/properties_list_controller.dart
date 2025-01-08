@@ -27,7 +27,7 @@ class PropertiesListController extends BaseController {
   List<ScheduleInspection> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
-  int itemsPerPage = 5;
+  int itemsPerPage = 30;
   int page = 1;
   bool hasMore = true;
 

@@ -496,6 +496,8 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                         onTap: () {
                           controller.startDate =
                               controller.todayDateGet(DateTime.now());
+                          controller.startDateTime = DateTime.now();
+                          controller.endDateTime = DateTime.now();
                           controller.getDailySchedulesData();
                           Get.back();
                           controller.update();
