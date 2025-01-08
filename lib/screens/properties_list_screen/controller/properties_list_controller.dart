@@ -78,15 +78,16 @@ class PropertiesListController extends BaseController {
       var response = await propertiesListRepository.getDailySchedules(
         page: page,
         endDate:
-            '${DateFormat("yyyy-MM-dd 00:00:00").format(endDateTime!)}${endDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${endDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(endDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
+        '${DateFormat("yyyy-MM-dd 00:00:00").format(endDateTime!)}${endDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${endDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(endDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
         startDate:
-            '${DateFormat("yyyy-MM-dd 00:00:00").format(startDateTime!)}${startDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${startDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(startDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
+        '${DateFormat("yyyy-MM-dd 00:00:00").format(startDateTime!)}${startDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${startDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(startDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
         itemsPerPage: itemsPerPage,
       );
 
       response.fold((l) {
         if (!isLoadMore && !isPrevious) {
           apiResponseStatus = ApiResponseStatus.failure;
+          scheduleMainDataList.clear();
         }
         hasMore = false;
       }, (r) async {
@@ -94,7 +95,7 @@ class PropertiesListController extends BaseController {
             r.scheduleInspections!.isNotEmpty) {
           final uniqueItems = r.scheduleInspections!
               .where((newItem) => !scheduleMainDataList
-                  .any((existing) => existing.id == newItem.id))
+              .any((existing) => existing.id == newItem.id))
               .toList();
 
           if (isLoadMore) {
@@ -107,18 +108,24 @@ class PropertiesListController extends BaseController {
           getTodayData();
           hasMore = r.scheduleInspections!.length == itemsPerPage;
         } else {
+          scheduleMainDataList.clear();
           hasMore = false;
+          getTodayData();
         }
 
         apiResponseStatus = ApiResponseStatus.success;
+        update();
       });
     } catch (e) {
       apiResponseStatus = ApiResponseStatus.failure;
+      scheduleMainDataList.clear();
       hasMore = false;
+      update();
     } finally {
       update();
     }
   }
+
 
   getUnitCount(List<ScheduleInspectionBuilding>? externalBuildings) {
     int totalUnit = 0;
