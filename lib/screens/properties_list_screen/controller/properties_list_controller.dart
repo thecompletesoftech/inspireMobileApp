@@ -77,10 +77,8 @@ class PropertiesListController extends BaseController {
 
       var response = await propertiesListRepository.getDailySchedules(
         page: page,
-        endDate:
-        '${DateFormat("yyyy-MM-dd 00:00:00").format(endDateTime!)}${endDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${endDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(endDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
-        startDate:
-        '${DateFormat("yyyy-MM-dd 00:00:00").format(startDateTime!)}${startDateTime!.timeZoneOffset.isNegative ? '-' : '+'}${startDateTime!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(startDateTime!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}',
+        endDate: formatDateWithTimeZone(endDateTime!),
+        startDate: formatDateWithTimeZone(startDateTime!),
         itemsPerPage: itemsPerPage,
       );
 
@@ -95,7 +93,7 @@ class PropertiesListController extends BaseController {
             r.scheduleInspections!.isNotEmpty) {
           final uniqueItems = r.scheduleInspections!
               .where((newItem) => !scheduleMainDataList
-              .any((existing) => existing.id == newItem.id))
+                  .any((existing) => existing.id == newItem.id))
               .toList();
 
           if (isLoadMore) {
@@ -125,7 +123,6 @@ class PropertiesListController extends BaseController {
       update();
     }
   }
-
 
   getUnitCount(List<ScheduleInspectionBuilding>? externalBuildings) {
     int totalUnit = 0;
@@ -207,6 +204,16 @@ class PropertiesListController extends BaseController {
     getDailySchedulesData();
     Get.back();
     update();
+  }
+
+  String formatDateWithTimeZone(DateTime date) {
+    String formattedDate = DateFormat("yyyy-MM-dd 00:00:00").format(date);
+    Duration timeZoneOffset = date.timeZoneOffset;
+    String sign = timeZoneOffset.isNegative ? '-' : '+';
+    String hours = timeZoneOffset.inHours.abs().toString().padLeft(2, '0');
+    String minutes =
+        (timeZoneOffset.inMinutes.abs() % 60).toString().padLeft(2, '0');
+    return '$formattedDate$sign$hours:$minutes';
   }
 }
 

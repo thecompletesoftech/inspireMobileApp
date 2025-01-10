@@ -159,7 +159,7 @@ class DeficiencyProofPicture {
 
 class Inspection {
   String? inspectorId;
-  DateTime? date;
+  dynamic? date;
   String? comment;
   String? inspectionStateId;
   String? inspectionTypeId;
@@ -188,8 +188,7 @@ class Inspection {
 
   Map<String, dynamic> toJson() => {
         "inspector_id": inspectorId,
-        "date":
-            "${DateFormat("yyyy-MM-dd HH:mm:ss").format(date!)}${date!.timeZoneOffset.isNegative ? '-' : '+'}${date!.timeZoneOffset.inHours.toString().padLeft(2, '0')}${(date!.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')}",
+        "date": date,
         "comment": comment,
         "inspection_state_id": inspectionStateId,
         "inspection_type_id": inspectionTypeId,

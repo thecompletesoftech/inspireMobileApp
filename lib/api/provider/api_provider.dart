@@ -253,6 +253,9 @@ class ApiProviders extends BaseController {
   Future<Either<Failure, dynamic>> createInspection(
       {required CreateInspectionRequestModel
           createInspectionRequestModel}) async {
+    createInspectionRequestModel.inspection?.date =
+        formatDateWithTimeZone(createInspectionRequestModel.inspection?.date);
+
     try {
       Response response = await apiBaseHelperImplementation.post(
         endPoint: Constants.createInspection,
@@ -303,5 +306,15 @@ class ApiProviders extends BaseController {
     } on DioException catch (e) {
       return Left(createFailure(e));
     }
+  }
+
+  String formatDateWithTimeZone(DateTime date) {
+    String formattedDate = DateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+    Duration timeZoneOffset = date.timeZoneOffset;
+    String sign = timeZoneOffset.isNegative ? '-' : '+';
+    String hours = timeZoneOffset.inHours.abs().toString().padLeft(2, '0');
+    String minutes =
+        (timeZoneOffset.inMinutes.abs() % 60).toString().padLeft(2, '0');
+    return '$formattedDate$sign$hours:$minutes';
   }
 }
