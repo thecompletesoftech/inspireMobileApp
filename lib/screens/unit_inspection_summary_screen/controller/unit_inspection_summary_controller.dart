@@ -79,8 +79,8 @@ class UnitInspectionSummaryController extends BaseController {
         "value":
             "Bad odor, greasy stove, food left out, infestation, or clutter."
       },
-      {"title": 'Standards', "value": "Generally clean with no clutter"},
-      {"title": 'clean', "value": "Very clean and neat."}
+      {"title": 'General Physical Condition', "value": "Generally clean with no clutter"},
+      {"title": 'Unit Housekeeping', "value": "Very clean and neat."}
     ];
     getDeficiencyJson();
     update();

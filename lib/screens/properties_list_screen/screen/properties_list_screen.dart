@@ -390,7 +390,7 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                               Subtitle:
                                                   '${propertyData.property?.city} - ${propertyData.property?.zip}',
                                               title1:
-                                                  '${propertyData.scheduleInspectionBuildings?.length ?? 0}',
+                                                  '${propertyData.scheduleInspectionBuildings?.length ?? 0} Buildings',
                                               Subtitle1:
                                                   '${controller.getUnitCount(propertyData.scheduleInspectionBuildings)} Units',
                                               date:

@@ -59,9 +59,8 @@ class BuildingListScreen extends GetView<BuildingListController> {
                     itemCount: controller.externalBuildings.length,
                     itemBuilder: (context, index) {
                       return CommonBuildingListView(
-                        title: controller
-                                .externalBuildings[index].building?.name ??
-                            "",
+                        title:
+                            "Building ${controller.externalBuildings[index].building?.name ?? ""}",
                         title1:
                             '${controller.externalBuildings[index].scheduleInspectionUnits?.length ?? ""} Units',
                         Subtitle:
@@ -83,7 +82,7 @@ class BuildingListScreen extends GetView<BuildingListController> {
                         onTap1: () {
                           if ('${DateFormat('yyyy-MM-dd').format(controller.propertyData.scheduleDate!)}' ==
                               '${DateFormat('yyyy-MM-dd').format(DateTime.now())}') {
-                              // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}') {
+                            // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}') {
                             Get.toNamed(
                               BuildingInspectionScreen.routes,
                               arguments: {
