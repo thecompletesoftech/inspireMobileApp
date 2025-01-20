@@ -284,10 +284,10 @@ class ApiProviders extends BaseController {
     try {
       Map<String, dynamic> queryParameter = {};
       queryParameter = {
-        "page": page,
-        "end_date": endDate,
-        "start_date": startDate,
         "items_per_page": itemsPerPage,
+        "start_date": startDate,
+        "end_date": endDate,
+        "page": page,
       };
 
       Response response = await apiBaseHelperImplementation.get(

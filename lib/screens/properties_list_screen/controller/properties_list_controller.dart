@@ -26,6 +26,8 @@ class PropertiesListController extends BaseController {
       PropertiesListRepository();
   List<ScheduleInspection> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
+  List<ScheduleInspectionBuilding> completedBuildings = [];
+  List<ScheduleInspectionUnit> completedUnits = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
   int itemsPerPage = 30;
   int page = 1;
@@ -103,14 +105,14 @@ class PropertiesListController extends BaseController {
           } else {
             scheduleMainDataList = r.scheduleInspections!;
           }
-          getTodayData();
+          await getTodayData();
           hasMore = r.scheduleInspections!.length == itemsPerPage;
         } else {
           scheduleMainDataList.clear();
           hasMore = false;
-          getTodayData();
+          await getTodayData();
         }
-
+        await getCompletedBuilding();
         apiResponseStatus = ApiResponseStatus.success;
         update();
       });
@@ -121,6 +123,53 @@ class PropertiesListController extends BaseController {
       update();
     } finally {
       update();
+    }
+  }
+
+  getCompletedBuilding() {
+    completedBuildings.clear();
+    completedUnits.clear();
+    if (scheduleDataList.isNotEmpty) {
+      scheduleDataList.forEach(
+        (element) {
+          element.scheduleDataList.forEach(
+            (e) {
+              e.scheduleInspectionBuildings?.forEach(
+                (building) {
+                  if (building.isBuildingInspection == true) {
+                    completedBuildings.add(
+                      ScheduleInspectionBuilding(
+                        id: building.id,
+                        building: building.building,
+                        isBuildingInspection: building.isBuildingInspection,
+                        scheduleInspectionUnits:
+                            building.scheduleInspectionUnits,
+                        dateTime: e.scheduleDate,
+                        propertyData: e,
+                      ),
+                    );
+                  }
+                  building.scheduleInspectionUnits?.forEach(
+                    (unit) {
+                      if (unit.inspectionStatus?.value == 'Complete') {
+                        completedUnits.add(
+                          ScheduleInspectionUnit(
+                            id: unit.id,
+                            unit: unit.unit,
+                            inspectionStatus: unit.inspectionStatus,
+                            dateTime: e.scheduleDate,
+                            propertyData: e,
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
     }
   }
 

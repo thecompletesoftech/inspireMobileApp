@@ -11,8 +11,7 @@ class CommonBuildingListView extends StatelessWidget {
   final DateTime dateTime;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
-
-  // final bool isComplete;
+  final bool isComplete;
 
   const CommonBuildingListView({
     super.key,
@@ -23,7 +22,7 @@ class CommonBuildingListView extends StatelessWidget {
     this.onTap,
     this.onTap1,
     required this.dateTime,
-    // required this.isComplete,
+    required this.isComplete,
   });
 
   @override
@@ -59,12 +58,12 @@ class CommonBuildingListView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // if (isComplete)
-                        //   ClipOval(
-                        //     child: SvgPicture.string(
-                        //       icComplete,
-                        //     ),
-                        //   )
+                        if (isComplete)
+                          ClipOval(
+                            child: SvgPicture.string(
+                              icComplete,
+                            ),
+                          )
                       ],
                     ),
                     Row(
@@ -112,10 +111,9 @@ class CommonBuildingListView extends StatelessWidget {
                 textWeight: FontWeight.w500,
               ).paddingOnly(right: 24.px),
               CommonIconButton(
-                title: /*isComplete
+                title: isComplete
                     ? Strings.editInspection
-                    : */
-                    Strings.inspectBuilding,
+                    : Strings.inspectBuilding,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -128,18 +126,21 @@ class CommonBuildingListView extends StatelessWidget {
                 textFamily: fontFamilyRegular,
                 onTap: onTap1,
                 iconColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                        isComplete == false
                     // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}'
                     ? AppColors.primerColor
                     : AppColors().border1,
-                icon: /*isComplete ? icEditNotes :*/ icBuildings,
+                icon: isComplete ? icEditNotes : icBuildings,
                 iconheigth: 20.px,
                 textColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                        isComplete == false
                     ? AppColors.primerColor
                     : AppColors().border1,
                 border: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                        isComplete == false
                     ? Border.all(color: AppColors().black)
                     : Border.all(color: AppColors().border1),
               ),

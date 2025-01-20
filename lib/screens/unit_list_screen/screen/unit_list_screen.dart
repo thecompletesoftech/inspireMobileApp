@@ -65,13 +65,27 @@ class UnitListScreen extends GetView<UnitListController> {
                         0,
                     itemBuilder: (context, index) {
                       return CommonUnitListView(
+                        isComplete: controller
+                                    .externalBuilding
+                                    .scheduleInspectionUnits?[index]
+                                    .inspectionStatus
+                                    ?.value ==
+                                'Complete'
+                            ? true
+                            : false,
                         title:
                             'Unit ${controller.externalBuilding.scheduleInspectionUnits?[index].unit?.name ?? ""}',
                         Subtitle:
                             '${controller.externalBuilding.scheduleInspectionUnits?[index].unit?.address ?? ""}',
                         onTap: () {
                           if ('${DateFormat('yyyy-MM-dd').format(controller.propertyData.scheduleDate!)}' ==
-                              '${DateFormat('yyyy-MM-dd').format(DateTime.now())}') {
+                                  '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                              controller
+                                      .externalBuilding
+                                      .scheduleInspectionUnits?[index]
+                                      .inspectionStatus
+                                      ?.value ==
+                                  'Complete') {
                             // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}') {
                             Get.toNamed(
                               UnitInspection.routes,

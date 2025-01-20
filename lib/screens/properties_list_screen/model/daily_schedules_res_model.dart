@@ -243,12 +243,8 @@ class Inspector {
   dynamic externalPersonalId;
   String? name;
 
-  Inspector({
-    this.id,
-    this.externalAccountId,
-    this.externalPersonalId,
-    this.name,
-  });
+  Inspector(
+      {this.id, this.externalAccountId, this.externalPersonalId, this.name});
 
   factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
         id: json["id"],
@@ -323,12 +319,16 @@ class ScheduleInspectionBuilding {
   bool? isBuildingInspection;
   Building? building;
   List<ScheduleInspectionUnit>? scheduleInspectionUnits;
+  DateTime? dateTime;
+  ScheduleInspection? propertyData;
 
   ScheduleInspectionBuilding({
     this.id,
     this.isBuildingInspection,
     this.building,
     this.scheduleInspectionUnits,
+    this.dateTime,
+    this.propertyData,
   });
 
   factory ScheduleInspectionBuilding.fromJson(Map<String, dynamic> json) =>
@@ -421,65 +421,68 @@ class BuildingType {
   String? name;
   dynamic description;
 
-  BuildingType({
-    this.id,
-    this.name,
-    this.description,
-  });
+  BuildingType({this.id, this.name, this.description});
 
   factory BuildingType.fromJson(Map<String, dynamic> json) => BuildingType(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-      );
+      id: json["id"], name: json["name"], description: json["description"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-      };
+  Map<String, dynamic> toJson() =>
+      {"id": id, "name": name, "description": description};
 }
 
 class BuildingProperty {
   int? id;
   String? address1;
 
-  BuildingProperty({
-    this.id,
-    this.address1,
-  });
+  BuildingProperty({this.id, this.address1});
 
   factory BuildingProperty.fromJson(Map<String, dynamic> json) =>
-      BuildingProperty(
-        id: json["id"],
-        address1: json["address1"],
-      );
+      BuildingProperty(id: json["id"], address1: json["address1"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "address1": address1,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "address1": address1};
 }
 
 class ScheduleInspectionUnit {
   int? id;
   Unit? unit;
+  InspectionStatus? inspectionStatus;
+  DateTime? dateTime;
+  ScheduleInspection? propertyData;
 
   ScheduleInspectionUnit({
     this.id,
     this.unit,
+    this.inspectionStatus,
+    this.dateTime,
+    this.propertyData,
   });
 
   factory ScheduleInspectionUnit.fromJson(Map<String, dynamic> json) =>
       ScheduleInspectionUnit(
         id: json["id"],
         unit: json["unit"] == null ? null : Unit.fromJson(json["unit"]),
+        inspectionStatus: json["inspection_status"] == null
+            ? null
+            : InspectionStatus.fromJson(json["inspection_status"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "unit": unit?.toJson(),
+        "inspection_status": inspectionStatus?.toJson(),
       };
+}
+
+class InspectionStatus {
+  int? id;
+  String? value;
+
+  InspectionStatus({this.id, this.value});
+
+  factory InspectionStatus.fromJson(Map<String, dynamic> json) =>
+      InspectionStatus(id: json["id"], value: json["value"]);
+
+  Map<String, dynamic> toJson() => {"id": id, "value": value};
 }
 
 class Unit {

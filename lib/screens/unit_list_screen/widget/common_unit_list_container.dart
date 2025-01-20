@@ -8,8 +8,7 @@ class CommonUnitListView extends StatelessWidget {
   final String Subtitle;
   final VoidCallback? onTap;
   final DateTime dateTime;
-
-  // final bool isComplete;
+  final bool isComplete;
 
   const CommonUnitListView({
     super.key,
@@ -17,7 +16,7 @@ class CommonUnitListView extends StatelessWidget {
     required this.Subtitle,
     this.onTap,
     required this.dateTime,
-    // required this.isComplete,
+    required this.isComplete,
   });
 
   @override
@@ -27,34 +26,37 @@ class CommonUnitListView extends StatelessWidget {
         children: [
           Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      MyTextView(
-                        title,
-                        textStyleNew: MyTextStyle(
-                            textSize: 24.px,
-                            textColor: AppColors().black,
-                            textWeight: FontWeight.w600),
-                      ),
-                      // if (isComplete)
-                      //   ClipOval(
-                      //     child: SvgPicture.string(
-                      //       icComplete,
-                      //     ),
-                      //   )
-                    ],
-                  ),
-                  MyTextView(
-                    Subtitle,
-                    textStyleNew: MyTextStyle(
-                        textSize: 20.px,
-                        textColor: AppColors().textcolor,
-                        textWeight: FontWeight.w400),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MyTextView(
+                          title,
+                          textStyleNew: MyTextStyle(
+                              textSize: 24.px,
+                              textColor: AppColors().black,
+                              textWeight: FontWeight.w600),
+                        ),
+                        if (isComplete)
+                          ClipOval(
+                            child: SvgPicture.string(
+                              icComplete,
+                            ),
+                          )
+                      ],
+                    ),
+                    MyTextView(
+                      Subtitle,
+                      textStyleNew: MyTextStyle(
+                          textSize: 20.px,
+                          textColor: AppColors().textcolor,
+                          textWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
               ),
             ],
           ).paddingAll(16.px),
@@ -68,8 +70,8 @@ class CommonUnitListView extends StatelessWidget {
               ),
               Spacer(),
               CommonIconButton(
-                title: /*isComplete ? Strings.editInspection :*/
-                    Strings.inspectUnit,
+                title:
+                    isComplete ? Strings.editInspection : Strings.inspectUnit,
                 radius: 100.px,
                 width: 185.px,
                 height: 44.px,
@@ -82,18 +84,21 @@ class CommonUnitListView extends StatelessWidget {
                 textFamily: fontFamilyRegular,
                 onTap: onTap,
                 iconColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                        isComplete ==false
                     // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}'
                     ? AppColors.primerColor
                     : AppColors().border1,
-                icon: /*isComplete ? icEditNotes :*/ icHome,
+                icon: isComplete ? icEditNotes : icHome,
                 iconheigth: 20.px,
                 textColor: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                    isComplete ==false
                     ? AppColors.primerColor
                     : AppColors().border1,
                 border: '${DateFormat('yyyy-MM-dd').format(dateTime)}' ==
-                        '${DateFormat('yyyy-MM-dd').format(DateTime.now())}'
+                            '${DateFormat('yyyy-MM-dd').format(DateTime.now())}' &&
+                    isComplete ==false
                     ? Border.all(color: AppColors().black)
                     : Border.all(color: AppColors().border1),
               ),
