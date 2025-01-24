@@ -84,8 +84,8 @@ class BuildingInspectionSummaryScreen
                                     textSize: 16.px,
                                     textWeight: FontWeight.w500,
                                     textFamily: fontFamilyRegular,
-                                    textColor: controller.appColors.lightText,
-                                    color: controller.appColors.buttonColor,
+                                    textColor: controller.appColors.white,
+                                    color: controller.appColors.appColor,
                                     onTap: () {
                                       controller.createInspection();
                                       controller.update();
@@ -963,41 +963,43 @@ class BuildingInspectionSummaryScreen
                             );
                           },
                         ),
-                        CommonButton(
-                          title: Strings.saveAddUnit,
-                          radius: 100.px,
-                          width: 171.px,
-                          height: 44.px,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15.px,
-                            horizontal: 24.px,
-                          ),
-                          textSize: 16.px,
-                          textWeight: FontWeight.w500,
-                          textFamily: fontFamilyRegular,
-                          textColor: controller.appColors.lightText,
-                          color: controller.appColors.buttonColor,
-                          onTap: () async {
-                            await controller.createInspection();
-                            // if (controller.isSuccess == true) {
-                            //   Get.toNamed(UnitInspection.routes, arguments: {
-                            //     "deficiencyArea": controller.deficiencyArea,
-                            //     "buildingName": controller.buildingName,
-                            //     "buildingtype": controller.buildingType,
-                            //     "imagesList": controller.imagesList,
-                            //     "inspectionName": controller.inspectionName,
-                            //     "propertyInfo": controller.propertyInfo,
-                            //     "buildingInfo": controller.buildingInfo,
-                            //     "certificatesInfo": controller.certificatesInfo,
-                            //     "inspectorName": controller.inspectorName,
-                            //     "inspectorDate": controller.inspectorDate
-                            //   })?.then((value) {
-                            //     controller.update();
-                            //   });
-                            // }
-                            // controller.update();
-                          },
-                        ).paddingSymmetric(vertical: 24.px),
+                        controller.isManually == true
+                            ? CommonButton(
+                                title: Strings.saveAddUnit,
+                                radius: 100.px,
+                                width: 171.px,
+                                height: 44.px,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15.px,
+                                  horizontal: 24.px,
+                                ),
+                                textSize: 16.px,
+                                textWeight: FontWeight.w500,
+                                textFamily: fontFamilyRegular,
+                                textColor: controller.appColors.white,
+                                color: controller.appColors.appColor,
+                                onTap: () async {
+                                  await controller.createInspection();
+                                  // if (controller.isSuccess == true) {
+                                  //   Get.toNamed(UnitInspection.routes, arguments: {
+                                  //     "deficiencyArea": controller.deficiencyArea,
+                                  //     "buildingName": controller.buildingName,
+                                  //     "buildingtype": controller.buildingType,
+                                  //     "imagesList": controller.imagesList,
+                                  //     "inspectionName": controller.inspectionName,
+                                  //     "propertyInfo": controller.propertyInfo,
+                                  //     "buildingInfo": controller.buildingInfo,
+                                  //     "certificatesInfo": controller.certificatesInfo,
+                                  //     "inspectorName": controller.inspectorName,
+                                  //     "inspectorDate": controller.inspectorDate
+                                  //   })?.then((value) {
+                                  //     controller.update();
+                                  //   });
+                                  // }
+                                  // controller.update();
+                                },
+                              ).paddingSymmetric(vertical: 24.px)
+                            : SizedBox.shrink(),
                       ],
                     ),
                   ),
