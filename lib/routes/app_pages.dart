@@ -13,6 +13,14 @@ import 'package:public_housing/screens/building_standards_screen/screen/building
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
+import 'package:public_housing/screens/inspection_information_screen/binding/inspection_information_binding.dart';
+import 'package:public_housing/screens/inspection_information_screen/screen/inspection_information_screen.dart';
+import 'package:public_housing/screens/inspection_list_screen/binding/inspection_list_binding.dart';
+import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
+import 'package:public_housing/screens/inspection_standards_screen/binding/inspection_standards_binding.dart';
+import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
+import 'package:public_housing/screens/no_show_screen/binding/no_show_binding.dart';
+import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/binding/properties_list_binding.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/select_work_screen/binding/select_work_binding.dart';
@@ -53,8 +61,6 @@ import '../screens/inspection_summary_screen/inspection_summary_binding.dart';
 import '../screens/inspection_summary_screen/inspection_summary_screen.dart';
 import '../screens/kitchen_screen/kitchen_binding.dart';
 import '../screens/kitchen_screen/kitchen_screen.dart';
-import '../screens/noshow_screen/noshow_binding.dart';
-import '../screens/noshow_screen/noshow_screen.dart';
 import '../screens/pdf_screen/pdf_binding.dart';
 import '../screens/pdf_screen/pdf_screen.dart';
 import '../screens/progress_screen/progress_binding.dart';
@@ -224,5 +230,17 @@ class AppPages {
         name: UnitListScreen.routes,
         page: () => UnitListScreen(),
         binding: UnitListBinding()),
+    GetPage(
+        name: InspectionListScreen.routes,
+        page: () => InspectionListScreen(),
+        binding: InspectionListBinding()),
+    GetPage(
+        name: InspectionInformationScreen.routes,
+        page: () => InspectionInformationScreen(),
+        binding: InspectionInformationBinding()),
+    GetPage(
+        name: InspectionStandardsScreen.routes,
+        page: () => InspectionStandardsScreen(),
+        binding: InspectionStandardsBinding()),
   ];
 }

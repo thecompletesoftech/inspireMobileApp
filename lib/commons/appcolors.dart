@@ -61,6 +61,7 @@ class AppColors {
   Color delete = const Color(0xFFD72B2B);
   Color pinkcolor = const Color(0xFFE8DEF8);
   Color greyColor = const Color(0xFFEAEAEB);
+  Color lightGreen = const Color(0xFF61FF00);
 }
 
 //

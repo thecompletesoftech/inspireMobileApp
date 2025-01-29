@@ -1,4 +1,5 @@
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/select_work_screen/controller/select_work_controller.dart';
 
@@ -66,7 +67,10 @@ class SelectWorkScreen extends GetView<SelectWorkController> {
                                       title: Strings.section,
                                       textWeight: FontWeight.w500,
                                       textSize: 16.px,
-                                      onTap: () {},
+                                      onTap: () {
+                                        Get.offAllNamed(
+                                            InspectionListScreen.routes);
+                                      },
                                       width: 92.px,
                                       height: 44.px,
                                       color: AppColors.primerColor,

@@ -3,16 +3,16 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
-import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/repository/properties_list_repository.dart';
+import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 enum PropertyStatus { completed, scheduled }
 
 enum ApiResponseStatus { initial, loading, success, failure }
 
-class PropertiesListController extends BaseController {
+class InspectionListController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   PropertyStatus status = PropertyStatus.scheduled;
   String todayDate = '';
@@ -227,8 +227,8 @@ class PropertiesListController extends BaseController {
     } else if (value == 2) {
       message = 'You selected ${Strings.nSPIREStandards}';
     } else if (value == 3) {
-      message = 'You selected ${Strings.changeSection}';
-      Get.offAllNamed(InspectionListScreen.routes);
+      message = 'You selected ${Strings.changeSection1}';
+      Get.offAllNamed(PropertiesListScreen.routes);
     } else if (value == 4) {
       message = 'You selected ${Strings.logOut}';
       Get.offAllNamed(SigningScreen.routes);

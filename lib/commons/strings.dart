@@ -225,9 +225,13 @@ class Strings {
   static String workToday = "Select with which program you will work today";
   static String section = "Section 8";
   static String changeSection = "Change to Section 8";
+  static String changeSection1 = "Change to Public Housing";
   static String timeframe =
       "These are today's inspections. To see more, select a timeframe.";
   static String unitUnInspectAble = "Unit Uninspectable";
   static String completedBuildings = "Completed Buildings";
   static String completedUnits = "Completed Units";
+  static String details = "Details";
+  static String inspectionNotes = "Inspection Notes";
+  static String specialAmenities = "Special Amenities";
 }
