@@ -13,18 +13,26 @@ import 'package:public_housing/screens/building_standards_screen/screen/building
 import 'package:public_housing/screens/buildings_screen/buildings_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/bindings/deficiencies_inside_binding.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/screen/deficiencies_inside_screen.dart';
+import 'package:public_housing/screens/inspection_cabinets_screen/binding/inspection_standards_details_binding.dart';
+import 'package:public_housing/screens/inspection_cabinets_screen/screen/inspection_standards_details_screen.dart';
+import 'package:public_housing/screens/inspection_deficiencies_inside_screen/bindings/inspection_deficiencies_inside_binding.dart';
+import 'package:public_housing/screens/inspection_deficiencies_inside_screen/screen/inspection_deficiencies_inside_screen.dart';
 import 'package:public_housing/screens/inspection_information_screen/binding/inspection_information_binding.dart';
 import 'package:public_housing/screens/inspection_information_screen/screen/inspection_information_screen.dart';
 import 'package:public_housing/screens/inspection_list_screen/binding/inspection_list_binding.dart';
 import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/inspection_standards_screen/binding/inspection_standards_binding.dart';
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/binding/inspection_unit_summary_binding.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/screen/inspection_unit_summary_screen.dart';
 import 'package:public_housing/screens/no_show_screen/binding/no_show_binding.dart';
 import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/binding/properties_list_binding.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/select_work_screen/binding/select_work_binding.dart';
 import 'package:public_housing/screens/select_work_screen/screen/select_work_screen.dart';
+import 'package:public_housing/screens/special_amenities_screen/binding/special_amenities_binding.dart';
+import 'package:public_housing/screens/special_amenities_screen/screen/special_amenities_screen.dart';
 import 'package:public_housing/screens/unit_inspection_screen/binding/unit_inspection_binding.dart';
 import 'package:public_housing/screens/unit_inspection_screen/screen/unit_inspection_screen.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/binding/unit_inspection_binding.dart';
@@ -69,8 +77,8 @@ import '../screens/property_screen/property_binding.dart';
 import '../screens/property_screen/property_screen.dart';
 import '../screens/propertydetails_screen/propertydetails_binding.dart';
 import '../screens/propertydetails_screen/propertydetails_screen.dart';
-import '../screens/signatures_screen/signature_binding.dart';
-import '../screens/signatures_screen/signature_screen.dart';
+import '../screens/signatures_screen/binding/signature_binding.dart';
+import '../screens/signatures_screen/screen/signature_screen.dart';
 import '../screens/splashscreen/binding/splash_binding.dart';
 import '../screens/splashscreen/screen/splash_screen.dart';
 import '../screens/standard_screen/standard_binding.dart';
@@ -242,5 +250,21 @@ class AppPages {
         name: InspectionStandardsScreen.routes,
         page: () => InspectionStandardsScreen(),
         binding: InspectionStandardsBinding()),
+    GetPage(
+        name: InspectionStandardsDetailsScreen.routes,
+        page: () => InspectionStandardsDetailsScreen(),
+        binding: InspectionStandardsDetailsBinding()),
+    GetPage(
+        name: InspectionDeficienciesInsideScreen.routes,
+        page: () => InspectionDeficienciesInsideScreen(),
+        binding: InspectionDeficienciesInsideBinding()),
+    GetPage(
+        name: SpecialAmenitiesScreen.routes,
+        page: () => SpecialAmenitiesScreen(),
+        binding: SpecialAmenitiesBinding()),
+    GetPage(
+        name: InspectionUnitSummaryScreen.routes,
+        page: () => InspectionUnitSummaryScreen(),
+        binding: InspectionUnitSummaryBinding()),
   ];
 }

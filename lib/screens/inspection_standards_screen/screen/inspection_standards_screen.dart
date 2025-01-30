@@ -1,7 +1,9 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/special_amenities_screen/screen/special_amenities_screen.dart';
+import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/inspection_cabinets_screen/screen/inspection_standards_details_screen.dart';
 import 'package:public_housing/screens/inspection_standards_screen/controller/inspection_standards_controller.dart';
-import 'package:public_housing/screens/unit_cabinets_screen%20/screen/unit_standards_details_screen.dart';
 
 class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
   const InspectionStandardsScreen({Key? key}) : super(key: key);
@@ -85,72 +87,26 @@ class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
                           textFamily: fontFamilyRegular,
                           textColor: controller.appColors.white,
                           color: controller.appColors.appColor,
-                          onTap: () {},
+                          onTap: () {
+                            List<DeficiencyArea> deficiencyArea = [];
+                            controller.searchList.forEach((element) {
+                              element.buildingDataModel?.forEach((e) {
+                                if (e.isArea == true) {
+                                  deficiencyArea.add(e);
+                                }
+                              });
+                            });
+                            Get.toNamed(SpecialAmenitiesScreen.routes,
+                                arguments: {
+                                  "deficiencyArea": deficiencyArea
+                                })?.then((value) {
+                              controller.update();
+                            });
+                          },
                         )
                       ],
                     ).paddingOnly(bottom: 40.px),
-                    Row(children: [
-                      Expanded(
-                        flex: 10,
-                        child: CommonTextField(
-                          isLable: true,
-                          onChange: (value) =>
-                              controller.searchStandards(searchText: value),
-                          controller: controller.searchStandardsController,
-                          color: controller.appColors.transparent,
-                          padding: EdgeInsets.zero,
-                          prefixIcon: SvgPicture.string(
-                            icSearch,
-                            color: controller.appColors.grey,
-                          ).paddingOnly(left: 15.px),
-                          contentPadding: EdgeInsets.only(
-                              left: 15.px, top: 16.px, bottom: 16.px),
-                          shadowColor: controller.appColors.transparent,
-                          labelText: Strings.searchStandards,
-                        ),
-                      ),
-                      SizedBox(width: 16.px),
-                      Expanded(
-                        flex: 4,
-                        // flex: 6,
-                        child: GestureDetector(
-                          onTap: controller.isExpanded,
-                          child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              height: 55.px,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100.px),
-                                  border: Border.all(
-                                      color: controller.appColors.appColor)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  controller.isCollapseStandards
-                                      ? SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.appColor,
-                                        )
-                                      : SvgPicture.string(
-                                          icUpArrow,
-                                          color: controller.appColors.appColor,
-                                        ),
-                                  MyTextView(
-                                    Strings.collapseStandards,
-                                    textStyleNew: MyTextStyle(
-                                      textColor: controller.appColors.appColor,
-                                      textWeight: FontWeight.w500,
-                                      textFamily: fontFamilyBold,
-                                      textSize: 16.px,
-                                    ),
-                                  ).paddingOnly(left: 6.px)
-                                ],
-                              )),
-                        ),
-                      ),
-                    ]),
-                    SizedBox(width: 16.px),
-                    /*Row(
+                    Row(
                       children: [
                         Expanded(
                           flex: 10,
@@ -174,96 +130,47 @@ class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
                         SizedBox(width: 16.px),
                         Expanded(
                           flex: 4,
-                          // flex: 6,
                           child: GestureDetector(
                             onTap: controller.isExpanded,
                             child: Container(
-                              height: 44.px,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100.px),
-                                  border: Border.all(
-                                      color: controller.appColors.appColor)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  controller.isCollapseStandards
-                                      ? SvgPicture.string(
-                                          icDownArrow,
-                                          color: controller.appColors.appColor,
-                                        )
-                                      : SvgPicture.string(
-                                          icUpArrow,
-                                          color: controller.appColors.appColor,
-                                        ),
-                                  MyTextView(
-                                    Strings.collapseStandards,
-                                    textStyleNew: MyTextStyle(
-                                      textColor: controller.appColors.appColor,
-                                      textWeight: FontWeight.w500,
-                                      textFamily: fontFamilyBold,
-                                      textSize: 16.px,
-                                    ),
-                                  ).paddingOnly(left: 8.px)
-                                ],
-                              ).paddingSymmetric(horizontal: 16.px),
-                            ),
+                                padding: EdgeInsets.only(left: 10),
+                                height: 55.px,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100.px),
+                                    border: Border.all(
+                                        color: controller.appColors.appColor)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    controller.isCollapseStandards
+                                        ? SvgPicture.string(
+                                            icDownArrow,
+                                            color:
+                                                controller.appColors.appColor,
+                                          )
+                                        : SvgPicture.string(
+                                            icUpArrow,
+                                            color:
+                                                controller.appColors.appColor,
+                                          ),
+                                    MyTextView(
+                                      Strings.collapseStandards,
+                                      textStyleNew: MyTextStyle(
+                                        textColor:
+                                            controller.appColors.appColor,
+                                        textWeight: FontWeight.w500,
+                                        textFamily: fontFamilyBold,
+                                        textSize: 16.px,
+                                      ),
+                                    ).paddingOnly(left: 6.px)
+                                  ],
+                                )),
                           ),
                         ),
-                        */ /* SizedBox(width: 16.px),
-                        Expanded(
-                          flex: 5,
-                          child: SizedBox(
-                            width: 350.px,
-                            height: 44.px,
-                            child: SegmentedButton<BuildingStandardsStatus>(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
-                                      ? controller.appColors.pinkcolor
-                                      : controller.appColors.transparent;
-                                }),
-                                foregroundColor: MaterialStateColor.resolveWith(
-                                    (Set<MaterialState> states) {
-                                  return states.contains(MaterialState.selected)
-                                      ? Colors.black
-                                      : controller.appColors.border1;
-                                }),
-                                side: MaterialStateBorderSide.resolveWith(
-                                    (states) {
-                                  return BorderSide(
-                                      color: states
-                                              .contains(MaterialState.selected)
-                                          ? Colors.black
-                                          : Colors.grey);
-                                }),
-                              ),
-                              segments: const <ButtonSegment<
-                                  BuildingStandardsStatus>>[
-                                ButtonSegment<BuildingStandardsStatus>(
-                                  value: BuildingStandardsStatus.all,
-                                  label: Text(Strings.all),
-                                ),
-                                ButtonSegment<BuildingStandardsStatus>(
-                                  value: BuildingStandardsStatus.failed,
-                                  label: Text(Strings.failed),
-                                ),
-                              ],
-                              selected: <BuildingStandardsStatus>{
-                                controller.status
-                              },
-                              onSelectionChanged:
-                                  (Set<BuildingStandardsStatus> newSelection) {
-                                controller.status = newSelection.first;
-                                // controller.searchTypeItem();
-                                controller.update();
-                              },
-                            ),
-                          ),
-                        ),*/ /*
                       ],
-                    ).paddingSymmetric(vertical: 32.px),*/
+                    ),
+                    SizedBox(width: 16.px),
                   ],
                 ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 controller.deficiencyAreas.isNotEmpty
@@ -349,12 +256,9 @@ class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
                                                   return GestureDetector(
                                                     onTap: () async {
                                                       await Get.toNamed(
-                                                          UnitStandardsDetailsScreen
+                                                          InspectionStandardsDetailsScreen
                                                               .routes,
                                                           arguments: {
-                                                            "buildingName":
-                                                                controller
-                                                                    .buildingName,
                                                             "deficiencyArea":
                                                                 buildingDataList,
                                                             "successListOfStandards":

@@ -7,24 +7,9 @@ class InspectionStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
   InspectionStandardsRepository buildingStandardsRepository =
       InspectionStandardsRepository();
-
   bool isCollapseStandards = false;
-  String buildingName = '';
-  String buildingtype = '';
-  String propertyname = '';
-  bool isSuccess = false;
-  String inspectionName = '';
   List<BuildingModel> deficiencyAreas = [];
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
-  RxList<BuildingModel> dataList = <BuildingModel>[].obs;
-  RxMap propertyInfo = {}.obs;
-  RxMap unitinfo = {}.obs;
-  RxMap buildingInfo = {}.obs;
-  var certificatesInfo = [].obs;
-  String inspectorName = '';
-  String inspectorDate = '';
-  String unitname = '';
-  var switchbtn = false.obs;
 
   void onInit() {
     super.onInit();
@@ -33,63 +18,8 @@ class InspectionStandardsController extends BaseController {
       await getDeficiencyAreasData();
       searchList.addAll(deficiencyAreas);
     }();
-
-    if (Get.arguments != null) {
-      buildingtype = Get.arguments['buildingtype'];
-      buildingName = Get.arguments['buildingInfo']['name'];
-      propertyname = Get.arguments['propertyInfo']['name'];
-      propertyInfo = Get.arguments['propertyInfo'];
-      buildingInfo = Get.arguments['buildingInfo'];
-      certificatesInfo.value = Get.arguments['certificatesInfo'];
-      inspectorName = Get.arguments['inspectorName'];
-      inspectorDate = Get.arguments['inspectorDate'].toString();
-      unitinfo = Get.arguments['unitinfo'];
-      unitname = Get.arguments['unitinfo']['name'];
-      switchbtn.value = bool.parse(Get.arguments['switchvalue'].toString());
-    }
     update();
   }
-
-  isUpdateList({required String name}) {
-    searchList.forEach((e) {
-      // e.buildingDataModel?.forEach((element) {
-      //   if (element.name == name) {
-      //     element.isSuccess = true;
-      //   }
-      // });
-    });
-  }
-
-  // searchTypeItem() {
-  //   searchList.clear();
-  //   if (status.toString() == BuildingStandardsStatus.all.toString()) {
-  //     searchList.addAll(deficiencyAreas);
-  //   } else {
-  //     for (int i = 0; i < deficiencyAreas.length; i++) {
-  //       for (int j = 0;
-  //           j < deficiencyAreas[i].buildingDataModel!.length;
-  //           j++) {
-  //         if (deficiencyAreas[i].buildingDataModel![j].status.toString() ==
-  //             status.toString()) {
-  //           int itemIndex = searchList
-  //               .indexWhere((e) => e.type == buildingDataList[i].type);
-  //
-  //           if (itemIndex != -1) {
-  //             searchList[itemIndex]
-  //                 .buildingDataModel
-  //                 ?.add(buildingDataList[i].buildingDataModel![j]);
-  //           } else {
-  //             searchList.add(BuildingModel(
-  //                 buildingDataList[i].type,
-  //                 isExpand: false,
-  //                 [buildingDataList[i].buildingDataModel![j]]));
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   update();
-  // }
 
   searchStandards({required String searchText}) {
     searchList.clear();
@@ -119,68 +49,8 @@ class InspectionStandardsController extends BaseController {
         }
       }
       update();
-      /* if (status.toString() == BuildingStandardsStatus.all.toString()) {
-        for (int i = 0; i < deficiencyAreas.length; i++) {
-          for (int j = 0;
-              j < deficiencyAreas[i].buildingDataModel!.length;
-              j++) {
-            if (deficiencyAreas[i]
-                .buildingDataModel![j]
-                .name
-                .toString()
-                .toLowerCase()
-                .contains(searchText.toString().toLowerCase())) {
-              int itemIndex = searchList
-                  .indexWhere((e) => e.type == deficiencyAreas[i].type);
-
-              if (itemIndex != -1) {
-                searchList[itemIndex]
-                    .buildingDataModel
-                    ?.add(deficiencyAreas[i].buildingDataModel![j]);
-              } else {
-                searchList.add(BuildingModel(
-                    deficiencyAreas[i].type,
-                    isExpand: true,
-                    [deficiencyAreas[i].buildingDataModel![j]]));
-              }
-            }
-          }
-        }
-      } else {
-        // for (int i = 0; i < buildingDataList.length; i++) {
-        //   for (int j = 0;
-        //       j < buildingDataList[i].buildingDataModel!.length;
-        //       j++) {
-        //     if (buildingDataList[i].buildingDataModel![j].status.toString() ==
-        //         status.toString()) {
-        //       if (buildingDataList[i]
-        //           .buildingDataModel![j]
-        //           .title
-        //           .toString()
-        //           .toLowerCase()
-        //           .contains(searchText.toString().toLowerCase())) {
-        //         int itemIndex = searchList
-        //             .indexWhere((e) => e.type == buildingDataList[i].type);
-        //
-        //         if (itemIndex != -1) {
-        //           searchList[itemIndex]
-        //               .buildingDataModel
-        //               ?.add(buildingDataList[i].buildingDataModel![j]);
-        //         } else {
-        //           searchList.add(BuildingModel(
-        //               buildingDataList[i].type,
-        //               isExpand: true,
-        //               [buildingDataList[i].buildingDataModel![j]]));
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-      }
-      update();*/
     } else {
       searchList.addAll(deficiencyAreas);
-      // searchTypeItem();
     }
     update();
   }
@@ -238,54 +108,6 @@ class InspectionStandardsController extends BaseController {
     });
     update();
   }
-
-  // isSuccessStandards1(successList, standardsId) {
-  //   for (int i = 0; i < searchList.length; i++) {
-  //     for (int j = 0; j < searchList[i].buildingDataModel!.length; j++) {
-  //       if (searchList[i].buildingDataModel![j].id == standardsId) {
-  //         var data = successList.where((e) => e['success'] == true);
-  //         if (searchList[i].buildingDataModel?[j].deficiencyAreaItems?.length ==
-  //             data.length) {
-  //           searchList[i].buildingDataModel![j].isArea = true;
-  //         }
-  //         successList.forEach((dataElement) {
-  //           if (searchList[i]
-  //                   .buildingDataModel![j]
-  //                   .deficiencyInspectionsReqModel !=
-  //               null) {
-  //             searchList[i]
-  //                 .buildingDataModel![j]
-  //                 .deficiencyInspectionsReqModel
-  //                 ?.add(DeficiencyInspectionsReqModel(
-  //                   isSuccess: dataElement['success'],
-  //                   housingDeficiencyId:
-  //                       dataElement['housingDeficiencyId'].toString(),
-  //                   date: dataElement['date'],
-  //                   deficiencyProofPictures:
-  //                       dataElement['deficiencyProofPictures'],
-  //                   comment: dataElement['comment'],
-  //                 ));
-  //           } else {
-  //             searchList[i]
-  //                 .buildingDataModel![j]
-  //                 .deficiencyInspectionsReqModel = [
-  //               DeficiencyInspectionsReqModel(
-  //                 isSuccess: dataElement['success'],
-  //                 housingDeficiencyId:
-  //                     dataElement['housingDeficiencyId'].toString(),
-  //                 date: dataElement['date'],
-  //                 deficiencyProofPictures:
-  //                     dataElement['deficiencyProofPictures'],
-  //                 comment: dataElement['comment'],
-  //               )
-  //             ];
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  //   update();
-  // }
 
   isSuccessStandards1(successList, standardsId) {
     for (int i = 0; i < searchList.length; i++) {
@@ -363,14 +185,3 @@ class BuildingModel {
 
   BuildingModel(this.type, this.buildingDataModel, {this.isExpand = false});
 }
-
-// class BuildingDataModel {
-//   String? image;
-//   bool? isSuccess;
-//   String? title;
-//   String? description;
-//   String? status = '';
-//
-//   BuildingDataModel(
-//       this.image, this.title, this.description, this.status, this.isSuccess);
-// }

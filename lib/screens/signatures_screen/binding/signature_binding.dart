@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-
-import 'signature_controller.dart';
+import 'package:public_housing/screens/signatures_screen/controller/signature_controller.dart';
 
 class SignatureBinding implements Bindings {
   @override

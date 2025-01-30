@@ -2,7 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_screen/deficienciesCard_widget.dart';
 
-import '../signatures_screen/signature_screen.dart';
+import '../signatures_screen/screen/signature_screen.dart';
 import 'inspection_summary_controller.dart';
 
 class InspectionSummaryScreen extends GetView<InspectionSummaryController> {

@@ -32,11 +32,7 @@ class BaseScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: backgroundColor ?? AppColors().appBGColor,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-        body: SafeArea(
-          top: false,
-          bottom: false,
-          child: child,
-        ),
+        body: SafeArea(top: false, bottom: false, child: child),
         bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: floatingActionButton,
       ),
