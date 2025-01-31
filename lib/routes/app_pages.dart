@@ -25,6 +25,8 @@ import 'package:public_housing/screens/inspection_standards_screen/binding/inspe
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/binding/inspection_unit_summary_binding.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/screen/inspection_unit_summary_screen.dart';
+import 'package:public_housing/screens/manual_unit_inspection_screen/binding/manual_unit_inspection_binding.dart';
+import 'package:public_housing/screens/manual_unit_inspection_screen/screen/manual_unit_inspection_screen.dart';
 import 'package:public_housing/screens/no_show_screen/binding/no_show_binding.dart';
 import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/properties_list_screen/binding/properties_list_binding.dart';
@@ -266,5 +268,9 @@ class AppPages {
         name: InspectionUnitSummaryScreen.routes,
         page: () => InspectionUnitSummaryScreen(),
         binding: InspectionUnitSummaryBinding()),
+    GetPage(
+        name: ManualUnitInspectionScreen.routes,
+        page: () => ManualUnitInspectionScreen(),
+        binding: ManualUnitInspectionBinding()),
   ];
 }

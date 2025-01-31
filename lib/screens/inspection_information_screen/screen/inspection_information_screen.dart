@@ -194,7 +194,7 @@ class InspectionInformationScreen
                         ),
                       ),
                       padding: EdgeInsets.zero,
-                      labelText: Strings.inspectorNotes,
+                      labelText: Strings.inspectionNotes,
                       hintText: Strings.commentHint,
                     ).paddingOnly(top: 16.px),
                     Row(

@@ -5,6 +5,7 @@ import 'package:public_housing/screens/inspection_information_screen/screen/insp
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/widget/common_inspection_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
+import 'package:public_housing/screens/manual_unit_inspection_screen/screen/manual_unit_inspection_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -250,8 +251,8 @@ class InspectionListScreen extends GetView<InspectionListController> {
                                 textWeight: FontWeight.w500,
                                 textFamily: fontFamilyRegular,
                                 onTap: () {
-                                  Get.toNamed(BuildingInspectionScreen.routes,
-                                      arguments: {'isManually': true});
+                                  Get.toNamed(
+                                      ManualUnitInspectionScreen.routes);
                                 },
                                 iconColor: controller.appColors.white,
                                 icon: inspectIcon,

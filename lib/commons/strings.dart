@@ -234,4 +234,8 @@ class Strings {
   static String details = "Details";
   static String inspectionNotes = "Inspection Notes";
   static String specialAmenities = "Special Amenities";
+  static String tenantName = "Tenant name*";
+  static String unitAddress = "Unit Address*";
+  static String landlordName = "Landlord Name*";
+  static String inspectionType = "Inspection Type*";
 }
