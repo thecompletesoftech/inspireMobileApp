@@ -105,46 +105,15 @@ class InspectionUnitSummaryScreen
                         ShadowContainer(
                           radius: 8.px,
                           padding: EdgeInsets.zero,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RadioListTile(
+                          child: ListView.separated(
+                            itemCount: controller.resultsList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var option = controller.resultsList[index];
+                              return RadioListTile(
                                 title: MyTextView(
-                                  "Pass",
-                                  textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.black,
-                                    textSize: 16.px,
-                                    textFamily: fontFamilyRegular,
-                                    textWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                value: "pass",
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 16.px),
-                                groupValue: controller.selectedItem,
-                                toggleable: true,
-                                activeColor: controller.selectedItem != "pass"
-                                    ? controller.appColors.white
-                                    : controller.appColors.textPink,
-                                tileColor: controller.selectedItem != "pass"
-                                    ? controller.appColors.white
-                                    : controller.appColors.grey
-                                        .withOpacity(0.2),
-                                controlAffinity:
-                                    ListTileControlAffinity.trailing,
-                                onChanged: (value) {
-                                  controller.selectedItem = value.toString();
-                                  controller.update();
-                                },
-                              ),
-                              Container(
-                                height: 2.px,
-                                color: controller.appColors.divider,
-                              ),
-                              RadioListTile(
-                                title: MyTextView(
-                                  "Fail",
+                                  option.last,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.black,
                                     textSize: 16.px,
@@ -153,16 +122,18 @@ class InspectionUnitSummaryScreen
                                   ),
                                 ),
                                 toggleable: true,
-                                value: "fail",
+                                value: option.last.toLowerCase(),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 16.px),
                                 groupValue: controller.selectedItem,
                                 controlAffinity:
                                     ListTileControlAffinity.trailing,
-                                activeColor: controller.selectedItem != "fail"
+                                activeColor: controller.selectedItem !=
+                                        option.last.toLowerCase()
                                     ? controller.appColors.white
                                     : controller.appColors.textPink,
-                                tileColor: controller.selectedItem != "fail"
+                                tileColor: controller.selectedItem !=
+                                        option.last.toLowerCase()
                                     ? controller.appColors.white
                                     : controller.appColors.grey
                                         .withOpacity(0.2),
@@ -170,43 +141,15 @@ class InspectionUnitSummaryScreen
                                   controller.selectedItem = value.toString();
                                   controller.update();
                                 },
-                              ),
-                              Container(
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return Container(
                                 height: 2.px,
                                 color: controller.appColors.divider,
-                              ),
-                              RadioListTile(
-                                title: MyTextView(
-                                  "Inconclusive",
-                                  textStyleNew: MyTextStyle(
-                                    textColor: controller.appColors.black,
-                                    textSize: 16.px,
-                                    textFamily: fontFamilyRegular,
-                                    textWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                toggleable: true,
-                                value: "inconclusive",
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 16.px),
-                                groupValue: controller.selectedItem,
-                                controlAffinity:
-                                    ListTileControlAffinity.trailing,
-                                activeColor:
-                                    controller.selectedItem != "inconclusive"
-                                        ? controller.appColors.white
-                                        : controller.appColors.textPink,
-                                tileColor:
-                                    controller.selectedItem != "inconclusive"
-                                        ? controller.appColors.white
-                                        : controller.appColors.grey
-                                            .withOpacity(0.2),
-                                onChanged: (value) {
-                                  controller.selectedItem = value.toString();
-                                  controller.update();
-                                },
-                              ),
-                            ],
+                              );
+                            },
                           ),
                         ),
                         CommonTextField(
@@ -274,7 +217,7 @@ class InspectionUnitSummaryScreen
                                 itemBuilder: (context, dynamic i) {
                                   return ListTile(
                                     title: MyTextView(
-                                      i.toString(),
+                                      i.last.toString(),
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,

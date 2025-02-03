@@ -484,7 +484,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
                           ),
                         ),
                       )
-                    : Expanded(
+                    : SizedBox() /* Expanded(
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
@@ -592,7 +592,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
                             ],
                           ),
                         ),
-                      )
+                      )*/
               ],
             ),
           ),

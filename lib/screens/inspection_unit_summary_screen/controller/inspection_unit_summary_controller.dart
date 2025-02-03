@@ -1,5 +1,6 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/repository/inspection_unit_summary_repository.dart';
 
 class InspectionUnitSummaryController extends BaseController {
   bool isSelected = false;
@@ -10,19 +11,10 @@ class InspectionUnitSummaryController extends BaseController {
   TextEditingController bathroomsController = TextEditingController();
   TextEditingController inspectionNotesController = TextEditingController();
   TextEditingController selectFindingTypeController = TextEditingController();
-
-  List<String> findingTypeList = [
-    '1st Time Fail',
-    '24 Hour Fail',
-    'Abatement',
-    'Could Not Enter',
-    'Full Inspection',
-    'Lead Paint Violations',
-    'Pass Abatement',
-    'Refused',
-    'Terminate',
-    'Weather Deferred',
-  ];
+  InspectionUnitSummaryRepository inspectionUnitSummaryRepository =
+      InspectionUnitSummaryRepository();
+  List<List<dynamic>> findingTypeList = [];
+  List<List<dynamic>> resultsList = [];
 
   @override
   void onInit() {
@@ -30,7 +22,37 @@ class InspectionUnitSummaryController extends BaseController {
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
     }
+    getResults();
+    getFindingType();
     super.onInit();
+  }
+
+  getFindingType() async {
+    var response = await inspectionUnitSummaryRepository.getFindingType();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      if (r.findingTypes!.isNotEmpty) {
+        r.findingTypes?.forEach((element) {
+          findingTypeList.add(element);
+        });
+      }
+    });
+    update();
+  }
+
+  getResults() async {
+    var response = await inspectionUnitSummaryRepository.getResults();
+    response.fold((l) {
+      utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+    }, (r) {
+      if (r.results!.isNotEmpty) {
+        r.results?.forEach((element) {
+          resultsList.add(element);
+        });
+      }
+    });
+    update();
   }
 
   searchBuildingType({required String searchText}) {
@@ -38,10 +60,11 @@ class InspectionUnitSummaryController extends BaseController {
     if (selectFindingTypeController.text.length > 0) {
       for (int i = 0; i < findingTypeList.length; i++) {
         if (findingTypeList[i]
+            .last
             .toString()
             .toLowerCase()
             .contains(searchText.toString().toLowerCase())) {
-          selectFindingList.add(findingTypeList[i]);
+          selectFindingList.add(findingTypeList[i].last);
           update();
         }
       }
@@ -52,7 +75,7 @@ class InspectionUnitSummaryController extends BaseController {
   }
 
   void actionBuildingType(value) {
-    selectFindingTypeController.text = value.toString();
+    selectFindingTypeController.text = value.last.toString();
     update();
   }
 

@@ -35,11 +35,11 @@ class NoShowScreen extends GetView<NoShowController> {
                     padding: EdgeInsets.zero,
                     physics: const BouncingScrollPhysics(),
                     children: [
-                      controller.imageFile.isNotEmpty
+                      controller.imageUploadStatus == ImageUploadStatus.success
                           ? Stack(
                               children: [
-                                Image.file(
-                                  File(controller.imageFile.toString()),
+                                Image.network(
+                                  controller.imageFile.toString(),
                                   fit: BoxFit.cover,
                                   height: 433.px,
                                   width: Get.width,
@@ -54,6 +54,8 @@ class NoShowScreen extends GetView<NoShowController> {
                                     textColor: AppColors().white,
                                     color: AppColors().appColor,
                                     onTap: () {
+                                      controller.imageUploadStatus =
+                                          ImageUploadStatus.initial;
                                       controller.imageFile.value = "";
                                       controller.visibleBtn = false;
                                       controller.update();
@@ -81,107 +83,118 @@ class NoShowScreen extends GetView<NoShowController> {
                                 ),
                               ],
                             )
-                          : Container(
-                              height: 433.px,
-                              color: controller.appColors.white,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Center(
-                                    child: SvgPicture.string(
-                                      icImage,
-                                      width: 138.px,
-                                      height: 138.px,
-                                    ),
-                                  ).paddingOnly(bottom: 20.px),
-                                  Flexible(
-                                    child: Text.rich(
-                                      TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: "Take a picture",
-                                            style: MyTextStyle(
-                                              textSize: 24.px,
-                                              textWeight: FontWeight.w600,
-                                              textColor:
-                                                  controller.appColors.appColor,
-                                              textFamily: fontFamilyBold,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: " of the unit to ",
-                                            style: MyTextStyle(
-                                              textSize: 24.px,
-                                              textWeight: FontWeight.w400,
-                                              textColor:
-                                                  controller.appColors.appColor,
-                                              textFamily: fontFamilyRegular,
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: "Complete the Inspection",
-                                            style: MyTextStyle(
-                                              textSize: 24.px,
-                                              textWeight: FontWeight.w600,
-                                              textColor:
-                                                  controller.appColors.appColor,
-                                              textFamily: fontFamilyBold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
+                          : controller.imageUploadStatus ==
+                                  ImageUploadStatus.initial
+                              ? Container(
+                                  height: 433.px,
+                                  color: controller.appColors.white,
+                                  child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      CommonIconButton(
-                                          icon: icUpload,
-                                          iconheigth: 20.px,
-                                          title: Strings.upload,
-                                          radius: 100.px,
-                                          border: Border.all(
-                                              color:
-                                                  controller.appColors.border,
-                                              width: 2),
-                                          padding: EdgeInsets.fromLTRB(
-                                              16.px, 10.px, 24.px, 10.px),
-                                          color:
-                                              controller.appColors.transparent,
-                                          textColor:
-                                              controller.appColors.appColor,
-                                          textWeight: FontWeight.w600,
-                                          textSize: 16.px,
-                                          onTap: () {
-                                            controller.getFromGallery();
-                                          }),
-                                      SizedBox(width: 16.px),
-                                      CommonIconButton(
-                                          icon: icCamera,
-                                          iconheigth: 20.px,
-                                          title: Strings.takeOne,
-                                          radius: 100.px,
-                                          border: Border.all(
-                                              color:
-                                                  controller.appColors.border,
-                                              width: 2),
-                                          padding: EdgeInsets.fromLTRB(
-                                              16.px, 10.px, 24.px, 10.px),
-                                          color:
-                                              controller.appColors.transparent,
-                                          textColor:
-                                              controller.appColors.appColor,
-                                          textWeight: FontWeight.w600,
-                                          textSize: 16.px,
-                                          onTap: () {
-                                            controller.getFromCamera();
-                                          }),
+                                      Center(
+                                        child: SvgPicture.string(
+                                          icImage,
+                                          width: 138.px,
+                                          height: 138.px,
+                                        ),
+                                      ).paddingOnly(bottom: 20.px),
+                                      Flexible(
+                                        child: Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: "Take a picture",
+                                                style: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w600,
+                                                  textColor: controller
+                                                      .appColors.appColor,
+                                                  textFamily: fontFamilyBold,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: " of the unit to ",
+                                                style: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w400,
+                                                  textColor: controller
+                                                      .appColors.appColor,
+                                                  textFamily: fontFamilyRegular,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: "Complete the Inspection",
+                                                style: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w600,
+                                                  textColor: controller
+                                                      .appColors.appColor,
+                                                  textFamily: fontFamilyBold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CommonIconButton(
+                                              icon: icUpload,
+                                              iconheigth: 20.px,
+                                              title: Strings.upload,
+                                              radius: 100.px,
+                                              border: Border.all(
+                                                  color: controller
+                                                      .appColors.border,
+                                                  width: 2),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  16.px, 10.px, 24.px, 10.px),
+                                              color: controller
+                                                  .appColors.transparent,
+                                              textColor:
+                                                  controller.appColors.appColor,
+                                              textWeight: FontWeight.w600,
+                                              textSize: 16.px,
+                                              onTap: () {
+                                                controller.getFromGallery();
+                                              }),
+                                          SizedBox(width: 16.px),
+                                          CommonIconButton(
+                                              icon: icCamera,
+                                              iconheigth: 20.px,
+                                              title: Strings.takeOne,
+                                              radius: 100.px,
+                                              border: Border.all(
+                                                  color: controller
+                                                      .appColors.border,
+                                                  width: 2),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  16.px, 10.px, 24.px, 10.px),
+                                              color: controller
+                                                  .appColors.transparent,
+                                              textColor:
+                                                  controller.appColors.appColor,
+                                              textWeight: FontWeight.w600,
+                                              textSize: 16.px,
+                                              onTap: () {
+                                                controller.getFromCamera();
+                                              }),
+                                        ],
+                                      ).paddingOnly(top: 20.px),
                                     ],
-                                  ).paddingOnly(top: 20.px),
-                                ],
-                              ),
-                            ),
+                                  ),
+                                )
+                              : Container(
+                                  height: 433.px,
+                                  color: controller.appColors.white,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
                       Container(height: 1.px, color: AppColors().divider),
                       Column(
                         children: [

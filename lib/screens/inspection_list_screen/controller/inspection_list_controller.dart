@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
-import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
-import 'package:public_housing/screens/properties_list_screen/repository/properties_list_repository.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/repository/inspection_list_repository.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -23,12 +23,10 @@ class InspectionListController extends BaseController {
   bool isDateSelected = false;
   Account? account;
   PickerDateRange? dateRange;
-  PropertiesListRepository propertiesListRepository =
-      PropertiesListRepository();
-  List<ScheduleInspection> scheduleMainDataList = [];
+  InspectionListRepository inspectionListRepository =
+      InspectionListRepository();
+  List<ScheduleInspections> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
-  List<ScheduleInspectionBuilding> completedBuildings = [];
-  List<ScheduleInspectionUnit> completedUnits = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
   int itemsPerPage = 30;
   int page = 1;
@@ -78,11 +76,12 @@ class InspectionListController extends BaseController {
         return;
       }
 
-      var response = await propertiesListRepository.getDailySchedules(
+      var response = await inspectionListRepository.getInspectionSchedules(
+        type: 1,
         page: page,
+        itemsPerPage: itemsPerPage,
         endDate: formatDateWithTimeZone(endDateTime!),
         startDate: formatDateWithTimeZone(startDateTime!),
-        itemsPerPage: itemsPerPage,
       );
 
       response.fold((l) {
@@ -113,7 +112,7 @@ class InspectionListController extends BaseController {
           hasMore = false;
           await getTodayData();
         }
-        await getCompletedBuilding();
+        // await getCompletedBuilding();
         apiResponseStatus = ApiResponseStatus.success;
         update();
       });
@@ -127,60 +126,52 @@ class InspectionListController extends BaseController {
     }
   }
 
-  getCompletedBuilding() {
-    completedBuildings.clear();
-    completedUnits.clear();
-    if (scheduleDataList.isNotEmpty) {
-      scheduleDataList.forEach(
-        (element) {
-          element.scheduleDataList.forEach(
-            (e) {
-              e.scheduleInspectionBuildings?.forEach(
-                (building) {
-                  if (building.isBuildingInspection == true) {
-                    completedBuildings.add(
-                      ScheduleInspectionBuilding(
-                        id: building.id,
-                        building: building.building,
-                        isBuildingInspection: building.isBuildingInspection,
-                        scheduleInspectionUnits:
-                            building.scheduleInspectionUnits,
-                        dateTime: e.scheduleDate,
-                        propertyData: e,
-                      ),
-                    );
-                  }
-                  building.scheduleInspectionUnits?.forEach(
-                    (unit) {
-                      if (unit.inspectionStatus?.value == 'Complete') {
-                        completedUnits.add(
-                          ScheduleInspectionUnit(
-                            id: unit.id,
-                            unit: unit.unit,
-                            inspectionStatus: unit.inspectionStatus,
-                            dateTime: e.scheduleDate,
-                            propertyData: e,
-                          ),
-                        );
-                      }
-                    },
-                  );
-                },
-              );
-            },
-          );
-        },
-      );
-    }
-  }
-
-  getUnitCount(List<ScheduleInspectionBuilding>? externalBuildings) {
-    int totalUnit = 0;
-    for (ScheduleInspectionBuilding i in externalBuildings ?? []) {
-      totalUnit += i.scheduleInspectionUnits!.length;
-    }
-    return totalUnit;
-  }
+  // getCompletedBuilding() {
+  //   completedBuildings.clear();
+  //   completedUnits.clear();
+  //   if (scheduleDataList.isNotEmpty) {
+  //     scheduleDataList.forEach(
+  //       (element) {
+  //         element.scheduleDataList.forEach(
+  //           (e) {
+  //             e.scheduleInspectionBuildings?.forEach(
+  //               (building) {
+  //                 if (building.isBuildingInspection == true) {
+  //                   completedBuildings.add(
+  //                     ScheduleInspectionBuilding(
+  //                       id: building.id,
+  //                       building: building.building,
+  //                       isBuildingInspection: building.isBuildingInspection,
+  //                       scheduleInspectionUnits:
+  //                           building.scheduleInspectionUnits,
+  //                       dateTime: e.scheduleDate,
+  //                       propertyData: e,
+  //                     ),
+  //                   );
+  //                 }
+  //                 building.scheduleInspectionUnits?.forEach(
+  //                   (unit) {
+  //                     if (unit.inspectionStatus?.value == 'Complete') {
+  //                       completedUnits.add(
+  //                         ScheduleInspectionUnit(
+  //                           id: unit.id,
+  //                           unit: unit.unit,
+  //                           inspectionStatus: unit.inspectionStatus,
+  //                           dateTime: e.scheduleDate,
+  //                           propertyData: e,
+  //                         ),
+  //                       );
+  //                     }
+  //                   },
+  //                 );
+  //               },
+  //             );
+  //           },
+  //         );
+  //       },
+  //     );
+  //   }
+  // }
 
   getTodayData() {
     scheduleDataList = [];
@@ -270,7 +261,7 @@ class InspectionListController extends BaseController {
 
 class DataSorting {
   final String date;
-  final List<ScheduleInspection> scheduleDataList;
+  final List<ScheduleInspections> scheduleDataList;
   final String prefix;
 
   DataSorting({

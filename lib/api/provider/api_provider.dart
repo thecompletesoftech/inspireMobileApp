@@ -14,6 +14,9 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/model/finding_type_res_model.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/model/result_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/models/create_inspection_model.dart';
 import 'package:public_housing/screens/building_inspection_screen/models/building_model.dart';
@@ -300,6 +303,78 @@ class ApiProviders extends BaseController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(DailySchedulesResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, InspectionResponseModel>>
+      getInspectionSchedulesRequest({
+    required int page,
+    required int itemsPerPage,
+    required int type,
+    required String endDate,
+    required String startDate,
+  }) async {
+    try {
+      Map<String, dynamic> queryParameter = {};
+      queryParameter = {
+        "items_per_page": itemsPerPage,
+        "page": page,
+        "type": type,
+        "start_date": startDate,
+        "end_date": endDate,
+      };
+
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.dailySchedules,
+        queryParameter: queryParameter,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(InspectionResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, GetFindingTypeResponseModel>>
+      getFindingTypeRequest() async {
+    try {
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.findingType,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(GetFindingTypeResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, ResultResponseModel>> getResultsRequest() async {
+    try {
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.results,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(ResultResponseModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

@@ -1,8 +1,10 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+
+enum ImageUploadStatus { initial, uploading, success }
 
 class NoShowController extends BaseController {
   RxString imageFile = "".obs;
@@ -13,6 +15,10 @@ class NoShowController extends BaseController {
   var isListening = false.obs;
   var speechText = "".obs;
   DateTime? selectedDateTime;
+  ImageUploadStatus imageUploadStatus = ImageUploadStatus.initial;
+
+  DeficienciesInsideRepository deficienciesInsideRepository =
+      DeficienciesInsideRepository();
 
   void listen() async {
     var microphoneStatus = await Permission.microphone.request();
@@ -69,18 +75,29 @@ class NoShowController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.camera,
-          maxWidth: 1800,
-          maxHeight: 1800,
+          imageQuality: 25,
         );
         if (pickedFile != null) {
+          imageUploadStatus = ImageUploadStatus.uploading;
+          update();
           selectedDateTime = await pickedFile.lastModified();
-          imageFile = (pickedFile.path.obs);
-          if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
-            visibleBtn = true;
+
+          var response = await deficienciesInsideRepository.getImageUpload(
+              filePath: pickedFile.path);
+
+          response.fold((l) {
+            imageUploadStatus = ImageUploadStatus.initial;
+            return null;
+          }, (r) {
+            imageUploadStatus = ImageUploadStatus.success;
+            imageFile = (r.images?.image ?? '').obs;
+            if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
+              visibleBtn = true;
+            } else {
+              visibleBtn = false;
+            }
             update();
-          } else {
-            visibleBtn = false;
-          }
+          });
         }
       } catch (e) {
         utils.showToast(message: e.toString(), context: Get.context!);
@@ -97,16 +114,29 @@ class NoShowController extends BaseController {
       try {
         XFile? pickedFile = await ImagePicker().pickImage(
           source: ImageSource.gallery,
-          maxWidth: 1800,
-          maxHeight: 1800,
+          imageQuality: 25,
         );
         if (pickedFile != null) {
+          imageUploadStatus = ImageUploadStatus.uploading;
+          update();
           selectedDateTime = await pickedFile.lastModified();
-          imageFile = (pickedFile.path.obs);
-          if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
-            visibleBtn = true;
+
+          var response = await deficienciesInsideRepository.getImageUpload(
+              filePath: pickedFile.path);
+
+          response.fold((l) {
+            imageUploadStatus = ImageUploadStatus.initial;
+            return null;
+          }, (r) {
+            imageUploadStatus = ImageUploadStatus.success;
+            imageFile = (r.images?.image ?? '').obs;
+            if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
+              visibleBtn = true;
+            } else {
+              visibleBtn = false;
+            }
             update();
-          }
+          });
         }
       } catch (e) {
         utils.showToast(message: e.toString(), context: Get.context!);

@@ -1,177 +1,28 @@
-// // To parse this JSON data, do
-// //
-// //     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
-//
-// import 'dart:convert';
-//
-// DailySchedulesResponseModel dailySchedulesResponseModelFromJson(String str) =>
-//     DailySchedulesResponseModel.fromJson(json.decode(str));
-//
-// String dailySchedulesResponseModelToJson(DailySchedulesResponseModel data) =>
-//     json.encode(data.toJson());
-//
-// class DailySchedulesResponseModel {
-//   String? type;
-//   List<ScheduleDatum>? scheduleData;
-//
-//   DailySchedulesResponseModel({
-//     this.type,
-//     this.scheduleData,
-//   });
-//
-//   factory DailySchedulesResponseModel.fromJson(Map<String, dynamic> json) =>
-//       DailySchedulesResponseModel(
-//         type: json["type"],
-//         scheduleData: json["schedule_data"] == null
-//             ? []
-//             : List<ScheduleDatum>.from(
-//                 json["schedule_data"]!.map((x) => ScheduleDatum.fromJson(x))),
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "type": type,
-//         "schedule_data": scheduleData == null
-//             ? []
-//             : List<dynamic>.from(scheduleData!.map((x) => x.toJson())),
-//       };
-// }
-//
-// class ScheduleDatum {
-//   String? state;
-//   String? zip;
-//   String? city;
-//   DateTime? date;
-//   String? property;
-//   Building? building;
-//
-//   ScheduleDatum({
-//     this.state,
-//     this.zip,
-//     this.city,
-//     this.date,
-//     this.property,
-//     this.building,
-//   });
-//
-//   factory ScheduleDatum.fromJson(Map<String, dynamic> json) => ScheduleDatum(
-//         state: json["State"],
-//         zip: json["Zip"],
-//         city: json["City"],
-//         date: json["Date"] == null ? null : DateTime.parse(json["Date"]),
-//         property: json["Property"],
-//         building: json["building"] == null
-//             ? null
-//             : Building.fromJson(json["building"]),
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "State": state,
-//         "Zip": zip,
-//         "City": city,
-//         "Date":
-//             "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
-//         "Property": property,
-//         "building": building?.toJson(),
-//       };
-// }
-//
-// class Building {
-//   String? buildingName;
-//   String? buildingType;
-//   String? year;
-//   bool? iscompleted;
-//   String? id;
-//   List<Unit>? units;
-//
-//   Building({
-//     this.buildingName,
-//     this.buildingType,
-//     this.year,
-//     this.iscompleted,
-//     this.id,
-//     this.units,
-//   });
-//
-//   factory Building.fromJson(Map<String, dynamic> json) => Building(
-//         buildingName: json["building_name"],
-//         buildingType: json["building_type"],
-//         year: json["year"],
-//         iscompleted: json["iscompleted"],
-//         id: json["id"],
-//         units: json["Units"] == null
-//             ? []
-//             : List<Unit>.from(json["Units"]!.map((x) => Unit.fromJson(x))),
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "building_name": buildingName,
-//         "building_type": buildingType,
-//         "year": year,
-//         "iscompleted": iscompleted,
-//         "id": id,
-//         "Units": units == null
-//             ? []
-//             : List<dynamic>.from(units!.map((x) => x.toJson())),
-//       };
-// }
-//
-// class Unit {
-//   String? year;
-//   bool? iscompleted;
-//   String? id;
-//   String? unitName;
-//
-//   Unit({
-//     this.year,
-//     this.iscompleted,
-//     this.id,
-//     this.unitName,
-//   });
-//
-//   factory Unit.fromJson(Map<String, dynamic> json) => Unit(
-//         year: json["year"],
-//         iscompleted: json["iscompleted"],
-//         id: json["id"],
-//         unitName: json["unit_name"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "year": year,
-//         "iscompleted": iscompleted,
-//         "id": id,
-//         "unit_name": unitName,
-//       };
-// }
-
 // To parse this JSON data, do
 //
-//     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
-
-// To parse this JSON data, do
-//
-//     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
+//     final inspectionResponseModel = inspectionResponseModelFromJson(jsonString);
 
 import 'dart:convert';
 
-DailySchedulesResponseModel dailySchedulesResponseModelFromJson(String str) =>
-    DailySchedulesResponseModel.fromJson(json.decode(str));
+InspectionResponseModel inspectionResponseModelFromJson(String str) =>
+    InspectionResponseModel.fromJson(json.decode(str));
 
-String dailySchedulesResponseModelToJson(DailySchedulesResponseModel data) =>
+String inspectionResponseModelToJson(InspectionResponseModel data) =>
     json.encode(data.toJson());
 
-class DailySchedulesResponseModel {
+class InspectionResponseModel {
   String? type;
-  List<ScheduleInspection>? scheduleInspections;
+  List<ScheduleInspections>? scheduleInspections;
 
-  DailySchedulesResponseModel({this.type, this.scheduleInspections});
+  InspectionResponseModel({this.type, this.scheduleInspections});
 
-  factory DailySchedulesResponseModel.fromJson(Map<String, dynamic> json) =>
-      DailySchedulesResponseModel(
+  factory InspectionResponseModel.fromJson(Map<String, dynamic> json) =>
+      InspectionResponseModel(
         type: json["type"],
         scheduleInspections: json["schedule_inspections"] == null
             ? []
-            : List<ScheduleInspection>.from(json["schedule_inspections"]!
-                .map((x) => ScheduleInspection.fromJson(x))),
+            : List<ScheduleInspections>.from(json["schedule_inspections"]!
+                .map((x) => ScheduleInspections.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -182,16 +33,19 @@ class DailySchedulesResponseModel {
       };
 }
 
-class ScheduleInspection {
+class ScheduleInspections {
   int? id;
   DateTime? scheduleDate;
-  String? status;
+  Status? status;
   Inspector? inspector;
-  ScheduleInspectionProperty? property;
+  dynamic property;
   List<ScheduleInspectionBuilding>? scheduleInspectionBuildings;
   String? formattedScheduleDate;
+  Status? type;
+  String? startTime;
+  String? endTime;
 
-  ScheduleInspection({
+  ScheduleInspections({
     this.id,
     this.scheduleDate,
     this.status,
@@ -199,21 +53,22 @@ class ScheduleInspection {
     this.property,
     this.scheduleInspectionBuildings,
     this.formattedScheduleDate,
+    this.type,
+    this.startTime,
+    this.endTime,
   });
 
-  factory ScheduleInspection.fromJson(Map<String, dynamic> json) =>
-      ScheduleInspection(
+  factory ScheduleInspections.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspections(
         id: json["id"],
         scheduleDate: json["schedule_date"] == null
             ? null
             : DateTime.parse(json["schedule_date"]),
-        status: json["status"],
+        status: json["status"] == null ? null : Status.fromJson(json["status"]),
         inspector: json["inspector"] == null
             ? null
             : Inspector.fromJson(json["inspector"]),
-        property: json["property"] == null
-            ? null
-            : ScheduleInspectionProperty.fromJson(json["property"]),
+        property: json["property"],
         scheduleInspectionBuildings:
             json["schedule_inspection_buildings"] == null
                 ? []
@@ -221,19 +76,25 @@ class ScheduleInspection {
                     json["schedule_inspection_buildings"]!
                         .map((x) => ScheduleInspectionBuilding.fromJson(x))),
         formattedScheduleDate: json["formatted_schedule_date"],
+        type: json["type"] == null ? null : Status.fromJson(json["type"]),
+        startTime: json["start_time"],
+        endTime: json["end_time"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "schedule_date": scheduleDate?.toIso8601String(),
-        "status": status,
+        "status": status?.toJson(),
         "inspector": inspector?.toJson(),
-        "property": property?.toJson(),
+        "property": property,
         "schedule_inspection_buildings": scheduleInspectionBuildings == null
             ? []
             : List<dynamic>.from(
                 scheduleInspectionBuildings!.map((x) => x.toJson())),
         "formatted_schedule_date": formattedScheduleDate,
+        "type": type?.toJson(),
+        "start_time": startTime,
+        "end_time": endTime,
       };
 }
 
@@ -243,8 +104,12 @@ class Inspector {
   dynamic externalPersonalId;
   String? name;
 
-  Inspector(
-      {this.id, this.externalAccountId, this.externalPersonalId, this.name});
+  Inspector({
+    this.id,
+    this.externalAccountId,
+    this.externalPersonalId,
+    this.name,
+  });
 
   factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
         id: json["id"],
@@ -261,200 +126,77 @@ class Inspector {
       };
 }
 
-class ScheduleInspectionProperty {
-  int? id;
-  String? address1;
-  dynamic address2;
-  String? city;
-  String? state;
-  String? zip;
-  String? name;
-  String? number;
-  dynamic ampNumber;
-  String? notes;
-
-  ScheduleInspectionProperty({
-    this.id,
-    this.address1,
-    this.address2,
-    this.city,
-    this.state,
-    this.zip,
-    this.name,
-    this.number,
-    this.ampNumber,
-    this.notes,
-  });
-
-  factory ScheduleInspectionProperty.fromJson(Map<String, dynamic> json) =>
-      ScheduleInspectionProperty(
-        id: json["id"],
-        address1: json["address1"],
-        address2: json["address2"],
-        city: json["city"],
-        state: json["state"],
-        zip: json["zip"],
-        name: json["name"],
-        number: json["number"],
-        ampNumber: json["amp_number"],
-        notes: json["notes"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "address1": address1,
-        "address2": address2,
-        "city": city,
-        "state": state,
-        "zip": zip,
-        "name": name,
-        "number": number,
-        "amp_number": ampNumber,
-        "notes": notes,
-      };
-}
-
 class ScheduleInspectionBuilding {
   int? id;
   bool? isBuildingInspection;
-  Building? building;
+  dynamic building;
   List<ScheduleInspectionUnit>? scheduleInspectionUnits;
-  DateTime? dateTime;
-  ScheduleInspection? propertyData;
+  Status? inspectionStatus;
 
   ScheduleInspectionBuilding({
     this.id,
     this.isBuildingInspection,
     this.building,
     this.scheduleInspectionUnits,
-    this.dateTime,
-    this.propertyData,
+    this.inspectionStatus,
   });
 
   factory ScheduleInspectionBuilding.fromJson(Map<String, dynamic> json) =>
       ScheduleInspectionBuilding(
         id: json["id"],
         isBuildingInspection: json["is_building_inspection"],
-        building: json["building"] == null
-            ? null
-            : Building.fromJson(json["building"]),
+        building: json["building"],
         scheduleInspectionUnits: json["schedule_inspection_units"] == null
             ? []
             : List<ScheduleInspectionUnit>.from(
                 json["schedule_inspection_units"]!
                     .map((x) => ScheduleInspectionUnit.fromJson(x))),
+        inspectionStatus: json["inspection_status"] == null
+            ? null
+            : Status.fromJson(json["inspection_status"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "is_building_inspection": isBuildingInspection,
-        "building": building?.toJson(),
+        "building": building,
         "schedule_inspection_units": scheduleInspectionUnits == null
             ? []
             : List<dynamic>.from(
                 scheduleInspectionUnits!.map((x) => x.toJson())),
+        "inspection_status": inspectionStatus?.toJson(),
       };
 }
 
-class Building {
+class Status {
   int? id;
-  String? address1;
-  dynamic address2;
-  String? city;
-  String? state;
-  String? zip;
-  String? name;
-  dynamic number;
-  BuildingProperty? property;
-  int? constructedYear;
-  BuildingType? buildingType;
+  String? value;
 
-  Building({
+  Status({
     this.id,
-    this.address1,
-    this.address2,
-    this.city,
-    this.state,
-    this.zip,
-    this.name,
-    this.number,
-    this.property,
-    this.constructedYear,
-    this.buildingType,
+    this.value,
   });
 
-  factory Building.fromJson(Map<String, dynamic> json) => Building(
+  factory Status.fromJson(Map<String, dynamic> json) => Status(
         id: json["id"],
-        address1: json["address1"],
-        address2: json["address2"],
-        city: json["city"],
-        state: json["state"],
-        zip: json["zip"],
-        name: json["name"],
-        number: json["number"],
-        property: json["property"] == null
-            ? null
-            : BuildingProperty.fromJson(json["property"]),
-        constructedYear: json["constructed_year"],
-        buildingType: json["building_type"] == null
-            ? null
-            : BuildingType.fromJson(json["building_type"]),
+        value: json["value"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "address1": address1,
-        "address2": address2,
-        "city": city,
-        "state": state,
-        "zip": zip,
-        "name": name,
-        "number": number,
-        "property": property?.toJson(),
-        "constructed_year": constructedYear,
-        "building_type": buildingType?.toJson(),
+        "value": value,
       };
-}
-
-class BuildingType {
-  int? id;
-  String? name;
-  dynamic description;
-
-  BuildingType({this.id, this.name, this.description});
-
-  factory BuildingType.fromJson(Map<String, dynamic> json) => BuildingType(
-      id: json["id"], name: json["name"], description: json["description"]);
-
-  Map<String, dynamic> toJson() =>
-      {"id": id, "name": name, "description": description};
-}
-
-class BuildingProperty {
-  int? id;
-  String? address1;
-
-  BuildingProperty({this.id, this.address1});
-
-  factory BuildingProperty.fromJson(Map<String, dynamic> json) =>
-      BuildingProperty(id: json["id"], address1: json["address1"]);
-
-  Map<String, dynamic> toJson() => {"id": id, "address1": address1};
 }
 
 class ScheduleInspectionUnit {
   int? id;
   Unit? unit;
-  InspectionStatus? inspectionStatus;
-  DateTime? dateTime;
-  ScheduleInspection? propertyData;
+  Status? inspectionStatus;
 
   ScheduleInspectionUnit({
     this.id,
     this.unit,
     this.inspectionStatus,
-    this.dateTime,
-    this.propertyData,
   });
 
   factory ScheduleInspectionUnit.fromJson(Map<String, dynamic> json) =>
@@ -463,7 +205,7 @@ class ScheduleInspectionUnit {
         unit: json["unit"] == null ? null : Unit.fromJson(json["unit"]),
         inspectionStatus: json["inspection_status"] == null
             ? null
-            : InspectionStatus.fromJson(json["inspection_status"]),
+            : Status.fromJson(json["inspection_status"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -473,25 +215,21 @@ class ScheduleInspectionUnit {
       };
 }
 
-class InspectionStatus {
-  int? id;
-  String? value;
-
-  InspectionStatus({this.id, this.value});
-
-  factory InspectionStatus.fromJson(Map<String, dynamic> json) =>
-      InspectionStatus(id: json["id"], value: json["value"]);
-
-  Map<String, dynamic> toJson() => {"id": id, "value": value};
-}
-
 class Unit {
   int? id;
   String? name;
   String? address;
   int? numberOfBedrooms;
-  int? numberOfBathrooms;
+  dynamic numberOfBathrooms;
   bool? occupied;
+  dynamic apartmentNumber;
+  dynamic phone;
+  dynamic mobile;
+  String? city;
+  String? state;
+  String? zip;
+  Landlord? landlord;
+  Tenant? tenant;
 
   Unit({
     this.id,
@@ -500,6 +238,14 @@ class Unit {
     this.numberOfBedrooms,
     this.numberOfBathrooms,
     this.occupied,
+    this.apartmentNumber,
+    this.phone,
+    this.mobile,
+    this.city,
+    this.state,
+    this.zip,
+    this.landlord,
+    this.tenant,
   });
 
   factory Unit.fromJson(Map<String, dynamic> json) => Unit(
@@ -509,6 +255,16 @@ class Unit {
         numberOfBedrooms: json["number_of_bedrooms"],
         numberOfBathrooms: json["number_of_bathrooms"],
         occupied: json["occupied"],
+        apartmentNumber: json["apartment_number"],
+        phone: json["phone"],
+        mobile: json["mobile"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
+        landlord: json["landlord"] == null
+            ? null
+            : Landlord.fromJson(json["landlord"]),
+        tenant: json["tenant"] == null ? null : Tenant.fromJson(json["tenant"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -518,5 +274,198 @@ class Unit {
         "number_of_bedrooms": numberOfBedrooms,
         "number_of_bathrooms": numberOfBathrooms,
         "occupied": occupied,
+        "apartment_number": apartmentNumber,
+        "phone": phone,
+        "mobile": mobile,
+        "city": city,
+        "state": state,
+        "zip": zip,
+        "landlord": landlord?.toJson(),
+        "tenant": tenant?.toJson(),
+      };
+}
+
+class Landlord {
+  int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? address1;
+  dynamic address2;
+  String? city;
+  dynamic state;
+  dynamic zip;
+  String? phone;
+  String? mobile;
+  dynamic email;
+  bool? isText;
+  bool? isEmail;
+  bool? isFax;
+  String? name;
+
+  Landlord({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.address1,
+    this.address2,
+    this.city,
+    this.state,
+    this.zip,
+    this.phone,
+    this.mobile,
+    this.email,
+    this.isText,
+    this.isEmail,
+    this.isFax,
+    this.name,
+  });
+
+  factory Landlord.fromJson(Map<String, dynamic> json) => Landlord(
+        id: json["id"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        address1: json["address1"],
+        address2: json["address2"],
+        city: json["city"],
+        state: json["state"],
+        zip: json["zip"],
+        phone: json["phone"],
+        mobile: json["mobile"],
+        email: json["email"],
+        isText: json["is_text"],
+        isEmail: json["is_email"],
+        isFax: json["is_fax"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "address1": address1,
+        "address2": address2,
+        "city": city,
+        "state": state,
+        "zip": zip,
+        "phone": phone,
+        "mobile": mobile,
+        "email": email,
+        "is_text": isText,
+        "is_email": isEmail,
+        "is_fax": isFax,
+        "name": name,
+      };
+}
+
+class Tenant {
+  int? id;
+  Status? program;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? address1;
+  dynamic address2;
+  String? city;
+  String? mobile;
+  dynamic email;
+  bool? isText;
+  bool? isEmail;
+  bool? isFax;
+  String? firstName;
+  String? lastName;
+  dynamic lastFourSsn;
+  String? tenantId;
+  dynamic typeHousing;
+  dynamic middleInitial;
+  dynamic dateOfBirth;
+  dynamic sex;
+  String? phone;
+  String? zip;
+  String? state;
+
+  Tenant({
+    this.id,
+    this.program,
+    this.createdAt,
+    this.updatedAt,
+    this.address1,
+    this.address2,
+    this.city,
+    this.mobile,
+    this.email,
+    this.isText,
+    this.isEmail,
+    this.isFax,
+    this.firstName,
+    this.lastName,
+    this.lastFourSsn,
+    this.tenantId,
+    this.typeHousing,
+    this.middleInitial,
+    this.dateOfBirth,
+    this.sex,
+    this.phone,
+    this.zip,
+    this.state,
+  });
+
+  factory Tenant.fromJson(Map<String, dynamic> json) => Tenant(
+        id: json["id"],
+        program:
+            json["program"] == null ? null : Status.fromJson(json["program"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        address1: json["address1"],
+        address2: json["address2"],
+        city: json["city"],
+        mobile: json["mobile"],
+        email: json["email"],
+        isText: json["is_text"],
+        isEmail: json["is_email"],
+        isFax: json["is_fax"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        lastFourSsn: json["last_four_ssn"],
+        tenantId: json["tenant_id"],
+        typeHousing: json["type_housing"],
+        middleInitial: json["middle_initial"],
+        dateOfBirth: json["date_of_birth"],
+        sex: json["sex"],
+        phone: json["phone"],
+        zip: json["zip"],
+        state: json["state"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "program": program?.toJson(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "address1": address1,
+        "address2": address2,
+        "city": city,
+        "mobile": mobile,
+        "email": email,
+        "is_text": isText,
+        "is_email": isEmail,
+        "is_fax": isFax,
+        "first_name": firstName,
+        "last_name": lastName,
+        "last_four_ssn": lastFourSsn,
+        "tenant_id": tenantId,
+        "type_housing": typeHousing,
+        "middle_initial": middleInitial,
+        "date_of_birth": dateOfBirth,
+        "sex": sex,
+        "phone": phone,
+        "zip": zip,
+        "state": state,
       };
 }
