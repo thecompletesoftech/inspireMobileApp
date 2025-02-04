@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/provider/api_provider.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
-import 'package:public_housing/screens/inspection_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 
 class InspectionListRepository {
   final ApiProviders _provider = ApiProviders();

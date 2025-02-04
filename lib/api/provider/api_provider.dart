@@ -14,7 +14,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
-import 'package:public_housing/screens/inspection_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/finding_type_res_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/result_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';

@@ -1,5 +1,7 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/repository/inspection_unit_summary_repository.dart';
 
 class InspectionUnitSummaryController extends BaseController {
@@ -15,6 +17,9 @@ class InspectionUnitSummaryController extends BaseController {
       InspectionUnitSummaryRepository();
   List<List<dynamic>> findingTypeList = [];
   List<List<dynamic>> resultsList = [];
+  List<DeficiencyInspection> deficiencyInspections = [];
+  InspectionListController inspectionListController =
+      Get.find<InspectionListController>();
 
   @override
   void onInit() {
@@ -55,6 +60,28 @@ class InspectionUnitSummaryController extends BaseController {
     update();
   }
 
+  createInspection() {
+    deficiencyArea.forEach((element) {
+      element.deficiencyInspectionsReqModel?.forEach((e) {
+        List<DeficiencyProofPicture> pictureList = [];
+        e.deficiencyProofPictures?.forEach((pictureString) {
+          pictureList.add(DeficiencyProofPicture(picturePath: pictureString));
+        });
+
+        deficiencyInspections.add(DeficiencyInspection(
+          housingDeficiencyId: int.tryParse(
+                  e.deficiencyItemHousingDeficiency?.id.toString() ?? "")
+              .toString(),
+          comment: e.comment,
+          deficiencyProofPictures: pictureList,
+        ));
+      });
+    });
+    inspectionListController.inspectionReqModel.deficiencyInspections =
+        deficiencyInspections;
+    update();
+  }
+
   searchBuildingType({required String searchText}) {
     selectFindingList.clear();
     if (selectFindingTypeController.text.length > 0) {
@@ -74,8 +101,10 @@ class InspectionUnitSummaryController extends BaseController {
     }
   }
 
-  void actionBuildingType(value) {
+  void actionFindingType(value) {
     selectFindingTypeController.text = value.last.toString();
+    inspectionListController.inspectionReqModel.inspection?.findingType =
+        value.first;
     update();
   }
 

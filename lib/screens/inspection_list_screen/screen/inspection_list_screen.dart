@@ -1,8 +1,10 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
 import 'package:public_housing/screens/inspection_information_screen/screen/inspection_information_screen.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/widget/common_inspection_list_container.dart';
 import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/manual_unit_inspection_screen/screen/manual_unit_inspection_screen.dart';
@@ -353,122 +355,163 @@ class InspectionListScreen extends GetView<InspectionListController> {
                           controller: _scrollController,
                           child: Column(
                             children: [
-                              controller.apiResponseStatus ==
-                                      ApiResponseStatus.success
-                                  ? /*ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount:
-                                          controller.scheduleDataList.length +
-                                              (controller.hasMore ? 1 : 0),
-                                      itemBuilder: (context, index) {
-                                        if (index <
-                                            controller
-                                                .scheduleDataList.length) {
-                                          return Column(
+                              if (controller.apiResponseStatus ==
+                                  ApiResponseStatus.success)
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      controller.scheduleDataList.length +
+                                          (controller.hasMore ? 1 : 0),
+                                  itemBuilder: (context, index) {
+                                    if (index <
+                                        controller.scheduleDataList.length) {
+                                      return Column(
+                                        children: [
+                                          Row(
                                             children: [
-                                              Row(
-                                                children: [
-                                                  MyTextView(
-                                                    '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
-                                                    textStyleNew: MyTextStyle(
-                                                      textSize: 24.px,
-                                                      textWeight:
-                                                          FontWeight.w400,
-                                                      textColor: controller
-                                                          .appColors.black,
-                                                    ),
-                                                  ).paddingOnly(right: 16.px),
-                                                  Expanded(
-                                                    child: Container(
-                                                      height: 2.px,
-                                                      color:
-                                                          AppColors().divider,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ).paddingAll(32.px),
-                                              ListView.separated(
-                                                shrinkWrap: true,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                itemCount: controller
-                                                    .scheduleDataList[index]
-                                                    .scheduleDataList
-                                                    .length,
-                                                itemBuilder: (context, i) {
-                                                  var propertyData = controller
-                                                      .scheduleDataList[index]
-                                                      .scheduleDataList[i];
-                                                  return CommonInspectionsListView(
-                                                    title: propertyData
-                                                            .property?.name ??
-                                                        "",
-                                                    Subtitle:
-                                                        '${propertyData.property?.city} - ${propertyData.property?.zip}',
-                                                    title1:
-                                                        '${propertyData.scheduleInspectionBuildings?.length ?? 0} Buildings',
-                                                    Subtitle1:
-                                                        '${controller.getUnitCount(propertyData.scheduleInspectionBuildings)} Units',
-                                                    date:
-                                                        '${DateFormat('yyyy-MM-dd').format(propertyData.scheduleDate!)}',
-                                                    onTap: () {},
-                                                  ).paddingSymmetric(
-                                                      horizontal: 32.px);
-                                                },
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return SizedBox(
-                                                      height: 24.px);
-                                                },
+                                              MyTextView(
+                                                '${controller.scheduleDataList[index].prefix}${controller.scheduleDataList[index].date}',
+                                                textStyleNew: MyTextStyle(
+                                                  textSize: 24.px,
+                                                  textWeight: FontWeight.w400,
+                                                  textColor: controller
+                                                      .appColors.black,
+                                                ),
+                                              ).paddingOnly(right: 16.px),
+                                              Expanded(
+                                                child: Container(
+                                                  height: 2.px,
+                                                  color: AppColors().divider,
+                                                ),
                                               ),
                                             ],
-                                          );
-                                        } else {
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                        }
-                                      },
-                                    )*/
-                                  ListView.separated(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: 2,
-                                      itemBuilder: (context, i) {
-                                        // var propertyData = controller
-                                        //     .scheduleDataList[index]
-                                        //     .scheduleDataList[i];
-                                        return CommonInspectionsListView(
-                                          title: "2113 Kendall Street",
-                                          subtitle: 'South Bend, IN',
-                                          title1: 'Fernando Devries',
-                                          subtitle1: 'Annual Inspection',
-                                          date: '06/22/2023',
-                                          onTap: () {
-                                            Get.toNamed(
-                                                InspectionInformationScreen
-                                                    .routes);
-                                          },
-                                          isCompleted: false,
-                                          startTime: '08:00',
-                                          endTime: '10:00',
-                                        ).paddingSymmetric(horizontal: 32.px);
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return SizedBox(height: 24.px);
-                                      },
-                                    )
-                                  : controller.apiResponseStatus ==
-                                          ApiResponseStatus.loading
-                                      ? Center(
-                                          child: CircularProgressIndicator())
-                                      : controller.apiResponseStatus ==
-                                              ApiResponseStatus.failure
-                                          ? Text('No Data Found')
-                                          : SizedBox(),
+                                          ).paddingAll(32.px),
+                                          ListView.separated(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            itemCount: controller
+                                                .scheduleDataList[index]
+                                                .scheduleDataList
+                                                .length,
+                                            itemBuilder: (context, i) {
+                                              var propertyData = controller
+                                                  .scheduleDataList[index]
+                                                  .scheduleDataList[i];
+                                              return CommonInspectionsListView(
+                                                title:
+                                                    '${controller.filterData(scheduleInspection: propertyData).unit?.address ?? ""}',
+                                                subtitle:
+                                                    '${controller.filterData(scheduleInspection: propertyData).unit?.city ?? ""} ${controller.filterData(scheduleInspection: propertyData).unit?.state ?? ""}',
+                                                title1:
+                                                    '${controller.filterData(scheduleInspection: propertyData).unit?.name ?? ""}',
+                                                subtitle1:
+                                                    '${propertyData.inspectionType?.type ?? ""}',
+                                                date:
+                                                    '${DateFormat("MM/dd/yyyy").format(propertyData.scheduleDate!)}',
+                                                onTap: () {
+                                                  controller
+                                                          .inspectionReqModel
+                                                          .inspection
+                                                          ?.inspectorId =
+                                                      propertyData.inspector?.id
+                                                          .toString();
+                                                  controller.inspectionReqModel
+                                                          .inspection?.date =
+                                                      propertyData.scheduleDate;
+                                                  controller
+                                                          .inspectionReqModel
+                                                          .inspection
+                                                          ?.startTime =
+                                                      propertyData.startTime;
+                                                  controller.inspectionReqModel
+                                                          .inspection?.endTime =
+                                                      propertyData.endTime;
+                                                  controller
+                                                          .inspectionReqModel
+                                                          .inspection
+                                                          ?.inspectionTypeId =
+                                                      propertyData
+                                                          .inspectionType?.id
+                                                          .toString();
+                                                  controller
+                                                          .inspectionReqModel
+                                                          .inspection
+                                                          ?.scheduleInspectionId =
+                                                      propertyData.id;
+                                                  controller
+                                                      .inspectionReqModel
+                                                      .inspection
+                                                      ?.inspectionStateId = '1';
+
+                                                  Get.toNamed(
+                                                      InspectionInformationScreen
+                                                          .routes,
+                                                      arguments: {
+                                                        "unitAddress": controller
+                                                                .filterData(
+                                                                    scheduleInspection:
+                                                                        propertyData)
+                                                                .unit
+                                                                ?.address ??
+                                                            "",
+                                                        "unitName": controller
+                                                                .filterData(
+                                                                    scheduleInspection:
+                                                                        propertyData)
+                                                                .unit
+                                                                ?.name ??
+                                                            "",
+                                                        "inspectionType": propertyData
+                                                                    .inspectionType ==
+                                                                null
+                                                            ? InspectionType()
+                                                            : propertyData
+                                                                .inspectionType,
+                                                        "timeFrame":
+                                                            "${propertyData.startTime ?? ""} - ${propertyData.endTime ?? ""}",
+                                                        "scheduleDate":
+                                                            propertyData
+                                                                .scheduleDate,
+                                                        "unitData": controller
+                                                            .filterData(
+                                                                scheduleInspection:
+                                                                    propertyData)
+                                                            .unit,
+                                                      });
+                                                },
+                                                isCompleted: false,
+                                                startTime:
+                                                    propertyData.startTime ??
+                                                        "",
+                                                endTime:
+                                                    propertyData.endTime ?? "",
+                                              ).paddingSymmetric(
+                                                  horizontal: 32.px);
+                                            },
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return SizedBox(height: 24.px);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                  },
+                                )
+                              else
+                                controller.apiResponseStatus ==
+                                        ApiResponseStatus.loading
+                                    ? Center(child: CircularProgressIndicator())
+                                    : controller.apiResponseStatus ==
+                                            ApiResponseStatus.failure
+                                        ? Text('No Data Found')
+                                        : SizedBox(),
                               if (controller.scheduleDataList.length == 1 &&
                                   controller.scheduleDataList.first.prefix
                                       .contains(Strings.todayInspections))

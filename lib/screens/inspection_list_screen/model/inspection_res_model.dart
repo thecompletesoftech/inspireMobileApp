@@ -12,7 +12,7 @@ String inspectionResponseModelToJson(InspectionResponseModel data) =>
 
 class InspectionResponseModel {
   String? type;
-  List<ScheduleInspections>? scheduleInspections;
+  List<ScheduleInspection>? scheduleInspections;
 
   InspectionResponseModel({this.type, this.scheduleInspections});
 
@@ -21,8 +21,8 @@ class InspectionResponseModel {
         type: json["type"],
         scheduleInspections: json["schedule_inspections"] == null
             ? []
-            : List<ScheduleInspections>.from(json["schedule_inspections"]!
-                .map((x) => ScheduleInspections.fromJson(x))),
+            : List<ScheduleInspection>.from(json["schedule_inspections"]!
+                .map((x) => ScheduleInspection.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,7 +33,7 @@ class InspectionResponseModel {
       };
 }
 
-class ScheduleInspections {
+class ScheduleInspection {
   int? id;
   DateTime? scheduleDate;
   Status? status;
@@ -44,8 +44,9 @@ class ScheduleInspections {
   Status? type;
   String? startTime;
   String? endTime;
+  InspectionType? inspectionType;
 
-  ScheduleInspections({
+  ScheduleInspection({
     this.id,
     this.scheduleDate,
     this.status,
@@ -56,10 +57,11 @@ class ScheduleInspections {
     this.type,
     this.startTime,
     this.endTime,
+    this.inspectionType,
   });
 
-  factory ScheduleInspections.fromJson(Map<String, dynamic> json) =>
-      ScheduleInspections(
+  factory ScheduleInspection.fromJson(Map<String, dynamic> json) =>
+      ScheduleInspection(
         id: json["id"],
         scheduleDate: json["schedule_date"] == null
             ? null
@@ -79,6 +81,9 @@ class ScheduleInspections {
         type: json["type"] == null ? null : Status.fromJson(json["type"]),
         startTime: json["start_time"],
         endTime: json["end_time"],
+        inspectionType: json["inspection_type"] == null
+            ? null
+            : InspectionType.fromJson(json["inspection_type"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,6 +100,31 @@ class ScheduleInspections {
         "type": type?.toJson(),
         "start_time": startTime,
         "end_time": endTime,
+        "inspection_type": inspectionType?.toJson(),
+      };
+}
+
+class InspectionType {
+  int? id;
+  String? type;
+  dynamic description;
+
+  InspectionType({
+    this.id,
+    this.type,
+    this.description,
+  });
+
+  factory InspectionType.fromJson(Map<String, dynamic> json) => InspectionType(
+        id: json["id"],
+        type: json["type"],
+        description: json["description"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "type": type,
+        "description": description,
       };
 }
 
@@ -190,7 +220,7 @@ class Status {
 
 class ScheduleInspectionUnit {
   int? id;
-  Unit? unit;
+  Units? unit;
   Status? inspectionStatus;
 
   ScheduleInspectionUnit({
@@ -202,7 +232,7 @@ class ScheduleInspectionUnit {
   factory ScheduleInspectionUnit.fromJson(Map<String, dynamic> json) =>
       ScheduleInspectionUnit(
         id: json["id"],
-        unit: json["unit"] == null ? null : Unit.fromJson(json["unit"]),
+        unit: json["unit"] == null ? null : Units.fromJson(json["unit"]),
         inspectionStatus: json["inspection_status"] == null
             ? null
             : Status.fromJson(json["inspection_status"]),
@@ -215,7 +245,7 @@ class ScheduleInspectionUnit {
       };
 }
 
-class Unit {
+class Units {
   int? id;
   String? name;
   String? address;
@@ -231,7 +261,7 @@ class Unit {
   Landlord? landlord;
   Tenant? tenant;
 
-  Unit({
+  Units({
     this.id,
     this.name,
     this.address,
@@ -248,7 +278,7 @@ class Unit {
     this.tenant,
   });
 
-  factory Unit.fromJson(Map<String, dynamic> json) => Unit(
+  factory Units.fromJson(Map<String, dynamic> json) => Units(
         id: json["id"],
         name: json["name"],
         address: json["address"],

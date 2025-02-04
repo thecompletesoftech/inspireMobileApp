@@ -139,6 +139,13 @@ class InspectionUnitSummaryScreen
                                         .withOpacity(0.2),
                                 onChanged: (value) {
                                   controller.selectedItem = value.toString();
+                                  if (value != null) {
+                                    controller
+                                        .inspectionListController
+                                        .inspectionReqModel
+                                        .inspection
+                                        ?.result = option.first;
+                                  }
                                   controller.update();
                                 },
                               );
@@ -228,7 +235,7 @@ class InspectionUnitSummaryScreen
                                   );
                                 },
                                 onSelected: (value) {
-                                  controller.actionBuildingType(value);
+                                  controller.actionFindingType(value);
                                   controller.update();
                                 },
                               ),

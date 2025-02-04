@@ -1,7 +1,8 @@
-import 'dart:io';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/no_show_screen/controller/no_show_controller.dart';
 
 class NoShowScreen extends GetView<NoShowController> {
@@ -202,7 +203,7 @@ class NoShowScreen extends GetView<NoShowController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               MyTextView(
-                                '2113 Kendall Street - Fernando Devries',
+                                '${controller.unitAddress} - ${controller.unitName}',
                                 textStyleNew: MyTextStyle(
                                   textColor: controller.appColors.appColor,
                                   textWeight: FontWeight.w600,
@@ -210,25 +211,23 @@ class NoShowScreen extends GetView<NoShowController> {
                                   textSize: 20.px,
                                 ),
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8.px, horizontal: 16.px),
-                                decoration: BoxDecoration(
-                                    color: AppColors().white,
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: MyTextView(
-                                  'Annual Inspection',
-                                  textStyleNew: MyTextStyle(
-                                      textSize: 14.px,
-                                      textColor: 'Annual Inspection' ==
-                                              'Annual Inspection'
-                                          ? AppColors().textGreen
-                                          : 'Re-Inspection' == 'Re-Inspection'
-                                              ? AppColors().textPink
-                                              : AppColors().black,
-                                      textWeight: FontWeight.w500),
-                                ),
-                              ).paddingOnly(left: 24.px),
+                              controller.inspectionType.type != null
+                                  ? Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8.px, horizontal: 16.px),
+                                      decoration: BoxDecoration(
+                                          color: AppColors().white,
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                      child: MyTextView(
+                                        controller.inspectionType.type,
+                                        textStyleNew: MyTextStyle(
+                                            textSize: 14.px,
+                                            textColor: AppColors().black,
+                                            textWeight: FontWeight.w500),
+                                      ),
+                                    ).paddingOnly(left: 24.px)
+                                  : SizedBox(),
                             ],
                           ).paddingOnly(top: 40.px, bottom: 48.px),
                           Row(
@@ -324,7 +323,13 @@ class NoShowScreen extends GetView<NoShowController> {
                                   onTap: () {
                                     if (controller.visibleBtn &&
                                         controller.imageFile.isNotEmpty) {
-                                      Get.back(result: true);
+                                      controller
+                                              .inspectionListController
+                                              .inspectionReqModel
+                                              .inspection
+                                              ?.noShowImage =
+                                          controller.imageFile.value;
+                                      Get.back();
                                     }
                                   }),
                             ],

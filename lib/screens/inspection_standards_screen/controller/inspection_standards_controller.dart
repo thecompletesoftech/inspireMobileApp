@@ -2,6 +2,7 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
 import 'package:public_housing/screens/inspection_standards_screen/repository/inspection_standards_repository.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 
 class InspectionStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
@@ -10,9 +11,17 @@ class InspectionStandardsController extends BaseController {
   bool isCollapseStandards = false;
   List<BuildingModel> deficiencyAreas = [];
   RxList<BuildingModel> searchList = <BuildingModel>[].obs;
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
 
   void onInit() {
     super.onInit();
+    if (Get.arguments != null) {
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+    }
     () async {
       searchList.clear();
       await getDeficiencyAreasData();

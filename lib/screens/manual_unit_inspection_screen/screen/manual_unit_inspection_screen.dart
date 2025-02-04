@@ -5,7 +5,8 @@ import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
 import 'package:public_housing/screens/manual_unit_inspection_screen/controller/manual_unit_inspection_controller.dart';
 
-class ManualUnitInspectionScreen extends GetView<ManualUnitInspectionController> {
+class ManualUnitInspectionScreen
+    extends GetView<ManualUnitInspectionController> {
   const ManualUnitInspectionScreen({Key? key}) : super(key: key);
 
   static const routes = "/ManualUnitInspectionScreen";

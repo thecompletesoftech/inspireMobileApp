@@ -1,6 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_information_screen/controller/inspection_information_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
 import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
@@ -38,31 +40,28 @@ class InspectionInformationScreen
                     Row(
                       children: [
                         MyTextView(
-                          '2113 Kendall Street',
+                          controller.unitAddress,
                           textStyleNew: MyTextStyle(
                               textSize: 20.px,
                               textColor: AppColors().black,
                               textWeight: FontWeight.w600),
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 8.px, horizontal: 16.px),
-                          decoration: BoxDecoration(
-                              color: AppColors().white,
-                              borderRadius: BorderRadius.circular(100)),
-                          child: MyTextView(
-                            'Annual Inspection',
-                            textStyleNew: MyTextStyle(
-                                textSize: 14.px,
-                                textColor:
-                                    'Annual Inspection' == 'Annual Inspection'
-                                        ? AppColors().textGreen
-                                        : 'Re-Inspection' == 'Re-Inspection'
-                                            ? AppColors().textPink
-                                            : AppColors().black,
-                                textWeight: FontWeight.w500),
-                          ),
-                        ).paddingOnly(left: 24.px),
+                        controller.inspectionType.type != null
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8.px, horizontal: 16.px),
+                                decoration: BoxDecoration(
+                                    color: AppColors().white,
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: MyTextView(
+                                  controller.inspectionType.type ?? "",
+                                  textStyleNew: MyTextStyle(
+                                      textSize: 14.px,
+                                      textColor: AppColors().black,
+                                      textWeight: FontWeight.w500),
+                                ),
+                              ).paddingOnly(left: 24.px)
+                            : SizedBox(),
                       ],
                     ).paddingOnly(top: 31.px),
                     Row(
@@ -72,7 +71,8 @@ class InspectionInformationScreen
                           decoration: BoxDecoration(color: AppColors().white),
                           child: CommonRow(
                             image: icCalenderColor,
-                            imageName: '06/22/2023',
+                            imageName:
+                                '${DateFormat("MM/dd/yyyy").format(controller.scheduleDate!)}',
                             imageNameColor: AppColors().black,
                           ),
                         ),
@@ -81,7 +81,7 @@ class InspectionInformationScreen
                           decoration: BoxDecoration(color: AppColors().white),
                           child: CommonRow(
                             image: clockIcon,
-                            imageName: '08:00 - 10:00',
+                            imageName: '${controller.timeFrame}',
                             imageNameColor: AppColors().black,
                           ),
                         ).paddingOnly(left: 16.px),
@@ -102,14 +102,14 @@ class InspectionInformationScreen
                           Row(
                             children: [
                               MyTextView(
-                                'Tenant_name',
+                                controller.unitData.tenant?.firstName ?? "",
                                 textStyleNew: MyTextStyle(
                                     textSize: 20.px,
                                     textColor: AppColors().black,
                                     textWeight: FontWeight.w600),
                               ),
                               MyTextView(
-                                ' - [Tenant ID]',
+                                ' - ${controller.unitData.tenant?.tenantId ?? ""}',
                                 textStyleNew: MyTextStyle(
                                     textSize: 16.px,
                                     textColor: AppColors().black,
@@ -118,7 +118,7 @@ class InspectionInformationScreen
                             ],
                           ),
                           MyTextView(
-                            'Tenant',
+                            controller.unitData.tenant?.lastName ?? "",
                             textStyleNew: MyTextStyle(
                                 textSize: 16.px,
                                 textColor: AppColors().black,
@@ -138,14 +138,14 @@ class InspectionInformationScreen
                           Row(
                             children: [
                               MyTextView(
-                                '[Landlord Name]',
+                                '${controller.unitData.landlord?.name ?? ""}',
                                 textStyleNew: MyTextStyle(
                                     textSize: 20.px,
                                     textColor: AppColors().black,
                                     textWeight: FontWeight.w600),
                               ),
                               MyTextView(
-                                ' - [Landlord ID]',
+                                ' - ${controller.unitData.landlord?.id ?? ""}',
                                 textStyleNew: MyTextStyle(
                                     textSize: 16.px,
                                     textColor: AppColors().black,
@@ -154,7 +154,7 @@ class InspectionInformationScreen
                             ],
                           ),
                           MyTextView(
-                            'Landlord',
+                            '${controller.unitData.landlord?.name ?? ""}',
                             textStyleNew: MyTextStyle(
                                 textSize: 16.px,
                                 textColor: AppColors().black,
@@ -243,7 +243,14 @@ class InspectionInformationScreen
                           textWeight: FontWeight.w600,
                           textSize: 16.px,
                           onTap: () {
-                            Get.toNamed(NoShowScreen.routes);
+                            Get.toNamed(
+                              NoShowScreen.routes,
+                              arguments: {
+                                "unitAddress": controller.unitAddress,
+                                "unitName": controller.unitName,
+                                "inspectionType": controller.inspectionType,
+                              },
+                            );
                           },
                           width: 115.px,
                           height: 44.px,
@@ -257,7 +264,49 @@ class InspectionInformationScreen
                           textWeight: FontWeight.w600,
                           textSize: 16.px,
                           onTap: () {
-                            Get.toNamed(InspectionStandardsScreen.routes);
+                            controller
+                                .inspectionListController
+                                .inspectionReqModel
+                                .unit
+                                ?.id = controller.unitData.id;
+                            controller
+                                .inspectionListController
+                                .inspectionReqModel
+                                .unit
+                                ?.id = controller.unitData.id;
+                            controller
+                                    .inspectionListController
+                                    .inspectionReqModel
+                                    .unit
+                                    ?.numberOfBathrooms =
+                                int.parse(controller.bathroomsController.text);
+                            controller.inspectionListController
+                                    .inspectionReqModel.unit?.numberOfBedrooms =
+                                int.parse(controller.bedroomsController.text);
+                            controller
+                                .inspectionListController
+                                .inspectionReqModel
+                                .unit
+                                ?.name = controller.unitName;
+                            controller
+                                .inspectionListController
+                                .inspectionReqModel
+                                .unit
+                                ?.address = controller.unitAddress;
+                            controller
+                                .inspectionListController
+                                .inspectionReqModel
+                                .unit
+                                ?.occupied = controller.unitData.occupied;
+
+                            Get.toNamed(
+                              InspectionStandardsScreen.routes,
+                              arguments: {
+                                "unitAddress": controller.unitAddress,
+                                "unitName": controller.unitName,
+                                "inspectionType": controller.inspectionType,
+                              },
+                            );
                           },
                           width: 171.px,
                           height: 44.px,

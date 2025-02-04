@@ -1,8 +1,10 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 
 enum ImageUploadStatus { initial, uploading, success }
 
@@ -16,9 +18,23 @@ class NoShowController extends BaseController {
   var speechText = "".obs;
   DateTime? selectedDateTime;
   ImageUploadStatus imageUploadStatus = ImageUploadStatus.initial;
-
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
+  InspectionListController inspectionListController =
+      Get.find<InspectionListController>();
+
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+    }
+    super.onInit();
+  }
 
   void listen() async {
     var microphoneStatus = await Permission.microphone.request();

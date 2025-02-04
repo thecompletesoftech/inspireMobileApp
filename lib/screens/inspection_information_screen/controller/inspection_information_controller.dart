@@ -1,10 +1,8 @@
-import 'dart:convert';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
-import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 enum PropertyStatus { completed, scheduled }
 
@@ -18,6 +16,34 @@ class InspectionInformationController extends BaseController {
   SpeechToText speechToText = SpeechToText();
   var isListening = false.obs;
   var speechText = "".obs;
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
+  String timeFrame = '';
+  DateTime? scheduleDate;
+  Units unitData = Units();
+  InspectionListController inspectionListController =
+      Get.find<InspectionListController>();
+
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+      timeFrame = Get.arguments['timeFrame'];
+      scheduleDate = Get.arguments['scheduleDate'];
+    }
+
+    if (Get.arguments['unitData'] != null) {
+      unitData = Get.arguments['unitData'];
+      bedroomsController.text = unitData.numberOfBedrooms.toString();
+      bathroomsController.text = unitData.numberOfBathrooms == null
+          ? (0).toString()
+          : unitData.numberOfBathrooms.toString();
+    }
+    super.onInit();
+  }
 
   void listen() async {
     var microphoneStatus = await Permission.microphone.request();

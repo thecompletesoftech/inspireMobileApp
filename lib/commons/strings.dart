@@ -238,4 +238,6 @@ class Strings {
   static String unitAddress = "Unit Address*";
   static String landlordName = "Landlord Name*";
   static String inspectionType = "Inspection Type*";
+  static String disability = "Disability";
+  static String other = "Other";
 }

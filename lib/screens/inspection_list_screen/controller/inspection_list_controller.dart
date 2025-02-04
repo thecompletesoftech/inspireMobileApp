@@ -3,9 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
-import 'package:public_housing/screens/inspection_list_screen/model/daily_schedules_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/repository/inspection_list_repository.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
+import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 enum PropertyStatus { completed, scheduled }
@@ -25,12 +27,26 @@ class InspectionListController extends BaseController {
   PickerDateRange? dateRange;
   InspectionListRepository inspectionListRepository =
       InspectionListRepository();
-  List<ScheduleInspections> scheduleMainDataList = [];
+  List<ScheduleInspection> scheduleMainDataList = [];
   List<DataSorting> scheduleDataList = [];
   ApiResponseStatus apiResponseStatus = ApiResponseStatus.initial;
   int itemsPerPage = 30;
   int page = 1;
   bool hasMore = true;
+  InspectionReqModel inspectionReqModel = InspectionReqModel(
+    inspection: Inspection(
+      specialAmenities: SpecialAmenities(
+        bath: Amenities(),
+        disabledAccessibility: Amenities(),
+        kitchen: Amenities(),
+        livingRoom: Amenities(),
+        otherRoomsUsedForLiving: Amenities(),
+        overallCharacteristics: Amenities(),
+      ),
+    ),
+    unit: Unit(),
+    deficiencyInspections: [],
+  );
 
   @override
   void onInit() {
@@ -208,6 +224,25 @@ class InspectionListController extends BaseController {
     });
   }
 
+  ScheduleInspectionUnit filterData(
+      {required ScheduleInspection scheduleInspection}) {
+    ScheduleInspectionUnit unitData = ScheduleInspectionUnit();
+    if (scheduleInspection.scheduleInspectionBuildings!.isNotEmpty) {
+      scheduleInspection.scheduleInspectionBuildings?.forEach(
+        (building) {
+          if (building.scheduleInspectionUnits!.isNotEmpty) {
+            building.scheduleInspectionUnits?.forEach(
+              (unit) {
+                unitData = unit;
+              },
+            );
+          }
+        },
+      );
+    }
+    return unitData;
+  }
+
   actionPopUpItemSelected(int value) {
     ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar;
     String message;
@@ -261,7 +296,7 @@ class InspectionListController extends BaseController {
 
 class DataSorting {
   final String date;
-  final List<ScheduleInspections> scheduleDataList;
+  final List<ScheduleInspection> scheduleDataList;
   final String prefix;
 
   DataSorting({
