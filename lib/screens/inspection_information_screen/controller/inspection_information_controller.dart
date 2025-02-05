@@ -1,5 +1,4 @@
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,8 +21,6 @@ class InspectionInformationController extends BaseController {
   String timeFrame = '';
   DateTime? scheduleDate;
   Units unitData = Units();
-  InspectionListController inspectionListController =
-      Get.find<InspectionListController>();
 
   @override
   void onInit() {
@@ -37,9 +34,11 @@ class InspectionInformationController extends BaseController {
 
     if (Get.arguments['unitData'] != null) {
       unitData = Get.arguments['unitData'];
-      bedroomsController.text = unitData.numberOfBedrooms.toString();
+      bedroomsController.text = unitData.numberOfBedrooms == null
+          ? "0"
+          : unitData.numberOfBedrooms.toString();
       bathroomsController.text = unitData.numberOfBathrooms == null
-          ? (0).toString()
+          ? '0'
           : unitData.numberOfBathrooms.toString();
     }
     super.onInit();

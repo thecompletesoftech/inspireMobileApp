@@ -17,7 +17,7 @@ class DeficienciesInsideRepository {
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 
-  Future<Either<Failure, InspectionReqModel>> createInspection(
+  Future<Either<Failure, dynamic>> createInspection(
       {required InspectionReqModel inspectionModel}) async {
     var response = await _provider.createInspectionRequest(
         inspectionModel: inspectionModel);

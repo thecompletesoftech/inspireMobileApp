@@ -1,6 +1,10 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
+import 'package:public_housing/screens/no_show_screen/model/no_show_req_model.dart';
+import 'package:public_housing/screens/no_show_screen/repository/no_show_repository.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
@@ -23,8 +27,7 @@ class NoShowController extends BaseController {
   InspectionType inspectionType = InspectionType();
   DeficienciesInsideRepository deficienciesInsideRepository =
       DeficienciesInsideRepository();
-  InspectionListController inspectionListController =
-      Get.find<InspectionListController>();
+  NoShowRepository noShowRepository = NoShowRepository();
 
   @override
   void onInit() {
@@ -160,5 +163,45 @@ class NoShowController extends BaseController {
       }
       update();
     }
+  }
+
+  createInspection() async {
+    print("zdgkszdfgjnfkls ${inspectionReqModel}");
+
+    NoShowReqModel noShowReqModel =
+        NoShowReqModel(inspection: InspectionsData(), unit: Unit());
+
+    noShowReqModel.inspection?.inspectorId =
+        inspectionReqModel.inspection?.inspectorId;
+    noShowReqModel.inspection?.date = inspectionReqModel.inspection?.date;
+    noShowReqModel.inspection?.startTime =
+        inspectionReqModel.inspection?.startTime;
+    noShowReqModel.inspection?.endTime = inspectionReqModel.inspection?.endTime;
+    noShowReqModel.inspection?.comment = inspectionReqModel.inspection?.comment;
+    noShowReqModel.inspection?.inspectionStateId =
+        inspectionReqModel.inspection?.inspectionStateId;
+    noShowReqModel.inspection?.inspectionTypeId =
+        inspectionReqModel.inspection?.inspectionTypeId;
+    noShowReqModel.inspection?.noShowImage =
+        inspectionReqModel.inspection?.noShowImage;
+    noShowReqModel.inspection?.findingType =
+        inspectionReqModel.inspection?.findingType;
+    noShowReqModel.inspection?.result = inspectionReqModel.inspection?.result;
+    noShowReqModel.inspection?.scheduleInspectionId =
+        inspectionReqModel.inspection?.scheduleInspectionId;
+
+    noShowReqModel.unit = inspectionReqModel.unit;
+
+    var response =
+        await noShowRepository.noShowCreateInspection(dataReq: noShowReqModel);
+
+    response.fold(
+      (l) {},
+      (r) {
+        inspectionReqModel = InspectionReqModel();
+        Get.offAllNamed(InspectionListScreen.routes);
+      },
+    );
+    update();
   }
 }

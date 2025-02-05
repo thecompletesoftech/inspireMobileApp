@@ -26,8 +26,6 @@ class SignatureController extends BaseController {
       DeficienciesInsideRepository();
   String ownerSignature = '';
   String tenantSignature = '';
-  InspectionListController inspectionListController =
-      Get.find<InspectionListController>();
   String unitAddress = '';
   String unitName = '';
   InspectionType inspectionType = InspectionType();
@@ -43,8 +41,6 @@ class SignatureController extends BaseController {
   }
 
   imageUpload({required String imagePath, required String signType}) async {
-    tenantSignature = '';
-    ownerSignature = '';
     imageUploadStatus = ImageUploadStatus.uploading;
     update();
     var response =
@@ -65,18 +61,17 @@ class SignatureController extends BaseController {
   }
 
   createInspection() async {
-    inspectionListController.inspectionReqModel.inspection?.tenantSignature =
-        tenantSignature;
-    inspectionListController.inspectionReqModel.inspection?.landlordSignature =
-        ownerSignature;
-
+    inspectionReqModel.inspection?.tenantSignature = tenantSignature;
+    inspectionReqModel.inspection?.landlordSignature = ownerSignature;
     var response = await deficienciesInsideRepository.createInspection(
-        inspectionModel: inspectionListController.inspectionReqModel);
+        inspectionModel: inspectionReqModel);
 
     response.fold(
       (l) {},
       (r) {
-        inspectionListController.inspectionReqModel = InspectionReqModel();
+        tenantSignature = '';
+        ownerSignature = '';
+        inspectionReqModel = InspectionReqModel();
         Get.offAllNamed(InspectionListScreen.routes);
       },
     );

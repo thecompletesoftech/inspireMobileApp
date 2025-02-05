@@ -20,8 +20,6 @@ class InspectionUnitSummaryController extends BaseController {
   List<FilterModel> findingTypeList = [];
   List<FilterModel> resultsList = [];
   List<DeficiencyInspection> deficiencyInspections = [];
-  InspectionListController inspectionListController =
-      Get.find<InspectionListController>();
   String unitAddress = '';
   String unitName = '';
   InspectionType inspectionType = InspectionType();
@@ -94,8 +92,7 @@ class InspectionUnitSummaryController extends BaseController {
         ));
       });
     });
-    inspectionListController.inspectionReqModel.deficiencyInspections =
-        deficiencyInspections;
+    inspectionReqModel.deficiencyInspections = deficiencyInspections;
     update();
   }
 
@@ -120,8 +117,7 @@ class InspectionUnitSummaryController extends BaseController {
 
   void actionFindingType(value) {
     selectFindingTypeController.text = value.title.toString();
-    inspectionListController.inspectionReqModel.inspection?.findingType =
-        value.id;
+    inspectionReqModel.inspection?.findingType = value.id;
     update();
   }
 

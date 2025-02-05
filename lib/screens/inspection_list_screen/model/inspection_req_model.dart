@@ -105,9 +105,6 @@ class Inspection {
   String? comment;
   String? inspectionStateId;
   String? inspectionTypeId;
-  String? generalPhysicalCondition;
-  String? unitHouseKeeping;
-  String? generalNotes;
   String? noShowImage;
   String? tenantSignature;
   String? landlordSignature;
@@ -124,9 +121,6 @@ class Inspection {
     this.comment,
     this.inspectionStateId,
     this.inspectionTypeId,
-    this.generalPhysicalCondition,
-    this.unitHouseKeeping,
-    this.generalNotes,
     this.noShowImage,
     this.tenantSignature,
     this.landlordSignature,
@@ -144,9 +138,6 @@ class Inspection {
         comment: json["comment"],
         inspectionStateId: json["inspection_state_id"],
         inspectionTypeId: json["inspection_type_id"],
-        generalPhysicalCondition: json["general_physical_condition"],
-        unitHouseKeeping: json["unit_house_keeping"],
-        generalNotes: json["general_notes"],
         noShowImage: json["no_show_image"],
         tenantSignature: json["tenant_signature"],
         landlordSignature: json["landlord_signature"],
@@ -167,9 +158,6 @@ class Inspection {
         "comment": comment,
         "inspection_state_id": inspectionStateId,
         "inspection_type_id": inspectionTypeId,
-        "general_physical_condition": generalPhysicalCondition,
-        "unit_house_keeping": unitHouseKeeping,
-        "general_notes": generalNotes,
         "no_show_image": noShowImage,
         "tenant_signature": tenantSignature,
         "landlord_signature": landlordSignature,

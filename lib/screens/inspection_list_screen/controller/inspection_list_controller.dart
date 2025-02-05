@@ -14,6 +14,22 @@ enum PropertyStatus { completed, scheduled }
 
 enum ApiResponseStatus { initial, loading, success, failure }
 
+InspectionReqModel inspectionReqModel = InspectionReqModel(
+  inspection: Inspection(
+    specialAmenities: SpecialAmenities(
+      bath: Amenities(),
+      disabledAccessibility: Amenities(),
+      kitchen: Amenities(),
+      livingRoom: Amenities(),
+      otherRoomsUsedForLiving: Amenities(),
+      overallCharacteristics: Amenities(),
+    ),
+  ),
+  unit: Unit(),
+  deficiencyInspections: [],
+);
+
+
 class InspectionListController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   PropertyStatus status = PropertyStatus.scheduled;
@@ -33,20 +49,6 @@ class InspectionListController extends BaseController {
   int itemsPerPage = 30;
   int page = 1;
   bool hasMore = true;
-  InspectionReqModel inspectionReqModel = InspectionReqModel(
-    inspection: Inspection(
-      specialAmenities: SpecialAmenities(
-        bath: Amenities(),
-        disabledAccessibility: Amenities(),
-        kitchen: Amenities(),
-        livingRoom: Amenities(),
-        otherRoomsUsedForLiving: Amenities(),
-        overallCharacteristics: Amenities(),
-      ),
-    ),
-    unit: Unit(),
-    deficiencyInspections: [],
-  );
 
   @override
   void onInit() {

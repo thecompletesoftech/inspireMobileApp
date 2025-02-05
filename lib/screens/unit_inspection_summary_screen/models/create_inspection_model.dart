@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+
 CreateInspectionModel createInspectionModelFromJson(String str) =>
     CreateInspectionModel.fromJson(json.decode(str));
 
@@ -444,19 +446,6 @@ class InspectionState {
       {"id": id, "state": state, "description": description};
 }
 
-class InspectionType {
-  int? id;
-  String? type;
-  dynamic description;
-
-  InspectionType({this.id, this.type, this.description});
-
-  factory InspectionType.fromJson(Map<String, dynamic> json) => InspectionType(
-      id: json["id"], type: json["type"], description: json["description"]);
-
-  Map<String, dynamic> toJson() =>
-      {"id": id, "type": type, "description": description};
-}
 
 class Inspector {
   int? id;

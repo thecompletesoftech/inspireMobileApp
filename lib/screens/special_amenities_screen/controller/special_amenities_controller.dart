@@ -13,8 +13,6 @@ class SpecialAmenitiesController extends BaseController {
   List<SpecialAmenitiesResModel> specialAmenitiesDataList = [];
   List<SpecialAmenitiesReqModel> specialAmenitiesReq = [];
   TextEditingController disabilityController = TextEditingController();
-  InspectionListController inspectionListController =
-      Get.find<InspectionListController>();
   String unitAddress = '';
   String unitName = '';
   InspectionType inspectionType = InspectionType();
@@ -104,7 +102,7 @@ class SpecialAmenitiesController extends BaseController {
     }
 
     if (specialAmenitiesReq.isNotEmpty) {
-      inspectionListController.inspectionReqModel.inspection?.specialAmenities =
+      inspectionReqModel.inspection?.specialAmenities =
           specialAmenitiesReq.first.specialAmenities;
     }
 

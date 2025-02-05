@@ -1,15 +1,11 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/building_list_screen/widget/common_building_list_container.dart';
 import 'package:public_housing/screens/inspection_information_screen/screen/inspection_information_screen.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/widget/common_inspection_list_container.dart';
-import 'package:public_housing/screens/building_inspection_screen/screen/building_inspection_screen.dart';
 import 'package:public_housing/screens/manual_unit_inspection_screen/screen/manual_unit_inspection_screen.dart';
-import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
-import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class InspectionListScreen extends GetView<InspectionListController> {
@@ -411,38 +407,28 @@ class InspectionListScreen extends GetView<InspectionListController> {
                                                 date:
                                                     '${DateFormat("MM/dd/yyyy").format(propertyData.scheduleDate!)}',
                                                 onTap: () {
-                                                  controller
-                                                          .inspectionReqModel
-                                                          .inspection
+                                                  inspectionReqModel.inspection
                                                           ?.inspectorId =
                                                       propertyData.inspector?.id
                                                           .toString();
-                                                  controller.inspectionReqModel
+                                                  inspectionReqModel
                                                           .inspection?.date =
                                                       propertyData.scheduleDate;
-                                                  controller
-                                                          .inspectionReqModel
-                                                          .inspection
+                                                  inspectionReqModel.inspection
                                                           ?.startTime =
                                                       propertyData.startTime;
-                                                  controller.inspectionReqModel
+                                                  inspectionReqModel
                                                           .inspection?.endTime =
                                                       propertyData.endTime;
-                                                  controller
-                                                          .inspectionReqModel
-                                                          .inspection
+                                                  inspectionReqModel.inspection
                                                           ?.inspectionTypeId =
                                                       propertyData
                                                           .inspectionType?.id
                                                           .toString();
-                                                  controller
-                                                          .inspectionReqModel
-                                                          .inspection
+                                                  inspectionReqModel.inspection
                                                           ?.scheduleInspectionId =
                                                       propertyData.id;
-                                                  controller
-                                                      .inspectionReqModel
-                                                      .inspection
+                                                  inspectionReqModel.inspection
                                                       ?.inspectionStateId = '1';
 
                                                   Get.toNamed(

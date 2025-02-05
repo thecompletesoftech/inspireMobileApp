@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/signatures_screen/screen/signature_screen.dart';
 import 'package:public_housing/screens/building_inspection_summary/screen/building_inspection_summary_screen.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/binding/inspection_unit_summary_binding.dart';
@@ -138,11 +139,8 @@ class InspectionUnitSummaryScreen
                                 onChanged: (value) {
                                   controller.selectedItem = value.toString();
                                   if (value != null) {
-                                    controller
-                                        .inspectionListController
-                                        .inspectionReqModel
-                                        .inspection
-                                        ?.result = option.id;
+                                    inspectionReqModel.inspection?.result =
+                                        option.id;
                                   }
                                   controller.update();
                                 },
@@ -299,6 +297,18 @@ class InspectionUnitSummaryScreen
                               width: 130.px,
                               title: Strings.signatures,
                               onTap: () async {
+                                if (controller.bathroomsController.text !=
+                                    'null') {
+                                  inspectionReqModel.unit?.numberOfBathrooms =
+                                      int.parse(
+                                          controller.bathroomsController.text);
+                                }
+                                if (controller.bedroomsController.text !=
+                                    'null') {
+                                  inspectionReqModel.unit?.numberOfBedrooms =
+                                      int.parse(
+                                          controller.bedroomsController.text);
+                                }
                                 await controller.createInspection();
                                 Get.toNamed(SignatureScreen.routes, arguments: {
                                   "unitAddress": controller.unitAddress,
