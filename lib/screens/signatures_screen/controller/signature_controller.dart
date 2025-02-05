@@ -1,3 +1,7 @@
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -22,8 +26,25 @@ class SignatureController extends BaseController {
       DeficienciesInsideRepository();
   String ownerSignature = '';
   String tenantSignature = '';
+  InspectionListController inspectionListController =
+      Get.find<InspectionListController>();
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
+
+  @override
+  void onInit() {
+    if (Get.arguments != null) {
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+    }
+    super.onInit();
+  }
 
   imageUpload({required String imagePath, required String signType}) async {
+    tenantSignature = '';
+    ownerSignature = '';
     imageUploadStatus = ImageUploadStatus.uploading;
     update();
     var response =
@@ -32,9 +53,33 @@ class SignatureController extends BaseController {
       imageUploadStatus = ImageUploadStatus.initial;
       return null;
     }, (r) {
+      if (signType == "tenant") {
+        tenantSignature = r.images?.image ?? "";
+      }
+      if (signType == "owner") {
+        ownerSignature = r.images?.image ?? "";
+      }
       imageUploadStatus = ImageUploadStatus.success;
     });
+    update();
+  }
 
+  createInspection() async {
+    inspectionListController.inspectionReqModel.inspection?.tenantSignature =
+        tenantSignature;
+    inspectionListController.inspectionReqModel.inspection?.landlordSignature =
+        ownerSignature;
+
+    var response = await deficienciesInsideRepository.createInspection(
+        inspectionModel: inspectionListController.inspectionReqModel);
+
+    response.fold(
+      (l) {},
+      (r) {
+        inspectionListController.inspectionReqModel = InspectionReqModel();
+        Get.offAllNamed(InspectionListScreen.routes);
+      },
+    );
     update();
   }
 }

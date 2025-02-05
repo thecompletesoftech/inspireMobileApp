@@ -14,6 +14,7 @@ class InspectionStandardsController extends BaseController {
   String unitAddress = '';
   String unitName = '';
   InspectionType inspectionType = InspectionType();
+  Units unitData = Units();
 
   void onInit() {
     super.onInit();
@@ -21,6 +22,9 @@ class InspectionStandardsController extends BaseController {
       unitAddress = Get.arguments['unitAddress'];
       unitName = Get.arguments['unitName'];
       inspectionType = Get.arguments['inspectionType'];
+    }
+    if (Get.arguments['unitData'] != null) {
+      unitData = Get.arguments['unitData'];
     }
     () async {
       searchList.clear();

@@ -14,6 +14,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/finding_type_res_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/result_res_model.dart';
@@ -303,6 +304,26 @@ class ApiProviders extends BaseController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(DailySchedulesResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, dynamic>> createInspectionRequest(
+      {required InspectionReqModel inspectionModel}) async {
+    try {
+      Response response = await apiBaseHelperImplementation.post(
+        endPoint: Constants.section8Create,
+        body: inspectionModel.toJson(),
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}'
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(true);
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

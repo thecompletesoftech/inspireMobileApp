@@ -1,7 +1,6 @@
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/special_amenities_screen/binding/special_amenities_binding.dart';
 import 'package:public_housing/screens/special_amenities_screen/controller/special_amenities_controller.dart';
-import 'package:public_housing/screens/inspection_unit_summary_screen/screen/inspection_unit_summary_screen.dart';
 
 class SpecialAmenitiesScreen extends GetView<SpecialAmenitiesBinding> {
   const SpecialAmenitiesScreen({Key? key}) : super(key: key);

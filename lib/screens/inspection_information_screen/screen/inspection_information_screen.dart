@@ -2,7 +2,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_information_screen/controller/inspection_information_controller.dart';
-import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
 import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/unit_list_screen/widget/common_unit_list_container.dart';
@@ -305,6 +304,7 @@ class InspectionInformationScreen
                                 "unitAddress": controller.unitAddress,
                                 "unitName": controller.unitName,
                                 "inspectionType": controller.inspectionType,
+                                "unitData": controller.unitData,
                               },
                             );
                           },

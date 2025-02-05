@@ -2,12 +2,14 @@ import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/model/filter_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/repository/inspection_unit_summary_repository.dart';
 
 class InspectionUnitSummaryController extends BaseController {
   bool isSelected = false;
   var selectedItem = "null";
-  var selectFindingList = [];
+  List<FilterModel> selectFindingList = [];
   List<DeficiencyArea> deficiencyArea = [];
   TextEditingController bedroomsController = TextEditingController();
   TextEditingController bathroomsController = TextEditingController();
@@ -15,17 +17,31 @@ class InspectionUnitSummaryController extends BaseController {
   TextEditingController selectFindingTypeController = TextEditingController();
   InspectionUnitSummaryRepository inspectionUnitSummaryRepository =
       InspectionUnitSummaryRepository();
-  List<List<dynamic>> findingTypeList = [];
-  List<List<dynamic>> resultsList = [];
+  List<FilterModel> findingTypeList = [];
+  List<FilterModel> resultsList = [];
   List<DeficiencyInspection> deficiencyInspections = [];
   InspectionListController inspectionListController =
       Get.find<InspectionListController>();
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
+  Units unitData = Units();
 
   @override
   void onInit() {
     deficiencyArea = [];
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+    }
+    if (Get.arguments['unitData'] != null) {
+      unitData = Get.arguments['unitData'];
+      bedroomsController.text = unitData.numberOfBedrooms.toString();
+      bathroomsController.text = unitData.numberOfBathrooms == null
+          ? (0).toString()
+          : unitData.numberOfBathrooms.toString();
     }
     getResults();
     getFindingType();
@@ -39,7 +55,8 @@ class InspectionUnitSummaryController extends BaseController {
     }, (r) {
       if (r.findingTypes!.isNotEmpty) {
         r.findingTypes?.forEach((element) {
-          findingTypeList.add(element);
+          findingTypeList
+              .add(FilterModel(id: element.first, title: element.last));
         });
       }
     });
@@ -53,7 +70,7 @@ class InspectionUnitSummaryController extends BaseController {
     }, (r) {
       if (r.results!.isNotEmpty) {
         r.results?.forEach((element) {
-          resultsList.add(element);
+          resultsList.add(FilterModel(id: element.first, title: element.last));
         });
       }
     });
@@ -82,16 +99,16 @@ class InspectionUnitSummaryController extends BaseController {
     update();
   }
 
-  searchBuildingType({required String searchText}) {
+  searchFindingType({required String searchText}) {
     selectFindingList.clear();
     if (selectFindingTypeController.text.length > 0) {
       for (int i = 0; i < findingTypeList.length; i++) {
         if (findingTypeList[i]
-            .last
+            .title
             .toString()
             .toLowerCase()
             .contains(searchText.toString().toLowerCase())) {
-          selectFindingList.add(findingTypeList[i].last);
+          selectFindingList.add(findingTypeList[i]);
           update();
         }
       }
@@ -102,9 +119,9 @@ class InspectionUnitSummaryController extends BaseController {
   }
 
   void actionFindingType(value) {
-    selectFindingTypeController.text = value.last.toString();
+    selectFindingTypeController.text = value.title.toString();
     inspectionListController.inspectionReqModel.inspection?.findingType =
-        value.first;
+        value.id;
     update();
   }
 

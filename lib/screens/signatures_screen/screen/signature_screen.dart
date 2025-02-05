@@ -23,7 +23,7 @@ class SignatureScreen extends GetView<SignatureController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MyTextView(
-                      '2113 Kendall Street - Fernando Devries',
+                      controller.unitAddress,
                       textStyleNew: MyTextStyle(
                         textColor: controller.appColors.appColor,
                         textWeight: FontWeight.w600,
@@ -31,25 +31,22 @@ class SignatureScreen extends GetView<SignatureController> {
                         textSize: 20.px,
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 8.px, horizontal: 16.px),
-                      decoration: BoxDecoration(
-                          color: AppColors().white,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: MyTextView(
-                        'Annual Inspection',
-                        textStyleNew: MyTextStyle(
-                            textSize: 14.px,
-                            textColor:
-                                'Annual Inspection' == 'Annual Inspection'
-                                    ? AppColors().textGreen
-                                    : 'Re-Inspection' == 'Re-Inspection'
-                                        ? AppColors().textPink
-                                        : AppColors().black,
-                            textWeight: FontWeight.w500),
-                      ),
-                    ).paddingOnly(left: 24.px),
+                    controller.inspectionType.type != null
+                        ? Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8.px, horizontal: 16.px),
+                            decoration: BoxDecoration(
+                                color: AppColors().white,
+                                borderRadius: BorderRadius.circular(100)),
+                            child: MyTextView(
+                              controller.inspectionType.type ?? "",
+                              textStyleNew: MyTextStyle(
+                                  textSize: 14.px,
+                                  textColor: AppColors().black,
+                                  textWeight: FontWeight.w500),
+                            ),
+                          ).paddingOnly(left: 24.px)
+                        : SizedBox(),
                   ],
                 ).paddingOnly(top: 32.px),
                 MyTextView(
@@ -194,6 +191,8 @@ class SignatureScreen extends GetView<SignatureController> {
                                 onTap: () {
                                   controller.tenantSignPadKey.currentState!
                                       .clear();
+                                  controller.tenantSignature = '';
+                                  controller.ownerSignature = '';
                                   controller.tenantSign = false;
                                   controller.isTenantBlank = true;
                                   controller.update();
@@ -399,6 +398,7 @@ class SignatureScreen extends GetView<SignatureController> {
                                               controller.update();
                                             }
                                           }
+                                          controller.createInspection();
                                         } else {
                                           printError(
                                               "file=> error sign not found");
@@ -423,6 +423,7 @@ class SignatureScreen extends GetView<SignatureController> {
                                               controller.isTenantBlank = true;
                                               controller.update();
                                             }
+                                            controller.createInspection();
                                           } else {
                                             var ownerSign = await controller
                                                 .ownerSignController
@@ -444,6 +445,7 @@ class SignatureScreen extends GetView<SignatureController> {
                                               controller.isOwnerBlank = true;
                                               controller.update();
                                             }
+                                            controller.createInspection();
                                           }
                                         }
                                       } catch (e) {

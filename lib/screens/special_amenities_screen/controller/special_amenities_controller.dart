@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+import 'package:public_housing/screens/inspection_unit_summary_screen/screen/inspection_unit_summary_screen.dart';
 import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_res_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
@@ -10,12 +13,24 @@ class SpecialAmenitiesController extends BaseController {
   List<SpecialAmenitiesResModel> specialAmenitiesDataList = [];
   List<SpecialAmenitiesReqModel> specialAmenitiesReq = [];
   TextEditingController disabilityController = TextEditingController();
+  InspectionListController inspectionListController =
+      Get.find<InspectionListController>();
+  String unitAddress = '';
+  String unitName = '';
+  InspectionType inspectionType = InspectionType();
+  Units unitData = Units();
 
   @override
   void onInit() {
     deficiencyArea = [];
     if (Get.arguments != null) {
       deficiencyArea = Get.arguments['deficiencyArea'];
+      unitAddress = Get.arguments['unitAddress'];
+      unitName = Get.arguments['unitName'];
+      inspectionType = Get.arguments['inspectionType'];
+    }
+    if (Get.arguments['unitData'] != null) {
+      unitData = Get.arguments['unitData'];
     }
     getSpecialAmenities();
     super.onInit();
@@ -40,50 +55,66 @@ class SpecialAmenitiesController extends BaseController {
     specialAmenitiesReq.clear();
 
     List<String> amenities = [];
+    SpecialAmenities singleSpecialAmenities = SpecialAmenities();
 
     specialAmenitiesDataList.forEach(
       (element) {
         element.amenitiesList?.forEach(
           (e) {
-            if ((e.isSelected ?? false) && e.title != null) {
-              amenities.add(e.title ?? "");
-            }
             if (e.titleType == 'switch') {
               e.title = disabilityController.text;
             }
+            if ((e.isSelected ?? false) && e.title != null) {
+              amenities.add(e.title ?? "");
+            }
           },
         );
-        specialAmenitiesReq.add(
-          SpecialAmenitiesReqModel(
-            specialAmenities: SpecialAmenities(
-              livingRoom: element.type == 'Living Room'
-                  ? Amenities(name: element.type, amenities: amenities)
-                  : null,
-              overallCharacteristics: element.type == 'Overall Characteristics'
-                  ? Amenities(name: element.type, amenities: amenities)
-                  : null,
-              otherRoomsUsedForLiving:
-                  element.type == 'Other rooms used for living'
-                      ? Amenities(name: element.type, amenities: amenities)
-                      : null,
-              kitchen: element.type == 'Kitchen'
-                  ? Amenities(name: element.type, amenities: amenities)
-                  : null,
-              disabledAccessibility: element.type == 'Disabled Accessibility'
-                  ? Amenities(name: element.type, amenities: amenities)
-                  : null,
-              bath: element.type == 'Bath'
-                  ? Amenities(name: element.type, amenities: amenities)
-                  : null,
-            ),
-          ),
-        );
+        if (amenities.isNotEmpty) {
+          if (element.type == 'Living Room') {
+            singleSpecialAmenities.livingRoom =
+                Amenities(name: element.type, amenities: amenities);
+          } else if (element.type == 'Overall Characteristics') {
+            singleSpecialAmenities.overallCharacteristics =
+                Amenities(name: element.type, amenities: amenities);
+          } else if (element.type == 'Other rooms used for living') {
+            singleSpecialAmenities.otherRoomsUsedForLiving =
+                Amenities(name: element.type, amenities: amenities);
+          } else if (element.type == 'Kitchen') {
+            singleSpecialAmenities.kitchen =
+                Amenities(name: element.type, amenities: amenities);
+          } else if (element.type == 'Disabled Accessibility') {
+            singleSpecialAmenities.disabledAccessibility =
+                Amenities(name: element.type, amenities: amenities);
+          } else if (element.type == 'Bath') {
+            singleSpecialAmenities.bath =
+                Amenities(name: element.type, amenities: amenities);
+          }
+        }
         amenities = [];
       },
     );
-    print("specialAmenities--->${specialAmenitiesReq}");
-    // Get.toNamed(InspectionUnitSummaryScreen.routes,
-    //     arguments: {"deficiencyArea": deficiencyArea});
+    if (singleSpecialAmenities.livingRoom != null ||
+        singleSpecialAmenities.overallCharacteristics != null ||
+        singleSpecialAmenities.otherRoomsUsedForLiving != null ||
+        singleSpecialAmenities.kitchen != null ||
+        singleSpecialAmenities.disabledAccessibility != null ||
+        singleSpecialAmenities.bath != null) {
+      specialAmenitiesReq.add(
+          SpecialAmenitiesReqModel(specialAmenities: singleSpecialAmenities));
+    }
+
+    if (specialAmenitiesReq.isNotEmpty) {
+      inspectionListController.inspectionReqModel.inspection?.specialAmenities =
+          specialAmenitiesReq.first.specialAmenities;
+    }
+
+    Get.toNamed(InspectionUnitSummaryScreen.routes, arguments: {
+      "deficiencyArea": deficiencyArea,
+      "unitAddress": unitAddress,
+      "unitName": unitName,
+      "inspectionType": inspectionType,
+      "unitData": unitData,
+    });
   }
 }
 

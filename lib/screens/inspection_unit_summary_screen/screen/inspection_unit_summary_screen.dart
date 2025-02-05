@@ -42,7 +42,7 @@ class InspectionUnitSummaryScreen
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              '2113 Kendall Street - Fernando Devries',
+                              controller.unitAddress,
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,
@@ -50,25 +50,23 @@ class InspectionUnitSummaryScreen
                                 textSize: 20.px,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 8.px, horizontal: 16.px),
-                              decoration: BoxDecoration(
-                                  color: AppColors().white,
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: MyTextView(
-                                'Annual Inspection',
-                                textStyleNew: MyTextStyle(
-                                    textSize: 14.px,
-                                    textColor: 'Annual Inspection' ==
-                                            'Annual Inspection'
-                                        ? AppColors().textGreen
-                                        : 'Re-Inspection' == 'Re-Inspection'
-                                            ? AppColors().textPink
-                                            : AppColors().black,
-                                    textWeight: FontWeight.w500),
-                              ),
-                            ).paddingOnly(left: 24.px),
+                            controller.inspectionType.type != null
+                                ? Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8.px, horizontal: 16.px),
+                                    decoration: BoxDecoration(
+                                        color: AppColors().white,
+                                        borderRadius:
+                                            BorderRadius.circular(100)),
+                                    child: MyTextView(
+                                      controller.inspectionType.type ?? "",
+                                      textStyleNew: MyTextStyle(
+                                          textSize: 14.px,
+                                          textColor: AppColors().black,
+                                          textWeight: FontWeight.w500),
+                                    ),
+                                  ).paddingOnly(left: 24.px)
+                                : SizedBox(),
                           ],
                         ).paddingOnly(top: 32.px),
                         Center(
@@ -113,7 +111,7 @@ class InspectionUnitSummaryScreen
                               var option = controller.resultsList[index];
                               return RadioListTile(
                                 title: MyTextView(
-                                  option.last,
+                                  option.title,
                                   textStyleNew: MyTextStyle(
                                     textColor: controller.appColors.black,
                                     textSize: 16.px,
@@ -122,18 +120,18 @@ class InspectionUnitSummaryScreen
                                   ),
                                 ),
                                 toggleable: true,
-                                value: option.last.toLowerCase(),
+                                value: option.title.toLowerCase(),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 16.px),
                                 groupValue: controller.selectedItem,
                                 controlAffinity:
                                     ListTileControlAffinity.trailing,
                                 activeColor: controller.selectedItem !=
-                                        option.last.toLowerCase()
+                                        option.title.toLowerCase()
                                     ? controller.appColors.white
                                     : controller.appColors.textPink,
                                 tileColor: controller.selectedItem !=
-                                        option.last.toLowerCase()
+                                        option.title.toLowerCase()
                                     ? controller.appColors.white
                                     : controller.appColors.grey
                                         .withOpacity(0.2),
@@ -144,7 +142,7 @@ class InspectionUnitSummaryScreen
                                         .inspectionListController
                                         .inspectionReqModel
                                         .inspection
-                                        ?.result = option.first;
+                                        ?.result = option.id;
                                   }
                                   controller.update();
                                 },
@@ -192,7 +190,7 @@ class InspectionUnitSummaryScreen
                                         return null;
                                       }
                                     : (search) async {
-                                        await controller.searchBuildingType(
+                                        await controller.searchFindingType(
                                             searchText: search);
                                         controller.update();
                                         return controller.selectFindingList;
@@ -221,10 +219,10 @@ class InspectionUnitSummaryScreen
                                     labelText: Strings.selectFindingType,
                                   );
                                 },
-                                itemBuilder: (context, dynamic i) {
+                                itemBuilder: (context, i) {
                                   return ListTile(
                                     title: MyTextView(
-                                      i.last.toString(),
+                                      i.title.toString(),
                                       textStyleNew: MyTextStyle(
                                         textColor: controller.appColors.black,
                                         textWeight: FontWeight.w400,
@@ -300,8 +298,13 @@ class InspectionUnitSummaryScreen
                               height: 44.px,
                               width: 130.px,
                               title: Strings.signatures,
-                              onTap: () {
-                                Get.toNamed(SignatureScreen.routes);
+                              onTap: () async {
+                                await controller.createInspection();
+                                Get.toNamed(SignatureScreen.routes, arguments: {
+                                  "unitAddress": controller.unitAddress,
+                                  "unitName": controller.unitName,
+                                  "inspectionType": controller.inspectionType,
+                                });
                               },
                               textWeight: FontWeight.w600,
                               textSize: 16.px,

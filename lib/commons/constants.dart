@@ -82,6 +82,7 @@ class Constants {
   static const String dailyInspection = "/inspection/api/collection";
   static const String findingType = "/inspection/api/finding_types";
   static const String results = "/inspection/api/results";
+  static const String section8Create = "/inspection/api/section8/create/";
 
   static const String signUp = "user/signUp";
 
