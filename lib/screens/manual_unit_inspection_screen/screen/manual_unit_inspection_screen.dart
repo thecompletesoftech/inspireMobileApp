@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:public_housing/commons/all.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/no_show_screen/screen/no_show_screen.dart';
 import 'package:public_housing/screens/inspection_standards_screen/screen/inspection_standards_screen.dart';
 import 'package:public_housing/screens/manual_unit_inspection_screen/controller/manual_unit_inspection_controller.dart';
@@ -199,11 +200,11 @@ class ManualUnitInspectionScreen
                                             }
                                           : (search) async {
                                               await controller
-                                                  .searchBuildingType(
+                                                  .searchInspectionType(
                                                       searchText: search);
                                               controller.update();
                                               return controller
-                                                  .selectFindingList;
+                                                  .selectInspectionTypeList;
                                             },
                                       builder: (context, c, focusNode) {
                                         return CommonTextField(
@@ -232,7 +233,7 @@ class ManualUnitInspectionScreen
                                       itemBuilder: (context, dynamic i) {
                                         return ListTile(
                                           title: MyTextView(
-                                            i.toString(),
+                                            i.type.toString(),
                                             textStyleNew: MyTextStyle(
                                               textColor:
                                                   controller.appColors.black,
@@ -349,7 +350,35 @@ class ManualUnitInspectionScreen
                           textWeight: FontWeight.w600,
                           textSize: 16.px,
                           onTap: () {
-                            Get.toNamed(NoShowScreen.routes);
+                            inspectionReqModel.inspection?.date =
+                                DateTime.parse(
+                                    controller.inspectionDateController.text);
+                            inspectionReqModel.inspection?.inspectorId =
+                                controller.getStorageData
+                                    .readString(
+                                        controller.getStorageData.inspectorId)
+                                    .toString();
+                            inspectionReqModel.inspection?.inspectionTypeId =
+                                controller.inspectionType.id.toString();
+                            inspectionReqModel.unit?.occupied =
+                                controller.switchButton.value;
+                            inspectionReqModel.unit?.name =
+                                controller.tenantNameController.text;
+                            inspectionReqModel.unit?.address =
+                                controller.unitAddressController.text;
+                            inspectionReqModel.inspection?.inspectionStateId =
+                                '1';
+
+                            Get.toNamed(
+                              NoShowScreen.routes,
+                              arguments: {
+                                "unitAddress":
+                                    controller.unitAddressController.text,
+                                "unitName":
+                                    controller.tenantNameController.text,
+                                "inspectionType": controller.inspectionType,
+                              },
+                            );
                           },
                           width: 115.px,
                           border: Border.all(
@@ -369,7 +398,35 @@ class ManualUnitInspectionScreen
                           textWeight: FontWeight.w600,
                           textSize: 16.px,
                           onTap: () {
-                            Get.toNamed(InspectionStandardsScreen.routes);
+                            if (controller.getStartInspection()) {
+                              inspectionReqModel.inspection?.date =
+                                  DateTime.parse(
+                                      controller.inspectionDateController.text);
+                              inspectionReqModel.inspection?.inspectorId =
+                                  controller.getStorageData
+                                      .readString(
+                                          controller.getStorageData.inspectorId)
+                                      .toString();
+                              inspectionReqModel.inspection?.inspectionTypeId =
+                                  controller.inspectionType.id.toString();
+                              inspectionReqModel.unit?.occupied =
+                                  controller.switchButton.value;
+                              inspectionReqModel.unit?.name =
+                                  controller.tenantNameController.text;
+                              inspectionReqModel.unit?.address =
+                                  controller.unitAddressController.text;
+                              inspectionReqModel.inspection?.inspectionStateId =
+                                  '1';
+
+                              Get.toNamed(InspectionStandardsScreen.routes,
+                                  arguments: {
+                                    "unitAddress":
+                                        controller.unitAddressController.text,
+                                    "unitName":
+                                        controller.tenantNameController.text,
+                                    "inspectionType": controller.inspectionType,
+                                  });
+                            }
                           },
                           width: 171.px,
                           height: 44.px,
