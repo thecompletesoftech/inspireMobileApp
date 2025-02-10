@@ -1,9 +1,8 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
-import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
-import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/no_show_screen/controller/no_show_controller.dart';
+import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 
 class NoShowScreen extends GetView<NoShowController> {
   const NoShowScreen({Key? key}) : super(key: key);

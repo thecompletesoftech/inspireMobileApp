@@ -185,7 +185,9 @@ class InspectionUnitSummaryController extends BaseController {
                         padding: EdgeInsets.symmetric(
                             horizontal: 24.px, vertical: 10.px),
                         radius: 100.px,
-                        onTap: () {},
+                        onTap: () {
+                          Get.back();
+                        },
                       ).paddingOnly(right: 8.px),
                       CommonButton(
                         title: Strings.completeInspection,
@@ -197,7 +199,9 @@ class InspectionUnitSummaryController extends BaseController {
                         padding: EdgeInsets.symmetric(
                             horizontal: 24.px, vertical: 10.px),
                         radius: 100.px,
-                        onTap: () {},
+                        onTap: () {
+                          Get.back();
+                        },
                       ),
                     ],
                   ).paddingOnly(top: 24.px, right: 24.px, bottom: 24.px),

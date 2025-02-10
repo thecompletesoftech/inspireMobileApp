@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:public_housing/api/provider/api_provider.dart';
 import 'package:public_housing/api/provider/status_objects.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/complete_inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 
 class InspectionListRepository {
@@ -21,6 +22,20 @@ class InspectionListRepository {
       itemsPerPage: itemsPerPage,
       endDate: endDate,
       startDate: startDate,
+    );
+    return response.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  Future<Either<Failure, CompleteInspectionResModel>>
+      getCompleteInspectionSchedules({
+    required int type,
+    required int page,
+    required int itemsPerPage,
+  }) async {
+    var response = await _provider.getCompleteInspectionSchedulesRequest(
+      type: type,
+      page: page,
+      itemsPerPage: itemsPerPage,
     );
     return response.fold((l) => Left(l), (r) => Right(r));
   }

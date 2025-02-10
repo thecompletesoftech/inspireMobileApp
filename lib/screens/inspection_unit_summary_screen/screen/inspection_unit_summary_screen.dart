@@ -43,7 +43,7 @@ class InspectionUnitSummaryScreen
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             MyTextView(
-                              controller.unitAddress,
+                              '${controller.unitAddress} - ${controller.unitName}',
                               textStyleNew: MyTextStyle(
                                 textColor: controller.appColors.appColor,
                                 textWeight: FontWeight.w600,
@@ -281,14 +281,23 @@ class InspectionUnitSummaryScreen
                               width: 182.px,
                               title: Strings.noOneIsPresent,
                               onTap: () {
-                                controller.noOnePresentDialog();
+                                if (controller.selectFindingTypeController.text
+                                    .isNotEmpty) {
+                                  controller.noOnePresentDialog();
+                                }
                               },
                               textWeight: FontWeight.w600,
                               textSize: 16.px,
                               color: controller.appColors.transparent,
-                              border:
-                                  Border.all(color: controller.appColors.black),
-                              textColor: controller.appColors.appColor,
+                              border: Border.all(
+                                  color: controller.selectFindingTypeController
+                                          .text.isNotEmpty
+                                      ? controller.appColors.appColor
+                                      : controller.appColors.border1),
+                              textColor: controller.selectFindingTypeController
+                                      .text.isNotEmpty
+                                  ? controller.appColors.appColor
+                                  : controller.appColors.border1,
                             ),
                             SizedBox(width: 24.px),
                             CommonButton(
@@ -297,31 +306,45 @@ class InspectionUnitSummaryScreen
                               width: 130.px,
                               title: Strings.signatures,
                               onTap: () async {
-                                if (controller.bathroomsController.text !=
-                                    'null') {
-                                  inspectionReqModel.unit?.numberOfBathrooms =
-                                      int.parse(
-                                          controller.bathroomsController.text);
+                                if (controller.selectFindingTypeController.text
+                                    .isNotEmpty) {
+                                  if (controller.bathroomsController.text !=
+                                      'null') {
+                                    inspectionReqModel.unit?.numberOfBathrooms =
+                                        int.parse(controller
+                                            .bathroomsController.text);
+                                  }
+                                  if (controller.bedroomsController.text !=
+                                      'null') {
+                                    inspectionReqModel.unit?.numberOfBedrooms =
+                                        int.parse(
+                                            controller.bedroomsController.text);
+                                  }
+                                  await controller.createInspection();
+                                  Get.toNamed(SignatureScreen.routes,
+                                      arguments: {
+                                        "unitAddress": controller.unitAddress,
+                                        "unitName": controller.unitName,
+                                        "inspectionType":
+                                            controller.inspectionType,
+                                      });
                                 }
-                                if (controller.bedroomsController.text !=
-                                    'null') {
-                                  inspectionReqModel.unit?.numberOfBedrooms =
-                                      int.parse(
-                                          controller.bedroomsController.text);
-                                }
-                                await controller.createInspection();
-                                Get.toNamed(SignatureScreen.routes, arguments: {
-                                  "unitAddress": controller.unitAddress,
-                                  "unitName": controller.unitName,
-                                  "inspectionType": controller.inspectionType,
-                                });
                               },
                               textWeight: FontWeight.w600,
                               textSize: 16.px,
-                              color: controller.appColors.appColor,
-                              border:
-                                  Border.all(color: controller.appColors.black),
-                              textColor: controller.appColors.white,
+                              color: controller.selectFindingTypeController.text
+                                      .isNotEmpty
+                                  ? controller.appColors.appColor
+                                  : controller.appColors.black.withOpacity(.12),
+                              border: Border.all(
+                                  color: controller.selectFindingTypeController
+                                          .text.isNotEmpty
+                                      ? controller.appColors.black
+                                      : controller.appColors.transparent),
+                              textColor: controller.selectFindingTypeController
+                                      .text.isNotEmpty
+                                  ? controller.appColors.white
+                                  : controller.appColors.border1,
                             ),
                           ],
                         ).paddingOnly(top: 48.px),

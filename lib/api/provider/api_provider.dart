@@ -14,6 +14,7 @@ import 'package:public_housing/screens/building_inspection_screen/models/propert
 import 'package:public_housing/screens/building_inspection_summary/model/create_inspection_request_model.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/image_response_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/complete_inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/finding_type_res_model.dart';
@@ -408,6 +409,37 @@ class ApiProviders extends BaseController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(GetFindingTypeResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
+  Future<Either<Failure, CompleteInspectionResModel>>
+      getCompleteInspectionSchedulesRequest({
+    required int type,
+    required int page,
+    required int itemsPerPage,
+  }) async {
+    try {
+      Map<String, dynamic> queryParameter = {};
+      queryParameter = {
+        "type": type,
+        "page": page,
+        "items_per_page": itemsPerPage,
+      };
+
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.completeInspection,
+        queryParameter: queryParameter,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(CompleteInspectionResModel.fromJson(response.data));
       } else {
         return Left(Failure(errorMessage: response.statusMessage.toString()));
       }

@@ -2,6 +2,7 @@ import 'package:public_housing/screens/inspection_list_screen/controller/inspect
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
+import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -67,11 +68,26 @@ class SignatureController extends BaseController {
         inspectionModel: inspectionReqModel);
 
     response.fold(
-      (l) {},
+      (l) {
+        utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      },
       (r) {
         tenantSignature = '';
         ownerSignature = '';
-        inspectionReqModel = InspectionReqModel();
+        inspectionReqModel = InspectionReqModel(
+          inspection: Inspection(
+            specialAmenities: SpecialAmenities(
+              bath: Amenities(),
+              disabledAccessibility: Amenities(),
+              kitchen: Amenities(),
+              livingRoom: Amenities(),
+              otherRoomsUsedForLiving: Amenities(),
+              overallCharacteristics: Amenities(),
+            ),
+          ),
+          unit: Unit(),
+          deficiencyInspections: [],
+        );
         Get.offAllNamed(InspectionListScreen.routes);
       },
     );

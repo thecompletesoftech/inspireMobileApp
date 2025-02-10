@@ -36,7 +36,7 @@ class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MyTextView(
-                          controller.unitAddress,
+                          '${controller.unitAddress} - ${controller.unitName}',
                           textStyleNew: MyTextStyle(
                             textColor: controller.appColors.appColor,
                             textWeight: FontWeight.w600,

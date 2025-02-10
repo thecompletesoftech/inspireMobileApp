@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:public_housing/Models/accountmodel/account_model.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/auth/signing_screen/screen/signing_screen.dart';
+import 'package:public_housing/screens/inspection_list_screen/model/complete_inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/repository/inspection_list_repository.dart';
@@ -29,7 +30,6 @@ InspectionReqModel inspectionReqModel = InspectionReqModel(
   deficiencyInspections: [],
 );
 
-
 class InspectionListController extends BaseController {
   final GlobalKey<PopupMenuButtonState<int>> popupKey = GlobalKey();
   PropertyStatus status = PropertyStatus.scheduled;
@@ -49,6 +49,9 @@ class InspectionListController extends BaseController {
   int itemsPerPage = 30;
   int page = 1;
   bool hasMore = true;
+  bool isLoading = false;
+  int completeDataPage = 1;
+  List<CompleteInspection> inspections = [];
 
   @override
   void onInit() {
@@ -58,6 +61,7 @@ class InspectionListController extends BaseController {
     () async {
       await getAccount();
       await getDailySchedulesData();
+      await getCompleteSchedulesData();
     }();
     super.onInit();
   }
@@ -130,7 +134,6 @@ class InspectionListController extends BaseController {
           hasMore = false;
           await getTodayData();
         }
-        // await getCompletedBuilding();
         apiResponseStatus = ApiResponseStatus.success;
         update();
       });
@@ -144,52 +147,39 @@ class InspectionListController extends BaseController {
     }
   }
 
-  // getCompletedBuilding() {
-  //   completedBuildings.clear();
-  //   completedUnits.clear();
-  //   if (scheduleDataList.isNotEmpty) {
-  //     scheduleDataList.forEach(
-  //       (element) {
-  //         element.scheduleDataList.forEach(
-  //           (e) {
-  //             e.scheduleInspectionBuildings?.forEach(
-  //               (building) {
-  //                 if (building.isBuildingInspection == true) {
-  //                   completedBuildings.add(
-  //                     ScheduleInspectionBuilding(
-  //                       id: building.id,
-  //                       building: building.building,
-  //                       isBuildingInspection: building.isBuildingInspection,
-  //                       scheduleInspectionUnits:
-  //                           building.scheduleInspectionUnits,
-  //                       dateTime: e.scheduleDate,
-  //                       propertyData: e,
-  //                     ),
-  //                   );
-  //                 }
-  //                 building.scheduleInspectionUnits?.forEach(
-  //                   (unit) {
-  //                     if (unit.inspectionStatus?.value == 'Complete') {
-  //                       completedUnits.add(
-  //                         ScheduleInspectionUnit(
-  //                           id: unit.id,
-  //                           unit: unit.unit,
-  //                           inspectionStatus: unit.inspectionStatus,
-  //                           dateTime: e.scheduleDate,
-  //                           propertyData: e,
-  //                         ),
-  //                       );
-  //                     }
-  //                   },
-  //                 );
-  //               },
-  //             );
-  //           },
-  //         );
-  //       },
-  //     );
-  //   }
-  // }
+  Future<void> getCompleteSchedulesData() async {
+    if (isLoading) return;
+    isLoading = true;
+    update();
+
+    var response =
+        await inspectionListRepository.getCompleteInspectionSchedules(
+      type: 1,
+      page: completeDataPage,
+      itemsPerPage: itemsPerPage,
+    );
+
+    response.fold((l) {
+      isLoading = false;
+      update();
+    }, (r) {
+      if (r.inspections?.isNotEmpty == true) {
+        if (completeDataPage == 1) {
+          inspections = r.inspections!;
+        } else {
+          inspections.addAll(r.inspections!);
+        }
+        completeDataPage++;
+        if (r.inspections!.length < itemsPerPage) {
+          isLoading = false;
+          update();
+          return;
+        }
+      }
+      isLoading = false;
+      update();
+    });
+  }
 
   getTodayData() {
     scheduleDataList = [];

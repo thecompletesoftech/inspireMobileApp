@@ -5,6 +5,7 @@ import 'package:public_housing/screens/inspection_list_screen/model/inspection_r
 import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/no_show_screen/model/no_show_req_model.dart';
 import 'package:public_housing/screens/no_show_screen/repository/no_show_repository.dart';
+import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
@@ -166,8 +167,6 @@ class NoShowController extends BaseController {
   }
 
   createInspection() async {
-    print("zdgkszdfgjnfkls ${inspectionReqModel}");
-
     NoShowReqModel noShowReqModel =
         NoShowReqModel(inspection: InspectionsData(), unit: Unit());
 
@@ -198,7 +197,21 @@ class NoShowController extends BaseController {
     response.fold(
       (l) {},
       (r) {
-        inspectionReqModel = InspectionReqModel();
+        inspectionReqModel = InspectionReqModel(
+          inspection: Inspection(
+            specialAmenities: SpecialAmenities(
+              bath: Amenities(),
+              disabledAccessibility: Amenities(),
+              kitchen: Amenities(),
+              livingRoom: Amenities(),
+              otherRoomsUsedForLiving: Amenities(),
+              overallCharacteristics: Amenities(),
+            ),
+          ),
+          unit: Unit(),
+          deficiencyInspections: [],
+        );
+
         Get.offAllNamed(InspectionListScreen.routes);
       },
     );

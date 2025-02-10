@@ -34,62 +34,58 @@ class CommonInspectionsListView extends StatelessWidget {
         children: [
           Row(
             children: [
-              MyTextView(
-                title,
-                textStyleNew: MyTextStyle(
-                    textSize: 24.px,
-                    textColor: AppColors().black,
-                    textWeight: FontWeight.w600),
-              ),
-              MyTextView(
-                ' - ${subtitle}',
-                textStyleNew: MyTextStyle(
-                    textSize: 20.px,
-                    textColor: AppColors().textcolor,
-                    textWeight: FontWeight.w400),
-              ),
+              title.isNotEmpty
+                  ? MyTextView(
+                      title,
+                      textStyleNew: MyTextStyle(
+                          textSize: 24.px,
+                          textColor: AppColors().black,
+                          textWeight: FontWeight.w600),
+                    )
+                  : SizedBox(),
+              subtitle.isNotEmpty
+                  ? MyTextView(
+                      ' - ${subtitle}',
+                      textStyleNew: MyTextStyle(
+                          textSize: 20.px,
+                          textColor: AppColors().textcolor,
+                          textWeight: FontWeight.w400),
+                    )
+                  : SizedBox(),
               Spacer(),
-              if (isCompleted)
-                ClipOval(
-                  child: SvgPicture.string(
-                    icComplete,
-                  ),
-                )
+              if (isCompleted) ClipOval(child: SvgPicture.string(icComplete))
             ],
           ).paddingOnly(top: 16.px, left: 16.px, right: 16.px, bottom: 8.px),
           Row(
             children: [
-              MyTextView(
-                title1,
-                textStyleNew: MyTextStyle(
-                    textSize: 20.px,
-                    textColor: AppColors().black,
-                    textWeight: FontWeight.w400),
-              ),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 8.px, horizontal: 16.px),
-                decoration: BoxDecoration(
-                    color: AppColors().appBGColor,
-                    borderRadius: BorderRadius.circular(100)),
-                child: MyTextView(
-                  subtitle1,
-                  textStyleNew: MyTextStyle(
-                      textSize: 14.px,
-                      textColor: subtitle1 == 'Annual Inspection'
-                          ? AppColors().textGreen
-                          : subtitle1 == 'Re-Inspection'
-                              ? AppColors().textPink
-                              : AppColors().black,
-                      textWeight: FontWeight.w500),
-                ),
-              ).paddingOnly(left: 24.px),
+              title1.isNotEmpty
+                  ? MyTextView(
+                      title1,
+                      textStyleNew: MyTextStyle(
+                          textSize: 20.px,
+                          textColor: AppColors().black,
+                          textWeight: FontWeight.w400),
+                    )
+                  : SizedBox(),
+              subtitle1.isNotEmpty
+                  ? Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 8.px, horizontal: 16.px),
+                      decoration: BoxDecoration(
+                          color: AppColors().appBGColor,
+                          borderRadius: BorderRadius.circular(100)),
+                      child: MyTextView(
+                        subtitle1,
+                        textStyleNew: MyTextStyle(
+                            textSize: 14.px,
+                            textColor: AppColors().black,
+                            textWeight: FontWeight.w500),
+                      ),
+                    ).paddingOnly(left: 24.px)
+                  : SizedBox(),
             ],
           ).paddingOnly(bottom: 16.px, left: 16.px),
-          Container(
-            height: 2.px,
-            color: AppColors().divider,
-          ),
+          Container(height: 2.px, color: AppColors().divider),
           Row(
             children: [
               CommonRow(
@@ -98,22 +94,49 @@ class CommonInspectionsListView extends StatelessWidget {
                 imageNameColor: AppColors().black,
               ),
               CommonRow(
-                image: clockIcon,
-                imageName: '${startTime} - ${endTime}',
+                image:
+                    endTime.isNotEmpty && startTime.isNotEmpty ? clockIcon : '',
+                imageName: endTime.isNotEmpty && startTime.isNotEmpty
+                    ? '${startTime} - ${endTime}'
+                    : "",
                 imageNameColor: AppColors().black,
               ).paddingOnly(left: 32.px),
               Spacer(),
-              CommonButton(
-                title: Strings.details,
-                textColor: AppColors().appColor,
-                textWeight: FontWeight.w500,
-                textSize: 16.px,
-                onTap: onTap,
-                width: 92.px,
-                height: 44.px,
-                color: AppColors().transparent,
-                border: Border.all(color: AppColors().black),
-              ),
+              isCompleted == true
+                  ? /*CommonIconButton(
+                      title: Strings.editInspection,
+                      textColor: AppColors().appColor,
+                      textWeight: FontWeight.w500,
+                      textSize: 16.px,
+                      onTap: onTap,
+                      width: 176.px,
+                      height: 44.px,
+                      color: AppColors().transparent,
+                      border: Border.all(color: AppColors().black),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.px,
+                      ),
+                      icon: icEditNotes,
+                      iconheigth: 20.px,
+                    )*/
+                  MyTextView(
+                      Strings.noShow,
+                      textStyleNew: MyTextStyle(
+                          textSize: 16.px,
+                          textColor: AppColors().border1,
+                          textWeight: FontWeight.w500),
+                    )
+                  : CommonButton(
+                      title: Strings.details,
+                      textColor: AppColors().appColor,
+                      textWeight: FontWeight.w500,
+                      textSize: 16.px,
+                      onTap: onTap,
+                      width: 92.px,
+                      height: 44.px,
+                      color: AppColors().transparent,
+                      border: Border.all(color: AppColors().black),
+                    ),
             ],
           ).paddingAll(16.px)
         ],

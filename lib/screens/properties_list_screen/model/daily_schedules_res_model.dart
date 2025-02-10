@@ -7,7 +7,7 @@
 //     final dailySchedulesResponseModel = dailySchedulesResponseModelFromJson(jsonString);
 
 import 'dart:convert';
-
+import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 
 DailySchedulesResponseModel dailySchedulesResponseModelFromJson(String str) =>
@@ -91,30 +91,6 @@ class ScheduleInspection {
             : List<dynamic>.from(
                 scheduleInspectionBuildings!.map((x) => x.toJson())),
         "formatted_schedule_date": formattedScheduleDate,
-      };
-}
-
-class Inspector {
-  int? id;
-  int? externalAccountId;
-  dynamic externalPersonalId;
-  String? name;
-
-  Inspector(
-      {this.id, this.externalAccountId, this.externalPersonalId, this.name});
-
-  factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
-        id: json["id"],
-        externalAccountId: json["external_account_id"],
-        externalPersonalId: json["external_personal_id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "external_account_id": externalAccountId,
-        "external_personal_id": externalPersonalId,
-        "name": name,
       };
 }
 
@@ -341,5 +317,3 @@ class InspectionStatus {
 
   Map<String, dynamic> toJson() => {"id": id, "value": value};
 }
-
-

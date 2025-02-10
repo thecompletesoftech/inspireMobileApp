@@ -445,28 +445,3 @@ class InspectionState {
   Map<String, dynamic> toJson() =>
       {"id": id, "state": state, "description": description};
 }
-
-
-class Inspector {
-  int? id;
-  int? externalAccountId;
-  dynamic externalPersonalId;
-  String? name;
-
-  Inspector(
-      {this.id, this.externalAccountId, this.externalPersonalId, this.name});
-
-  factory Inspector.fromJson(Map<String, dynamic> json) => Inspector(
-        id: json["id"],
-        externalAccountId: json["external_account_id"],
-        externalPersonalId: json["external_personal_id"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "external_account_id": externalAccountId,
-        "external_personal_id": externalPersonalId,
-        "name": name,
-      };
-}

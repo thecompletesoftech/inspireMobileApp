@@ -40,7 +40,7 @@ class InspectionInformationScreen
                     Row(
                       children: [
                         MyTextView(
-                          controller.unitAddress,
+                          '${controller.unitAddress} - ${controller.unitName}',
                           textStyleNew: MyTextStyle(
                               textSize: 20.px,
                               textColor: AppColors().black,

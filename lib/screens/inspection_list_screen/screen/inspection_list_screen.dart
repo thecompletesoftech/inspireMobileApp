@@ -16,6 +16,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
   @override
   Widget build(BuildContext context) {
     final ScrollController _scrollController = ScrollController();
+    final ScrollController _completeController = ScrollController();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -26,6 +27,14 @@ class InspectionListScreen extends GetView<InspectionListController> {
               _scrollController.position.minScrollExtent &&
           controller.page > 1) {
         controller.getDailySchedulesData(isPrevious: true);
+      }
+    });
+
+    _completeController.addListener(() {
+      if (_completeController.position.pixels ==
+              _completeController.position.maxScrollExtent &&
+          !controller.isLoading) {
+        controller.getCompleteSchedulesData();
       }
     });
 
@@ -513,115 +522,44 @@ class InspectionListScreen extends GetView<InspectionListController> {
                           ),
                         ),
                       )
-                    : SizedBox() /* Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              if (controller.completedBuildings.isNotEmpty)
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    MyTextView(
-                                      Strings.completedBuildings,
-                                      textStyleNew: MyTextStyle(
-                                          textSize: 24.px,
-                                          textColor: AppColors().black,
-                                          textWeight: FontWeight.w400),
-                                    ).paddingOnly(right: 10.px),
-                                    Expanded(
-                                      child: Divider(
-                                        height: 10.px,
-                                        color: AppColors().divider,
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingSymmetric(
-                                    vertical: 31.px, horizontal: 32.px),
-                              ...List.generate(
-                                controller.completedBuildings.length,
-                                (index) {
-                                  return CommonBuildingListView(
-                                    title:
-                                        "Building ${controller.completedBuildings[index].building?.name ?? ""}",
-                                    title1:
-                                        '${controller.completedBuildings[index].scheduleInspectionUnits?.length ?? ""} Units',
-                                    Subtitle:
-                                        '${controller.completedBuildings[index].building?.constructedYear ?? ""}',
-                                    Subtitle1:
-                                        '${controller.completedBuildings[index].building?.buildingType?.name ?? ""}',
-                                    onTap: () {
-                                      Get.toNamed(UnitListScreen.routes,
-                                          arguments: {
-                                            "isManually": false,
-                                            "isComplete": true,
-                                            'externalBuilding': controller
-                                                .completedBuildings[index],
-                                            "propertyData": controller
-                                                .completedBuildings[index]
-                                                .propertyData,
-                                          });
-                                      controller.update();
-                                    },
-                                    isComplete: controller
-                                            .completedBuildings[index]
-                                            .isBuildingInspection ??
-                                        false,
-                                    dateTime: controller
-                                            .completedBuildings[index]
-                                            .dateTime ??
-                                        DateTime.now(),
-                                    onTap1: () {},
-                                  ).paddingSymmetric(
-                                      horizontal: 32.px, vertical: 5.px);
-                                },
-                              ),
-                              if (controller.completedBuildings.isNotEmpty)
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    MyTextView(
-                                      Strings.completedUnits,
-                                      textStyleNew: MyTextStyle(
-                                          textSize: 24.px,
-                                          textColor: AppColors().black,
-                                          textWeight: FontWeight.w400),
-                                    ).paddingOnly(right: 10.px),
-                                    Expanded(
-                                      child: Divider(
-                                        height: 10.px,
-                                        color: AppColors().divider,
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingSymmetric(
-                                    vertical: 31.px, horizontal: 32.px),
-                              ...List.generate(
-                                controller.completedUnits.length,
-                                (index) {
-                                  return CommonUnitListView(
-                                    isComplete: controller.completedUnits[index]
-                                                .inspectionStatus?.value ==
-                                            'Complete'
+                    : Expanded(
+                        child: ListView.separated(
+                          controller: _completeController,
+                          itemCount: controller.inspections.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index == controller.inspections.length) {
+                              return controller.isLoading
+                                  ? Center(child: CircularProgressIndicator())
+                                  : SizedBox.shrink();
+                            } else {
+                              var propertyData = controller.inspections[index];
+                              return CommonInspectionsListView(
+                                title: propertyData.externalUnit?.address ?? "",
+                                subtitle:
+                                    '${propertyData.externalUnit?.state ?? ""} ${propertyData.externalUnit?.city ?? ""}',
+                                title1: propertyData
+                                        .externalUnit?.tenant?.firstName ??
+                                    "",
+                                subtitle1:
+                                    propertyData.inspectionType?.type ?? "",
+                                date:
+                                    '${DateFormat("MM/dd/yyyy").format(propertyData.date!)}',
+                                onTap: () {},
+                                isCompleted:
+                                    propertyData.inspectionState?.state ==
+                                            'Completed'
                                         ? true
                                         : false,
-                                    title:
-                                        'Unit ${controller.completedUnits[index].unit?.name ?? ""}',
-                                    Subtitle:
-                                        '${controller.completedUnits[index].unit?.address ?? ""}',
-                                    onTap: () {},
-                                    dateTime: controller
-                                            .completedUnits[index].dateTime ??
-                                        DateTime.now(),
-                                  ).paddingSymmetric(
-                                      horizontal: 32.px, vertical: 5.px);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      )*/
+                                startTime: propertyData.startTime ?? "",
+                                endTime: propertyData.endTime ?? "",
+                              ).paddingSymmetric(horizontal: 32.px);
+                            }
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(height: 24.px);
+                          },
+                        ).paddingSymmetric(vertical: 24.px),
+                      )
               ],
             ),
           ),
