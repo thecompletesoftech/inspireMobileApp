@@ -285,9 +285,10 @@ class ApiProviders extends BaseController {
   Future<Either<Failure, DailySchedulesResponseModel>>
       getDailySchedulesRequest({
     required int page,
-    required int itemsPerPage,
+    required int type,
     required String endDate,
     required String startDate,
+    required int itemsPerPage,
   }) async {
     try {
       Map<String, dynamic> queryParameter = {};
@@ -296,6 +297,7 @@ class ApiProviders extends BaseController {
         "start_date": startDate,
         "end_date": endDate,
         "page": page,
+        "type": type,
       };
 
       Response response = await apiBaseHelperImplementation.get(

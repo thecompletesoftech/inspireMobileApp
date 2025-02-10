@@ -1194,7 +1194,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                     "inspectorDate": controller
                                         .inspectionDateController.text,
                                     "propertyData": controller.propertyData,
-                                    "buildingId":controller.buildingId
+                                    "buildingId": controller.buildingId
                                   });
                               controller.update();
                             },

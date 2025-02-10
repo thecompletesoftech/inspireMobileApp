@@ -66,9 +66,9 @@ class BuildingListScreen extends GetView<BuildingListController> {
                             "Building ${controller.externalBuildings[index].building?.name ?? ""}",
                         title1:
                             '${controller.externalBuildings[index].scheduleInspectionUnits?.length ?? ""} Units',
-                        Subtitle:
+                        subTitle:
                             '${controller.externalBuildings[index].building?.constructedYear ?? ""}',
-                        Subtitle1:
+                        subTitle1:
                             '${controller.externalBuildings[index].building?.buildingType?.name ?? ""}',
                         onTap: () {
                           Get.toNamed(UnitListScreen.routes, arguments: {

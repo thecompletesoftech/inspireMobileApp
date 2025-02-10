@@ -500,9 +500,9 @@ class PropertiesListScreen extends GetView<PropertiesListController> {
                                         "Building ${controller.completedBuildings[index].building?.name ?? ""}",
                                     title1:
                                         '${controller.completedBuildings[index].scheduleInspectionUnits?.length ?? ""} Units',
-                                    Subtitle:
+                                    subTitle:
                                         '${controller.completedBuildings[index].building?.constructedYear ?? ""}',
-                                    Subtitle1:
+                                    subTitle1:
                                         '${controller.completedBuildings[index].building?.buildingType?.name ?? ""}',
                                     onTap: () {
                                       Get.toNamed(UnitListScreen.routes,

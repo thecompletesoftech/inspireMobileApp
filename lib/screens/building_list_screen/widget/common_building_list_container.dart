@@ -6,8 +6,8 @@ import 'package:public_housing/commons/common_widgets/common_container.dart';
 class CommonBuildingListView extends StatelessWidget {
   final String title;
   final String title1;
-  final String Subtitle;
-  final String Subtitle1;
+  final String subTitle;
+  final String subTitle1;
   final DateTime dateTime;
   final VoidCallback? onTap;
   final VoidCallback? onTap1;
@@ -17,8 +17,8 @@ class CommonBuildingListView extends StatelessWidget {
     super.key,
     required this.title,
     required this.title1,
-    required this.Subtitle,
-    required this.Subtitle1,
+    required this.subTitle,
+    required this.subTitle1,
     this.onTap,
     this.onTap1,
     required this.dateTime,
@@ -69,14 +69,14 @@ class CommonBuildingListView extends StatelessWidget {
                     Row(
                       children: [
                         MyTextView(
-                          '${Subtitle} - ',
+                          '${subTitle} - ',
                           textStyleNew: MyTextStyle(
                               textSize: 24.px,
                               textColor: AppColors().black,
                               textWeight: FontWeight.w600),
                         ),
                         MyTextView(
-                          Subtitle1,
+                          subTitle1,
                           textStyleNew: MyTextStyle(
                               textSize: 20.px,
                               textColor: AppColors().textcolor,
