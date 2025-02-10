@@ -185,7 +185,7 @@ class DailySchedulesResponseModel {
 class ScheduleInspection {
   int? id;
   DateTime? scheduleDate;
-  String? status;
+  Status? status;
   Inspector? inspector;
   ScheduleInspectionProperty? property;
   List<ScheduleInspectionBuilding>? scheduleInspectionBuildings;
@@ -207,7 +207,7 @@ class ScheduleInspection {
         scheduleDate: json["schedule_date"] == null
             ? null
             : DateTime.parse(json["schedule_date"]),
-        status: json["status"],
+        status: json["status"] == null ? null : Status.fromJson(json["status"]),
         inspector: json["inspector"] == null
             ? null
             : Inspector.fromJson(json["inspector"]),
@@ -226,7 +226,7 @@ class ScheduleInspection {
   Map<String, dynamic> toJson() => {
         "id": id,
         "schedule_date": scheduleDate?.toIso8601String(),
-        "status": status,
+        "status": status?.toJson(),
         "inspector": inspector?.toJson(),
         "property": property?.toJson(),
         "schedule_inspection_buildings": scheduleInspectionBuildings == null
@@ -235,6 +235,18 @@ class ScheduleInspection {
                 scheduleInspectionBuildings!.map((x) => x.toJson())),
         "formatted_schedule_date": formattedScheduleDate,
       };
+}
+
+class Status {
+  int? id;
+  String? value;
+
+  Status({this.id, this.value});
+
+  factory Status.fromJson(Map<String, dynamic> json) =>
+      Status(id: json["id"], value: json["value"]);
+
+  Map<String, dynamic> toJson() => {"id": id, "value": value};
 }
 
 class Inspector {

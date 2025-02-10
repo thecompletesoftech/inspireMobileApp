@@ -78,10 +78,11 @@ class PropertiesListController extends BaseController {
       }
 
       var response = await propertiesListRepository.getDailySchedules(
+        type: 0,
         page: page,
+        itemsPerPage: itemsPerPage,
         endDate: formatDateWithTimeZone(endDateTime!),
         startDate: formatDateWithTimeZone(startDateTime!),
-        itemsPerPage: itemsPerPage,
       );
 
       response.fold((l) {
