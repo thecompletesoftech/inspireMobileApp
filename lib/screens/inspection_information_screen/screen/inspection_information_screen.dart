@@ -102,7 +102,7 @@ class InspectionInformationScreen
                           Row(
                             children: [
                               MyTextView(
-                                controller.unitData.tenant?.firstName ?? "",
+                                '${controller.unitData.tenant?.firstName ?? ""} ${controller.unitData.tenant?.lastName ?? ""}',
                                 textStyleNew: MyTextStyle(
                                     textSize: 20.px,
                                     textColor: AppColors().black,
@@ -118,7 +118,7 @@ class InspectionInformationScreen
                             ],
                           ),
                           MyTextView(
-                            controller.unitData.tenant?.lastName ?? "",
+                            Strings.tenantNames,
                             textStyleNew: MyTextStyle(
                                 textSize: 16.px,
                                 textColor: AppColors().black,
@@ -154,7 +154,7 @@ class InspectionInformationScreen
                             ],
                           ),
                           MyTextView(
-                            '${controller.unitData.landlord?.name ?? ""}',
+                            Strings.landlord,
                             textStyleNew: MyTextStyle(
                                 textSize: 16.px,
                                 textColor: AppColors().black,
@@ -213,6 +213,12 @@ class InspectionInformationScreen
                             contentPadding: EdgeInsets.only(left: 25.px),
                             shadowColor: controller.appColors.transparent,
                             labelText: Strings.bedroom,
+                            onChange: (value) {
+                              if (value.isNotEmpty) {
+                                controller.unitData.numberOfBedrooms =
+                                    int.parse(value);
+                              }
+                            },
                           ),
                         ),
                         SizedBox(width: 16.px),
@@ -230,6 +236,12 @@ class InspectionInformationScreen
                             contentPadding: EdgeInsets.only(left: 25.px),
                             shadowColor: controller.appColors.transparent,
                             labelText: Strings.bathroom,
+                            onChange: (value) {
+                              if (value.isNotEmpty) {
+                                controller.unitData.numberOfBathrooms =
+                                    int.parse(value);
+                              }
+                            },
                           ),
                         ),
                       ],

@@ -6,7 +6,7 @@ import 'package:public_housing/screens/inspection_list_screen/model/inspection_r
 
 class InspectionStandardsController extends BaseController {
   TextEditingController searchStandardsController = TextEditingController();
-  InspectionStandardsRepository buildingStandardsRepository =
+  InspectionStandardsRepository inspectionStandardsRepository =
       InspectionStandardsRepository();
   bool isCollapseStandards = false;
   List<BuildingModel> deficiencyAreas = [];
@@ -95,7 +95,8 @@ class InspectionStandardsController extends BaseController {
   }
 
   getDeficiencyAreasData() async {
-    var response = await buildingStandardsRepository.getDeficiencyAreas();
+    var response =
+        await inspectionStandardsRepository.getInspectionDeficiencyAreas();
 
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);

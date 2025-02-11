@@ -9,8 +9,8 @@ class InspectionStandardsRepository {
   InspectionStandardsRepository();
 
   Future<Either<Failure, DeficiencyAreasResponseModel>>
-      getDeficiencyAreas() async {
-    var response = await _provider.getUnitDeficiencyAreasRequest();
+      getInspectionDeficiencyAreas() async {
+    var response = await _provider.getInspectionDeficiencyAreasRequest();
     return response.fold((l) => Left(l), (r) => Right(r));
   }
 }

@@ -72,14 +72,14 @@ class InspectionListScreen extends GetView<InspectionListController> {
                               ),
                               Spacer(),
                               MyTextView(
-                                Strings.publicHousing,
+                                Strings.section,
                                 textStyleNew: MyTextStyle(
                                   textColor: AppColors.primerColor,
                                   textWeight: FontWeight.w600,
                                   textFamily: fontFamilyBold,
                                   textSize: 32.px,
                                 ),
-                              )
+                              ),
                             ],
                           ),
                           Spacer(),
@@ -410,7 +410,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
                                                 subtitle:
                                                     '${controller.filterData(scheduleInspection: propertyData).unit?.city ?? ""} ${controller.filterData(scheduleInspection: propertyData).unit?.state ?? ""}',
                                                 title1:
-                                                    '${controller.filterData(scheduleInspection: propertyData).unit?.name ?? ""}',
+                                                    '${controller.filterData(scheduleInspection: propertyData).unit?.tenant?.firstName ?? ""} ${controller.filterData(scheduleInspection: propertyData).unit?.tenant?.lastName ?? ""}',
                                                 subtitle1:
                                                     '${propertyData.inspectionType?.type ?? ""}',
                                                 date:
@@ -537,9 +537,8 @@ class InspectionListScreen extends GetView<InspectionListController> {
                                 title: propertyData.externalUnit?.address ?? "",
                                 subtitle:
                                     '${propertyData.externalUnit?.state ?? ""} ${propertyData.externalUnit?.city ?? ""}',
-                                title1: propertyData
-                                        .externalUnit?.tenant?.firstName ??
-                                    "",
+                                title1:
+                                    '${propertyData.externalUnit?.tenant?.firstName ?? ""} ${propertyData.externalUnit?.tenant?.lastName ?? ""}',
                                 subtitle1:
                                     propertyData.inspectionType?.type ?? "",
                                 date:

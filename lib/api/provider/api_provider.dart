@@ -71,6 +71,25 @@ class ApiProviders extends BaseController {
     }
   }
 
+  Future<Either<Failure, DeficiencyAreasResponseModel>>
+      getInspectionDeficiencyAreasRequest() async {
+    try {
+      Response response = await apiBaseHelperImplementation.get(
+        endPoint: Constants.getDeficiency,
+        headers: {
+          'Authorization': '${getStorageData.readString(getStorageData.token)}',
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(DeficiencyAreasResponseModel.fromJson(response.data));
+      } else {
+        return Left(Failure(errorMessage: response.statusMessage.toString()));
+      }
+    } on DioException catch (e) {
+      return Left(createFailure(e));
+    }
+  }
+
   Future<Either<Failure, Loginmodel>> loginRequest(mapJson) async {
     try {
       Response response = await apiBaseHelperImplementation.post(

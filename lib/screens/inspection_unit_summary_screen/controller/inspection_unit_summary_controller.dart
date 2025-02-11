@@ -1,10 +1,14 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
+import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
+import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/filter_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/repository/inspection_unit_summary_repository.dart';
+import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 
 class InspectionUnitSummaryController extends BaseController {
   bool isSelected = false;
@@ -24,6 +28,10 @@ class InspectionUnitSummaryController extends BaseController {
   String unitName = '';
   InspectionType inspectionType = InspectionType();
   Units unitData = Units();
+  List<String> healthList = [];
+  bool isHealth = false;
+  DeficienciesInsideRepository deficienciesInsideRepository =
+      DeficienciesInsideRepository();
 
   @override
   void onInit() {
@@ -36,14 +44,37 @@ class InspectionUnitSummaryController extends BaseController {
     }
     if (Get.arguments['unitData'] != null) {
       unitData = Get.arguments['unitData'];
-      bedroomsController.text = unitData.numberOfBedrooms.toString();
+      bedroomsController.text = unitData.numberOfBedrooms == null
+          ? '0'
+          : unitData.numberOfBedrooms.toString();
       bathroomsController.text = unitData.numberOfBathrooms == null
-          ? (0).toString()
+          ? '0'
           : unitData.numberOfBathrooms.toString();
     }
     getResults();
     getFindingType();
+    filterHealthData();
     super.onInit();
+  }
+
+  filterHealthData() async {
+    isHealth = false;
+    healthList = [];
+    deficiencyArea.forEach(
+      (element) {
+        element.deficiencyInspectionsReqModel?.forEach(
+          (e) {
+            healthList.add(e.deficiencyItemHousingDeficiency?.severity
+                    ?.healthySafetyDesignation ??
+                "");
+          },
+        );
+      },
+    );
+    isHealth = healthList
+        .where((element) => element == 'LT' || element == 'S' || element == 'M')
+        .toList()
+        .isNotEmpty;
   }
 
   getFindingType() async {
@@ -75,7 +106,7 @@ class InspectionUnitSummaryController extends BaseController {
     update();
   }
 
-  createInspection() {
+  filterInspection() {
     deficiencyArea.forEach((element) {
       element.deficiencyInspectionsReqModel?.forEach((e) {
         List<DeficiencyProofPicture> pictureList = [];
@@ -199,8 +230,9 @@ class InspectionUnitSummaryController extends BaseController {
                         padding: EdgeInsets.symmetric(
                             horizontal: 24.px, vertical: 10.px),
                         radius: 100.px,
-                        onTap: () {
-                          Get.back();
+                        onTap: () async {
+                          await filterInspection();
+                          createInspections();
                         },
                       ),
                     ],
@@ -227,5 +259,137 @@ class InspectionUnitSummaryController extends BaseController {
       deficiencyArea[mainIndex].isArea = false;
     }
     update();
+  }
+
+  createInspections() async {
+    var response = await deficienciesInsideRepository.createInspection(
+        inspectionModel: inspectionReqModel);
+
+    response.fold(
+      (l) {
+        utils.showSnackBar(context: Get.context!, message: l.errorMessage);
+      },
+      (r) {
+        inspectionReqModel = InspectionReqModel(
+          inspection: Inspection(
+            specialAmenities: SpecialAmenities(
+              bath: Amenities(),
+              disabledAccessibility: Amenities(),
+              kitchen: Amenities(),
+              livingRoom: Amenities(),
+              otherRoomsUsedForLiving: Amenities(),
+              overallCharacteristics: Amenities(),
+            ),
+          ),
+          unit: Unit(),
+          deficiencyInspections: [],
+        );
+        Get.offAllNamed(InspectionListScreen.routes);
+      },
+    );
+    update();
+  }
+
+  passInspectionDialog() {
+    alertActionDialogApp(
+        context: Get.context!,
+        borderRadius: 28.px,
+        widget: GetBuilder<InspectionUnitSummaryController>(
+          builder: (_) {
+            return Column(
+              children: [
+                SvgPicture.string(warningIcon)
+                    .paddingSymmetric(vertical: 24.px),
+                Container(
+                  width: 350.px,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      MyTextView(
+                        Strings.youInspectionHeading,
+                        textStyleNew: MyTextStyle(
+                          textColor: appColors.textBlack,
+                          textSize: 24.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: Strings.youInspectionTitle,
+                                style: MyTextStyle(
+                                  textColor: appColors.textBlack2,
+                                  textSize: 16.px,
+                                  textFamily: fontFamilyRegular,
+                                  textWeight: FontWeight.w400,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: '\n\nDelete ',
+                                    style: MyTextStyle(
+                                      textColor: appColors.textBlack2,
+                                      textSize: 16.px,
+                                      textFamily: fontFamilyRegular,
+                                      textWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.youInspectionSubTitle,
+                                    style: MyTextStyle(
+                                      textColor: appColors.textBlack2,
+                                      textSize: 16.px,
+                                      textFamily: fontFamilyRegular,
+                                      textWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'fail ',
+                                    style: MyTextStyle(
+                                      textColor: appColors.textBlack2,
+                                      textSize: 16.px,
+                                      textFamily: fontFamilyRegular,
+                                      textWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.youInspectionSubTitle1,
+                                    style: MyTextStyle(
+                                      textColor: appColors.textBlack2,
+                                      textSize: 16.px,
+                                      textFamily: fontFamilyRegular,
+                                      textWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ]),
+                          ],
+                        ),
+                      ).paddingOnly(top: 16.px),
+                    ],
+                  ),
+                ).paddingSymmetric(horizontal: 24.px),
+                SizedBox(
+                    width: 350.px,
+                    child: CommonButton(
+                      title: Strings.close,
+                      textColor: appColors.appColor,
+                      color: appColors.transparent,
+                      textSize: 16.px,
+                      textFamily: fontFamilyRegular,
+                      textWeight: FontWeight.w500,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 24.px, vertical: 10.px),
+                      radius: 100.px,
+                      onTap: () {
+                        Get.back();
+                      },
+                    )).paddingSymmetric(vertical: 24.px),
+              ],
+            );
+          },
+        ));
   }
 }

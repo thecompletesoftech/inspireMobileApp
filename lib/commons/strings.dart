@@ -127,7 +127,7 @@ class Strings {
   static const String changesUnsaved = "Changes unsaved";
   static const String inspectionIncomplete = "Inspection Incomplete";
   static const String properties = "Properties";
-  static const String yes = "yes";
+  static const String yes = "Yes";
 
   static const String messageHint =
       "This is the beginning of your chat with Fernando Devries";
@@ -240,4 +240,11 @@ class Strings {
   static String inspectionType = "Inspection Type*";
   static String disability = "Disability";
   static String other = "Other";
+  static String landlord = "Landlord";
+  static String tenantNames = "Tenant";
+  static String youInspectionHeading = "You cannot pass this inspection";
+  static String youInspectionTitle =
+      "The inspection has 1 or more deficiencies more severe than “Low” H&S Designation.";
+  static String youInspectionSubTitle = "the deficiency or ";
+  static String youInspectionSubTitle1 = "de inspection to continue.";
 }

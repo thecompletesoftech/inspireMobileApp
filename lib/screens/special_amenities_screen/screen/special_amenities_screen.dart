@@ -139,6 +139,11 @@ class SpecialAmenitiesScreen extends GetView<SpecialAmenitiesBinding> {
                                                         subData?.isSelected ??
                                                             false,
                                                     onChanged: (value) {
+                                                      controller.switchButton
+                                                              .value =
+                                                          !controller
+                                                              .switchButton
+                                                              .value;
                                                       subData?.isSelected =
                                                           !(subData
                                                                   .isSelected ??

@@ -251,6 +251,12 @@ class InspectionUnitSummaryScreen
                                 contentPadding: EdgeInsets.only(left: 25.px),
                                 shadowColor: controller.appColors.transparent,
                                 labelText: Strings.bedroom,
+                                onChange: (value) {
+                                  if (value.isNotEmpty) {
+                                    inspectionReqModel.unit?.numberOfBedrooms =
+                                        int.parse(value);
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(width: 16.px),
@@ -268,6 +274,12 @@ class InspectionUnitSummaryScreen
                                 contentPadding: EdgeInsets.only(left: 25.px),
                                 shadowColor: controller.appColors.transparent,
                                 labelText: Strings.bathroom,
+                                onChange: (value) {
+                                  if (value.isNotEmpty) {
+                                    inspectionReqModel.unit?.numberOfBathrooms =
+                                        int.parse(value);
+                                  }
+                                },
                               ),
                             ),
                           ],
@@ -283,7 +295,14 @@ class InspectionUnitSummaryScreen
                               onTap: () {
                                 if (controller.selectFindingTypeController.text
                                     .isNotEmpty) {
-                                  controller.noOnePresentDialog();
+                                  if (controller.isHealth) {
+                                    if (controller.selectedItem != 'null' &&
+                                        controller.selectedItem != 'pass') {
+                                      controller.noOnePresentDialog();
+                                    } else {
+                                      controller.passInspectionDialog();
+                                    }
+                                  }
                                 }
                               },
                               textWeight: FontWeight.w600,
@@ -308,26 +327,31 @@ class InspectionUnitSummaryScreen
                               onTap: () async {
                                 if (controller.selectFindingTypeController.text
                                     .isNotEmpty) {
-                                  if (controller.bathroomsController.text !=
-                                      'null') {
-                                    inspectionReqModel.unit?.numberOfBathrooms =
-                                        int.parse(controller
-                                            .bathroomsController.text);
+                                  if (controller.isHealth) {
+                                    if (controller.selectedItem != 'null' &&
+                                        controller.selectedItem != 'pass') {
+                                      await controller.filterInspection();
+                                      Get.toNamed(SignatureScreen.routes,
+                                          arguments: {
+                                            "unitAddress":
+                                                controller.unitAddress,
+                                            "unitName": controller.unitName,
+                                            "inspectionType":
+                                                controller.inspectionType,
+                                          });
+                                    } else {
+                                      controller.passInspectionDialog();
+                                    }
+                                  } else {
+                                    await controller.filterInspection();
+                                    Get.toNamed(SignatureScreen.routes,
+                                        arguments: {
+                                          "unitAddress": controller.unitAddress,
+                                          "unitName": controller.unitName,
+                                          "inspectionType":
+                                              controller.inspectionType,
+                                        });
                                   }
-                                  if (controller.bedroomsController.text !=
-                                      'null') {
-                                    inspectionReqModel.unit?.numberOfBedrooms =
-                                        int.parse(
-                                            controller.bedroomsController.text);
-                                  }
-                                  await controller.createInspection();
-                                  Get.toNamed(SignatureScreen.routes,
-                                      arguments: {
-                                        "unitAddress": controller.unitAddress,
-                                        "unitName": controller.unitName,
-                                        "inspectionType":
-                                            controller.inspectionType,
-                                      });
                                 }
                               },
                               textWeight: FontWeight.w600,
@@ -369,7 +393,7 @@ class InspectionUnitSummaryScreen
                                 ],
                               ).paddingSymmetric(vertical: 30.px)
                             : SizedBox.shrink(),
-                        ListView.builder(
+                        ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: controller.deficiencyArea.length,
@@ -410,7 +434,11 @@ class InspectionUnitSummaryScreen
                                           ),
                                           CommonButton(
                                             radius: 100.px,
-                                            title: Strings.unit,
+                                            title: data
+                                                    ?.deficiencyItemHousingDeficiency
+                                                    ?.housingItem
+                                                    ?.item ??
+                                                "",
                                             onTap: () {},
                                             padding: EdgeInsets.symmetric(
                                               horizontal: 24.px,
@@ -583,6 +611,9 @@ class InspectionUnitSummaryScreen
                                 );
                               },
                             );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(height: 24.px);
                           },
                         ),
                       ],
