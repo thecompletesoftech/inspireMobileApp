@@ -28,8 +28,11 @@ class InspectionInformationController extends BaseController {
       unitAddress = Get.arguments['unitAddress'];
       unitName = Get.arguments['unitName'];
       inspectionType = Get.arguments['inspectionType'];
-      timeFrame = Get.arguments['timeFrame'];
       scheduleDate = Get.arguments['scheduleDate'];
+    }
+
+    if (Get.arguments['timeFrame'] != null) {
+      timeFrame = Get.arguments['timeFrame'];
     }
 
     if (Get.arguments['unitData'] != null) {

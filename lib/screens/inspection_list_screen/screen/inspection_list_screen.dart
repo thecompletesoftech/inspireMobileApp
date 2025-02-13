@@ -293,7 +293,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
                       textFamily: fontFamilyRegular,
                       onTap: () {
                         if (controller.status == PropertyStatus.scheduled) {
-                          navigateToDateTime();
+                          navigateToDateTime(controller);
                           controller.dateRange = PickerDateRange(null, null);
                           controller.startDate = '';
                           controller.endDate = '';
@@ -567,7 +567,7 @@ class InspectionListScreen extends GetView<InspectionListController> {
     );
   }
 
-  void navigateToDateTime() {
+  void navigateToDateTime(controller) {
     showModalBottomSheet(
       context: Get.context!,
       backgroundColor: controller.appColors.white,

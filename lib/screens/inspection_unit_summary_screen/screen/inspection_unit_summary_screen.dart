@@ -250,6 +250,7 @@ class InspectionUnitSummaryScreen
                                 padding: EdgeInsets.zero,
                                 contentPadding: EdgeInsets.only(left: 25.px),
                                 shadowColor: controller.appColors.transparent,
+                                inputType: TextInputType.number,
                                 labelText: Strings.bedroom,
                                 onChange: (value) {
                                   if (value.isNotEmpty) {
@@ -266,6 +267,7 @@ class InspectionUnitSummaryScreen
                                 readOnly: false,
                                 controller: controller.bathroomsController,
                                 color: controller.appColors.transparent,
+                                inputType: TextInputType.number,
                                 prefixIcon: SvgPicture.string(
                                   icbathroom,
                                   color: controller.appColors.grey,
@@ -310,11 +312,13 @@ class InspectionUnitSummaryScreen
                               color: controller.appColors.transparent,
                               border: Border.all(
                                   color: controller.selectFindingTypeController
-                                          .text.isNotEmpty
+                                              .text.isNotEmpty &&
+                                          controller.selectedItem != 'null'
                                       ? controller.appColors.appColor
                                       : controller.appColors.border1),
                               textColor: controller.selectFindingTypeController
-                                      .text.isNotEmpty
+                                          .text.isNotEmpty &&
+                                      controller.selectedItem != 'null'
                                   ? controller.appColors.appColor
                                   : controller.appColors.border1,
                             ),
@@ -357,16 +361,19 @@ class InspectionUnitSummaryScreen
                               textWeight: FontWeight.w600,
                               textSize: 16.px,
                               color: controller.selectFindingTypeController.text
-                                      .isNotEmpty
+                                          .isNotEmpty &&
+                                      controller.selectedItem != 'null'
                                   ? controller.appColors.appColor
                                   : controller.appColors.black.withOpacity(.12),
                               border: Border.all(
                                   color: controller.selectFindingTypeController
-                                          .text.isNotEmpty
+                                              .text.isNotEmpty &&
+                                          controller.selectedItem != 'null'
                                       ? controller.appColors.black
                                       : controller.appColors.transparent),
                               textColor: controller.selectFindingTypeController
-                                      .text.isNotEmpty
+                                          .text.isNotEmpty &&
+                                      controller.selectedItem != 'null'
                                   ? controller.appColors.white
                                   : controller.appColors.border1,
                             ),

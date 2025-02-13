@@ -2,12 +2,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/Repository/deficiencies_inside_repository.dart';
+import 'package:public_housing/screens/inspection_information_screen/controller/inspection_information_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_res_model.dart';
 import 'package:public_housing/screens/inspection_list_screen/screen/inspection_list_screen.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/model/filter_model.dart';
 import 'package:public_housing/screens/inspection_unit_summary_screen/repository/inspection_unit_summary_repository.dart';
+import 'package:public_housing/screens/manual_unit_inspection_screen/controller/manual_unit_inspection_controller.dart';
 import 'package:public_housing/screens/special_amenities_screen/model/special_amenities_req_model.dart';
 
 class InspectionUnitSummaryController extends BaseController {
@@ -50,6 +52,24 @@ class InspectionUnitSummaryController extends BaseController {
       bathroomsController.text = unitData.numberOfBathrooms == null
           ? '0'
           : unitData.numberOfBathrooms.toString();
+    }
+    if (Get.put(InspectionInformationController())
+        .inspectionNotesController
+        .text
+        .isNotEmpty) {
+      inspectionNotesController.text =
+          Get.find<InspectionInformationController>()
+              .inspectionNotesController
+              .text;
+    }
+    if (Get.put(ManualUnitInspectionController())
+        .inspectionNotesController
+        .text
+        .isNotEmpty) {
+      inspectionNotesController.text =
+          Get.find<ManualUnitInspectionController>()
+              .inspectionNotesController
+              .text;
     }
     getResults();
     getFindingType();
@@ -262,6 +282,7 @@ class InspectionUnitSummaryController extends BaseController {
   }
 
   createInspections() async {
+    inspectionReqModel.inspection?.comment = inspectionNotesController.text;
     var response = await deficienciesInsideRepository.createInspection(
         inspectionModel: inspectionReqModel);
 
