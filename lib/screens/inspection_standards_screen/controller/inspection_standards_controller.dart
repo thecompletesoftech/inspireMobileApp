@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/building_standards_screen/models/deficiency_areas_res_model.dart';
 import 'package:public_housing/screens/deficiencies_inside_screen/models/deficiency_inspections_req_model.dart';
@@ -189,6 +190,129 @@ class InspectionStandardsController extends BaseController {
       }
     }
     update();
+  }
+
+  dialogDelete() {
+    alertActionDialogApp(
+        context: Get.context!,
+        borderRadius: 28.px,
+        widget: Column(
+          children: [
+            Container(
+              width: 460.px,
+              // height: 184.px,
+              padding: EdgeInsets.only(top: 24.px, left: 24.px, right: 24.px),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      width: 24.px,
+                      height: 24.px,
+                      child: SvgPicture.string(icOops)),
+                  MyTextView(
+                    Strings.inspectionProcess,
+                    textStyleNew: MyTextStyle(
+                      textColor: appColors.textBlack,
+                      textSize: 24.px,
+                      textFamily: fontFamilyRegular,
+                      textWeight: FontWeight.w400,
+                    ),
+                  ).paddingSymmetric(vertical: 16.px),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'You will ',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w400,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'lose all progress ',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'made if you go back.',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w400,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '\n\nDo you cant to continue?',
+                            style: MyTextStyle(
+                              textColor: appColors.lightText,
+                              textSize: 16.px,
+                              textFamily: fontFamilyRegular,
+                              textWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 460.px,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      CommonButton(
+                          title: Strings.resumeInspection,
+                          textColor: appColors.appColor,
+                          color: appColors.transparent,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back();
+                          }).paddingOnly(right: 8.px),
+                      CommonButton(
+                          title: Strings.returnLoseProgress,
+                          textColor: appColors.white,
+                          color: appColors.delete,
+                          textSize: 16.px,
+                          textFamily: fontFamilyRegular,
+                          textWeight: FontWeight.w500,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.px, vertical: 10.px),
+                          radius: 100.px,
+                          onTap: () {
+                            Get.back();
+                            Get.back();
+                          }),
+                    ],
+                  ).paddingOnly(
+                    top: 24.px,
+                    left: 8.px,
+                    right: 24.px,
+                    bottom: 24.px,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
 

@@ -247,4 +247,5 @@ class Strings {
       "The inspection has 1 or more deficiencies more severe than “Low” H&S Designation.";
   static String youInspectionSubTitle = "the deficiency or ";
   static String youInspectionSubTitle1 = "de inspection to continue.";
+  static String returnLoseProgress = "Return and lose progress";
 }

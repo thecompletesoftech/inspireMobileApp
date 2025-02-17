@@ -27,7 +27,19 @@ class InspectionStandardsScreen extends GetView<InspectionStandardsController> {
                   color: controller.appColors.transparent,
                   radius: 0.px,
                   onClickBack: () {
-                    Get.back();
+                    List<DeficiencyArea> deficiencyArea = [];
+                    controller.searchList.forEach((element) {
+                      element.buildingDataModel?.forEach((e) {
+                        if (e.isArea == true) {
+                          deficiencyArea.add(e);
+                        }
+                      });
+                    });
+                    if (deficiencyArea.isNotEmpty) {
+                      controller.dialogDelete();
+                    } else {
+                      Get.back();
+                    }
                   },
                 ),
                 Column(
