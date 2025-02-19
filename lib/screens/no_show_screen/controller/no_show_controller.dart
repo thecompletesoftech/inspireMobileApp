@@ -1,4 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:public_housing/commons/all.dart';
 import 'package:public_housing/screens/inspection_list_screen/controller/inspection_list_controller.dart';
 import 'package:public_housing/screens/inspection_list_screen/model/inspection_req_model.dart';
@@ -14,7 +20,7 @@ import 'package:public_housing/screens/deficiencies_inside_screen/Repository/def
 enum ImageUploadStatus { initial, uploading, success }
 
 class NoShowController extends BaseController {
-  RxString imageFile = "".obs;
+  String imageFile = "";
   bool visibleBtn = false;
   bool change = true;
   SpeechToText speechToText = SpeechToText();
@@ -101,16 +107,17 @@ class NoShowController extends BaseController {
           imageUploadStatus = ImageUploadStatus.uploading;
           update();
           selectedDateTime = await pickedFile.lastModified();
-
+          File file = await Utils()
+              .addTimestampToImage(File(pickedFile.path), selectedDateTime!);
           var response = await deficienciesInsideRepository.getImageUpload(
-              filePath: pickedFile.path);
+              filePath: file.path);
 
           response.fold((l) {
             imageUploadStatus = ImageUploadStatus.initial;
             return null;
           }, (r) {
             imageUploadStatus = ImageUploadStatus.success;
-            imageFile = (r.images?.image ?? '').obs;
+            imageFile = r.images?.image ?? '';
             if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
               visibleBtn = true;
             } else {
@@ -140,16 +147,17 @@ class NoShowController extends BaseController {
           imageUploadStatus = ImageUploadStatus.uploading;
           update();
           selectedDateTime = await pickedFile.lastModified();
-
+          File file = await Utils()
+              .addTimestampToImage(File(pickedFile.path), selectedDateTime!);
           var response = await deficienciesInsideRepository.getImageUpload(
-              filePath: pickedFile.path);
+              filePath: file.path);
 
           response.fold((l) {
             imageUploadStatus = ImageUploadStatus.initial;
             return null;
           }, (r) {
             imageUploadStatus = ImageUploadStatus.success;
-            imageFile = (r.images?.image ?? '').obs;
+            imageFile = r.images?.image ?? '';
             if (textController.text.isNotEmpty && imageFile.isNotEmpty) {
               visibleBtn = true;
             } else {

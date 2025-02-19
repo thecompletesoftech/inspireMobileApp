@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/services.dart';
@@ -502,6 +503,34 @@ class Utils {
         GetStorageData().saveString(GetStorageData().userLoc, address);
       }
     }
+  }
+
+  Future<File> addTimestampToImage(File imageFile, DateTime dateTime) async {
+    Uint8List imageBytes = await imageFile.readAsBytes();
+    img.Image? image = img.decodeImage(imageBytes);
+
+    if (image == null) return File('');
+
+    String timestamp = "${DateFormat('MM-dd-yyyy HH:mm').format(dateTime)}";
+    img.drawString(
+      image,
+      timestamp,
+      font: image.height <= 500
+          ? img.arial14
+          : image.height <= 1000
+              ? img.arial24
+              : img.arial48,
+      color: img.ColorFloat64.rgb(255, 255, 255),
+      x: int.parse((image.width * .07).ceil().toString()),
+      y: int.parse((image.height * .9).ceil().toString()),
+    );
+
+    Uint8List encodedImage = Uint8List.fromList(img.encodeJpg(image));
+    Directory tempDir = await getTemporaryDirectory();
+    File newImage = File("${tempDir.path}/timestamped_image.jpg");
+    await newImage.writeAsBytes(encodedImage);
+
+    return newImage;
   }
 
   Future<Position> determinePosition() async {

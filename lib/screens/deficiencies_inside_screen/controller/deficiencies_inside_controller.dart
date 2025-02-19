@@ -41,6 +41,7 @@ class DeficienciesInsideController extends BaseController {
       Get.put(StandardsDetailsController());
   bool isDeleted = false;
   String standard = '';
+  DateTime? selectedDateTime;
 
   @override
   void onInit() {
@@ -588,7 +589,7 @@ class DeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir.path, // <-- Uint8List of image
+                savePath: tempDir.path,
               ),
             ),
           );
@@ -599,8 +600,12 @@ class DeficienciesInsideController extends BaseController {
             file.writeAsBytesSync(editedImage);
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
+            selectedDateTime = await pickedFile.lastModified();
+            File files = await Utils()
+                .addTimestampToImage(File(file.path), selectedDateTime!);
+
             var response = await deficienciesInsideRepository.getImageUpload(
-                filePath: file.path);
+                filePath: files.path);
 
             response.fold((l) {
               imageUploadStatus = ImageUploadStatus.initial;
@@ -828,7 +833,7 @@ class DeficienciesInsideController extends BaseController {
               builder: (context) => ImageEditor(
                 image:
                     Uint8List.fromList(File(pickedFile.path).readAsBytesSync()),
-                savePath: tempDir.path, // <-- Uint8List of image
+                savePath: tempDir.path,
               ),
             ),
           );
@@ -840,9 +845,12 @@ class DeficienciesInsideController extends BaseController {
             file.writeAsBytesSync(editedImage);
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
+            selectedDateTime = await pickedFile.lastModified();
+            File files = await Utils()
+                .addTimestampToImage(File(file.path), selectedDateTime!);
 
             var response = await deficienciesInsideRepository.getImageUpload(
-                filePath: file.path);
+                filePath: files.path);
 
             response.fold((l) {
               imageUploadStatus = ImageUploadStatus.initial;

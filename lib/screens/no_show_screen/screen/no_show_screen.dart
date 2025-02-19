@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:public_housing/commons/all.dart';
@@ -40,7 +42,7 @@ class NoShowScreen extends GetView<NoShowController> {
                               children: [
                                 Image.network(
                                   controller.imageFile.toString(),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                   height: 433.px,
                                   width: Get.width,
                                 ),
@@ -56,7 +58,7 @@ class NoShowScreen extends GetView<NoShowController> {
                                     onTap: () {
                                       controller.imageUploadStatus =
                                           ImageUploadStatus.initial;
-                                      controller.imageFile.value = "";
+                                      controller.imageFile = "";
                                       controller.visibleBtn = false;
                                       controller.update();
                                     },
@@ -65,22 +67,22 @@ class NoShowScreen extends GetView<NoShowController> {
                                         horizontal: 24.px, vertical: 10.px),
                                   ),
                                 ),
-                                Positioned(
-                                  bottom: 32.0,
-                                  left: 32.0,
-                                  child: CommonButton(
-                                    title:
-                                        '${DateFormat('MM-dd-yyyy HH:mm').format(controller.selectedDateTime!)}',
-                                    textSize: 16.px,
-                                    textWeight: FontWeight.w500,
-                                    textColor: AppColors().lightGreen,
-                                    color: AppColors().black.withOpacity(.5),
-                                    onTap: () {},
-                                    radius: 0.px,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 24.px, vertical: 10.px),
-                                  ),
-                                ),
+                                // Positioned(
+                                //   bottom: 32.0,
+                                //   left: 32.0,
+                                //   child: CommonButton(
+                                //     title:
+                                //         '${DateFormat('MM-dd-yyyy HH:mm').format(controller.selectedDateTime!)}',
+                                //     textSize: 16.px,
+                                //     textWeight: FontWeight.w500,
+                                //     textColor: AppColors().lightGreen,
+                                //     color: AppColors().black.withOpacity(.5),
+                                //     onTap: () {},
+                                //     radius: 0.px,
+                                //     padding: EdgeInsets.symmetric(
+                                //         horizontal: 24.px, vertical: 10.px),
+                                //   ),
+                                // ),
                               ],
                             )
                           : controller.imageUploadStatus ==
@@ -322,9 +324,8 @@ class NoShowScreen extends GetView<NoShowController> {
                                   onTap: () async {
                                     if (controller.visibleBtn &&
                                         controller.imageFile.isNotEmpty) {
-                                      inspectionReqModel
-                                              .inspection?.noShowImage =
-                                          controller.imageFile.value;
+                                      inspectionReqModel.inspection
+                                          ?.noShowImage = controller.imageFile;
                                       inspectionReqModel.inspection?.comment =
                                           controller.textController.text;
                                       await controller.createInspection();

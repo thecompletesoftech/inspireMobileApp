@@ -37,6 +37,7 @@ class InspectionDeficienciesInsideController extends BaseController {
   SpeechToText speechToText = SpeechToText();
   bool isDeleted = false;
   String standard = '';
+  DateTime? selectedDateTime;
 
   @override
   void onInit() {
@@ -594,8 +595,12 @@ class InspectionDeficienciesInsideController extends BaseController {
             file.writeAsBytesSync(editedImage);
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
+            selectedDateTime = await pickedFile.lastModified();
+            File files = await Utils()
+                .addTimestampToImage(File(file.path), selectedDateTime!);
+
             var response = await deficienciesInsideRepository.getImageUpload(
-                filePath: file.path);
+                filePath: files.path);
 
             response.fold((l) {
               imageUploadStatus = ImageUploadStatus.initial;
@@ -815,9 +820,11 @@ class InspectionDeficienciesInsideController extends BaseController {
             file.writeAsBytesSync(editedImage);
             imageUploadStatus = ImageUploadStatus.uploading;
             update();
-
+            selectedDateTime = await pickedFile.lastModified();
+            File files = await Utils()
+                .addTimestampToImage(File(file.path), selectedDateTime!);
             var response = await deficienciesInsideRepository.getImageUpload(
-                filePath: file.path);
+                filePath: files.path);
 
             response.fold((l) {
               imageUploadStatus = ImageUploadStatus.initial;
