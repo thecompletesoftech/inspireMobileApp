@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,8 +25,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       'Handling a background message ------2---->>>>> ${message.messageId}');
 }
 
-AndroidNotificationChannel? channel;
-FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+// AndroidNotificationChannel? channel;
+// FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
 Future<void> main() async {
   // final context = SecurityContext.defaultContext;
@@ -43,20 +43,20 @@ Future<void> main() async {
   if (!kIsWeb) {
     await Firebase.initializeApp();
 
-    channel = const AndroidNotificationChannel(
-      'high_importance_channel',
-      'High Importance Notifications',
-      description: 'This channel is used for important notifications.',
-      playSound: true,
-      importance: Importance.high,
-      showBadge: true,
-    );
-
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    await flutterLocalNotificationsPlugin
-        ?.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel!);
+    // channel = const AndroidNotificationChannel(
+    //   'high_importance_channel',
+    //   'High Importance Notifications',
+    //   description: 'This channel is used for important notifications.',
+    //   playSound: true,
+    //   importance: Importance.high,
+    //   showBadge: true,
+    // );
+    //
+    // flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    // await flutterLocalNotificationsPlugin
+    //     ?.resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()
+    //     ?.createNotificationChannel(channel!);
   } else {
     await Firebase.initializeApp(
       // Replace with actual values
@@ -103,7 +103,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale? local;
-  final notifications = FlutterLocalNotificationsPlugin();
+  // final notifications = FlutterLocalNotificationsPlugin();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   GetStorageData getStorage = GetStorageData();
@@ -113,10 +113,10 @@ class _MyAppState extends State<MyApp> {
 
   firebaseInit() async {
     if (Platform.isIOS) {
-      final bool? result = await flutterLocalNotificationsPlugin
-          ?.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(alert: true, badge: true, sound: true);
+      // final bool? result = await flutterLocalNotificationsPlugin
+      //     ?.resolvePlatformSpecificImplementation<
+      //         IOSFlutterLocalNotificationsPlugin>()
+      //     ?.requestPermissions(alert: true, badge: true, sound: true);
     }
     _firebaseMessaging.requestPermission();
     if (Platform.isIOS) iOSPermission();
@@ -147,30 +147,30 @@ class _MyAppState extends State<MyApp> {
         }
 
         if (Platform.isAndroid) {
-          flutterLocalNotificationsPlugin!.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              iOS: const DarwinNotificationDetails(
-                presentSound: true,
-                presentBadge: true,
-                presentAlert: true,
-              ),
-              android: AndroidNotificationDetails(
-                channel!.id,
-                channel!.name,
-                channelDescription: channel!.description,
-                icon: 'ic_notifications',
-                importance: Importance.max,
-                priority: Priority.high,
-                enableLights: true,
-                playSound: true,
-                enableVibration: true,
-                channelShowBadge: true,
-              ),
-            ),
-          );
+          // flutterLocalNotificationsPlugin!.show(
+          //   notification.hashCode,
+          //   notification.title,
+          //   notification.body,
+          //   NotificationDetails(
+          //     iOS: const DarwinNotificationDetails(
+          //       presentSound: true,
+          //       presentBadge: true,
+          //       presentAlert: true,
+          //     ),
+          //     android: AndroidNotificationDetails(
+          //       channel!.id,
+          //       channel!.name,
+          //       channelDescription: channel!.description,
+          //       icon: 'ic_notifications',
+          //       importance: Importance.max,
+          //       priority: Priority.high,
+          //       enableLights: true,
+          //       playSound: true,
+          //       enableVibration: true,
+          //       channelShowBadge: true,
+          //     ),
+          //   ),
+          // );
         }
       },
     );
