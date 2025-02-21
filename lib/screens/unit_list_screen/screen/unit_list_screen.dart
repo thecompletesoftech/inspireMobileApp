@@ -84,9 +84,8 @@ class UnitListScreen extends GetView<UnitListController> {
                                       .externalBuilding
                                       .scheduleInspectionUnits?[index]
                                       .inspectionStatus
-                                      ?.value ==
+                                      ?.value !=
                                   'Complete') {
-                            // '${DateFormat('yyyy-MM-dd').format(DateTime.parse('2025-01-16T00:00:00-05:00'))}') {
                             Get.toNamed(
                               UnitInspection.routes,
                               arguments: {

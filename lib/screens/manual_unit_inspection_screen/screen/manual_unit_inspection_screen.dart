@@ -140,6 +140,9 @@ class ManualUnitInspectionScreen
                                     Expanded(
                                       child: CommonTextField(
                                         isLable: true,
+                                        onChange: ((value) {
+                                          controller.update();
+                                        }),
                                         controller:
                                             controller.tenantNameController,
                                         color: controller.appColors.transparent,
@@ -158,6 +161,9 @@ class ManualUnitInspectionScreen
                                     Expanded(
                                       child: CommonTextField(
                                         isLable: true,
+                                        onChange: ((value) {
+                                          controller.update();
+                                        }),
                                         controller:
                                             controller.unitAddressController,
                                         color: controller.appColors.transparent,
@@ -179,6 +185,9 @@ class ManualUnitInspectionScreen
                                     Expanded(
                                       child: CommonTextField(
                                         isLable: true,
+                                        onChange: ((value) {
+                                          controller.update();
+                                        }),
                                         controller:
                                             controller.landlordNameController,
                                         color: controller.appColors.transparent,
@@ -233,6 +242,9 @@ class ManualUnitInspectionScreen
                                             shadowColor: controller
                                                 .appColors.transparent,
                                             labelText: Strings.inspectionType,
+                                            onChange: ((value) {
+                                              controller.update();
+                                            }),
                                           );
                                         },
                                         itemBuilder: (context, dynamic i) {

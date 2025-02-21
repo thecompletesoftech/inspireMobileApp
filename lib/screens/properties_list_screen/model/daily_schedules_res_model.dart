@@ -190,15 +190,16 @@ class ScheduleInspectionBuilding {
   List<ScheduleInspectionUnit>? scheduleInspectionUnits;
   DateTime? dateTime;
   ScheduleInspection? propertyData;
+  InspectionStatus? inspectionStatus;
 
-  ScheduleInspectionBuilding({
-    this.id,
-    this.isBuildingInspection,
-    this.building,
-    this.scheduleInspectionUnits,
-    this.dateTime,
-    this.propertyData,
-  });
+  ScheduleInspectionBuilding(
+      {this.id,
+      this.isBuildingInspection,
+      this.building,
+      this.scheduleInspectionUnits,
+      this.dateTime,
+      this.propertyData,
+      this.inspectionStatus});
 
   factory ScheduleInspectionBuilding.fromJson(Map<String, dynamic> json) =>
       ScheduleInspectionBuilding(
@@ -207,6 +208,9 @@ class ScheduleInspectionBuilding {
         building: json["building"] == null
             ? null
             : Building.fromJson(json["building"]),
+        inspectionStatus: json["inspection_status"] == null
+            ? null
+            : InspectionStatus.fromJson(json["inspection_status"]),
         scheduleInspectionUnits: json["schedule_inspection_units"] == null
             ? []
             : List<ScheduleInspectionUnit>.from(
@@ -218,6 +222,7 @@ class ScheduleInspectionBuilding {
         "id": id,
         "is_building_inspection": isBuildingInspection,
         "building": building?.toJson(),
+        "inspection_status": inspectionStatus?.toJson(),
         "schedule_inspection_units": scheduleInspectionUnits == null
             ? []
             : List<dynamic>.from(

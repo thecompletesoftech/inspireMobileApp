@@ -264,6 +264,43 @@ class UnitInspection extends GetView<UnitController> {
                             left: 24.px),
                       ),
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 10.px),
+                    if (controller.isManually != true)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CommonButton(
+                              title: Strings.quickPassInspection,
+                              textColor: controller.appColors.appColor,
+                              color: controller.appColors.transparent,
+                              radius: 35.px,
+                              textWeight: FontWeight.w600,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.px,
+                                vertical: 10.px,
+                              ),
+                              textSize: 16.px,
+                              border: Border.all(
+                                  color: controller.appColors.border, width: 2),
+                              onTap: () {
+                                controller.dialogPassInspection();
+                              }),
+                          SizedBox(width: 24.px),
+                          CommonButton(
+                            title: Strings.takeNotes,
+                            color: controller.appColors.transparent,
+                            textColor: controller.appColors.appColor,
+                            border: Border.all(
+                                color: controller.appColors.border, width: 2),
+                            onTap: () {
+                              controller.dialogIncompleteInspection();
+                            },
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24.px, vertical: 10.px),
+                            textWeight: FontWeight.w500,
+                            radius: 35.px,
+                          ),
+                        ],
+                      ).paddingSymmetric(vertical: 32.px),
                     controller.isManually == true
                         ? Center(
                             child: CommonButton(
@@ -351,16 +388,8 @@ class UnitInspection extends GetView<UnitController> {
                                     },
                                   );
                                 }
-                                // Get.toNamed(UnitInspectionSummary.routes,
-                                //     arguments: {
-                                //       "isManually": controller.isManually,
-                                //       "propertyData": controller.propertyData,
-                                //       "externalBuilding":
-                                //           controller.externalBuilding,
-                                //       "unitsData": controller.unitsData
-                                //     });
                               },
-                            ).paddingSymmetric(vertical: 24.px),
+                            ).paddingOnly(bottom: 24.px),
                           ),
                     Row(
                       children: [
