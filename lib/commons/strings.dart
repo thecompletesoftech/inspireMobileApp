@@ -248,4 +248,11 @@ class Strings {
   static String youInspectionSubTitle = "the deficiency or ";
   static String youInspectionSubTitle1 = "de inspection to continue.";
   static String returnLoseProgress = "Return and lose progress";
+  static String quickPassInspection = "Quick Pass Inspection";
+  static String takeNotes = "Take notes";
+  static String passUnitInspection = "Pass Unit Inspection";
+  static String passInspection = "Pass Inspection";
+  static String notess = "Notes";
+  static String takePicture = "Take a picture";
+  static String save = "Save";
 }
