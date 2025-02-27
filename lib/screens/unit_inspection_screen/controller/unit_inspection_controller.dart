@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
 import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
@@ -591,7 +592,7 @@ class UnitController extends BaseController {
                             radius: 100.px,
                             title: Strings.takePicture,
                             onTap: () async {
-                              await getFromCamera(setState);
+                              await imagePicker(setState);
                             },
                             padding:
                                 EdgeInsets.fromLTRB(16.px, 10.px, 24.px, 10.px),
@@ -669,7 +670,7 @@ class UnitController extends BaseController {
     );
   }
 
-  getFromCamera(Function setState) async {
+  getFromGallery(Function setState) async {
     bool checkPermission = await utils.checkPermissionOpenCamera();
     if (checkPermission) {
       try {
@@ -691,5 +692,129 @@ class UnitController extends BaseController {
         printError(e.toString());
       }
     }
+  }
+
+  getFromCamera(Function setState) async {
+    bool checkPermission = await utils.checkPermissionOpenCamera();
+    if (checkPermission) {
+      try {
+        XFile? pickedFile = await ImagePicker().pickImage(
+          source: ImageSource.camera,
+          imageQuality: 25,
+        );
+        if (pickedFile != null) {
+          setState(() {});
+          selectedDateTime = await pickedFile.lastModified();
+          File file = await Utils()
+              .addTimestampToImage(File(pickedFile.path), selectedDateTime!);
+          setState(() {
+            imageFile = file.path;
+          });
+        }
+      } catch (e) {
+        utils.showToast(message: e.toString(), context: Get.context!);
+        printError(e.toString());
+      }
+    }
+  }
+
+  imagePicker(Function setState) {
+    alertActionDialogApp(
+        context: Get.context!,
+        borderRadius: 28.px,
+        widget: SizedBox(
+          width: 390.px,
+          child: Column(
+            children: [
+              SizedBox(height: 30.px),
+              MyTextView(
+                Languages.of(Get.context!)!.upload,
+                textStyleNew: MyTextStyle(
+                  textSize: 25.px,
+                  textColor: AppColors().black,
+                  textWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 20.px),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.back(closeOverlays: true);
+                      getFromGallery(setState);
+                    },
+                    child: Container(
+                      height: 129.px,
+                      width: 157.px,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.px),
+                        border: Border.all(
+                          color: AppColors().grey.withOpacity(0.1),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SvgPicture.string(
+                            icUpload,
+                            height: 30,
+
+                            // height: ScalingQuery(Get.context!).scale(0.2.px),
+                          ),
+                          MyTextView(
+                            Languages.of(Get.context!)!.fromGallery,
+                            textStyleNew: MyTextStyle(
+                              textSize: 15.px,
+                              textWeight: FontWeight.w700,
+                              textColor: AppColors().lightText,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back(closeOverlays: true);
+                      getFromCamera(setState);
+                    },
+                    child: Container(
+                      height: 129.px,
+                      width: 157.px,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.px),
+                        border: Border.all(
+                          color: AppColors().grey.withOpacity(0.1),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SvgPicture.string(
+                            icCamera,
+                            height: 30,
+                            // height: ScalingQuery(Get.context!).scale(0.2.px),
+                          ),
+                          MyTextView(
+                            Languages.of(Get.context!)!.takePhoto,
+                            textStyleNew: MyTextStyle(
+                              textSize: 15.px,
+                              textWeight: FontWeight.w700,
+                              textColor: AppColors().lightText,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.px),
+            ],
+          ),
+        ));
   }
 }
