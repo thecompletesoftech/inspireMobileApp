@@ -4,8 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:public_housing/languages/language.dart';
 import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart';
-import 'package:public_housing/screens/properties_list_screen/screen/properties_list_screen.dart';
 import 'package:public_housing/screens/unit_inspection_summary_screen/repository/unit_inspection_repository.dart';
+import 'package:public_housing/screens/properties_list_screen/model/daily_schedules_res_model.dart'
+    as daily;
+import 'package:public_housing/screens/unit_list_screen/screen/unit_list_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../commons/all.dart';
 import '../../building_inspection_screen/screen/building_inspection_screen.dart';
@@ -34,6 +36,8 @@ class UnitController extends BaseController {
   ScheduleInspectionUnit unitsData = ScheduleInspectionUnit();
   DateTime? selectedDateTime;
   String imageFile = "";
+  daily.ScheduleInspectionBuilding scheduleInspectionBuilding =
+      daily.ScheduleInspectionBuilding();
 
   void onInit() {
     if (Get.arguments['deficiencyArea'] != null) {
@@ -211,16 +215,34 @@ class UnitController extends BaseController {
       isLoading.value = false;
       update();
     }, (r) async {
-      utils.showSnackBar(
-          context: Get.context!,
-          message: "Unit inspection Submitted Successfully!!",
-          isOk: true);
-
-      await Get.offAllNamed(PropertiesListScreen.routes);
-
+      await getUnitData();
+      await Get.toNamed(
+        UnitListScreen.routes,
+        arguments: {
+          'externalBuilding': scheduleInspectionBuilding,
+          "propertyData": propertyData,
+          "isManually": isManually
+        },
+      );
       isLoading.value = false;
       update();
     });
+  }
+
+  getUnitData() {
+    propertyData.scheduleInspectionBuildings?.forEach(
+      (element) {
+        if (element.id == externalBuilding.id) {
+          scheduleInspectionBuilding.id = element.id;
+          scheduleInspectionBuilding.scheduleInspectionUnits =
+              element.scheduleInspectionUnits;
+          scheduleInspectionBuilding.building = element.building;
+          scheduleInspectionBuilding.isBuildingInspection =
+              element.isBuildingInspection;
+        }
+      },
+    );
+    update();
   }
 
   saveCreateInspection(arg) async {
