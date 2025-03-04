@@ -42,8 +42,8 @@ class BuildingInspectionController extends BaseController {
   // List<String> buildingList = [];
   List<Building> buildingList = [];
   List<String> buildingTypeList = [];
-  List<Properties>? propertyList = [];
-  List<Certificates>? certificates = [];
+  List<Properties> propertyList = [];
+  List<Certificates> certificates = [];
   bool? isData;
   Account? account;
   var propertyInfo = {}.obs;
@@ -162,10 +162,10 @@ class BuildingInspectionController extends BaseController {
 
   getCertificatesJson() {
     certificatesInfo.clear();
-    for (var i = 0; i < certificates!.length; i += 1) {
+    for (var i = 0; i < certificates.length; i += 1) {
       if (checked[i]) {
-        certificatesInfo.add({"id": certificates![i].id.toString()});
-        print(certificates![i].certificate.toString());
+        certificatesInfo.add({"id": certificates[i].id.toString()});
+        print(certificates[i].certificate.toString());
       }
     }
     print('fgdsfg${certificatesInfo.toJson()}');
@@ -216,14 +216,15 @@ class BuildingInspectionController extends BaseController {
 
   getStartInspection() {
     return propertyNameController.text.isNotEmpty &&
-            buildingNameController.text.isNotEmpty
+            cityController.text.isNotEmpty &&
+            propertyIDController.text.isNotEmpty &&
+            stateController.text.isNotEmpty &&
+            zipController.text.isNotEmpty &&
+            buildingNameController.text.isNotEmpty &&
+            yearConstructedController.text.isNotEmpty &&
+            buildingTypeController.text.isNotEmpty
         ? true
         : false;
-    //  &&
-    // buildingNameController.text.isNotEmpty;
-    // &&
-    // yearConstructedController.text.isNotEmpty &&
-    // buildingTypeController.text.isNotEmpty;
   }
 
   isAllSelected(value) {
@@ -241,12 +242,12 @@ class BuildingInspectionController extends BaseController {
     buildingTypeIdController.clear();
     buildingIdController.clear();
     // await getbuildingapi(value.id.toString());
-    propertyNameController.text = value.name!;
-    cityController.text = value.city!;
+    propertyNameController.text = value.name ?? "";
+    cityController.text = value.city ?? "";
     propertyIDController.text = value.id.toString();
-    stateController.text = value.state!;
-    zipController.text = value.zip!;
-    propertyAddressController.text = value.address1!;
+    stateController.text = value.state ?? "";
+    zipController.text = value.zip ?? "";
+    propertyAddressController.text = value.address1 ?? "";
     certificatesInfo.value = [];
     update();
   }
@@ -267,11 +268,11 @@ class BuildingInspectionController extends BaseController {
 
   void actionBuilding(Building value) {
     isSelected = true;
-    buildingNameController.text = value.name;
+    buildingNameController.text = value.name ?? "";
     buildingIdController.text = value.id.toString();
     yearConstructedController.text = value.constructedYear.toString();
-    buildingTypeController.text = value.buildingType.name.toString();
-    buildingTypeIdController.text = value.buildingType.id.toString();
+    buildingTypeController.text = value.buildingType?.name ?? "";
+    buildingTypeIdController.text = value.buildingType?.id.toString() ?? "";
     update();
   }
 
@@ -300,18 +301,18 @@ class BuildingInspectionController extends BaseController {
   searchProperty({required String searchText}) async {
     searchPropertyNameList.clear();
     if (!utils.isValidationEmpty(searchText)) {
-      for (int i = 0; i < propertyList!.length; i++) {
-        if (propertyList![i]
+      for (int i = 0; i < propertyList.length; i++) {
+        if (propertyList[i]
             .name
             .toString()
             .toLowerCase()
             .contains(searchText.toString().toLowerCase())) {
-          searchPropertyNameList.add(propertyList![i]);
+          searchPropertyNameList.add(propertyList[i]);
           update();
         }
       }
     } else {
-      searchPropertyNameList.addAll(propertyList!);
+      searchPropertyNameList.addAll(propertyList);
       update();
     }
   }
@@ -356,12 +357,12 @@ class BuildingInspectionController extends BaseController {
   }
 
   getPropertyInfo() async {
-    propertyList!.clear();
+    propertyList.clear();
     var response = await buildingInspectionRepository.getPropertyInfoApi();
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (PropertyModel r) {
-      propertyList = r.properties;
+      propertyList = r.properties ?? [];
       searchProperty(searchText: "");
     });
     update();
@@ -372,8 +373,8 @@ class BuildingInspectionController extends BaseController {
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (CertificateModel r) {
-      certificates = r.certificates;
-      checked = List.filled(certificates!.length, false);
+      certificates = r.certificates ?? [];
+      checked = List.filled(certificates.length, false);
     });
     update();
   }
@@ -428,7 +429,7 @@ class BuildingInspectionController extends BaseController {
     response.fold((l) {
       utils.showSnackBar(context: Get.context!, message: l.errorMessage);
     }, (BuildingModel r) {
-      buildingList = r.buildings;
+      buildingList = r.buildings ?? [];
       searchBuilding(searchText: "");
     });
     update();
