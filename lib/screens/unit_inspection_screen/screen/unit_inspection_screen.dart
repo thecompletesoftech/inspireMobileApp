@@ -190,7 +190,6 @@ class UnitInspection extends GetView<UnitController> {
                                         height: 60,
                                         width: 60,
                                       ).image,
-                                      // SvgPicture.string(icbathroom),
                                       activeColor: controller.appColors.white,
                                       value: controller.switchButton.value,
                                       onChanged: (value) {
@@ -212,7 +211,7 @@ class UnitInspection extends GetView<UnitController> {
                                     ).paddingOnly(left: 10.px),
                                   ],
                                 ),
-                                controller.isManually == true
+                                controller.isManually
                                     ? GestureDetector(
                                         onTap: (() {
                                           if (controller.getUnitInspection()) {
@@ -301,7 +300,7 @@ class UnitInspection extends GetView<UnitController> {
                           ),
                         ],
                       ).paddingSymmetric(vertical: 32.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? Center(
                             child: CommonButton(
                               title: Strings.startInspection,
@@ -410,7 +409,7 @@ class UnitInspection extends GetView<UnitController> {
                         ),
                       ],
                     ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -443,7 +442,7 @@ class UnitInspection extends GetView<UnitController> {
                             imageString: icBuildingss,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -476,7 +475,7 @@ class UnitInspection extends GetView<UnitController> {
                             imageString: icLocation,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? Row(
                             children: [
                               MyTextView(
@@ -503,7 +502,7 @@ class UnitInspection extends GetView<UnitController> {
                             imageString: hasTagIcon,
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? SizedBox.shrink()
                         : Row(
                             children: [
@@ -528,7 +527,7 @@ class UnitInspection extends GetView<UnitController> {
                             right: 32.px,
                             bottom: 40.px,
                             top: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -567,7 +566,7 @@ class UnitInspection extends GetView<UnitController> {
                             ],
                           ).paddingOnly(
                             left: 32.px, right: 32.px, bottom: 20.px),
-                    controller.isManually == true
+                    controller.isManually
                         ? TitleheadMenu(
                             title: Strings.yearConstructed,
                             value: controller.buildingInfo['constructed_year']

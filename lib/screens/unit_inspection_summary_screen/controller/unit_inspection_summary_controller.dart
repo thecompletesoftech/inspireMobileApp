@@ -70,8 +70,8 @@ class UnitInspectionSummaryController extends BaseController {
         "value":
             "Damages to walls, hardware, doors, flooring, appliances beyond normal wear and tear."
       },
-      {"title": 'Standards', "value": "No damage beyond normal wear and tear."},
-      {"title": 'clean', "value": "No or minimal defect."}
+      {"title": 'Standard', "value": "No damage beyond normal wear and tear."},
+      {"title": 'Clean', "value": "No or minimal defect."}
     ];
     generalPhysicalConditionList = [
       {
@@ -79,8 +79,8 @@ class UnitInspectionSummaryController extends BaseController {
         "value":
             "Bad odor, greasy stove, food left out, infestation, or clutter."
       },
-      {"title": 'General Physical Condition', "value": "Generally clean with no clutter"},
-      {"title": 'Unit Housekeeping', "value": "Very clean and neat."}
+      {"title": 'Standard', "value": "Generally clean with no clutter"},
+      {"title": 'Clean', "value": "Very clean and neat."}
     ];
     getDeficiencyJson();
     update();

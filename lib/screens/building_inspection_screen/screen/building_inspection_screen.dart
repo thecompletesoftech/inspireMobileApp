@@ -25,160 +25,6 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Image.asset(
-                //       ImagePath.logo,
-                //       width: 182.px,
-                //       height: 40.625.px,
-                //     ),
-                //     Flexible(
-                //       flex: 1,
-                //       child: GestureDetector(
-                //         onTap: () {
-                //           controller.popupKey.currentState?.showButtonMenu();
-                //         },
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.end,
-                //           children: [
-                //             Row(
-                //               children: [
-                //                 GestureDetector(
-                //                     onTap: controller.isCheck,
-                //                     child: SvgPicture.string(
-                //                         isInternet == IsInternet.initial
-                //                             ? syncCompleteIcon
-                //                             : isInternet == IsInternet.connect
-                //                                 ? syncIcon
-                //                                 : offlineIcon)),
-                //                 Column(
-                //                   crossAxisAlignment:
-                //                       CrossAxisAlignment.start,
-                //                   mainAxisAlignment: MainAxisAlignment.center,
-                //                   children: [
-                //                     Row(
-                //                       crossAxisAlignment:
-                //                           CrossAxisAlignment.start,
-                //                       mainAxisSize: MainAxisSize.min,
-                //                       children: [
-                //                         Flexible(
-                //                           flex: 1,
-                //                           child: MyTextView(
-                //                             controller.account?.userName ??
-                //                                 "",
-                //                             textStyleNew: MyTextStyle(
-                //                               textColor: controller
-                //                                   .appColors.lightText,
-                //                               textWeight: FontWeight.w600,
-                //                               textFamily: fontFamilyBold,
-                //                               textSize: 16.px,
-                //                             ),
-                //                           ),
-                //                         ),
-                //                       ],
-                //                     ).paddingOnly(bottom: 4.px),
-                //                     MyTextView(
-                //                       "${controller.getStorageData.readString(controller.getStorageData.clientName)}",
-                //                       isMaxLineWrap: true,
-                //                       textStyleNew: MyTextStyle(
-                //                         textColor:
-                //                             controller.appColors.lightText,
-                //                         textWeight: FontWeight.w400,
-                //                         textFamily: fontFamilyMedium,
-                //                         textSize: 14.px,
-                //                       ),
-                //                     )
-                //                   ],
-                //                 ),
-                //               ],
-                //             ),
-                //             Column(
-                //               mainAxisAlignment:
-                //                   MainAxisAlignment.spaceEvenly,
-                //               children: [
-                //                 PopupMenuButton<int>(
-                //                   key: controller.popupKey,
-                //                   icon: SvgPicture.string(
-                //                     icDownArrow,
-                //                     height: 24.px,
-                //                   ),
-                //                   onSelected: (int value) => controller
-                //                       .actionPopUpItemSelected(value),
-                //                   itemBuilder: (context) {
-                //                     return <PopupMenuEntry<int>>[
-                //                       PopupMenuItem(
-                //                           value: 0,
-                //                           child: ListTile(
-                //                               leading: SvgPicture.string(
-                //                                 icEdit,
-                //                               ),
-                //                               title: MyTextView(
-                //                                 Strings.editProfile,
-                //                                 textStyleNew: MyTextStyle(
-                //                                     textSize: 16.px,
-                //                                     textColor:
-                //                                         AppColors().black,
-                //                                     textWeight:
-                //                                         FontWeight.w400),
-                //                               ))),
-                //                       PopupMenuItem(
-                //                           value: 1,
-                //                           child: ListTile(
-                //                               leading: SvgPicture.string(
-                //                                 icCopy,
-                //                               ),
-                //                               title: MyTextView(
-                //                                 Strings.inspectionHistory,
-                //                                 textStyleNew: MyTextStyle(
-                //                                     textSize: 16.px,
-                //                                     textColor:
-                //                                         AppColors().black,
-                //                                     textWeight:
-                //                                         FontWeight.w400),
-                //                               ))),
-                //                       PopupMenuItem(
-                //                           value: 2,
-                //                           child: ListTile(
-                //                               leading: SvgPicture.string(
-                //                                 icBook,
-                //                               ),
-                //                               title: MyTextView(
-                //                                 Strings.nSPIREStandards,
-                //                                 textStyleNew: MyTextStyle(
-                //                                     textSize: 16.px,
-                //                                     textColor:
-                //                                         AppColors().black,
-                //                                     textWeight:
-                //                                         FontWeight.w400),
-                //                               ))),
-                //                       PopupMenuItem(
-                //                           value: 3,
-                //                           child: ListTile(
-                //                               leading: SvgPicture.string(
-                //                                 icLogout,
-                //                               ),
-                //                               title: MyTextView(
-                //                                 Strings.logOut,
-                //                                 textStyleNew: MyTextStyle(
-                //                                     textSize: 16.px,
-                //                                     textColor:
-                //                                         AppColors().black,
-                //                                     textWeight:
-                //                                         FontWeight.w400),
-                //                               ))),
-                //                     ];
-                //                   },
-                //                 ),
-                //                 const SizedBox()
-                //               ],
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     )
-                //   ],
-                // ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
                 CommonAppBar(
                   color: controller.appColors.transparent,
                   radius: 0.px,
@@ -222,7 +68,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 ),
                               ],
                             ),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
@@ -308,12 +154,12 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 ),
                               ],
                             ).paddingOnly(top: 32.px, bottom: 32.px),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
                                           child: controller
-                                                  .propertyList!.isNotEmpty
+                                                  .propertyList.isNotEmpty
                                               ? TypeAheadField(
                                                   controller: controller
                                                       .propertyNameController,
@@ -466,7 +312,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                     ],
                                   ),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
@@ -589,15 +435,23 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                     ],
                                   ).paddingOnly(top: 12.px),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
                                         child: CommonTextField(
                                           isLable: true,
-                                          readOnly: true,
+                                          readOnly: controller
+                                                  .propertyAddressController
+                                                  .text
+                                                  .isEmpty
+                                              ? false
+                                              : true,
                                           controller: controller
                                               .propertyAddressController,
+                                          onChange: (value) {
+                                            controller.update();
+                                          },
                                           color:
                                               controller.appColors.transparent,
                                           prefixIcon: SvgPicture.string(
@@ -667,7 +521,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                 ),
                               ],
                             ).paddingOnly(top: 32.px, bottom: 32.px),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
@@ -794,7 +648,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                       ),
                                     ],
                                   ),
-                            controller.isManually == true
+                            controller.isManually
                                 ? Row(
                                     children: [
                                       Expanded(
@@ -1019,7 +873,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                                                       .appColors.appColor,
                                                 ),
                                                 MyTextView(
-                                                  controller.certificates![i]
+                                                  controller.certificates[i]
                                                       .certificate,
                                                   textStyleNew: MyTextStyle(
                                                     textColor: controller
@@ -1048,7 +902,7 @@ class BuildingInspectionScreen extends GetView<BuildingInspectionController> {
                     ),
                   ).paddingOnly(left: 32.px, right: 32.px),
                 ),
-                controller.isManually == true
+                controller.isManually
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

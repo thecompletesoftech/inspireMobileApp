@@ -205,7 +205,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             ),
                           ],
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                        controller.isManually == true
+                        controller.isManually
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -338,7 +338,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                           ],
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
 
-                        controller.isManually == true
+                        controller.isManually
                             ? Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -379,7 +379,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 imageString: icBuildingss,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
-                        controller.isManually == true
+                        controller.isManually
                             ? Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -422,7 +422,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 imageString: icLocation,
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
-                        controller.isManually == true
+                        controller.isManually
                             ? SizedBox.shrink()
                             : CommonTextRow(
                                 title: 'Property ID: ',
@@ -449,7 +449,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                             ),
                           ],
                         ).paddingOnly(left: 32.px, right: 32.px, bottom: 20.px),
-                        controller.isManually == true
+                        controller.isManually
                             ? Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -494,7 +494,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                                 ],
                               ).paddingOnly(
                                 left: 32.px, right: 32.px, bottom: 20.px),
-                        controller.isManually == true
+                        controller.isManually
                             ? TitleheadMenu(
                                 title: Strings.yearConstructed,
                                 value: Get.arguments == null
@@ -1107,7 +1107,7 @@ class UnitInspectionSummary extends GetView<UnitInspectionSummaryController> {
                         //     );
                         //   },
                         // ),
-                        controller.isManually == true
+                        controller.isManually
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

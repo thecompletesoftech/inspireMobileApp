@@ -222,6 +222,7 @@ class BuildingInspectionController extends BaseController {
             zipController.text.isNotEmpty &&
             buildingNameController.text.isNotEmpty &&
             yearConstructedController.text.isNotEmpty &&
+            propertyAddressController.text.isNotEmpty &&
             buildingTypeController.text.isNotEmpty
         ? true
         : false;
@@ -241,7 +242,6 @@ class BuildingInspectionController extends BaseController {
     buildingTypeController.clear();
     buildingTypeIdController.clear();
     buildingIdController.clear();
-    // await getbuildingapi(value.id.toString());
     propertyNameController.text = value.name ?? "";
     cityController.text = value.city ?? "";
     propertyIDController.text = value.id.toString();

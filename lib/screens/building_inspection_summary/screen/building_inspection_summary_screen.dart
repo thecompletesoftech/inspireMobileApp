@@ -71,7 +71,7 @@ class BuildingInspectionSummaryScreen
                                 textSize: 32.px,
                               ),
                             ),
-                            controller.isManually == true
+                            controller.isManually
                                 ? CommonButton(
                                     title: Strings.saveAddUnit,
                                     radius: 100.px,
@@ -137,7 +137,7 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -225,7 +225,7 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ).paddingOnly(top: 32.px, bottom: 32.px),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -320,7 +320,7 @@ class BuildingInspectionSummaryScreen
                                           ),
                                         ],
                                       ),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -414,7 +414,7 @@ class BuildingInspectionSummaryScreen
                                           ),
                                         ],
                                       ).paddingOnly(top: 12.px),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -479,7 +479,7 @@ class BuildingInspectionSummaryScreen
                                     ),
                                   ],
                                 ).paddingOnly(top: 32.px, bottom: 32.px),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -554,7 +554,7 @@ class BuildingInspectionSummaryScreen
                                           ),
                                         ],
                                       ),
-                                controller.isManually == true
+                                controller.isManually
                                     ? Row(
                                         children: [
                                           Expanded(
@@ -963,7 +963,7 @@ class BuildingInspectionSummaryScreen
                             );
                           },
                         ),
-                        controller.isManually == true
+                        controller.isManually
                             ? CommonButton(
                                 title: Strings.saveAddUnit,
                                 radius: 100.px,
